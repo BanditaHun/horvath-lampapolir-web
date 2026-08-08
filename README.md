@@ -1,8 +1,13 @@
 # Horváth Lámpapolír – weboldal
 
-Egyszerű, egyoldalas statikus weboldal (HTML/CSS/JS) **Decap CMS** admin felülettel.
+Egyszerű, egyoldalas statikus weboldal (HTML/CSS/JS) **Sveltia CMS** admin felülettel.
 A szövegek, árak, csomagok, szolgáltatások és a galéria a `content/` mappa JSON-fájljaiból
 töltődnek be – így kódolás nélkül, a `/admin` felületen szerkeszthetők.
+
+> **Miért Sveltia és nem Decap?** A Netlify Identity + Git Gateway (amit a Decap alapból
+> használt) ki lett vezetve, új projekteknél nem kapcsolható be. Ezért a **Sveltia CMS**-t
+> használjuk (a Decap modern, karbantartott utódja – ugyanaz a `config.yml`), **GitHub
+> backenddel**, a hitelesítést pedig egy ingyenes **Cloudflare Worker** intézi.
 
 ## Mappaszerkezet
 
@@ -19,9 +24,10 @@ Horvath-Lampapolir-Web/
 │  ├─ delivery.json        # Kiszállási díj
 │  ├─ contact.json         # Elérhetőség (telefon, Facebook)
 │  └─ gallery.json         # Galéria képek
-├─ admin/                  # Decap CMS admin felület
+├─ admin/                  # Sveltia CMS admin felület
 │  ├─ index.html
 │  └─ config.yml
+├─ images/logo.png         # A fejléc logója
 ├─ images/uploads/         # Ide kerülnek a CMS-ből feltöltött képek
 └─ netlify.toml
 ```
@@ -30,89 +36,114 @@ Horvath-Lampapolir-Web/
 
 > **Fontos:** a `content/*.json` fájlokat a böngésző `fetch`-csel tölti be, ez pedig
 > **nem működik**, ha az `index.html`-t dupla kattintással (`file://`) nyitod meg.
-> Indíts egy egyszerű helyi szervert:
+> Indíts egy egyszerű helyi szervert Node.js-szel:
 
-**Python (ha van telepítve):**
-```bash
-cd "I:\Horvath-Lampapolir-Web"
-python -m http.server 8080
-```
-Majd nyisd meg: <http://localhost:8080>
-
-**Vagy Node.js-szel:**
 ```bash
 npx serve -l 8080 "I:\Horvath-Lampapolir-Web"
 ```
 
 Az oldal a <http://localhost:8080> címen jelenik meg.
-(A `/admin` felület helyben csak korlátozottan működik – éles belépés a Netlify-n keresztül,
-lásd lentebb.)
+(A `/admin` felület helyi belépése nem működik – éles belépés a Worker + GitHub OAuth-on
+keresztül, lásd lentebb.)
 
 ---
 
-## Élesítés + Decap CMS bekapcsolása (lépésről lépésre)
+## Élesítés lépésről lépésre
 
-A Decap CMS `git-gateway` backendet és **Netlify Identity**-t használ. Ehhez a projektnek
-egy Git-repóban (GitHub/GitLab) kell lennie, és a Netlify-ra kell publikálni.
+### 1. GitHubra feltöltés  ✅ KÉSZ
+A projekt már fenn van privát repóban:
+**https://github.com/BanditaHun/horvath-lampapolir-web**
 
-### 1. Töltsd fel a projektet GitHubra
-1. Hozz létre egy új privát repót a GitHubon (pl. `horvath-lampapolir-web`).
-2. A projekt mappájában:
+Új változtatás feltöltése később:
+```bash
+cd "I:\Horvath-Lampapolir-Web"
+git add .
+git commit -m "Módosítás"
+git push
+```
+
+### 2. Weboldal élesítése Netlify-on (statikus tárhely)
+1. Lépj be: <https://app.netlify.com> (legegyszerűbb: **Log in with GitHub**).
+2. **Add new site → Import an existing project → GitHub** → válaszd a
+   `horvath-lampapolir-web` repót.
+3. Build: **build command üres**, **publish directory: `.`** (a `netlify.toml` ezt már
+   megadja) → **Deploy**.
+4. Pár másodperc múlva megkapod az élő címet: `https://valami-nev.netlify.app`
+   (Itt **nem** kell Identity-t bekapcsolni – a belépést a Worker intézi.)
+
+### 3. GitHub OAuth App létrehozása
+1. Menj ide: <https://github.com/settings/applications/new>
+2. Töltsd ki:
+   - **Application name:** Horváth Lámpapolír CMS (bármi lehet)
+   - **Homepage URL:** a Netlify-címed (pl. `https://valami-nev.netlify.app`)
+   - **Authorization callback URL:** *egyelőre* `https://example.com/callback`
+     (a 4. lépés után visszajössz és beírod a valódi Worker-címet + `/callback`)
+3. **Register application** → jegyezd fel a **Client ID**-t, majd **Generate a new client
+   secret** → jegyezd fel a **Client Secret**-et is (csak egyszer látszik!).
+
+### 4. Cloudflare Worker (a hitelesítő) telepítése
+1. Regisztrálj (ingyenes): <https://dash.cloudflare.com/sign-up>
+2. Nyisd meg a hitelesítő Workert: <https://github.com/sveltia/sveltia-cms-auth>
+   és kövesd a README **„Deploy to Cloudflare"** gombját (vagy klónozd és `wrangler deploy`).
+3. A telepítés után kapsz egy Worker-címet, kb.:
+   `https://sveltia-cms-auth.<valami>.workers.dev` – **jegyezd fel.**
+4. A Cloudflare dashboardon a Workernél: **Settings → Variables** – add hozzá:
+   - `GITHUB_CLIENT_ID` = a 3. lépésből
+   - `GITHUB_CLIENT_SECRET` = a 3. lépésből (kattints **Encrypt**)
+   - `ALLOWED_DOMAINS` = a Netlify-hosted domain, pl. `valami-nev.netlify.app`
+     (később a saját domain is ide vehető, vesszővel elválasztva)
+   - majd **Deploy** / mentés.
+
+### 5. A három cím összekötése
+1. **GitHub OAuth App** (3. lépés) → szerkeszd, és a **Authorization callback URL**-t
+   írd át a valódira: `https://sveltia-cms-auth.<valami>.workers.dev/callback` → mentés.
+2. A projektben **`admin/config.yml`** → a `base_url` sort írd át a Worker-címedre:
+   ```yaml
+   backend:
+     name: github
+     repo: BanditaHun/horvath-lampapolir-web
+     branch: main
+     base_url: https://sveltia-cms-auth.<valami>.workers.dev
+   ```
+3. Mentsd, majd töltsd fel:
    ```bash
    cd "I:\Horvath-Lampapolir-Web"
-   git init
-   git add .
-   git commit -m "Első verzió"
-   git branch -M main
-   git remote add origin https://github.com/<felhasznalonev>/horvath-lampapolir-web.git
-   git push -u origin main
+   git add admin/config.yml
+   git commit -m "CMS OAuth Worker cim beallitasa"
+   git push
    ```
 
-### 2. Kösd össze a Netlify-vel
-1. Lépj be a <https://app.netlify.com> oldalra.
-2. **Add new site → Import an existing project → GitHub**, válaszd ki a repót.
-3. Build beállítás: **build command üres**, **publish directory: `.`** (a `netlify.toml`
-   ezt már tartalmazza) → **Deploy**.
-4. Pár másodperc után kapsz egy `https://valami-nev.netlify.app` címet.
+### 6. Első admin-belépés
+1. Nyisd meg: `https://valami-nev.netlify.app/admin/`
+2. Kattints **Login with GitHub** → engedélyezd → belépsz.
+3. Kész! Megjelennek a szerkeszthető szekciók (Fejléc, Bemutatkozás, Csomagok, stb.).
+   Mentés után a CMS közvetlenül commitol a GitHub-repóba, a Netlify pedig automatikusan
+   újrapublikálja az oldalt.
 
-### 3. Kapcsold be a Netlify Identity-t
-1. A Netlify vezérlőpultján a site-nál: **Site configuration → Identity → Enable Identity**.
-2. **Registration preferences**: állítsd **Invite only**-ra (csak meghívott
-   felhasználó léphet be – ez a biztonságos).
-3. Görgess a **Services → Git Gateway** részhez, és kattints **Enable Git Gateway**.
-   (Ez engedi, hogy a CMS a te nevedben mentse a módosításokat a repóba.)
+> **Fontos:** a `github` backendnél minden CMS-felhasználónak **push-joga** kell legyen a
+> repóhoz. A te fiókod (a repó tulajdonosa) automatikusan jó.
 
-### 4. Első admin-belépés
-1. Ugyanitt: **Identity → Invite users**, írd be a saját e-mail-címed → **Send**.
-2. Az e-mailben kapott linkre kattintva állíts be jelszót.
-   - Ha a link a főoldalra vinne `#invite_token=...` résszel a címben, az oldal
-     automatikusan felajánlja a jelszó beállítását (ezt a beépített Netlify Identity
-     widget kezeli).
-3. Ezután lépj a `https://valami-nev.netlify.app/admin/` címre, és jelentkezz be a
-   most beállított e-mail + jelszó párossal.
-4. Kész! Bal oldalt megjelennek a szerkeszthető szekciók (Fejléc, Bemutatkozás,
-   Csomagok, stb.). Módosítás után a **Publish** gombbal élesíthetsz – a CMS commitol
-   a repóba, a Netlify pedig automatikusan újrapubliká az oldalt.
-
-### 5. (Ajánlott) Egyedi domain
+### 7. (Ajánlott) Egyedi domain
 A Netlify-n **Domain management** alatt köthetsz saját domaint (pl. `horvathlampapolir.hu`),
-és ingyenes HTTPS-t kapsz hozzá.
+ingyenes HTTPS-sel. Ha megvan, vedd fel a Worker `ALLOWED_DOMAINS` változójába is.
 
 ---
 
 ## Amit érdemes még kitölteni
 - `content/contact.json` → **`phone`**: valódi telefonszám (a `[TELEFONSZÁM]` helyére).
 - `content/contact.json` → **`facebook_url`**: a Facebook oldal linkje (`[FACEBOOK LINK]` helyére).
-- Ezeket megteheted közvetlenül a fájlban **vagy** a `/admin` felület „Elérhetőség” menüjében.
+- Ezeket megteheted közvetlenül a fájlban **vagy** a `/admin` felület „Elérhetőség" menüjében.
 
 ## Galéria képek
 A `/admin → Galéria` menüben tölthetsz fel képeket; a CMS az `images/uploads/`
 mappába menti őket, és a galéria automatikusan megjeleníti.
 
+## Logó
+A fejléc a `images/logo.png` fájlt jeleníti meg (fekete-arany-króm címeres logó). Cseréhez
+egyszerűen írd felül ezt a fájlt. Ha hiányzik, az oldal egy 💡 emoji + szöveges névre esik
+vissza (nem törik el).
+
 ## Dizájn színek
 - Háttér: `#0a0a0a` (fekete)
 - Akcent: `#f0b429` (arany/sárga)
 - Szöveg: ezüst/króm árnyalatok
-Illeszkedik a fekete-arany-króm színvilágú fényszóró-logóhoz. A logó helye jelenleg egy
-💡 emoji a fejlécben – cseréld le valódi logóra: tedd a képet pl. `images/logo.png` néven,
-és az `index.html`-ben a `.hero__logo` div tartalmát írd át `<img src="images/logo.png" alt="Logó">`-ra.

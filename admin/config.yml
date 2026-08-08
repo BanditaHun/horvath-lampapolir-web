@@ -1,6 +1,10 @@
+# GitHub backend + Cloudflare Worker OAuth (a kivezetett Netlify Identity helyett).
+# A base_url-t írd át a saját Worker-címedre a telepítés után (lásd README).
 backend:
-  name: git-gateway
+  name: github
+  repo: BanditaHun/horvath-lampapolir-web
   branch: main
+  base_url: https://SAJAT-WORKER-CIMED.workers.dev
 
 # Feltöltött képek helye a repóban
 media_folder: "images/uploads"
