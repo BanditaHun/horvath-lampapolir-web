@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Horváth Lámpapolír – mobil fényszóró-felújítás, házhoz megyünk Tolna megyében, 50 km-es körzetben." />
+  <title>Horváth Lámpapolír – mobil fényszóró-felújítás</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- FEJLÉC / HERO -->
+  <header class="hero">
+    <img class="hero__logo" src="images/logo.png" alt="Horváth Lámpapolír logó"
+         onerror="this.onerror=null; document.body.classList.add('no-logo'); this.replaceWith(Object.assign(document.createElement('div'),{className:'hero__logo hero__logo--fallback',textContent:'💡'}));" />
+    <h1 class="hero__title" id="hero-title">Horváth Lámpapolír</h1>
+    <p class="hero__subtitle" id="hero-subtitle"></p>
+    <div class="hero__cta">
+      <a class="btn btn--primary" href="#kapcsolat">Kapcsolat</a>
+      <a class="btn btn--ghost" href="#csomagok">Csomagok</a>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <div id="error-box" style="display:none; margin-top:20px; padding:14px 18px; border:1px solid #a33; border-radius:12px; background:#2a0f0f; color:#ffbcbc;"></div>
+
+    <!-- BEMUTATKOZÁS -->
+    <section id="bemutatkozas">
+      <h2 class="section__title" id="about-heading">Bemutatkozás</h2>
+      <p class="lead" id="about-text"></p>
+    </section>
+
+    <!-- CSOMAGOK -->
+    <section id="csomagok">
+      <h2 class="section__title" id="packages-heading">Csomagok</h2>
+      <div class="packages" id="packages-list"></div>
+    </section>
+
+    <!-- ÖNÁLLÓ SZOLGÁLTATÁSOK -->
+    <section id="szolgaltatasok">
+      <h2 class="section__title" id="services-heading">Önálló szolgáltatások</h2>
+      <div class="rows" id="services-list"></div>
+    </section>
+
+    <!-- KISZÁLLÁSI DÍJ -->
+    <section id="kiszallas">
+      <h2 class="section__title" id="delivery-heading">Kiszállási díj</h2>
+      <div class="rows" id="delivery-list"></div>
+    </section>
+
+    <!-- GALÉRIA -->
+    <section id="galeria">
+      <h2 class="section__title" id="gallery-heading">Munkáink</h2>
+      <div class="gallery" id="gallery-list"></div>
+    </section>
+
+    <!-- ELÉRHETŐSÉG -->
+    <section id="kapcsolat">
+      <h2 class="section__title" id="contact-heading">Elérhetőség</h2>
+      <div class="contact__grid">
+        <div class="contact__card">
+          <a class="contact__phone" id="contact-phone" href="#">[TELEFONSZÁM]</a>
+          <p class="contact__note" id="contact-note"></p>
+        </div>
+        <div class="contact__card">
+          <p style="color:var(--chrome-dim); margin-bottom:8px;">Kövess minket:</p>
+          <a class="btn btn--ghost" id="contact-facebook" href="#" target="_blank" rel="noopener">Facebook</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    © <span id="year"></span> Horváth Lámpapolír – mobil fényszóró-felújítás
+  </footer>
+
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+  <script src="js/main.js"></script>
+
+  <!-- Netlify Identity: admin belépés + meghívó/megerősítő linkek helyes átirányítása -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", (user) => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
+</body>
+</html>

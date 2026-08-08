@@ -1,0 +1,4 @@
+# Statikus oldal – nincs build lépés, a repó gyökere a publikált mappa.
+[build]
+  publish = "."
+  command = ""

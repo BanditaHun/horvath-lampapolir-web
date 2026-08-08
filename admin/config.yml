@@ -1,0 +1,119 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Feltöltött képek helye a repóban
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+# Felület nyelve
+locale: "hu"
+
+collections:
+  # ---- Fejléc (hero) ----
+  - name: "hero"
+    label: "Fejléc"
+    files:
+      - name: "hero"
+        label: "Fejléc szövegek"
+        file: "content/hero.json"
+        format: "json"
+        fields:
+          - { name: "title", label: "Cím", widget: "string" }
+          - { name: "subtitle", label: "Alcím", widget: "text" }
+
+  # ---- Bemutatkozás ----
+  - name: "about"
+    label: "Bemutatkozás"
+    files:
+      - name: "about"
+        label: "Bemutatkozás szöveg"
+        file: "content/about.json"
+        format: "json"
+        fields:
+          - { name: "heading", label: "Szakasz címe", widget: "string" }
+          - { name: "text", label: "Szöveg", widget: "text" }
+
+  # ---- Csomagok ----
+  - name: "packages"
+    label: "Csomagok"
+    files:
+      - name: "packages"
+        label: "Csomagok listája"
+        file: "content/packages.json"
+        format: "json"
+        fields:
+          - { name: "heading", label: "Szakasz címe", widget: "string" }
+          - name: "items"
+            label: "Csomagok"
+            widget: "list"
+            fields:
+              - { name: "name", label: "Név", widget: "string" }
+              - { name: "description", label: "Leírás", widget: "text" }
+              - { name: "price", label: "Ár", widget: "string" }
+
+  # ---- Önálló szolgáltatások ----
+  - name: "services"
+    label: "Önálló szolgáltatások"
+    files:
+      - name: "services"
+        label: "Szolgáltatások listája"
+        file: "content/services.json"
+        format: "json"
+        fields:
+          - { name: "heading", label: "Szakasz címe", widget: "string" }
+          - name: "items"
+            label: "Szolgáltatások"
+            widget: "list"
+            fields:
+              - { name: "name", label: "Megnevezés", widget: "string" }
+              - { name: "price", label: "Ár", widget: "string" }
+
+  # ---- Kiszállási díj ----
+  - name: "delivery"
+    label: "Kiszállási díj"
+    files:
+      - name: "delivery"
+        label: "Kiszállási díjak"
+        file: "content/delivery.json"
+        format: "json"
+        fields:
+          - { name: "heading", label: "Szakasz címe", widget: "string" }
+          - name: "items"
+            label: "Sávok"
+            widget: "list"
+            fields:
+              - { name: "range", label: "Távolság", widget: "string" }
+              - { name: "fee", label: "Díj", widget: "string" }
+
+  # ---- Elérhetőség ----
+  - name: "contact"
+    label: "Elérhetőség"
+    files:
+      - name: "contact"
+        label: "Kapcsolati adatok"
+        file: "content/contact.json"
+        format: "json"
+        fields:
+          - { name: "heading", label: "Szakasz címe", widget: "string" }
+          - { name: "phone", label: "Telefonszám", widget: "string" }
+          - { name: "note", label: "Megjegyzés (elérhetőség)", widget: "text" }
+          - { name: "facebook_url", label: "Facebook link", widget: "string" }
+          - { name: "facebook_label", label: "Facebook gomb felirata", widget: "string" }
+
+  # ---- Galéria ----
+  - name: "gallery"
+    label: "Galéria"
+    files:
+      - name: "gallery"
+        label: "Galéria képek"
+        file: "content/gallery.json"
+        format: "json"
+        fields:
+          - { name: "heading", label: "Szakasz címe", widget: "string" }
+          - name: "items"
+            label: "Képek"
+            widget: "list"
+            fields:
+              - { name: "image", label: "Kép", widget: "image" }
+              - { name: "caption", label: "Képaláírás", widget: "string", required: false }

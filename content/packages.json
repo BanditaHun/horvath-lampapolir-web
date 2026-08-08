@@ -1,0 +1,20 @@
+{
+  "heading": "Csomagok",
+  "items": [
+    {
+      "name": "ALAP",
+      "description": "Sima polírozás, védelem nélkül",
+      "price": "10 000 Ft-tól"
+    },
+    {
+      "name": "STANDARD",
+      "description": "Csiszolás + K2 Vapron gőzös felújítás + apróságok",
+      "price": "15 000 Ft-tól"
+    },
+    {
+      "name": "PRÉMIUM",
+      "description": "Standard + K2 Lamp Protect UV-védelem + 1 év garancia",
+      "price": "18 000 Ft-tól"
+    }
+  ]
+}

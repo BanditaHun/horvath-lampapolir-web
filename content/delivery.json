@@ -1,0 +1,8 @@
+{
+  "heading": "Kiszállási díj",
+  "items": [
+    { "range": "0–15 km", "fee": "ingyenes" },
+    { "range": "15–30 km", "fee": "+1 500–2 000 Ft" },
+    { "range": "30–50 km", "fee": "+3 000–3 500 Ft" }
+  ]
+}
