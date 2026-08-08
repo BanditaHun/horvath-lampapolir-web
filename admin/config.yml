@@ -4,7 +4,7 @@ backend:
   name: github
   repo: BanditaHun/horvath-lampapolir-web
   branch: main
-  base_url: https://SAJAT-WORKER-CIMED.workers.dev
+  base_url: https://sveltia-cms-auth.andras-horvat1989.workers.dev
 
 # Feltöltött képek helye a repóban
 media_folder: "images/uploads"
