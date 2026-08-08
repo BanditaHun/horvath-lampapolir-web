@@ -1,10 +1,25 @@
 {
   "heading": "Önálló szolgáltatások",
   "items": [
-    { "name": "Szélvédőmosó feltöltés", "price": "2 000 Ft" },
-    { "name": "Fagyálló feltöltés/csere", "price": "3 500 Ft" },
-    { "name": "Ablaktörlő lapát csere (pár)", "price": "4 500 Ft" },
-    { "name": "Szélvédő vízlepergető kezelés", "price": "5 000 Ft" },
-    { "name": "Állapotfelmérés", "price": "ingyenes" }
+    {
+      "name": "Szezonális szélvédőmosó szintellenőrzés és feltöltés (anyaggal)",
+      "price": "2 500 Ft"
+    },
+    {
+      "name": "Fagyálló feltöltés/csere",
+      "price": "3 500 Ft"
+    },
+    {
+      "name": "Ablaktörlő lapát csere (pár)",
+      "price": "4 500 Ft"
+    },
+    {
+      "name": "Szélvédő vízlepergető kezelés",
+      "price": "5 000 Ft"
+    },
+    {
+      "name": "Állapotfelmérés",
+      "price": "ingyenes"
+    }
   ]
 }
