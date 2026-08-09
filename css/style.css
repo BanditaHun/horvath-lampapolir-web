@@ -293,6 +293,38 @@ a.neon-card__price { color: var(--gold); }
 a.neon-card, a.neon-card:hover { text-decoration: none; }
 @media (prefers-reduced-motion: reduce) { .neon-card { animation: none; } }
 
+/* ---------- Bemutatkozás a kezdőlapon ---------- */
+.home-about { padding: 40px 0 6px; }
+
+/* ---------- Vélemények / értékelés ---------- */
+.reviews { border-top: 1px solid var(--line); margin-top: 24px; padding-bottom: 24px; }
+.reviews__list { margin-top: 26px; }
+.stars { color: #555; font-size: 1.15rem; letter-spacing: 2px; }
+.stars .star--on { color: var(--gold); text-shadow: 0 0 8px rgba(240,180,41,0.5); }
+.review-card__text { color: var(--chrome); }
+.review-card__meta { color: var(--chrome-dim); font-size: .92rem; margin-top: 4px; }
+
+.review-form-wrap { max-width: 620px; margin: 32px 0 10px; }
+.review-form { background: var(--bg-card); border: 1px solid var(--line); border-radius: 16px; padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+.review-form .form-row { display: flex; flex-direction: column; gap: 6px; }
+.review-form label, .review-form .form-label { color: var(--chrome); font-weight: 600; font-size: .95rem; }
+.review-form input[type="text"], .review-form textarea {
+  width: 100%; background: #0e0e0e; border: 1px solid var(--line); border-radius: 10px;
+  color: var(--chrome); padding: 11px 13px; font: inherit; font-size: 1rem;
+}
+.review-form input:focus, .review-form textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 2px rgba(240,180,41,0.2); }
+.review-form textarea { resize: vertical; }
+.review-form .btn { align-self: flex-start; cursor: pointer; border: 1px solid var(--gold); }
+.review-form__note { color: var(--chrome-dim); font-size: .85rem; margin: 0; }
+.review-form__ok { color: var(--gold); font-weight: 700; font-size: 1.05rem; text-align: center; padding: 12px 0; }
+.hp { position: absolute; left: -9999px; }
+.star-input { display: inline-flex; gap: 4px; }
+.star-btn { background: none; border: 0; cursor: pointer; font-size: 1.7rem; line-height: 1; color: #555; padding: 0 2px; transition: color .12s ease, transform .12s ease; }
+.star-btn:hover { transform: scale(1.12); }
+.star-btn.on { color: var(--gold); text-shadow: 0 0 10px rgba(240,180,41,0.55); }
+.review-cta { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.review-cta p { color: var(--chrome-dim); margin: 0; }
+
 /* ---------- Reszponzív ---------- */
 @media (max-width: 860px) {
   .packages { grid-template-columns: 1fr; }

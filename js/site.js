@@ -75,7 +75,6 @@ function applyTheme(theme) {
 // ---------- Fejléc / menü / lábléc ----------
 const NAV = [
   { href: "index.html", label: "Kezdőlap", page: "home" },
-  { href: "bemutatkozas.html", label: "Bemutatkozás", page: "bemutatkozas" },
   { href: "csomagok.html", label: "Csomagok", page: "csomagok" },
   { href: "szolgaltatasok.html", label: "Szolgáltatások", page: "szolgaltatasok" },
   { href: "kiszallas.html", label: "Kiszállás", page: "kiszallas" },
@@ -157,7 +156,84 @@ function pageHead(heading, intro) {
   </header></div>`;
 }
 
-function renderHome(app, hero) {
+// ---------- Vélemények / értékelés ----------
+function starsHTML(n) {
+  n = Math.max(0, Math.min(5, parseInt(n, 10) || 0));
+  let s = "";
+  for (let i = 0; i < 5; i++) s += `<span class="star${i < n ? " star--on" : ""}">★</span>`;
+  return `<div class="stars" aria-label="${n}/5 csillag">${s}</div>`;
+}
+function reviewCardHTML(r, i) {
+  return `<article class="neon-card review-card" style="animation-delay:${(i % 6) * 0.35}s">
+    ${starsHTML(r.rating)}
+    <div class="review-card__text rich">${mdBlock(r.text || "")}</div>
+    <div class="review-card__meta">— ${esc(r.name || "Névtelen")}${r.date ? " · " + esc(r.date) : ""}</div>
+  </article>`;
+}
+function reviewsSectionHTML(reviews, contact) {
+  const items = (reviews && reviews.items) || [];
+  const list = items.length
+    ? `<div class="cards reviews__list">${items.map(reviewCardHTML).join("")}</div>`
+    : `<p class="gallery__empty">Legyél te az első, aki értékel minket!</p>`;
+  const key = reviews && reviews.form_access_key;
+  let form = "";
+  if (isSet(key)) {
+    form = `<form class="review-form" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="${esc(key)}" />
+      <input type="hidden" name="subject" value="Új vélemény – Horváth Lámpapolír weboldal" />
+      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" />
+      <div class="form-row"><label for="rv-name">Neved</label><input id="rv-name" type="text" name="name" required maxlength="60" /></div>
+      <div class="form-row"><span class="form-label">Értékelés</span>
+        <div class="star-input" id="star-input">${[1, 2, 3, 4, 5].map((i) => `<button type="button" class="star-btn" data-v="${i}" aria-label="${i} csillag">★</button>`).join("")}</div>
+        <input type="hidden" name="rating" id="rating-input" value="5" />
+      </div>
+      <div class="form-row"><label for="rv-msg">Véleményed</label><textarea id="rv-msg" name="message" rows="4" required maxlength="1000"></textarea></div>
+      <button type="submit" class="btn btn--primary">Vélemény küldése</button>
+      <p class="review-form__note">A beküldött vélemények <strong>moderálás után</strong> jelennek meg az oldalon.</p>
+    </form>`;
+  } else if (contact && isSet(contact.facebook_url)) {
+    form = `<div class="review-cta"><p>Örülnénk a véleményednek! Értékelj minket a Facebook-oldalunkon:</p>
+      <a class="btn btn--primary" href="${esc(contact.facebook_url)}" target="_blank" rel="noopener">Értékelés a Facebookon</a></div>`;
+  }
+  return `<section class="reviews" id="velemenyek"><div class="container">
+    <h2 class="page__title">${esc((reviews && reviews.heading) || "Vélemények")}</h2>
+    ${reviews && reviews.intro ? `<div class="rich page__intro">${mdBlock(reviews.intro)}</div>` : ""}
+    ${list}
+    <div class="review-form-wrap">${form}</div>
+  </div></section>`;
+}
+function wireReviewForm(scope) {
+  const form = scope.querySelector(".review-form");
+  if (!form) return;
+  const starBtns = [...scope.querySelectorAll(".star-btn")];
+  const ratingInput = scope.querySelector("#rating-input");
+  const paint = (v) => starBtns.forEach((s) => s.classList.toggle("on", Number(s.dataset.v) <= v));
+  paint(Number(ratingInput.value) || 5);
+  starBtns.forEach((s) => s.addEventListener("click", () => { ratingInput.value = s.dataset.v; paint(Number(s.dataset.v)); }));
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button[type="submit"]');
+    const orig = btn.textContent; btn.disabled = true; btn.textContent = "Küldés…";
+    try {
+      const res = await fetch(form.action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } });
+      const data = await res.json();
+      if (data.success) {
+        form.innerHTML = '<p class="review-form__ok">Köszönjük a véleményed! Moderálás után megjelenik az oldalon. 🙏</p>';
+      } else { throw new Error(data.message || "hiba"); }
+    } catch (err) {
+      btn.disabled = false; btn.textContent = orig;
+      alert("Nem sikerült elküldeni a véleményt. Kérlek, próbáld újra később.");
+    }
+  });
+}
+
+async function renderHome(app, contact) {
+  const [hero, about, reviews] = await Promise.all([
+    loadJSON("content/hero.json"),
+    loadJSON("content/about.json").catch(() => null),
+    loadJSON("content/reviews.json").catch(() => null),
+  ]);
+
   let h = `<header class="hero${hero.banner ? " hero--banner" : ""}">
     <div class="hero__overlay"></div>`;
   if (hero.banner) {
@@ -177,16 +253,20 @@ function renderHome(app, hero) {
       </div></div>`;
   }
   h += `</header>`;
-  app.innerHTML = h + `<div class="container"><div class="cards cards--3">
+
+  const aboutHTML = about ? `<div class="container"><section class="home-about">
+    <h2 class="page__title">${esc(about.heading || "Bemutatkozás")}</h2>
+    <div class="rich prose">${mdBlock(about.text || "")}</div>
+  </section></div>` : "";
+
+  const quick = `<div class="container"><div class="cards cards--3">
     <a class="neon-card neon-card--link" href="csomagok.html" style="animation-delay:0s"><h3 class="neon-card__title">Csomagok &amp; árak</h3><p class="neon-card__desc">ALAP · STANDARD · PRÉMIUM fényszóró-felújítás</p><span class="neon-card__more">Megnézem →</span></a>
     <a class="neon-card neon-card--link" href="szolgaltatasok.html" style="animation-delay:.35s"><h3 class="neon-card__title">Szolgáltatások</h3><p class="neon-card__desc">Szélvédőmosó, fagyálló, ablaktörlő, vízlepergető és több</p><span class="neon-card__more">Megnézem →</span></a>
     <a class="neon-card neon-card--link" href="kapcsolat.html" style="animation-delay:.7s"><h3 class="neon-card__title">Kapcsolat</h3><p class="neon-card__desc">Hívj vagy írj – házhoz megyünk Tolna megyében</p><span class="neon-card__more">Kapcsolat →</span></a>
   </div></div>`;
-}
 
-function renderAbout(app, about) {
-  app.innerHTML = pageHead(about.heading || "Bemutatkozás", "") +
-    `<div class="container"><div class="rich prose">${mdBlock(about.text || "")}</div></div>`;
+  app.innerHTML = h + aboutHTML + quick + reviewsSectionHTML(reviews, contact);
+  wireReviewForm(app);
 }
 
 function renderCardsPage(app, data, defTitle, kind) {
@@ -260,8 +340,7 @@ async function initSite() {
   const app = document.getElementById("app");
   try {
     switch (page) {
-      case "home": renderHome(app, await loadJSON("content/hero.json")); break;
-      case "bemutatkozas": renderAbout(app, await loadJSON("content/about.json")); break;
+      case "home": await renderHome(app, contact); break;
       case "csomagok": renderCardsPage(app, await loadJSON("content/packages.json"), "Csomagok", "packages"); break;
       case "szolgaltatasok": renderCardsPage(app, await loadJSON("content/services.json"), "Szolgáltatások", "services"); break;
       case "kiszallas": renderCardsPage(app, await loadJSON("content/delivery.json"), "Kiszállási díj", "delivery"); break;

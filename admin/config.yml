@@ -160,3 +160,25 @@ collections:
             fields:
               - { name: "image", label: "Kép", widget: "image" }
               - { name: "caption", label: "Képaláírás", widget: "string", required: false }
+
+  # ---- Vélemények (a kezdőlap alján) ----
+  - name: "reviews"
+    label: "Vélemények"
+    files:
+      - name: "reviews"
+        label: "Vélemények és értékelések"
+        file: "content/reviews.json"
+        format: "json"
+        fields:
+          - { name: "heading", label: "Szakasz címe", widget: "string" }
+          - { name: "intro", label: "Bevezető szöveg", widget: "markdown", required: false }
+          - { name: "form_access_key", label: "Web3Forms hozzáférési kulcs (a beküldő űrlaphoz)", widget: "string", required: false, hint: "Ingyenes kulcs a web3forms.com oldalon (csak e-mail kell). Ha kitöltöd, a látogatók közvetlenül az oldalon írhatnak véleményt (e-mailben megkapod). Ha üres, Facebook-értékelés gomb jelenik meg helyette." }
+          - name: "items"
+            label: "Megjelenő vélemények (moderált)"
+            widget: "list"
+            required: false
+            fields:
+              - { name: "name", label: "Név", widget: "string" }
+              - { name: "rating", label: "Csillagok (1–5)", widget: "number", default: 5, min: 1, max: 5, value_type: "int" }
+              - { name: "text", label: "Vélemény szövege", widget: "text" }
+              - { name: "date", label: "Dátum (opcionális)", widget: "string", required: false }

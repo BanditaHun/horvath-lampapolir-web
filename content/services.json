@@ -4,17 +4,17 @@
   "items": [
     {
       "name": "Szezonális szélvédőmosó szintellenőrzés és feltöltés",
-      "description": "Az évszaknak megfelelő szélvédőmosó folyadék ellenőrzése és feltöltése – **az anyagot hozzuk**.",
+      "description": "A tiszta szélvédő a biztonságos vezetés alapja.\n\n**Miért jó?** Az évszakhoz illő mosófolyadék azonnal eltünteti a rárakódott rovart, sót és port, télen pedig **megakadályozza a fúvókák és a szélvédő befagyását**. Az anyagot hozzuk – neked csak szólnod kell.",
       "price": "2 500 Ft"
     },
     {
       "name": "Fagyálló ellenőrzés és utántöltés",
-      "description": "A hűtőfolyadék fagyáspontjának ellenőrzése és szükség szerinti utántöltés. Az ár a betöltött **mennyiségtől függ**.",
+      "description": "**Miért fontos?** A fagyálló nemcsak a fagyáspontot állítja be, hanem **véd a korróziótól** is a hűtőrendszerben. Télen megóvja a motort a szétfagyástól – a javítás sokszorosába kerül a feltöltésnek –, nyáron pedig a túlmelegedéstől.\n\nAz ár a szükséges **mennyiségtől függ**.",
       "price": "500 Ft – 3 500 Ft"
     },
     {
       "name": "Ablaktörlő lapát csere",
-      "description": "Kopott ablaktörlő lapátok cseréje – **típustól függően**.",
+      "description": "**Miért jó a csere?** A kopott, repedezett gumi **csíkoz, maszatol, sőt karcolhatja a szélvédőt** – esőben, hóban pedig veszélyesen ronthatja a látást. Friss lapáttal a törlés újra tiszta és egyenletes.\n\nAz ár **típustól függ**.",
       "price": "4 500 Ft"
     },
     {
