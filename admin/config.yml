@@ -96,6 +96,7 @@ collections:
             widget: "list"
             fields:
               - { name: "name", label: "Név", widget: "string" }
+              - { name: "badge", label: "Címke (pl. Legnépszerűbb, Ajánlott, Kiegészítő) – opcionális", widget: "string", required: false }
               - { name: "description", label: "Leírás", widget: "markdown", required: false, hint: "Bővebb leírás – félkövér, címsor, lista is használható." }
               - { name: "price", label: "Ár", widget: "string" }
 

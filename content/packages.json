@@ -1,21 +1,30 @@
 {
   "heading": "Csomagok",
-  "intro": "A megfakult, homályos fényszóró **veszélyes**: szétszórja és elnyeli a fényt, így éjszaka jóval kevesebbet látsz az útból – ráadásul a műszaki vizsgán is hibapont lehet. A felújítás **visszaadja a kristálytiszta fényt**: jobb látótávolság, biztonságosabb éjszakai vezetés és megújult megjelenés – a fényszórócsere árának töredékéért. Minden csomag **helyszíni**, házhoz megyünk, és bármilyen autótípusra vállaljuk. Az árak tájékoztató jellegűek, a végleges ár az ingyenes állapotfelmérés után derül ki.",
+  "intro": "A megfakult, homályos fényszóró **veszélyes**: szétszórja és elnyeli a fényt, így éjszaka jóval kevesebbet látsz az útból – ráadásul a műszaki vizsgán is hibapont lehet. A felújítás **visszaadja a kristálytiszta fényt**: jobb látótávolság, biztonságosabb éjszakai vezetés és megújult megjelenés – a fényszórócsere árának töredékéért. Minden csomag **helyszíni**, házhoz megyünk, bármilyen autótípusra. Az árak tájékoztató jellegűek, a végleges ár az ingyenes állapotfelmérés után derül ki.",
   "items": [
     {
-      "name": "ALAP",
-      "description": "Gyors **polírozás** enyhén fakó, kissé homályos fényszóróra – visszaadja a tisztaságát és a fényét.\n\n**Kinek ajánlott?** Ha a búra még nem sárgult be erősen, csak a fényét vesztette, vagy egy gyors frissítésre van szükség (például autó eladása előtt). Védőréteg nélkül – ez a legkedvezőbb, belépő szintű csomag.",
+      "name": "ALAP – Fényszóró polírozás",
+      "badge": "",
+      "description": "- Fényszóró külső felületének alapos megtisztítása\n- Fényszóró állapotának felmérése\n- Alap polírozás\n- Matt, elszíneződött felület javítása\n- A fényszóró átláthatóságának és megjelenésének javítása\n- Felületvédelem nélkül\n\n**Ajánlott:** enyhébb mattulás és kisebb felületi oxidáció esetén.",
       "price": "10 000 Ft-tól"
     },
     {
-      "name": "STANDARD",
-      "description": "Többlépcsős **csiszolás + K2 Vapron gőzös felújítás**, apróbb korrekciókkal – már az erősebben megfakult, besárgult búrákra is.\n\nMélyebb tisztítás és **tartósabb, ragyogó eredmény**, mint az alapcsomagnál. A legtöbb autóhoz ez a **legnépszerűbb választás**.",
+      "name": "STANDARD – Fényszóró-felújítás + garancia",
+      "badge": "Legnépszerűbb",
+      "description": "- Fényszóró alapos tisztítása és előkészítése\n- Szükség esetén csiszolás\n- 2 lépcsős polírozás vagy polimeres technológiás fényszóró-felújítás\n- Finiselés és végső felületkezelés\n- A fényszóró átláthatóságának és megjelenésének javítása\n- **1 év felületi garancia**\n\n**Ajánlott:** közepesen vagy erősen matt, oxidálódott fényszórókhoz.",
       "price": "15 000 Ft-tól"
     },
     {
-      "name": "PRÉMIUM",
-      "description": "A teljes védelem: minden, ami a Standardban, **plusz K2 Lamp Protect UV-védő bevonat**, amely megakadályozza az újbóli sárgulást – és **1 év garancia**.\n\n**Kinek ajánlott?** Ha hosszú távon szeretnéd megőrizni a kristálytiszta fényt – ez a legjobb ár-érték arányú, leginkább megtérülő választás.",
-      "price": "18 000 Ft-tól"
+      "name": "PRÉMIUM – Komplett felújítás + kerámia UV-védelem",
+      "badge": "Ajánlott",
+      "description": "- Fényszóró teljes körű tisztítása\n- Alapos felület-előkészítés\n- Szükség esetén csiszolás\n- 2 lépcsős polírozás vagy polimeres technológiás felújítás\n- Finomító polírozás és végső felületkorrekció\n- Alapos zsírtalanítás\n- **Prémium kerámia UV-felületvédelem**\n- Végső ellenőrzés és minőségellenőrzés\n- **1 év felületi garancia**\n- Tartósabb és ellenállóbb felületvédelem\n- Prémium megjelenés és felületminőség\n\n**Ajánlott:** erősen matt, oxidálódott vagy jelentősen elszíneződött fényszórókhoz, illetve azoknak, akik hosszabb távú UV-védelmet szeretnének.",
+      "price": "22 000 Ft-tól"
+    },
+    {
+      "name": "🛡️ +1 év felületi garancia",
+      "badge": "Kiegészítő",
+      "description": "A **Standard** és **Prémium** csomaghoz járó 1 év felületi garancia további **1 évvel** meghosszabbítható – így összesen **2 év** felületi garanciát kapsz.\n\nA hosszabb védelem plusz nyugalmat ad, és tartósan megőrzi a kristálytiszta fényt.",
+      "price": "3 500 Ft"
     }
   ]
 }

@@ -403,6 +403,7 @@ footer { text-align: center; padding: 30px 20px; color: var(--chrome-dim); font-
 .neon-card__price { font-size: 1.5rem; font-weight: 800; color: #fff; margin-top: 4px; }
 a.neon-card__price { color: var(--gold); }
 .neon-card__more { color: var(--gold); font-weight: 700; margin-top: 6px; }
+.neon-card__order { align-self: flex-start; margin-top: 8px; cursor: pointer; }
 .neon-card__links { display: flex; flex-wrap: wrap; gap: 10px; }
 a.neon-card, a.neon-card:hover { text-decoration: none; }
 @media (prefers-reduced-motion: reduce) { .neon-card { animation: none; } }

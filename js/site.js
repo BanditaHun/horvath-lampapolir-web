@@ -338,11 +338,12 @@ function renderCardsPage(app, data, defTitle, kind) {
         ${it.description ? `<div class="neon-card__desc rich">${mdBlock(it.description)}</div>` : ""}
         <div class="neon-card__price">${esc(it.fee || "")}</div>`;
     } else {
-      const featured = kind === "packages" && i === (data.items.length - 1);
-      inner = `${featured ? '<span class="neon-card__badge">Ajánlott</span>' : ""}
+      const order = kind === "packages" ? `<a class="btn btn--primary neon-card__order" href="kapcsolat.html">Megrendelem</a>` : "";
+      inner = `${it.badge ? `<span class="neon-card__badge">${esc(it.badge)}</span>` : ""}
         <h3 class="neon-card__title">${esc(it.name || "")}</h3>
         ${it.description ? `<div class="neon-card__desc rich">${mdBlock(it.description)}</div>` : ""}
-        <div class="neon-card__price">${esc(it.price || "")}</div>`;
+        <div class="neon-card__price">${esc(it.price || "")}</div>
+        ${order}`;
     }
     grid.appendChild(neonCard(i, inner));
   });
