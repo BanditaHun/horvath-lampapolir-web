@@ -38,6 +38,22 @@ a:hover { text-decoration: underline; }
 
 .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
 
+/* ---------- Vékony felső elérhetőségi sáv ---------- */
+.topbar { background: #0d0d0d; border-bottom: 1px solid var(--line); font-size: .9rem; }
+.topbar__inner {
+  min-height: 38px; display: flex; align-items: center; justify-content: flex-end; gap: 20px;
+  padding-top: 6px; padding-bottom: 6px;
+}
+.topbar__phone { display: inline-flex; align-items: center; gap: 7px; color: var(--chrome); font-weight: 700; }
+.topbar__phone:hover { color: var(--gold); text-decoration: none; }
+.topbar__phone svg { color: var(--gold); flex: none; }
+.topbar__socials { display: inline-flex; align-items: center; gap: 12px; }
+.topbar__social { display: inline-flex; color: var(--chrome-dim); transition: color .15s ease, transform .12s ease; }
+.topbar__social:hover { color: var(--gold); transform: translateY(-1px); }
+@media (max-width: 560px) {
+  .topbar__inner { justify-content: center; gap: 16px; }
+}
+
 /* ---------- Felső navigáció ---------- */
 .nav {
   position: sticky; top: 0; z-index: 100;

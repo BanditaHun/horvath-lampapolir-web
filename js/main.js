@@ -178,6 +178,21 @@ async function init() {
     fb.href = contact.facebook_url || "#";
     fb.textContent = contact.facebook_label || "Facebook";
 
+    // --- Fejléc elérhetőségi sáv (ugyanabból a contact.json-ból) ---
+    const isSet = (v) => typeof v === "string" && v.trim() && v.trim() !== "#";
+    if (isSet(contact.phone)) {
+      document.getElementById("top-phone-text").textContent = contact.phone;
+      const tp = document.getElementById("top-phone");
+      tp.href = telHref(contact.phone);
+      tp.hidden = false;
+    }
+    if (isSet(contact.facebook_url)) {
+      const t = document.getElementById("top-fb"); t.href = contact.facebook_url; t.hidden = false;
+    }
+    if (isSet(contact.instagram_url)) {
+      const t = document.getElementById("top-ig"); t.href = contact.instagram_url; t.hidden = false;
+    }
+
     // --- Galéria ---
     document.getElementById("gallery-heading").textContent = gallery.heading;
     const galWrap = document.getElementById("gallery-list");

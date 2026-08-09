@@ -132,10 +132,12 @@ collections:
         format: "json"
         fields:
           - { name: "heading", label: "Szakasz címe", widget: "string" }
-          - { name: "phone", label: "Telefonszám", widget: "string" }
+          - { name: "phone", label: "Telefonszám", widget: "string", hint: "A fejléc felső sávjában és a Kapcsolat szekcióban is megjelenik (kattintható hívás)." }
           - { name: "note", label: "Megjegyzés (elérhetőség)", widget: "markdown", hint: "Félkövér, címsor, lista is használható." }
-          - { name: "facebook_url", label: "Facebook link", widget: "string" }
-          - { name: "facebook_label", label: "Facebook gomb felirata", widget: "string" }
+          - { name: "facebook_url", label: "Facebook link", widget: "string", required: false, hint: "A fejléc felső sávjában is megjelenik ikonként. Üresen hagyva elrejtve." }
+          - { name: "facebook_label", label: "Facebook gomb felirata", widget: "string", required: false }
+          - { name: "instagram_url", label: "Instagram link (opcionális)", widget: "string", required: false, hint: "Ha kitöltöd, megjelenik a fejléc felső sávjában. Üresen hagyva elrejtve." }
+          - { name: "email", label: "E-mail (opcionális)", widget: "string", required: false }
 
   # ---- Galéria ----
   - name: "gallery"
