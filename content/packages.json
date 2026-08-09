@@ -1,20 +1,20 @@
 {
   "heading": "Csomagok",
-  "intro": "A megfakult, homályos fényszóró **veszélyes**: szétszórja és elnyeli a fényt, így éjszaka jóval kevesebbet látsz az útból – ráadásul a műszaki vizsgán is hibapont lehet. A felújítás **visszaadja a kristálytiszta fényt**: jobb látótávolság, biztonságosabb éjszakai vezetés és megújult megjelenés – a fényszórócsere árának töredékéért. Minden csomag **helyszíni**, házhoz megyünk. Az árak tájékoztató jellegűek, a végleges ár az állapotfelmérés után derül ki.",
+  "intro": "A megfakult, homályos fényszóró **veszélyes**: szétszórja és elnyeli a fényt, így éjszaka jóval kevesebbet látsz az útból – ráadásul a műszaki vizsgán is hibapont lehet. A felújítás **visszaadja a kristálytiszta fényt**: jobb látótávolság, biztonságosabb éjszakai vezetés és megújult megjelenés – a fényszórócsere árának töredékéért. Minden csomag **helyszíni**, házhoz megyünk, és bármilyen autótípusra vállaljuk. Az árak tájékoztató jellegűek, a végleges ár az ingyenes állapotfelmérés után derül ki.",
   "items": [
     {
       "name": "ALAP",
-      "description": "Sima polírozás, védelem nélkül",
+      "description": "Gyors **polírozás** enyhén fakó, kissé homályos fényszóróra – visszaadja a tisztaságát és a fényét.\n\n**Kinek ajánlott?** Ha a búra még nem sárgult be erősen, csak a fényét vesztette, vagy egy gyors frissítésre van szükség (például autó eladása előtt). Védőréteg nélkül – ez a legkedvezőbb, belépő szintű csomag.",
       "price": "10 000 Ft-tól"
     },
     {
       "name": "STANDARD",
-      "description": "Csiszolás + K2 Vapron gőzös felújítás + apróságok",
+      "description": "Többlépcsős **csiszolás + K2 Vapron gőzös felújítás**, apróbb korrekciókkal – már az erősebben megfakult, besárgult búrákra is.\n\nMélyebb tisztítás és **tartósabb, ragyogó eredmény**, mint az alapcsomagnál. A legtöbb autóhoz ez a **legnépszerűbb választás**.",
       "price": "15 000 Ft-tól"
     },
     {
       "name": "PRÉMIUM",
-      "description": "Standard + K2 Lamp Protect UV-védelem + 1 év garancia",
+      "description": "A teljes védelem: minden, ami a Standardban, **plusz K2 Lamp Protect UV-védő bevonat**, amely megakadályozza az újbóli sárgulást – és **1 év garancia**.\n\n**Kinek ajánlott?** Ha hosszú távon szeretnéd megőrizni a kristálytiszta fényt – ez a legjobb ár-érték arányú, leginkább megtérülő választás.",
       "price": "18 000 Ft-tól"
     }
   ]
