@@ -1,10 +1,11 @@
 {
   "heading": "Kiszállási díj",
-  "intro": "Házhoz megyünk – a kiszállási díj a távolságtól függ. **0–5 km-en belül ingyenes.** A távolságot a telephelytől számítjuk.",
+  "intro": "**Házhoz megyünk** Tolna megyében, 50 km-es körzetben – neked nem kell autót bevinni sehova. A kiszállási díj a **távolságtól függ** (a telephelytől számítva), és **0–5 km-en belül ingyenes**.\n\nA díj **egyszeri**: a helyszínre utazást fedezi, akárhány szolgáltatást is kérsz egy alkalommal.\n\n**Ha munkát rendelsz, a felmérés ingyenes.** Fényszóró-felújítás (vagy más szolgáltatás) mellett az **állapotfelmérés, az akkumulátor-állapot ellenőrzés és a fagyálló-mérés díjtalan**. Ha viszont **csak felmérésért** hívsz ki (munka nélkül), a felmérés ingyenes, de a lenti **kiszállási díjat** ilyenkor is kérem – ezt fedezi az odautazás.",
   "items": [
     {
       "range": "0–5 km",
-      "fee": "ingyenes"
+      "fee": "INGYENES",
+      "description": "A telephely közvetlen közelében – nincs kiszállási díj."
     },
     {
       "range": "5–15 km",
@@ -15,8 +16,8 @@
       "fee": "+3 500 Ft"
     },
     {
-      "range": "30-50 km",
-      "fee": "+5000 Ft"
+      "range": "30–50 km",
+      "fee": "+5 000 Ft"
     }
   ]
 }
