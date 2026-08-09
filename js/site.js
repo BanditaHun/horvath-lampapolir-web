@@ -233,18 +233,20 @@ function reviewsSectionHTML(reviews, contact) {
     ? `<div class="cards reviews__list">${items.map(reviewCardHTML).join("")}</div>`
     : `<p class="reviews__empty">Még nincs közzétett vélemény – <strong>legyél te az első!</strong></p>`;
   const key = reviews && reviews.form_access_key;
+  const email = contact && isSet(contact.email) ? contact.email : "";
   const fbUrl = contact && isSet(contact.facebook_url) ? contact.facebook_url : "";
+  const useKey = isSet(key);
+  const starBtns = [1, 2, 3, 4, 5].map((i) => `<button type="button" class="star-btn" data-v="${i}" aria-label="${i} csillag">★</button>`).join("");
   let form = "";
-  if (isSet(key)) {
+  if (useKey || email) {
     form = `<div class="review-form-card">
       <h3 class="review-form-card__title">Írj véleményt vagy hozzászólást</h3>
-      <form class="review-form" action="https://api.web3forms.com/submit" method="POST">
-        <input type="hidden" name="access_key" value="${esc(key)}" />
-        <input type="hidden" name="subject" value="Új vélemény – Horváth Lámpapolír weboldal" />
+      <form class="review-form" ${useKey ? 'action="https://api.web3forms.com/submit" method="POST"' : `data-mailto="${esc(email)}"`}>
+        ${useKey ? `<input type="hidden" name="access_key" value="${esc(key)}" /><input type="hidden" name="subject" value="Új vélemény – Horváth Lámpapolír weboldal" />` : ""}
         <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" />
         <div class="form-row"><label for="rv-name">Neved</label><input id="rv-name" type="text" name="name" required maxlength="60" /></div>
         <div class="form-row"><span class="form-label">Értékelés</span>
-          <div class="star-input" id="star-input">${[1, 2, 3, 4, 5].map((i) => `<button type="button" class="star-btn" data-v="${i}" aria-label="${i} csillag">★</button>`).join("")}</div>
+          <div class="star-input" id="star-input">${starBtns}</div>
           <input type="hidden" name="rating" id="rating-input" value="5" />
         </div>
         <div class="form-row"><label for="rv-msg">Véleményed / hozzászólásod</label><textarea id="rv-msg" name="message" rows="4" required maxlength="1000"></textarea></div>
@@ -277,6 +279,23 @@ function wireReviewForm(scope) {
   starBtns.forEach((s) => s.addEventListener("click", () => { ratingInput.value = s.dataset.v; paint(Number(s.dataset.v)); }));
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    const hp = form.querySelector('input[name="botcheck"]');
+    if (hp && hp.checked) return; // spam-csapda
+    const val = (n) => (form.querySelector('[name="' + n + '"]') || {}).value || "";
+    const nm = val("name").trim(), rt = val("rating"), msg = val("message").trim();
+    if (!nm || !msg) return;
+
+    // E-mail fallback (nincs Web3Forms kulcs): a látogató levelezőjében nyílik meg az üzenet
+    const mailto = form.getAttribute("data-mailto");
+    if (mailto) {
+      const subject = encodeURIComponent("Vélemény – Horváth Lámpapolír");
+      const body = encodeURIComponent("Név: " + nm + "\nÉrtékelés: " + rt + "/5\n\n" + msg);
+      window.location.href = "mailto:" + mailto + "?subject=" + subject + "&body=" + body;
+      form.innerHTML = '<p class="review-form__ok">Köszönjük! A levelezőprogramodban megnyílt az üzenet – csak küldd el, és moderálás után megjelenik. 🙏</p>';
+      return;
+    }
+
+    // Web3Forms (ha van kulcs)
     const btn = form.querySelector('button[type="submit"]');
     const orig = btn.textContent; btn.disabled = true; btn.textContent = "Küldés…";
     try {
