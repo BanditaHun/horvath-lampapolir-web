@@ -227,6 +227,15 @@ function wireReviewForm(scope) {
   });
 }
 
+// Animált "reklám" buborékok a banner két oldalán (csak széles képernyőn)
+const FLANK_LEFT = ["Kristálytiszta fény", "Ingyenes állapotfelmérés", "1 év garancia*"];
+const FLANK_RIGHT = ["Házhoz megyünk", "UV-védelem", "Gyors, helyszíni munka"];
+function flankChips(list) {
+  return list
+    .map((t, i) => `<div class="flank-chip" style="animation-delay:${(i * 0.45).toFixed(2)}s"><span class="flank-chip__ic">✦</span><span>${esc(t)}</span></div>`)
+    .join("");
+}
+
 async function renderHome(app, contact) {
   const [hero, about, reviews] = await Promise.all([
     loadJSON("content/hero.json"),
@@ -237,7 +246,11 @@ async function renderHome(app, contact) {
   let h = `<header class="hero${hero.banner ? " hero--banner" : ""}">
     <div class="hero__overlay"></div>`;
   if (hero.banner) {
-    h += `<img class="hero__banner" src="${esc(hero.banner)}" alt="${esc(hero.title || "")}" />
+    h += `<div class="hero-stage">
+        <aside class="hero-flank hero-flank--left" aria-hidden="true">${flankChips(FLANK_LEFT)}</aside>
+        <img class="hero__banner" src="${esc(hero.banner)}" alt="${esc(hero.title || "")}" />
+        <aside class="hero-flank hero-flank--right" aria-hidden="true">${flankChips(FLANK_RIGHT)}</aside>
+      </div>
       <div class="hero__content"><div class="hero__cta">
         <a class="btn btn--primary" href="kapcsolat.html">Kérj időpontot</a>
         <a class="btn btn--ghost" href="csomagok.html">Csomagok &amp; árak</a>
