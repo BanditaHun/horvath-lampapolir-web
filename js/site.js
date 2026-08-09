@@ -101,14 +101,17 @@ function buildHeader(active) {
     </div>
   </div>
   <nav class="nav" id="nav">
-    <div class="nav__inner">
+    <div class="nav__top">
       <a class="nav__brand" href="index.html">
         <img class="nav__logo" src="images/logo.png" alt="Horváth Lámpapolír" onerror="this.style.display='none'" />
-        <span class="nav__brand-text">Horváth Lámpapolír</span>
       </a>
+      <div class="nav__title">
+        <span class="nav__title-main">Horváth Lámpapolír</span>
+        <span class="nav__title-sub">Mobil fényszóró-felújítás – házhoz megyünk</span>
+      </div>
       <button class="nav__toggle" id="nav-toggle" aria-label="Menü" aria-expanded="false"><span></span><span></span><span></span></button>
-      <ul class="nav__links" id="nav-links">${links}</ul>
     </div>
+    <ul class="nav__links" id="nav-links">${links}</ul>
   </nav>`;
 }
 function buildFooter() {
