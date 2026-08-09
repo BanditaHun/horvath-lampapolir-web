@@ -1,5 +1,5 @@
-// Tartalom betöltése a content/*.json fájlokból és az oldal felépítése.
-// Így a szövegek/árak a Decap CMS-ből szerkeszthetők, nincsenek a HTML-be kódolva.
+// Tartalom + megjelenés betöltése a content/*.json fájlokból és az oldal felépítése.
+// A szövegek/árak és a tipográfia a CMS-ből szerkeszthetők, nincsenek a HTML-be kódolva.
 
 async function loadJSON(path) {
   const res = await fetch(path, { cache: "no-store" });
@@ -19,7 +19,79 @@ function telHref(phone) {
   return digits ? "tel:" + digits : "#kapcsolat";
 }
 
+// ---- Betűtípusok (a CMS „Megjelenés" választható értékei) ----
+const SYSTEM_FONT = '"Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif';
+const FONT_MAP = {
+  "Rendszer (alap)": { css: SYSTEM_FONT, g: null },
+  "Montserrat": { css: "'Montserrat', sans-serif", g: "Montserrat:wght@400;600;800" },
+  "Poppins": { css: "'Poppins', sans-serif", g: "Poppins:wght@400;600;800" },
+  "Roboto": { css: "'Roboto', sans-serif", g: "Roboto:wght@400;700;900" },
+  "Inter": { css: "'Inter', sans-serif", g: "Inter:wght@400;600;800" },
+  "Oswald": { css: "'Oswald', sans-serif", g: "Oswald:wght@400;600;700" },
+  "Rajdhani": { css: "'Rajdhani', sans-serif", g: "Rajdhani:wght@500;600;700" },
+  "Bebas Neue": { css: "'Bebas Neue', sans-serif", g: "Bebas+Neue" },
+  "Anton": { css: "'Anton', sans-serif", g: "Anton" },
+};
+
+function loadGoogleFonts(specs) {
+  const families = specs.filter(Boolean);
+  if (!families.length) return;
+  const pre1 = el("link"); pre1.rel = "preconnect"; pre1.href = "https://fonts.googleapis.com";
+  const pre2 = el("link"); pre2.rel = "preconnect"; pre2.href = "https://fonts.gstatic.com"; pre2.crossOrigin = "anonymous";
+  const link = el("link"); link.rel = "stylesheet";
+  link.href = "https://fonts.googleapis.com/css2?" + families.map((f) => "family=" + f).join("&") + "&display=swap";
+  document.head.append(pre1, pre2, link);
+}
+
+function applyTheme(theme) {
+  if (!theme) return;
+  const root = document.documentElement.style;
+
+  const body = FONT_MAP[theme.font_family] || FONT_MAP["Rendszer (alap)"];
+  const heading = FONT_MAP[theme.heading_font_family] || body;
+
+  root.setProperty("--font-body", body.css);
+  root.setProperty("--font-heading", heading.css);
+
+  // Egyedi Google Fontok betöltése (duplikátumok kiszűrve)
+  loadGoogleFonts([...new Set([body.g, heading.g])]);
+
+  if (theme.base_font_size) root.setProperty("--base-font-size", theme.base_font_size);
+  if (theme.heading_scale) root.setProperty("--heading-scale", String(theme.heading_scale));
+  if (theme.accent_color) {
+    root.setProperty("--gold", theme.accent_color);
+    root.setProperty("--gold-dim", theme.accent_color);
+  }
+}
+
+function initNav() {
+  const nav = document.getElementById("nav");
+  const toggle = document.getElementById("nav-toggle");
+  const links = document.getElementById("nav-links");
+  if (!nav || !toggle || !links) return;
+  toggle.addEventListener("click", () => {
+    const open = nav.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", String(open));
+  });
+  // Mobil menü bezárása kattintás után
+  links.querySelectorAll("a").forEach((a) =>
+    a.addEventListener("click", () => {
+      nav.classList.remove("open");
+      toggle.setAttribute("aria-expanded", "false");
+    })
+  );
+}
+
 async function init() {
+  initNav();
+
+  // Megjelenés (nem kritikus – ha hiányzik, marad az alap)
+  try {
+    applyTheme(await loadJSON("content/theme.json"));
+  } catch (e) {
+    console.warn("theme.json nem tölthető, alap megjelenés marad", e);
+  }
+
   try {
     const [hero, about, packages, services, delivery, contact, gallery] = await Promise.all([
       loadJSON("content/hero.json"),
@@ -35,6 +107,9 @@ async function init() {
     document.getElementById("hero-title").textContent = hero.title;
     document.getElementById("hero-subtitle").textContent = hero.subtitle;
     document.title = hero.title + " – mobil fényszóró-felújítás";
+    if (hero.banner) {
+      document.querySelector(".hero").style.setProperty("--hero-banner", `url("${hero.banner}")`);
+    }
 
     // --- Bemutatkozás ---
     document.getElementById("about-heading").textContent = about.heading;

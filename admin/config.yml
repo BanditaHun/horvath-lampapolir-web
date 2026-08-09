@@ -14,6 +14,37 @@ public_folder: "/images/uploads"
 locale: "hu"
 
 collections:
+  # ---- Megjelenés (betűtípus, méret, szín) ----
+  - name: "theme"
+    label: "Megjelenés"
+    files:
+      - name: "theme"
+        label: "Betűk és színek"
+        file: "content/theme.json"
+        format: "json"
+        fields:
+          - name: "font_family"
+            label: "Szöveg betűtípusa"
+            widget: "select"
+            default: "Montserrat"
+            options: ["Rendszer (alap)", "Montserrat", "Poppins", "Roboto", "Inter", "Oswald", "Rajdhani", "Bebas Neue", "Anton"]
+          - name: "heading_font_family"
+            label: "Címek betűtípusa"
+            widget: "select"
+            default: "Oswald"
+            options: ["Rendszer (alap)", "Montserrat", "Poppins", "Roboto", "Inter", "Oswald", "Rajdhani", "Bebas Neue", "Anton"]
+          - name: "base_font_size"
+            label: "Alap betűméret"
+            widget: "select"
+            default: "16px"
+            options: ["14px", "15px", "16px", "17px", "18px", "20px"]
+          - name: "heading_scale"
+            label: "Címek mérete (szorzó)"
+            widget: "select"
+            default: "1"
+            options: ["0.9", "1", "1.1", "1.25", "1.4"]
+          - { name: "accent_color", label: "Kiemelő szín (arany)", widget: "color", default: "#f0b429" }
+
   # ---- Fejléc (hero) ----
   - name: "hero"
     label: "Fejléc"
@@ -25,6 +56,7 @@ collections:
         fields:
           - { name: "title", label: "Cím", widget: "string" }
           - { name: "subtitle", label: "Alcím", widget: "text" }
+          - { name: "banner", label: "Bannerkép (háttér a fejlécben)", widget: "image", required: false, hint: "Széles, fekvő kép ajánlott. Ha üres, a sötét-arany háttér marad." }
 
   # ---- Bemutatkozás ----
   - name: "about"
