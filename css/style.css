@@ -87,6 +87,11 @@ a:hover { text-decoration: underline; }
 }
 .nav__cta:hover { filter: brightness(1.05); }
 
+/* Aktív (éppen megnyitott) oldal a menüben – tartósan kijelölve marad */
+.nav__links a.is-active { color: var(--gold); background: rgba(240,180,41,0.12); box-shadow: inset 0 -2px 0 var(--gold); }
+.nav__links a.is-active:hover { color: var(--gold); }
+.nav__cta.is-active { box-shadow: 0 0 0 2px rgba(255,255,255,0.28); }
+
 .nav__toggle {
   display: none; flex-direction: column; gap: 5px; cursor: pointer;
   background: none; border: 0; padding: 8px;
