@@ -33,6 +33,8 @@ function mdInline(str) {
   return window.marked ? window.marked.parseInline(String(str)) : esc(str);
 }
 const isSet = (v) => typeof v === "string" && v.trim() && v.trim() !== "#";
+// A "/images/..." abszolút útvonalat relatívvá teszi, hogy alkönyvtáron (pl. GitHub Pages) is működjön.
+const rel = (u) => (typeof u === "string" && u.charAt(0) === "/" && u.charAt(1) !== "/" ? u.slice(1) : u);
 
 // ---------- Betűtípusok (theme.json) ----------
 const SYSTEM_FONT = '"Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif';
@@ -278,7 +280,7 @@ function tickerBand(items) {
 function flankSide(side, imgs, chips) {
   const pics = (Array.isArray(imgs) ? imgs : [imgs]).filter(isSet);
   const inner = pics.length
-    ? pics.map((src) => `<figure class="flank-imgwrap"><img class="flank-img" src="${esc(src)}" alt="" loading="lazy" /></figure>`).join("")
+    ? pics.map((src) => `<figure class="flank-imgwrap"><img class="flank-img" src="${esc(rel(src))}" alt="" loading="lazy" /></figure>`).join("")
     : flankChips(chips);
   return `<aside class="hero-flank hero-flank--${side}" aria-hidden="true">${inner}</aside>`;
 }
@@ -295,7 +297,7 @@ async function renderHome(app, contact) {
   if (hero.banner) {
     h += `<div class="hero-stage">
         ${flankSide("left", [hero.side_left, hero.side_left_2], FLANK_LEFT)}
-        <img class="hero__banner" src="${esc(hero.banner)}" alt="${esc(hero.title || "")}" />
+        <img class="hero__banner" src="${esc(rel(hero.banner))}" alt="${esc(hero.title || "")}" />
         ${flankSide("right", [hero.side_right, hero.side_right_2], FLANK_RIGHT)}
       </div>`;
   } else {
@@ -354,7 +356,7 @@ function renderGallery(app, gallery) {
     const grid = el("div", "gallery");
     gallery.items.forEach((g) => {
       const fig = el("figure");
-      const img = el("img"); img.src = g.image; img.alt = g.caption || "Munka"; img.loading = "lazy";
+      const img = el("img"); img.src = rel(g.image); img.alt = g.caption || "Munka"; img.loading = "lazy";
       fig.appendChild(img);
       if (g.caption) fig.appendChild(el("figcaption", null, esc(g.caption)));
       grid.appendChild(fig);
