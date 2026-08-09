@@ -31,6 +31,20 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Csillagos, pislákoló háttér (fix, a tartalom mögött) */
+.starfield { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.star {
+  position: absolute; border-radius: 50%; background: #fff;
+  box-shadow: 0 0 6px 1px rgba(255,255,255,0.4); opacity: .5;
+  animation: twinkle var(--dur, 3s) ease-in-out infinite alternate;
+}
+.star--gold { background: var(--gold); box-shadow: 0 0 7px 1px rgba(240,180,41,0.65); }
+@keyframes twinkle {
+  from { opacity: .10; transform: scale(.7); }
+  to   { opacity: 1; transform: scale(1.15); }
+}
+@media (prefers-reduced-motion: reduce) { .star { animation: none; opacity: .5; } }
+
 h1, h2, h3, .nav__brand-text { font-family: var(--font-heading); }
 
 a { color: var(--gold); text-decoration: none; }
@@ -110,7 +124,7 @@ a:hover { text-decoration: underline; }
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #0a0a0a;
+  background-color: transparent;
   border-bottom: 1px solid var(--line);
   overflow: hidden;
 }

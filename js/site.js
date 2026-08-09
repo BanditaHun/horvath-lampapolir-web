@@ -114,6 +114,29 @@ function buildHeader(active) {
 function buildFooter() {
   return `<footer>© <span id="year"></span> Horváth Lámpapolír – mobil fényszóró-felújítás</footer>`;
 }
+
+// Animált, pislákoló csillagos háttér (fix, a tartalom mögött)
+function buildStarfield(count) {
+  if (document.querySelector(".starfield")) return;
+  count = count || 110;
+  const sf = document.createElement("div");
+  sf.className = "starfield";
+  sf.setAttribute("aria-hidden", "true");
+  const frag = document.createDocumentFragment();
+  for (let i = 0; i < count; i++) {
+    const s = document.createElement("span");
+    s.className = "star" + (Math.random() < 0.22 ? " star--gold" : "");
+    const size = (Math.random() * 1.8 + 0.8).toFixed(2);
+    s.style.width = s.style.height = size + "px";
+    s.style.left = (Math.random() * 100).toFixed(2) + "%";
+    s.style.top = (Math.random() * 100).toFixed(2) + "%";
+    s.style.setProperty("--dur", (Math.random() * 3 + 2).toFixed(2) + "s");
+    s.style.animationDelay = (Math.random() * 5).toFixed(2) + "s";
+    frag.appendChild(s);
+  }
+  sf.appendChild(frag);
+  document.body.prepend(sf);
+}
 function wireNav() {
   const nav = document.getElementById("nav");
   const toggle = document.getElementById("nav-toggle");
@@ -346,6 +369,7 @@ function renderContact(app, contact) {
 
 // ---------- Indítás ----------
 async function initSite() {
+  buildStarfield();
   const page = document.body.dataset.page || "home";
   document.getElementById("site-header").innerHTML = buildHeader(page);
   document.getElementById("site-footer").innerHTML = buildFooter();
