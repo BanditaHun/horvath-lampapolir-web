@@ -96,17 +96,17 @@ a:hover { text-decoration: underline; }
 @media (max-width: 520px) { .hero:not(.hero--banner) { min-height: 380px; padding: 56px 18px 48px; } }
 
 /* Banner-mód: a kész bannerkép középen, kisebb méretben, lekerekítve; alatta a gombok */
-.hero--banner { display: block; padding: 30px 20px 10px; min-height: 0; }
+.hero--banner { display: block; padding: 26px 20px 10px; min-height: 0; }
 .hero--banner .hero__overlay { display: none; }
 .hero__banner {
   display: block;
   width: 100%;
-  max-width: 760px;
+  max-width: 1080px;
   height: auto;
   margin: 0 auto;
-  border-radius: 14px;
+  border-radius: 16px;
   border: 1px solid var(--line);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  box-shadow: 0 14px 44px rgba(0,0,0,0.5);
 }
 .hero--banner .hero__content { position: static; text-align: center; padding: 16px 20px 4px; }
 .hero--banner .hero__cta { margin-top: 0; }
