@@ -89,14 +89,18 @@ a:hover { text-decoration: underline; }
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #0d0d0d;
-  background-image: var(--hero-banner, none);
-  background-size: cover;
-  background-position: center;
+  background-color: #0a0a0a;
   border-bottom: 1px solid var(--line);
   overflow: hidden;
 }
-@media (max-width: 520px) { .hero { min-height: 380px; padding: 56px 18px 48px; } }
+@media (max-width: 520px) { .hero:not(.hero--banner) { min-height: 380px; padding: 56px 18px 48px; } }
+
+/* Banner-mód: a kész bannerkép teljes szélességben, felette semmi, alatta a gombok */
+.hero--banner { display: block; padding: 0; min-height: 0; }
+.hero--banner .hero__overlay { display: none; }
+.hero__banner { display: block; width: 100%; height: auto; }
+.hero--banner .hero__content { position: static; text-align: center; padding: 18px 20px 6px; }
+.hero--banner .hero__cta { margin-top: 0; }
 /* Sötét fátyol a banner fölött a szöveg olvashatóságáért */
 .hero__overlay {
   position: absolute; inset: 0;

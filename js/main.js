@@ -119,7 +119,16 @@ async function init() {
     document.getElementById("hero-subtitle").innerHTML = mdInline(hero.subtitle);
     document.title = hero.title + " – mobil fényszóró-felújítás";
     if (hero.banner) {
-      document.querySelector(".hero").style.setProperty("--hero-banner", `url("${hero.banner}")`);
+      // Banner-mód: a kész (feliratos) bannerkép teljes szélességben, tisztán,
+      // felette semmi szöveg – csak a gombok kerülnek alá. Ha nincs banner,
+      // marad a letisztult szöveges hero (embléma + cím + alcím + gombok).
+      const heroEl = document.querySelector(".hero");
+      const bannerImg = document.getElementById("hero-banner-img");
+      bannerImg.src = hero.banner;
+      bannerImg.hidden = false;
+      heroEl.classList.add("hero--banner");
+      const brand = document.getElementById("hero-brand");
+      if (brand) brand.hidden = true;
     }
 
     // --- Bemutatkozás ---
