@@ -316,9 +316,9 @@ async function renderHome(app, contact) {
   </section></div>` : "";
 
   const quick = `<div class="container"><div class="cards cards--3">
-    <a class="neon-card neon-card--link" href="csomagok.html" style="animation-delay:0s"><h3 class="neon-card__title">Csomagok &amp; árak</h3><p class="neon-card__desc">ALAP · STANDARD · PRÉMIUM fényszóró-felújítás</p><span class="neon-card__more">Megnézem →</span></a>
-    <a class="neon-card neon-card--link" href="szolgaltatasok.html" style="animation-delay:.35s"><h3 class="neon-card__title">Szolgáltatások</h3><p class="neon-card__desc">Szélvédőmosó, fagyálló, ablaktörlő, vízlepergető és több</p><span class="neon-card__more">Megnézem →</span></a>
-    <a class="neon-card neon-card--link" href="kapcsolat.html" style="animation-delay:.7s"><h3 class="neon-card__title">Kapcsolat</h3><p class="neon-card__desc">Hívj vagy írj – házhoz megyünk Tolna megyében</p><span class="neon-card__more">Kapcsolat →</span></a>
+    <a class="neon-card neon-card--link" href="csomagok.html" style="animation-delay:0s"><h3 class="neon-card__title">Csomagok &amp; árak</h3><p class="neon-card__desc">ALAP · STANDARD · PRÉMIUM csomagok: csiszolás, polírozás, UV-védelem és garancia – már 10 000 Ft-tól, minden autótípusra.</p><span class="neon-card__more">Megnézem →</span></a>
+    <a class="neon-card neon-card--link" href="szolgaltatasok.html" style="animation-delay:.35s"><h3 class="neon-card__title">Szolgáltatások</h3><p class="neon-card__desc">A fényszóró-felújítás mellett szélvédőmosó, fagyálló, ablaktörlő-csere, vízlepergető kezelés és ingyenes állapotfelmérés – mind helyben.</p><span class="neon-card__more">Megnézem →</span></a>
+    <a class="neon-card neon-card--link" href="kapcsolat.html" style="animation-delay:.7s"><h3 class="neon-card__title">Kapcsolat</h3><p class="neon-card__desc">Hívj vagy írj, és egyeztetünk egy időpontot – házhoz megyünk Tolna megyében, 50 km-es körzetben.</p><span class="neon-card__more">Kapcsolat →</span></a>
   </div></div>`;
 
   app.innerHTML = h + tickerBand(hero.ticker) + aboutHTML + quick + reviewsSectionHTML(reviews, contact);
