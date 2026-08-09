@@ -80,12 +80,13 @@ collections:
         format: "json"
         fields:
           - { name: "heading", label: "Szakasz címe", widget: "string" }
+          - { name: "intro", label: "Bevezető szöveg (az oldal tetején)", widget: "markdown", required: false, hint: "A Csomagok oldal tetején jelenik meg. Félkövér, címsor, lista is használható." }
           - name: "items"
             label: "Csomagok"
             widget: "list"
             fields:
               - { name: "name", label: "Név", widget: "string" }
-              - { name: "description", label: "Leírás", widget: "markdown", hint: "Félkövér, címsor, lista is használható." }
+              - { name: "description", label: "Leírás", widget: "markdown", required: false, hint: "Bővebb leírás – félkövér, címsor, lista is használható." }
               - { name: "price", label: "Ár", widget: "string" }
 
   # ---- Önálló szolgáltatások ----
@@ -98,11 +99,13 @@ collections:
         format: "json"
         fields:
           - { name: "heading", label: "Szakasz címe", widget: "string" }
+          - { name: "intro", label: "Bevezető szöveg (az oldal tetején)", widget: "markdown", required: false, hint: "A Szolgáltatások oldal tetején jelenik meg." }
           - name: "items"
             label: "Szolgáltatások"
             widget: "list"
             fields:
-              - { name: "name", label: "Megnevezés / leírás", widget: "markdown", hint: "Félkövér (B), nagyobb címsor és lista is beállítható." }
+              - { name: "name", label: "Megnevezés", widget: "string" }
+              - { name: "description", label: "Leírás", widget: "markdown", required: false, hint: "Bővebb leírás – félkövér, címsor, lista is használható." }
               - { name: "price", label: "Ár", widget: "string" }
 
   # ---- Kiszállási díj ----
@@ -115,12 +118,14 @@ collections:
         format: "json"
         fields:
           - { name: "heading", label: "Szakasz címe", widget: "string" }
+          - { name: "intro", label: "Bevezető szöveg (az oldal tetején)", widget: "markdown", required: false }
           - name: "items"
             label: "Sávok"
             widget: "list"
             fields:
               - { name: "range", label: "Távolság", widget: "string" }
               - { name: "fee", label: "Díj", widget: "string" }
+              - { name: "description", label: "Megjegyzés (opcionális)", widget: "markdown", required: false }
 
   # ---- Elérhetőség ----
   - name: "contact"

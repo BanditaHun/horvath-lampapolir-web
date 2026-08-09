@@ -1,24 +1,30 @@
 {
   "heading": "Önálló szolgáltatások",
+  "intro": "A fényszóró-felújítás mellett a helyszínen elvégezhető **kiegészítő szolgáltatások**. Az árak tájékoztató jellegűek – a pontos ár a helyszínen, az igénytől függően alakul.",
   "items": [
     {
-      "name": "Szezonális szélvédőmosó szintellenőrzés és feltöltés (anyaggal)",
+      "name": "Szezonális szélvédőmosó szintellenőrzés és feltöltés",
+      "description": "Az évszaknak megfelelő szélvédőmosó folyadék ellenőrzése és feltöltése – **az anyagot hozzuk**.",
       "price": "2 500 Ft"
     },
     {
-      "name": "Fagyálló ellenőrzés és utántöltés (mennyiségfüggő)",
-      "price": "500Ft - 3 500 Ft"
+      "name": "Fagyálló ellenőrzés és utántöltés",
+      "description": "A hűtőfolyadék fagyáspontjának ellenőrzése és szükség szerinti utántöltés. Az ár a betöltött **mennyiségtől függ**.",
+      "price": "500 Ft – 3 500 Ft"
     },
     {
-      "name": "Ablaktörlő lapát csere (típusfüggő)",
+      "name": "Ablaktörlő lapát csere",
+      "description": "Kopott ablaktörlő lapátok cseréje – **típustól függően**.",
       "price": "4 500 Ft"
     },
     {
-      "name": "Prémium nanotechnológiás szélvédő vízlepergető kezelés.A technológia és az előnyei: Hogyan működik: Nano-réteget képez a szélvédő üvegfelületén, amely mikroszkopikus szinten kitölti az egyenetlenségeket, így a felület teljesen simává és rendkívül víztaszítóvá válik.  Tartósság: Átlagosan 3–6 hónapig (vagy több ezer kilométeren át) megőrzi a hatását a használattól és az ablaktörlő igénybevételétől függően.  Fő előnyei:  Kiváló kilátás esőben: 70–80 km/h sebesség felett a menetszél önmagától lefújja a vízcseppeket a szélvédőről, így alig kell használni az ablaktörlőt.  Könnyebb tisztíthatóság: A rászáradt sár, a bogarak és a téli jég/dér sokkal nehezebben tapad meg az üvegen, így könnyebben letörölhető.  Biztonság: Jelentősen csökkenti a szembejövő forgalom vakító fényét éjszakai, esős vezetés során.",
+      "name": "Prémium nanotechnológiás szélvédő vízlepergető kezelés",
+      "description": "**Hogyan működik:** nano-réteget képez a szélvédő üvegfelületén, amely mikroszkopikus szinten kitölti az egyenetlenségeket, így a felület teljesen simává és rendkívül víztaszítóvá válik.\n\n**Tartósság:** átlagosan 3–6 hónapig (vagy több ezer kilométeren át) megőrzi a hatását a használattól és az ablaktörlő igénybevételétől függően.\n\n**Fő előnyei:**\n\n- **Kiváló kilátás esőben:** 70–80 km/h felett a menetszél önmagától lefújja a vízcseppeket, így alig kell az ablaktörlő.\n- **Könnyebb tisztíthatóság:** a rászáradt sár, a bogarak és a téli jég/dér sokkal nehezebben tapad meg az üvegen.\n- **Biztonság:** jelentősen csökkenti a szembejövő forgalom vakító fényét éjszakai, esős vezetés során.",
       "price": "5 000 Ft"
     },
     {
       "name": "Állapotfelmérés",
+      "description": "Kötelezettség nélküli, helyszíni felmérés – megmondjuk, mi a legjobb megoldás a fényszóródra.",
       "price": "ingyenes"
     }
   ]

@@ -253,6 +253,46 @@ section:last-of-type { border-bottom: none; }
 /* ---------- Lábléc ---------- */
 footer { text-align: center; padding: 30px 20px; color: var(--chrome-dim); font-size: .9rem; }
 
+/* ---------- Aloldalak: fejléc + hasáb ---------- */
+.page__head { padding: 46px 0 6px; }
+.page__title {
+  font-family: var(--font-heading);
+  font-size: calc(clamp(1.7rem, 4.5vw, 2.6rem) * var(--heading-scale));
+  color: #fff; margin-bottom: 8px; display: inline-block;
+}
+.page__title::after { content: ""; display: block; height: 3px; width: 64px; margin-top: 10px; background: linear-gradient(90deg, var(--gold), transparent); border-radius: 3px; }
+.page__intro { color: var(--chrome-dim); max-width: 840px; font-size: 1.05rem; margin-top: 8px; }
+.prose { color: var(--chrome-dim); max-width: 840px; font-size: 1.06rem; padding: 6px 0 48px; }
+.prose h1, .prose h2, .prose h3, .prose h4 { color: #fff; }
+
+/* ---------- Kártyarácsok ---------- */
+.cards { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin: 26px 0 60px; }
+.cards--2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); max-width: 840px; }
+.cards--3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin: 44px 0 60px; }
+
+/* ---------- Neon (pulzáló) kártya ---------- */
+@keyframes neonPulse {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(240,180,41,0.5) inset, 0 0 12px rgba(240,180,41,0.18), 0 0 26px rgba(240,180,41,0.08); border-color: rgba(240,180,41,0.5); }
+  50%      { box-shadow: 0 0 0 1px var(--gold) inset, 0 0 22px rgba(240,180,41,0.5), 0 0 48px rgba(240,180,41,0.28); border-color: var(--gold); }
+}
+.neon-card {
+  position: relative; display: flex; flex-direction: column; gap: 12px;
+  background: linear-gradient(180deg, #16130b 0%, #0d0d0d 100%);
+  border: 1px solid rgba(240,180,41,0.5); border-radius: 16px; padding: 26px 22px;
+  color: var(--chrome); animation: neonPulse 2.8s ease-in-out infinite;
+  transition: transform .15s ease;
+}
+.neon-card:hover { transform: translateY(-4px); }
+.neon-card__badge { align-self: flex-start; font-size: .72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #1a1200; background: var(--gold); padding: 4px 10px; border-radius: 20px; }
+.neon-card__title { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: var(--gold); letter-spacing: .4px; text-shadow: 0 0 12px rgba(240,180,41,0.45); }
+.neon-card__desc { color: var(--chrome-dim); flex: 1; }
+.neon-card__price { font-size: 1.5rem; font-weight: 800; color: #fff; margin-top: 4px; }
+a.neon-card__price { color: var(--gold); }
+.neon-card__more { color: var(--gold); font-weight: 700; margin-top: 6px; }
+.neon-card__links { display: flex; flex-wrap: wrap; gap: 10px; }
+a.neon-card, a.neon-card:hover { text-decoration: none; }
+@media (prefers-reduced-motion: reduce) { .neon-card { animation: none; } }
+
 /* ---------- Reszponzív ---------- */
 @media (max-width: 860px) {
   .packages { grid-template-columns: 1fr; }
