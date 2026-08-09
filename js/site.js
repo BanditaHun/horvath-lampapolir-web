@@ -275,10 +275,11 @@ function tickerBand(items) {
   return `<div class="ticker" aria-hidden="true"><div class="ticker__track">${one}${one}</div></div>`;
 }
 
-// Oldalsó elem: feltöltött kép, ha van; különben az animált buborékok
-function flankSide(side, img, chips) {
-  const inner = isSet(img)
-    ? `<figure class="flank-imgwrap"><img class="flank-img" src="${esc(img)}" alt="" loading="lazy" /></figure>`
+// Oldalsó elem: a feltöltött kép(ek) egymás alatt; ha egy sincs, az animált buborékok
+function flankSide(side, imgs, chips) {
+  const pics = (Array.isArray(imgs) ? imgs : [imgs]).filter(isSet);
+  const inner = pics.length
+    ? pics.map((src) => `<figure class="flank-imgwrap"><img class="flank-img" src="${esc(src)}" alt="" loading="lazy" /></figure>`).join("")
     : flankChips(chips);
   return `<aside class="hero-flank hero-flank--${side}" aria-hidden="true">${inner}</aside>`;
 }
@@ -294,9 +295,9 @@ async function renderHome(app, contact) {
     <div class="hero__overlay"></div>`;
   if (hero.banner) {
     h += `<div class="hero-stage">
-        ${flankSide("left", hero.side_left, FLANK_LEFT)}
+        ${flankSide("left", [hero.side_left, hero.side_left_2], FLANK_LEFT)}
         <img class="hero__banner" src="${esc(hero.banner)}" alt="${esc(hero.title || "")}" />
-        ${flankSide("right", hero.side_right, FLANK_RIGHT)}
+        ${flankSide("right", [hero.side_right, hero.side_right_2], FLANK_RIGHT)}
       </div>`;
   } else {
     h += `<div class="hero__content">

@@ -171,7 +171,7 @@ a:hover { text-decoration: underline; }
   background: linear-gradient(180deg, rgba(240,180,41,0.10) 0%, rgba(10,10,10,0.10) 32%, rgba(10,10,10,0.64) 100%);
   box-shadow: inset 0 0 42px rgba(0,0,0,0.5);
 }
-.flank-img { display: block; width: 100%; height: auto; filter: saturate(1.05) contrast(1.03); }
+.flank-img { display: block; width: 100%; height: auto; max-height: 250px; object-fit: cover; filter: saturate(1.05) contrast(1.03); }
 @keyframes flankFloat {
   0%, 100% { transform: translateY(0); box-shadow: 0 0 18px rgba(240,180,41,0.16); }
   50%      { transform: translateY(-10px); box-shadow: 0 0 34px rgba(240,180,41,0.42); }

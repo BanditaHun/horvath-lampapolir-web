@@ -57,8 +57,10 @@ collections:
           - { name: "title", label: "Cím", widget: "string" }
           - { name: "subtitle", label: "Alcím", widget: "text" }
           - { name: "banner", label: "Banner kép (a kezdőlap tetején)", widget: "image", required: false, hint: "A kész, feliratos plakát – középen jelenik meg. Ha üres, letisztult sötét szöveges fejléc marad." }
-          - { name: "side_left", label: "Bal oldali kép a banner mellett (opcionális)", widget: "image", required: false, hint: "Széles képernyőn a banner BAL oldalán jelenik meg, animáltan (lebegve). Álló/négyzetes kép ajánlott. Ha üres, animált neon buborékok jelennek meg helyette." }
-          - { name: "side_right", label: "Jobb oldali kép a banner mellett (opcionális)", widget: "image", required: false, hint: "Széles képernyőn a banner JOBB oldalán jelenik meg, animáltan. Ha üres, animált neon buborékok jelennek meg helyette." }
+          - { name: "side_left", label: "Bal oldali FELSŐ kép a banner mellett (opcionális)", widget: "image", required: false, hint: "Széles képernyőn a banner BAL oldalán, felül jelenik meg, animáltan. Álló/négyzetes kép ajánlott. Ha egy oldalsó kép sincs, animált neon buborékok jelennek meg." }
+          - { name: "side_left_2", label: "Bal oldali ALSÓ kép (opcionális)", widget: "image", required: false, hint: "A bal oldali felső kép alá kerül – jó egy munka közbeni fotó." }
+          - { name: "side_right", label: "Jobb oldali FELSŐ kép a banner mellett (opcionális)", widget: "image", required: false, hint: "Széles képernyőn a banner JOBB oldalán, felül jelenik meg, animáltan." }
+          - { name: "side_right_2", label: "Jobb oldali ALSÓ kép (opcionális)", widget: "image", required: false, hint: "A jobb oldali felső kép alá kerül." }
           - name: "ticker"
             label: "Futó szalag szövegei (a banner alatt)"
             widget: "list"
