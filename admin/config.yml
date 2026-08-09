@@ -56,7 +56,9 @@ collections:
         fields:
           - { name: "title", label: "Cím", widget: "string" }
           - { name: "subtitle", label: "Alcím", widget: "text" }
-          - { name: "banner", label: "Háttérkép a fejlécben (opcionális)", widget: "image", required: false, hint: "Felirat NÉLKÜLI, sötét, fekvő autó-/fényszóró-fotó ajánlott – erős sötétítés kerül rá, hogy a szöveg olvasható maradjon. Ha üres, letisztult sötét háttér marad." }
+          - { name: "banner", label: "Banner kép (a kezdőlap tetején)", widget: "image", required: false, hint: "A kész, feliratos plakát – középen jelenik meg. Ha üres, letisztult sötét szöveges fejléc marad." }
+          - { name: "side_left", label: "Bal oldali kép a banner mellett (opcionális)", widget: "image", required: false, hint: "Széles képernyőn a banner BAL oldalán jelenik meg, animáltan (lebegve). Álló/négyzetes kép ajánlott. Ha üres, animált neon buborékok jelennek meg helyette." }
+          - { name: "side_right", label: "Jobb oldali kép a banner mellett (opcionális)", widget: "image", required: false, hint: "Széles képernyőn a banner JOBB oldalán jelenik meg, animáltan. Ha üres, animált neon buborékok jelennek meg helyette." }
 
   # ---- Bemutatkozás ----
   - name: "about"

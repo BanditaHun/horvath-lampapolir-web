@@ -235,6 +235,13 @@ function flankChips(list) {
     .map((t, i) => `<div class="flank-chip" style="animation-delay:${(i * 0.45).toFixed(2)}s"><span class="flank-chip__ic">✦</span><span>${esc(t)}</span></div>`)
     .join("");
 }
+// Oldalsó elem: feltöltött kép, ha van; különben az animált buborékok
+function flankSide(side, img, chips) {
+  const inner = isSet(img)
+    ? `<img class="flank-img" src="${esc(img)}" alt="" loading="lazy" />`
+    : flankChips(chips);
+  return `<aside class="hero-flank hero-flank--${side}" aria-hidden="true">${inner}</aside>`;
+}
 
 async function renderHome(app, contact) {
   const [hero, about, reviews] = await Promise.all([
@@ -247,9 +254,9 @@ async function renderHome(app, contact) {
     <div class="hero__overlay"></div>`;
   if (hero.banner) {
     h += `<div class="hero-stage">
-        <aside class="hero-flank hero-flank--left" aria-hidden="true">${flankChips(FLANK_LEFT)}</aside>
+        ${flankSide("left", hero.side_left, FLANK_LEFT)}
         <img class="hero__banner" src="${esc(hero.banner)}" alt="${esc(hero.title || "")}" />
-        <aside class="hero-flank hero-flank--right" aria-hidden="true">${flankChips(FLANK_RIGHT)}</aside>
+        ${flankSide("right", hero.side_right, FLANK_RIGHT)}
       </div>
       <div class="hero__content"><div class="hero__cta">
         <a class="btn btn--primary" href="kapcsolat.html">Kérj időpontot</a>
