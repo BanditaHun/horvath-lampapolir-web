@@ -196,35 +196,53 @@ function reviewCardHTML(r, i) {
 }
 function reviewsSectionHTML(reviews, contact) {
   const items = (reviews && reviews.items) || [];
+  let summary = "";
+  if (items.length) {
+    const nums = items.map((r) => Math.max(1, Math.min(5, parseInt(r.rating, 10) || 5)));
+    const avg = nums.reduce((a, b) => a + b, 0) / nums.length;
+    summary = `<div class="reviews__summary">
+        <span class="reviews__avg">${avg.toFixed(1).replace(".", ",")}</span>
+        <div class="reviews__avg-stars">${starsHTML(Math.round(avg))}</div>
+        <span class="reviews__count">${items.length} vélemény alapján</span>
+      </div>`;
+  }
   const list = items.length
     ? `<div class="cards reviews__list">${items.map(reviewCardHTML).join("")}</div>`
-    : `<p class="gallery__empty">Legyél te az első, aki értékel minket!</p>`;
+    : `<p class="reviews__empty">Még nincs közzétett vélemény – <strong>legyél te az első!</strong></p>`;
   const key = reviews && reviews.form_access_key;
+  const fbUrl = contact && isSet(contact.facebook_url) ? contact.facebook_url : "";
   let form = "";
   if (isSet(key)) {
-    form = `<form class="review-form" action="https://api.web3forms.com/submit" method="POST">
-      <input type="hidden" name="access_key" value="${esc(key)}" />
-      <input type="hidden" name="subject" value="Új vélemény – Horváth Lámpapolír weboldal" />
-      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" />
-      <div class="form-row"><label for="rv-name">Neved</label><input id="rv-name" type="text" name="name" required maxlength="60" /></div>
-      <div class="form-row"><span class="form-label">Értékelés</span>
-        <div class="star-input" id="star-input">${[1, 2, 3, 4, 5].map((i) => `<button type="button" class="star-btn" data-v="${i}" aria-label="${i} csillag">★</button>`).join("")}</div>
-        <input type="hidden" name="rating" id="rating-input" value="5" />
-      </div>
-      <div class="form-row"><label for="rv-msg">Véleményed</label><textarea id="rv-msg" name="message" rows="4" required maxlength="1000"></textarea></div>
-      <button type="submit" class="btn btn--primary">Vélemény küldése</button>
-      <p class="review-form__note">A beküldött vélemények <strong>moderálás után</strong> jelennek meg az oldalon.</p>
-    </form>`;
-  } else if (contact && isSet(contact.facebook_url)) {
-    form = `<div class="review-cta"><p>Örülnénk a véleményednek! Értékelj minket a Facebook-oldalunkon:</p>
-      <a class="btn btn--primary" href="${esc(contact.facebook_url)}" target="_blank" rel="noopener">Értékelés a Facebookon</a></div>`;
+    form = `<div class="review-form-card">
+      <h3 class="review-form-card__title">Írj véleményt vagy hozzászólást</h3>
+      <form class="review-form" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="${esc(key)}" />
+        <input type="hidden" name="subject" value="Új vélemény – Horváth Lámpapolír weboldal" />
+        <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" />
+        <div class="form-row"><label for="rv-name">Neved</label><input id="rv-name" type="text" name="name" required maxlength="60" /></div>
+        <div class="form-row"><span class="form-label">Értékelés</span>
+          <div class="star-input" id="star-input">${[1, 2, 3, 4, 5].map((i) => `<button type="button" class="star-btn" data-v="${i}" aria-label="${i} csillag">★</button>`).join("")}</div>
+          <input type="hidden" name="rating" id="rating-input" value="5" />
+        </div>
+        <div class="form-row"><label for="rv-msg">Véleményed / hozzászólásod</label><textarea id="rv-msg" name="message" rows="4" required maxlength="1000"></textarea></div>
+        <button type="submit" class="btn btn--primary">Küldés</button>
+        <p class="review-form__note">A beküldött vélemények <strong>moderálás után</strong> jelennek meg.</p>
+      </form>
+      ${fbUrl ? `<p class="review-or">…vagy <a href="${esc(fbUrl)}" target="_blank" rel="noopener">értékelj a Facebookon</a></p>` : ""}
+    </div>`;
+  } else if (fbUrl) {
+    form = `<div class="review-cta">
+      <p>Elégedett voltál? Örülnénk a véleményednek – pár kattintás:</p>
+      <a class="btn btn--primary" href="${esc(fbUrl)}" target="_blank" rel="noopener">Értékelés a Facebookon</a>
+    </div>`;
   }
-  return `<section class="reviews" id="velemenyek"><div class="container">
+  return `<section class="reviews" id="velemenyek"><div class="container"><div class="reviews__panel">
     <h2 class="page__title">${esc((reviews && reviews.heading) || "Vélemények")}</h2>
     ${reviews && reviews.intro ? `<div class="rich page__intro">${mdBlock(reviews.intro)}</div>` : ""}
+    ${summary}
     ${list}
     <div class="review-form-wrap">${form}</div>
-  </div></section>`;
+  </div></div></section>`;
 }
 function wireReviewForm(scope) {
   const form = scope.querySelector(".review-form");
