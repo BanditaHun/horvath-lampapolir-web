@@ -57,7 +57,7 @@
     <!-- BEMUTATKOZÁS -->
     <section id="bemutatkozas">
       <h2 class="section__title" id="about-heading">Bemutatkozás</h2>
-      <p class="lead" id="about-text"></p>
+      <div class="lead rich" id="about-text"></div>
     </section>
 
     <!-- CSOMAGOK -->
@@ -90,7 +90,7 @@
       <div class="contact__grid">
         <div class="contact__card">
           <a class="contact__phone" id="contact-phone" href="#">[TELEFONSZÁM]</a>
-          <p class="contact__note" id="contact-note"></p>
+          <div class="contact__note rich" id="contact-note"></div>
         </div>
         <div class="contact__card">
           <p style="color:var(--chrome-dim); margin-bottom:8px;">Kövess minket:</p>
@@ -106,6 +106,7 @@
   </footer>
 
   <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+  <script src="js/marked.min.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

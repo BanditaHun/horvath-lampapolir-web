@@ -68,7 +68,7 @@ collections:
         format: "json"
         fields:
           - { name: "heading", label: "Szakasz címe", widget: "string" }
-          - { name: "text", label: "Szöveg", widget: "text" }
+          - { name: "text", label: "Szöveg", widget: "markdown", hint: "Kijelöléssel félkövér (B), címsor és lista is beállítható a szerkesztő eszköztárában." }
 
   # ---- Csomagok ----
   - name: "packages"
@@ -85,7 +85,7 @@ collections:
             widget: "list"
             fields:
               - { name: "name", label: "Név", widget: "string" }
-              - { name: "description", label: "Leírás", widget: "text" }
+              - { name: "description", label: "Leírás", widget: "markdown", hint: "Félkövér, címsor, lista is használható." }
               - { name: "price", label: "Ár", widget: "string" }
 
   # ---- Önálló szolgáltatások ----
@@ -102,7 +102,7 @@ collections:
             label: "Szolgáltatások"
             widget: "list"
             fields:
-              - { name: "name", label: "Megnevezés", widget: "string" }
+              - { name: "name", label: "Megnevezés / leírás", widget: "markdown", hint: "Félkövér (B), nagyobb címsor és lista is beállítható." }
               - { name: "price", label: "Ár", widget: "string" }
 
   # ---- Kiszállási díj ----
@@ -133,7 +133,7 @@ collections:
         fields:
           - { name: "heading", label: "Szakasz címe", widget: "string" }
           - { name: "phone", label: "Telefonszám", widget: "string" }
-          - { name: "note", label: "Megjegyzés (elérhetőség)", widget: "text" }
+          - { name: "note", label: "Megjegyzés (elérhetőség)", widget: "markdown", hint: "Félkövér, címsor, lista is használható." }
           - { name: "facebook_url", label: "Facebook link", widget: "string" }
           - { name: "facebook_label", label: "Facebook gomb felirata", widget: "string" }
 

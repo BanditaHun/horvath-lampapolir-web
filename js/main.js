@@ -19,6 +19,17 @@ function telHref(phone) {
   return digits ? "tel:" + digits : "#kapcsolat";
 }
 
+// Markdown → HTML (a leírás-mezők félkövér / címsor / lista formázásához).
+// Ha valamiért nincs betöltve a marked, sima szövegként jelenik meg.
+function mdBlock(str) {
+  if (str == null || str === "") return "";
+  return window.marked ? window.marked.parse(String(str)) : String(str);
+}
+function mdInline(str) {
+  if (str == null || str === "") return "";
+  return window.marked ? window.marked.parseInline(String(str)) : String(str);
+}
+
 // ---- Betűtípusok (a CMS „Megjelenés" választható értékei) ----
 const SYSTEM_FONT = '"Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif';
 const FONT_MAP = {
@@ -105,7 +116,7 @@ async function init() {
 
     // --- Hero ---
     document.getElementById("hero-title").textContent = hero.title;
-    document.getElementById("hero-subtitle").textContent = hero.subtitle;
+    document.getElementById("hero-subtitle").innerHTML = mdInline(hero.subtitle);
     document.title = hero.title + " – mobil fényszóró-felújítás";
     if (hero.banner) {
       document.querySelector(".hero").style.setProperty("--hero-banner", `url("${hero.banner}")`);
@@ -113,7 +124,7 @@ async function init() {
 
     // --- Bemutatkozás ---
     document.getElementById("about-heading").textContent = about.heading;
-    document.getElementById("about-text").textContent = about.text;
+    document.getElementById("about-text").innerHTML = mdBlock(about.text);
 
     // --- Csomagok ---
     document.getElementById("packages-heading").textContent = packages.heading;
@@ -123,7 +134,7 @@ async function init() {
       const card = el("article", "pkg" + (featured ? " pkg--featured" : ""));
       if (featured) card.appendChild(el("span", "pkg__badge", "Ajánlott"));
       card.appendChild(el("h3", "pkg__name", p.name));
-      card.appendChild(el("p", "pkg__desc", p.description));
+      card.appendChild(el("div", "pkg__desc rich", mdBlock(p.description)));
       card.appendChild(el("div", "pkg__price", p.price));
       pkgWrap.appendChild(card);
     });
@@ -133,7 +144,7 @@ async function init() {
     const svcWrap = document.getElementById("services-list");
     services.items.forEach((s) => {
       const row = el("div", "row");
-      row.appendChild(el("span", "row__name", s.name));
+      row.appendChild(el("div", "row__name rich", mdBlock(s.name)));
       row.appendChild(el("span", "row__price", s.price));
       svcWrap.appendChild(row);
     });
@@ -153,7 +164,7 @@ async function init() {
     const phoneEl = document.getElementById("contact-phone");
     phoneEl.textContent = contact.phone;
     phoneEl.href = telHref(contact.phone);
-    document.getElementById("contact-note").textContent = contact.note;
+    document.getElementById("contact-note").innerHTML = mdBlock(contact.note);
     const fb = document.getElementById("contact-facebook");
     fb.href = contact.facebook_url || "#";
     fb.textContent = contact.facebook_label || "Facebook";
