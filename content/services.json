@@ -24,8 +24,8 @@
     },
     {
       "name": "Állapotfelmérés",
-      "description": "Kötelezettség nélküli, helyszíni felmérés – megmondjuk, mi a legjobb megoldás a fényszóródra.",
-      "price": "ingyenes"
+      "description": "Megnézem a fényszóród – és ha már ott vagyok, akár az egész autód – állapotát, és **őszintén megmondom**, mi a legjobb, legköltséghatékonyabb megoldás. Semmire nem kötelez.\n\n**Hogyan működik?**\n\n- Ha **valamilyen munka miatt** kint vagyok nálad, a felmérés **teljesen ingyenes** – ilyenkor mindent átnézek, és szólok, ha valami odafigyelést igényel.\n- Ha **csak felmérésért** hívsz ki külön (munka nélkül), szívesen megcsinálom, de ilyenkor a **kiszállási (úti) díjat** kérem érte – a díjakat a **Kiszállás** oldalon találod.",
+      "price": "Munka mellett ingyenes"
     }
   ]
 }
