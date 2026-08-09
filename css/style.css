@@ -309,6 +309,20 @@ section:last-of-type { border-bottom: none; }
 /* ---------- Lábléc ---------- */
 footer { text-align: center; padding: 30px 20px; color: var(--chrome-dim); font-size: .9rem; }
 
+/* ---------- Futó szalaghirdetés (ticker) ---------- */
+.ticker {
+  width: 100%; overflow: hidden;
+  background: linear-gradient(180deg, rgba(240,180,41,0.13), rgba(240,180,41,0.05));
+  border-top: 1px solid rgba(240,180,41,0.35);
+  border-bottom: 1px solid rgba(240,180,41,0.35);
+  padding: 12px 0; margin-top: 8px;
+}
+.ticker__track { display: inline-flex; white-space: nowrap; will-change: transform; animation: tickerMove 34s linear infinite; }
+.ticker__item { color: var(--gold); font-weight: 700; font-size: 1rem; letter-spacing: .3px; padding: 0 30px; text-shadow: 0 0 10px rgba(240,180,41,0.4); }
+@keyframes tickerMove { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+.ticker:hover .ticker__track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .ticker__track { animation: none; white-space: normal; text-align: center; } }
+
 /* ---------- Aloldalak: fejléc + hasáb ---------- */
 .page__head { padding: 46px 0 6px; }
 .page__title {

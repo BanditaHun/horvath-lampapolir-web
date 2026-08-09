@@ -258,6 +258,23 @@ function flankChips(list) {
     .map((t, i) => `<div class="flank-chip" style="animation-delay:${(i * 0.45).toFixed(2)}s"><span class="flank-chip__ic">✦</span><span>${esc(t)}</span></div>`)
     .join("");
 }
+// Futó szalaghirdetés (ticker) a kezdőlapon
+const TICKER_DEFAULT = [
+  "Házhoz megyünk Tolna megyében",
+  "Ingyenes állapotfelmérés",
+  "1 év garancia*",
+  "Kristálytiszta fény – biztonságosabb éjszakai vezetés",
+  "50 km-es körzetben, akár csak a fényszóróért",
+  "Professzionális, helyszíni munka",
+];
+function tickerBand(items) {
+  const norm = (t) => (typeof t === "string" ? t : (t && (t.text || t.value)) || "");
+  let list = Array.isArray(items) ? items.map(norm).filter(Boolean) : [];
+  if (!list.length) list = TICKER_DEFAULT;
+  const one = list.map((t) => `<span class="ticker__item">✦ ${esc(t)}</span>`).join("");
+  return `<div class="ticker" aria-hidden="true"><div class="ticker__track">${one}${one}</div></div>`;
+}
+
 // Oldalsó elem: feltöltött kép, ha van; különben az animált buborékok
 function flankSide(side, img, chips) {
   const inner = isSet(img)
@@ -280,11 +297,7 @@ async function renderHome(app, contact) {
         ${flankSide("left", hero.side_left, FLANK_LEFT)}
         <img class="hero__banner" src="${esc(hero.banner)}" alt="${esc(hero.title || "")}" />
         ${flankSide("right", hero.side_right, FLANK_RIGHT)}
-      </div>
-      <div class="hero__content"><div class="hero__cta">
-        <a class="btn btn--primary" href="kapcsolat.html">Kérj időpontot</a>
-        <a class="btn btn--ghost" href="csomagok.html">Csomagok &amp; árak</a>
-      </div></div>`;
+      </div>`;
   } else {
     h += `<div class="hero__content">
       <img class="hero__emblem" src="images/logo.png" alt="" onerror="this.style.display='none'" />
@@ -308,7 +321,7 @@ async function renderHome(app, contact) {
     <a class="neon-card neon-card--link" href="kapcsolat.html" style="animation-delay:.7s"><h3 class="neon-card__title">Kapcsolat</h3><p class="neon-card__desc">Hívj vagy írj – házhoz megyünk Tolna megyében</p><span class="neon-card__more">Kapcsolat →</span></a>
   </div></div>`;
 
-  app.innerHTML = h + aboutHTML + quick + reviewsSectionHTML(reviews, contact);
+  app.innerHTML = h + tickerBand(hero.ticker) + aboutHTML + quick + reviewsSectionHTML(reviews, contact);
   wireReviewForm(app);
 }
 
