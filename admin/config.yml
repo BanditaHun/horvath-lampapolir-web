@@ -56,7 +56,7 @@ collections:
         fields:
           - { name: "title", label: "Cím", widget: "string" }
           - { name: "subtitle", label: "Alcím", widget: "text" }
-          - { name: "banner", label: "Bannerkép (háttér a fejlécben)", widget: "image", required: false, hint: "Széles, fekvő kép ajánlott. Ha üres, a sötét-arany háttér marad." }
+          - { name: "banner", label: "Háttérkép a fejlécben (opcionális)", widget: "image", required: false, hint: "Felirat NÉLKÜLI, sötét, fekvő autó-/fényszóró-fotó ajánlott – erős sötétítés kerül rá, hogy a szöveg olvasható maradjon. Ha üres, letisztult sötét háttér marad." }
 
   # ---- Bemutatkozás ----
   - name: "about"
