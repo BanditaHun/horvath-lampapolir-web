@@ -351,7 +351,19 @@ section:last-of-type { border-bottom: none; }
 .contact__note { color: var(--chrome-dim); margin-top: 10px; }
 
 /* ---------- Lábléc ---------- */
-footer { text-align: center; padding: 30px 20px; color: var(--chrome-dim); font-size: .9rem; }
+.site-footer { border-top: 1px solid rgba(240,180,41,0.20); background: linear-gradient(180deg, rgba(13,13,13,0.6), rgba(10,10,10,0.85)); margin-top: 24px; }
+.site-footer__inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding: 26px 20px; }
+.site-footer__brand { display: flex; align-items: center; gap: 14px; }
+.site-footer__logo { height: 54px; width: auto; border-radius: 12px; border: 1px solid rgba(240,180,41,0.35); }
+.site-footer__brandtext { display: flex; flex-direction: column; }
+.site-footer__brandtext strong { color: #fff; font-family: var(--font-heading); font-size: 1.12rem; }
+.site-footer__brandtext span { color: var(--chrome-dim); font-size: .86rem; }
+.site-footer__contact { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; }
+.site-footer__link { display: inline-flex; align-items: center; gap: 8px; color: var(--chrome); font-weight: 600; font-size: .95rem; }
+.site-footer__link svg { color: var(--gold); flex: none; }
+.site-footer__link:hover { color: var(--gold); text-decoration: none; }
+.site-footer__bottom { text-align: center; padding: 14px 20px; color: var(--chrome-dim); font-size: .85rem; border-top: 1px solid var(--line); }
+@media (max-width: 640px) { .site-footer__inner { flex-direction: column; align-items: flex-start; gap: 18px; } }
 
 /* ---------- Futó szalaghirdetés (ticker) ---------- */
 .ticker {

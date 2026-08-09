@@ -112,8 +112,31 @@ function buildHeader(active) {
     <ul class="nav__links" id="nav-links">${links}</ul>
   </nav>`;
 }
+const ICON_MAIL = '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1.4 2 7.6 5.3L19.6 7H4.4zM20 8.9l-8 5.6-8-5.6V17h16V8.9z"/></svg>';
 function buildFooter() {
-  return `<footer>© <span id="year"></span> Horváth Lámpapolír – mobil fényszóró-felújítás</footer>`;
+  return `<footer class="site-footer">
+    <div class="container site-footer__inner">
+      <div class="site-footer__brand">
+        <img class="site-footer__logo" src="images/logo.png" alt="" onerror="this.style.display='none'" />
+        <div class="site-footer__brandtext">
+          <strong>Horváth Lámpapolír</strong>
+          <span>Mobil fényszóró-felújítás · Tolna megye, 50 km-es körzet · Számlát adunk</span>
+        </div>
+      </div>
+      <div class="site-footer__contact" id="footer-contact"></div>
+    </div>
+    <div class="site-footer__bottom">© <span id="year"></span> Horváth Lámpapolír – mobil fényszóró-felújítás</div>
+  </footer>`;
+}
+function populateFooter(contact) {
+  const box = document.getElementById("footer-contact");
+  if (!box || !contact) return;
+  const parts = [];
+  if (isSet(contact.phone)) parts.push(`<a class="site-footer__link" href="${telHref(contact.phone)}">${ICON_PHONE}<span>${esc(contact.phone)}</span></a>`);
+  if (isSet(contact.email)) parts.push(`<a class="site-footer__link" href="mailto:${esc(contact.email)}">${ICON_MAIL}<span>${esc(contact.email)}</span></a>`);
+  if (isSet(contact.facebook_url)) parts.push(`<a class="site-footer__link" href="${esc(contact.facebook_url)}" target="_blank" rel="noopener">${ICON_FB}<span>Facebook</span></a>`);
+  if (isSet(contact.instagram_url)) parts.push(`<a class="site-footer__link" href="${esc(contact.instagram_url)}" target="_blank" rel="noopener">${ICON_IG}<span>Instagram</span></a>`);
+  box.innerHTML = parts.join("");
 }
 
 // Animált, pislákoló csillagos háttér (fix, a tartalom mögött)
@@ -413,7 +436,7 @@ async function initSite() {
 
   // A topbar-hoz mindig kell a kapcsolat
   let contact = null;
-  try { contact = await loadJSON("content/contact.json"); populateTopbar(contact); } catch (e) {}
+  try { contact = await loadJSON("content/contact.json"); populateTopbar(contact); populateFooter(contact); } catch (e) {}
 
   const app = document.getElementById("app");
   try {
