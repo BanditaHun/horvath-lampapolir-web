@@ -141,21 +141,28 @@ a:hover { text-decoration: underline; }
   animation: chipPulse 3.2s ease-in-out infinite;
 }
 .flank-chip__ic { color: var(--gold); font-size: 1rem; text-shadow: 0 0 8px rgba(240,180,41,0.6); }
-.flank-img {
-  width: 100%; max-width: 300px; height: auto; border-radius: 14px;
+.flank-imgwrap {
+  position: relative; margin: 0; width: 100%; max-width: 300px;
+  border-radius: 14px; overflow: hidden;
   border: 1px solid rgba(240,180,41,0.45);
-  animation: flankFloat 4.2s ease-in-out infinite;
+  animation: flankFloat 4.4s ease-in-out infinite;
 }
+.flank-imgwrap::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(240,180,41,0.10) 0%, rgba(10,10,10,0.10) 32%, rgba(10,10,10,0.64) 100%);
+  box-shadow: inset 0 0 42px rgba(0,0,0,0.5);
+}
+.flank-img { display: block; width: 100%; height: auto; filter: saturate(1.05) contrast(1.03); }
 @keyframes flankFloat {
-  0%, 100% { transform: translateY(0); box-shadow: 0 0 18px rgba(240,180,41,0.14); }
-  50%      { transform: translateY(-10px); box-shadow: 0 0 32px rgba(240,180,41,0.40); }
+  0%, 100% { transform: translateY(0); box-shadow: 0 0 18px rgba(240,180,41,0.16); }
+  50%      { transform: translateY(-10px); box-shadow: 0 0 34px rgba(240,180,41,0.42); }
 }
 @keyframes chipPulse {
   0%, 100% { transform: translateY(0); box-shadow: 0 0 0 1px rgba(240,180,41,0.35) inset, 0 0 12px rgba(240,180,41,0.10); border-color: rgba(240,180,41,0.4); }
   50%      { transform: translateY(-6px); box-shadow: 0 0 0 1px var(--gold) inset, 0 0 22px rgba(240,180,41,0.45); border-color: var(--gold); }
 }
 @media (max-width: 1400px) { .hero-flank { display: none; } .hero-stage { gap: 0; } }
-@media (prefers-reduced-motion: reduce) { .flank-chip, .flank-img { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .flank-chip, .flank-imgwrap { animation: none; } }
 /* Sötét fátyol a banner fölött a szöveg olvashatóságáért */
 .hero__overlay {
   position: absolute; inset: 0;

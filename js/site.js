@@ -238,7 +238,7 @@ function flankChips(list) {
 // Oldalsó elem: feltöltött kép, ha van; különben az animált buborékok
 function flankSide(side, img, chips) {
   const inner = isSet(img)
-    ? `<img class="flank-img" src="${esc(img)}" alt="" loading="lazy" />`
+    ? `<figure class="flank-imgwrap"><img class="flank-img" src="${esc(img)}" alt="" loading="lazy" /></figure>`
     : flankChips(chips);
   return `<aside class="hero-flank hero-flank--${side}" aria-hidden="true">${inner}</aside>`;
 }
