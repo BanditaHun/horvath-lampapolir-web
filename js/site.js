@@ -91,15 +91,6 @@ function buildHeader(active) {
     return `<li><a class="${cls}" href="${n.href}">${n.label}</a></li>`;
   }).join("");
   return `
-  <div class="topbar">
-    <div class="topbar__inner">
-      <a class="topbar__phone" id="top-phone" href="#" hidden>${ICON_PHONE}<span id="top-phone-text"></span></a>
-      <div class="topbar__socials">
-        <a class="topbar__social" id="top-fb" href="#" target="_blank" rel="noopener" aria-label="Facebook" hidden>${ICON_FB}</a>
-        <a class="topbar__social" id="top-ig" href="#" target="_blank" rel="noopener" aria-label="Instagram" hidden>${ICON_IG}</a>
-      </div>
-    </div>
-  </div>
   <nav class="nav" id="nav">
     <div class="nav__top">
       <a class="nav__brand" href="index.html">
@@ -109,7 +100,12 @@ function buildHeader(active) {
         <span class="nav__title-main">Horváth Lámpapolír</span>
         <span class="nav__title-sub">Mobil fényszóró-felújítás – házhoz megyünk</span>
       </div>
-      <button class="nav__toggle" id="nav-toggle" aria-label="Menü" aria-expanded="false"><span></span><span></span><span></span></button>
+      <div class="nav__right">
+        <a class="topbar__phone" id="top-phone" href="#" hidden>${ICON_PHONE}<span id="top-phone-text"></span></a>
+        <a class="topbar__social" id="top-fb" href="#" target="_blank" rel="noopener" aria-label="Facebook" hidden>${ICON_FB}</a>
+        <a class="topbar__social" id="top-ig" href="#" target="_blank" rel="noopener" aria-label="Instagram" hidden>${ICON_IG}</a>
+        <button class="nav__toggle" id="nav-toggle" aria-label="Menü" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
     </div>
     <ul class="nav__links" id="nav-links">${links}</ul>
   </nav>`;
