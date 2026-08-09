@@ -92,7 +92,7 @@ function buildHeader(active) {
   }).join("");
   return `
   <div class="topbar">
-    <div class="topbar__inner container">
+    <div class="topbar__inner">
       <a class="topbar__phone" id="top-phone" href="#" hidden>${ICON_PHONE}<span id="top-phone-text"></span></a>
       <div class="topbar__socials">
         <a class="topbar__social" id="top-fb" href="#" target="_blank" rel="noopener" aria-label="Facebook" hidden>${ICON_FB}</a>
@@ -101,7 +101,7 @@ function buildHeader(active) {
     </div>
   </div>
   <nav class="nav" id="nav">
-    <div class="nav__inner container">
+    <div class="nav__inner">
       <a class="nav__brand" href="index.html">
         <img class="nav__logo" src="images/logo.png" alt="Horváth Lámpapolír" onerror="this.style.display='none'" />
         <span class="nav__brand-text">Horváth Lámpapolír</span>
