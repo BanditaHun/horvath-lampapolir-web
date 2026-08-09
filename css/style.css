@@ -76,15 +76,33 @@ a:hover { text-decoration: underline; }
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
 }
+/* A fejléc tartalma középre zárt max-szélességben (ne szóródjon szét ultraszéles kijelzőn) */
+.topbar__inner, .nav__top { max-width: 1560px; margin-left: auto; margin-right: auto; }
+
 .nav__top {
   position: relative;
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  padding: 10px clamp(16px, 3vw, 44px);
+  padding: 12px clamp(16px, 3vw, 44px);
   min-height: var(--nav-h);
 }
 .nav__brand { display: inline-flex; align-items: center; z-index: 1; }
 .nav__brand:hover { text-decoration: none; }
-.nav__logo { height: 84px; width: auto; }
+.nav__logo {
+  height: 92px; width: auto;
+  border-radius: 16px; border: 1px solid rgba(240,180,41,0.45); background: #0a0a0a;
+  animation: logoBeam 4.2s ease-in-out infinite;
+}
+/* Neon "pislogó fényszóró": kétszer felvillan, közte halvány arany fény */
+@keyframes logoBeam {
+  0%, 40%, 100% { box-shadow: 0 0 0 1px rgba(240,180,41,0.4), 0 0 14px rgba(240,180,41,0.22); }
+  44% { box-shadow: 0 0 0 1px var(--gold), 0 0 26px rgba(255,255,255,0.6), 0 0 46px rgba(240,180,41,0.6); }
+  48% { box-shadow: 0 0 0 1px rgba(240,180,41,0.4), 0 0 14px rgba(240,180,41,0.22); }
+  52% { box-shadow: 0 0 0 1px var(--gold), 0 0 32px rgba(255,255,255,0.75), 0 0 52px rgba(240,180,41,0.7); }
+  56% { box-shadow: 0 0 0 1px rgba(240,180,41,0.4), 0 0 14px rgba(240,180,41,0.22); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav__logo { animation: none; box-shadow: 0 0 0 1px rgba(240,180,41,0.4), 0 0 14px rgba(240,180,41,0.22); }
+}
 .nav__title {
   position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
   display: flex; flex-direction: column; align-items: center; gap: 2px;
