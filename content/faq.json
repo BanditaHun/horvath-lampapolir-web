@@ -1,42 +1,50 @@
 {
   "heading": "Gyakori kérdések",
-  "intro": "A leggyakoribb kérdések a mobil fényszóró-felújításról. Ha valami kimaradt, [hívj](kapcsolat.html) vagy írj bátran.",
+  "intro": "Összeszedtem a leggyakoribb kérdéseket a mobil fényszóró-felújításról – így előre tudod, mire számíthatsz. Ha valami mégis kimaradt, [hívj](kapcsolat.html) vagy írj bátran, szívesen segítek.",
   "items": [
     {
       "q": "Mennyi ideig tart egy fényszóró-felújítás?",
-      "a": "A legtöbb autónál **kb. 30–60 perc**, a fényszórók állapotától és a kért csomagtól függően. A lámpát nem kell kiszerelni, helyben, az autón végzem el a munkát."
+      "a": "A legtöbb személyautónál egy fényszórópár felújítása **kb. 30–60 percet** vesz igénybe, a lámpák állapotától és a választott csomagtól függően. A fényszórót **nem kell kiszerelni** – mindent helyben, az autón végzek el, így akár egy kávé mellett meg is várhatod, vagy közben nyugodtan intézheted a dolgaidat. Az erősen megsárgult, mély karcos lámpáknál a csiszolás valamivel tovább tarthat, de erről előre szólok."
     },
     {
-      "q": "Meddig tart a hatás? Nem homályosodik vissza?",
-      "a": "A záró UV-védelemmel ellátott felület **tartósan tiszta marad** – nem mattul vissza néhány hét alatt, mint a védelem nélküli csiszolásnál. A felújításra **1 év garanciát** vállalok, amely igény szerint összesen 2 évre bővíthető."
+      "q": "Meddig tart a hatás? Nem homályosodik vissza hamar?",
+      "a": "A felújítás végén **záró UV-védő réteget** viszek fel, amely megóvja a felületet a nap károsító sugárzásától – épp ettől marad a fényszóró **tartósan tiszta**. A boltban kapható, védelem nélküli polírpaszták pár hét alatt visszamattulnak, mert nem védik meg a műanyagot; nálam ez a záróréteg adja az igazi különbséget. A munkára **1 év garanciát** vállalok, amely igény szerint összesen **2 évre** bővíthető."
     },
     {
       "q": "Házhoz jössz? Meddig mész el?",
-      "a": "Igen, **házhoz megyek** – otthonhoz vagy munkahelyre egyaránt. Tolna megyében és környékén, nagyjából **50 km-es körzetben** dolgozom. A kiszállási díjról a [Kiszállás](kiszallas.html) oldalon tájékozódhatsz."
+      "a": "Igen, pontosan ez a lényeg: **én megyek hozzád**, neked nem kell szervizbe vinned az autót. Otthonhoz és munkahelyre egyaránt kimegyek, **Tolna megyében és a környező, nagyjából 50 km-es körzetben**. A kiszállási díj a távolságtól függ, és a teljes oda-vissza utat fedezi – a pontos sávokat a **[Kiszállás](kiszallas.html)** oldalon találod."
     },
     {
       "q": "Mire van szükség a helyszínen? Kell áram vagy víz?",
-      "a": "Alap esetben **mindent viszek magammal**, saját eszközzel dolgozom. Ha van a közelben elérhető **konnektor**, az segít, de nem feltétel – előre egyeztetjük."
+      "a": "Alapvetően **mindent viszek magammal** – saját eszközzel és anyaggal dolgozom, így neked nem kell semmit előkészítened. Ha van a közelben egy elérhető **konnektor**, az megkönnyíti a munkát, de nem feltétel; ezt előre egyeztetjük. Igazából csak annyi kell, hogy az autó **mindkét oldala szabadon megközelíthető** legyen."
     },
     {
       "q": "Rossz időben, esőben is vállalod?",
-      "a": "A polírozáshoz **száraz felület** kell, ezért szakadó esőben nem ideális a munka. Ilyenkor egyeztetünk egy másik időpontot, vagy egy fedett helyen (garázs, kocsibeálló) meg tudjuk oldani."
+      "a": "A polírozáshoz, és főleg a védőréteg felviteléhez **száraz, tiszta felület** kell, ezért szakadó esőben nem ideális a munka. Ha esik, keresünk egy másik időpontot, vagy ha van fedett hely – **garázs, kocsibeálló, fészer** –, ott gond nélkül meg tudjuk oldani. A hidegtől nem kell tartani, télen is dolgozom."
     },
     {
       "q": "Minden autótípusra jó? A nagyon sárga, repedezett lámpán is segít?",
-      "a": "**Minden személyautóra és haszonjárműre** alkalmas. Az erősen megsárgult, oxidálódott fényszórók is jelentősen javulnak. Ha a lámpa **belülről párás** vagy fizikailag repedt, azt a felújítás nem oldja meg – ilyenkor őszintén megmondom, mi várható."
+      "a": "Igen, **minden személyautóra és haszonjárműre** alkalmas a technológia, típustól függetlenül. Az évek alatt megsárgult, oxidálódott, „tejszerűvé\" vált fényszórók **látványosan feljavulnak**, sokszor szinte újszerűek lesznek. Amit viszont a felújítás **nem** tud megoldani: ha a lámpa **belülről párásodik**, vagy a búra fizikailag **megrepedt** – ilyenkor őszintén megmondom, mi várható, mielőtt bármibe belekezdenénk."
+    },
+    {
+      "q": "Miért éri meg felújíttatni új fényszóró vagy egy házi polírkészlet helyett?",
+      "a": "Egy új, gyári fényszóró párja gyakran **több tízezer, akár százezer forint** is lehet, plusz a beszerelés – a felújítás ennek **töredékébe** kerül, és az eredmény szemre alig különbözik az újtól. A boltban kapható házi polírkészletek védőréteg nélkül csak **átmeneti** javulást adnak. A szakszerű felújítás a **tartós UV-védelemmel** együtt valódi megoldást jelent: **jobb, biztonságosabb látást** ad éjszaka, és a rendezett fényszóróval a **műszaki vizsgán** is előnybe kerülsz."
     },
     {
       "q": "Mennyibe kerül?",
-      "a": "A csomagok **10 000 Ft-tól** indulnak, a fényszórók állapota és a választott csomag szerint. A pontos árakat a [Csomagok](csomagok.html) oldalon találod – a kiszállási díj ehhez adódik."
+      "a": "A csomagok **10 000 Ft-tól** indulnak, a fényszórók állapota és a választott csomag (**ALAP / STANDARD / PRÉMIUM**) függvényében; ehhez adódik a kiszállási díj a távolság szerint. A pontos árakat és azt, hogy melyik csomag mit tartalmaz, a **[Csomagok](csomagok.html)** oldalon nézheted meg. Ha bizonytalan vagy, hívj – a lámpák állapota alapján szívesen mondok előzetes árat."
     },
     {
       "q": "Adsz számlát? Céges autót is vállalsz?",
-      "a": "Igen. **Bejelentett, számlaképes egyéni vállalkozó** vagyok, magánszemélyeknek és cégeknek egyaránt **adok számlát**. Fuvarozóknak, autókereskedéseknek és flottáknak is szívesen dolgozom."
+      "a": "Igen. **Bejelentett, számlaképes egyéni vállalkozó** vagyok, így magánszemélyeknek és cégeknek egyaránt **adok számlát** a munkáról. Fuvarozóknak, autókereskedéseknek és flottáknak is szívesen dolgozom – több autó esetén keress bátran, egyeztethetünk a részletekről."
+    },
+    {
+      "q": "Milyen fizetési módot fogadsz el?",
+      "a": "**Készpénzzel és banki átutalással** is fizethetsz, a munka elvégzése után, a számla ellenében. Céges megrendelésnél átutalásos számlát is tudok adni."
     },
     {
       "q": "Hogyan tudok időpontot kérni?",
-      "a": "A legegyszerűbb, ha **[telefonon hívsz](kapcsolat.html)**, vagy kitöltöd a [Kapcsolat](kapcsolat.html) oldalon lévő rövid **időpontkérő űrlapot** – utána egyeztetjük a részleteket."
+      "a": "A legegyszerűbb, ha **[telefonon felhívsz](kapcsolat.html)**, vagy kitöltöd a **[Kapcsolat](kapcsolat.html)** oldalon lévő rövid **időpontkérő űrlapot** – abban megadhatod a neved, a telefonszámod, az autó típusát és hogy pontosan mit szeretnél. Ezután felveszem veled a kapcsolatot, és egyeztetjük az időpontot."
     }
   ]
 }
