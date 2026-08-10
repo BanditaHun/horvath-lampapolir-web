@@ -654,3 +654,20 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 }
 .areas__note { color: var(--chrome-dim); margin: 20px 0 0; font-size: .92rem; }
 .areas__note a { color: var(--gold); }
+
+/* ---------- Vissza a lap tetejere gomb ---------- */
+.to-top {
+  position: fixed; right: 18px; bottom: 22px; z-index: 55;
+  width: 46px; height: 46px; border-radius: 50%; cursor: pointer; border: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--gold); color: #1a1400;
+  box-shadow: 0 6px 18px rgba(0,0,0,.45);
+  opacity: 0; visibility: hidden; transform: translateY(10px);
+  transition: opacity .2s ease, transform .2s ease, visibility .2s ease, background .15s ease;
+}
+.to-top--show { opacity: 1; visibility: visible; transform: none; }
+.to-top:hover { background: #ffca4d; }
+.to-top:active { transform: translateY(1px); }
+@media (max-width: 860px) {
+  body.has-mbar .to-top { bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
+}

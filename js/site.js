@@ -661,6 +661,21 @@ function buildMobileBar(contact) {
   document.body.classList.add("has-mbar");
 }
 
+// „Vissza a lap tetejére" gomb – görgetéskor jelenik meg
+function buildToTop() {
+  if (document.querySelector(".to-top")) return;
+  const b = document.createElement("button");
+  b.className = "to-top";
+  b.type = "button";
+  b.setAttribute("aria-label", "Vissza a lap tetejére");
+  b.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 5.7l6.3 6.3-1.4 1.4L13 9.5V19h-2V9.5l-3.9 3.9-1.4-1.4z"/></svg>';
+  b.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+  document.body.appendChild(b);
+  const onScroll = () => b.classList.toggle("to-top--show", window.scrollY > 400);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+}
+
 // LocalBusiness strukturált adat (Google helyi találat / térkép)
 function injectLocalBusiness(contact) {
   if (!contact || document.getElementById("ld-localbusiness")) return;
@@ -706,6 +721,7 @@ async function initSite() {
   try { contact = await loadJSON("content/contact.json"); populateTopbar(contact); populateFooter(contact); } catch (e) {}
 
   buildMobileBar(contact);
+  buildToTop();
   injectLocalBusiness(contact);
 
   const app = document.getElementById("app");
