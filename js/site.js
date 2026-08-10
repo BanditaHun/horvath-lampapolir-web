@@ -431,7 +431,7 @@ async function renderHome(app, contact) {
 function renderCardsPage(app, data, defTitle, kind) {
   app.innerHTML = pageHead(data.heading || defTitle, data.intro || "");
   const cont = app.querySelector(".container");
-  const grid = el("div", "cards");
+  const grid = el("div", "cards" + (kind === "delivery" ? " cards--4" : ""));
   (data.items || []).forEach((it, i) => {
     let inner = "";
     if (kind === "delivery") {

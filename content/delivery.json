@@ -5,19 +5,22 @@
     {
       "range": "0–5 km",
       "fee": "INGYENES",
-      "description": "A telephely közvetlen közelében – nincs kiszállási díj."
+      "description": "A telephely (Tolna, Mözs) közvetlen közelében – **nincs kiszállási díj**, csak a szolgáltatás árát fizeted."
     },
     {
       "range": "5–15 km",
-      "fee": "+2 000 Ft"
+      "fee": "+2 000 Ft",
+      "description": "Tolna és a közeli települések – pár perc, és a helyszínen vagyok."
     },
     {
       "range": "15–30 km",
-      "fee": "+3 500 Ft"
+      "fee": "+3 500 Ft",
+      "description": "Tágabb körzet (pl. Szekszárd irányába) – egy úttal akár több szolgáltatás is elintézhető."
     },
     {
       "range": "30–50 km",
-      "fee": "+5 000 Ft"
+      "fee": "+5 000 Ft",
+      "description": "A vállalt körzet széle – előzetes egyeztetéssel ide is kimegyek."
     }
   ]
 }
