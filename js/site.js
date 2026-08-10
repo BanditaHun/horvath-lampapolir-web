@@ -120,10 +120,25 @@ function buildFooter() {
         <img class="site-footer__logo" src="images/logo.png" alt="" onerror="this.style.display='none'" />
         <div class="site-footer__brandtext">
           <strong>Horváth Lámpapolír</strong>
-          <span>Mobil fényszóró-felújítás · Tolna megye, 50 km-es körzet · Számlát adunk</span>
+          <span>Mobil fényszóró-felújítás · Tolna megye, kb. 50 km-es körzet</span>
+          <span class="site-footer__tags">Házhoz megyünk · 1 év garancia · Számlát adunk</span>
         </div>
       </div>
-      <div class="site-footer__contact" id="footer-contact"></div>
+      <div class="site-footer__col">
+        <h4 class="site-footer__h">Elérhetőség</h4>
+        <div class="site-footer__contact" id="footer-contact"></div>
+      </div>
+      <nav class="site-footer__col" aria-label="Oldalak">
+        <h4 class="site-footer__h">Oldalak</h4>
+        <div class="site-footer__links">
+          <a href="index.html">Kezdőlap</a>
+          <a href="csomagok.html">Csomagok</a>
+          <a href="szolgaltatasok.html">Szolgáltatások</a>
+          <a href="kiszallas.html">Kiszállás</a>
+          <a href="galeria.html">Galéria</a>
+          <a href="kapcsolat.html">Kapcsolat</a>
+        </div>
+      </nav>
     </div>
     <div class="site-footer__bottom">
       <span>© <span id="year"></span> Horváth Lámpapolír – mobil fényszóró-felújítás</span>
