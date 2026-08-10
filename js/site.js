@@ -482,19 +482,31 @@ function renderGallery(app, gallery) {
 
 function renderContact(app, contact) {
   const phone = isSet(contact.phone) ? contact.phone : "";
-  const parts = [];
-  parts.push(`<div class="neon-card"><h3 class="neon-card__title">Telefon</h3>
-    ${phone ? `<a class="neon-card__price" href="${telHref(phone)}">${esc(phone)}</a>` : "<p>—</p>"}
-    ${contact.note ? `<div class="neon-card__desc rich">${mdBlock(contact.note)}</div>` : ""}</div>`);
-  const links = [];
-  if (isSet(contact.facebook_url)) links.push(`<a class="btn btn--ghost" href="${esc(contact.facebook_url)}" target="_blank" rel="noopener">Facebook</a>`);
-  if (isSet(contact.instagram_url)) links.push(`<a class="btn btn--ghost" href="${esc(contact.instagram_url)}" target="_blank" rel="noopener">Instagram</a>`);
-  if (isSet(contact.email)) links.push(`<a class="btn btn--ghost" href="mailto:${esc(contact.email)}">${esc(contact.email)}</a>`);
-  if (links.length) parts.push(`<div class="neon-card"><h3 class="neon-card__title">Kövess / írj</h3><div class="neon-card__links">${links.join("")}</div></div>`);
+  const infoRow = (ic, label, valueHTML) =>
+    `<li class="contact-info__item">
+       <span class="contact-info__ic">${ic}</span>
+       <span class="contact-info__body">
+         <span class="contact-info__label">${label}</span>
+         <span class="contact-info__value">${valueHTML}</span>
+       </span>
+     </li>`;
+  const rows = [];
+  if (phone) rows.push(infoRow(ICON_PHONE, "Telefon", `<a href="${telHref(phone)}">${esc(phone)}</a>`));
+  if (isSet(contact.email)) rows.push(infoRow(ICON_MAIL, "E-mail", `<a href="mailto:${esc(contact.email)}">${esc(contact.email)}</a>`));
+  if (isSet(contact.facebook_url)) rows.push(infoRow(ICON_FB, "Facebook", `<a href="${esc(contact.facebook_url)}" target="_blank" rel="noopener">Írj üzenetet</a>`));
+  if (isSet(contact.instagram_url)) rows.push(infoRow(ICON_IG, "Instagram", `<a href="${esc(contact.instagram_url)}" target="_blank" rel="noopener">Megnézem</a>`));
 
-  app.innerHTML = pageHead(contact.heading || "Elérhetőség", "") +
-    `<div class="container">${bookingFormHTML(contact)}
-      <div class="cards cards--2">${parts.join("")}</div></div>`;
+  const aside = `<aside class="contact-aside">
+      <h2 class="contact-aside__title">Közvetlen elérhetőség</h2>
+      <ul class="contact-info">${rows.join("")}</ul>
+      ${contact.note ? `<div class="contact-aside__note rich">${mdBlock(contact.note)}</div>` : ""}
+    </aside>`;
+
+  app.innerHTML = pageHead(contact.heading || "Kapcsolat", "") +
+    `<div class="container"><div class="contact-layout">
+       <div class="contact-layout__main">${bookingFormHTML(contact)}</div>
+       ${aside}
+     </div></div>`;
   wireBookingForm(contact);
 }
 
