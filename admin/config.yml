@@ -183,9 +183,10 @@ collections:
         fields:
           - { name: "heading", label: "Szakasz címe", widget: "string" }
           - { name: "intro", label: "Bevezető szöveg", widget: "markdown", required: false }
-          - { name: "form_access_key", label: "Web3Forms hozzáférési kulcs (a beküldő űrlaphoz)", widget: "string", required: false, hint: "Ingyenes kulcs a web3forms.com oldalon (csak e-mail kell). Ha kitöltöd, a látogatók közvetlenül az oldalon írhatnak véleményt (e-mailben megkapod). Ha üres, Facebook-értékelés gomb jelenik meg helyette." }
+          - { name: "api_url", label: "Vélemény-API címe (Cloudflare Worker)", widget: "string", required: false, hint: "Ha ki van töltve, a látogatók véleménye a küldés után AZONNAL megjelenik az oldalon (nem e-mailben). Alapból be van állítva – ne töröld." }
+          - { name: "form_access_key", label: "Web3Forms kulcs (nem szükséges, ha az API be van állítva)", widget: "string", required: false }
           - name: "items"
-            label: "Megjelenő vélemények (moderált)"
+            label: "Kézzel felvett (kiemelt) vélemények"
             widget: "list"
             required: false
             fields:

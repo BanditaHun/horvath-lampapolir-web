@@ -1,6 +1,7 @@
 {
   "heading": "Vélemények",
   "intro": "Elégedett voltál a munkával? Írd meg pár szóban – másoknak is sokat segít a döntésben!",
+  "api_url": "https://horvath-reviews.andras-horvat1989.workers.dev",
   "form_access_key": "",
   "items": []
 }

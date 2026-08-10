@@ -229,38 +229,32 @@ function starsHTML(n) {
   return `<div class="stars" aria-label="${n}/5 csillag">${s}</div>`;
 }
 function reviewCardHTML(r, i) {
+  const text = esc(r.text || "").replace(/\n/g, "<br>"); // közönség által beküldött -> escape (XSS ellen)
   return `<article class="neon-card review-card" style="animation-delay:${(i % 6) * 0.35}s">
     ${starsHTML(r.rating)}
-    <div class="review-card__text rich">${mdBlock(r.text || "")}</div>
+    <div class="review-card__text">${text}</div>
     <div class="review-card__meta">— ${esc(r.name || "Névtelen")}${r.date ? " · " + esc(r.date) : ""}</div>
   </article>`;
 }
+function reviewsSummaryHTML(list) {
+  if (!list.length) return "";
+  const nums = list.map((r) => Math.max(1, Math.min(5, parseInt(r.rating, 10) || 5)));
+  const avg = nums.reduce((a, b) => a + b, 0) / nums.length;
+  return `<div class="reviews__summary">
+      <span class="reviews__avg">${avg.toFixed(1).replace(".", ",")}</span>
+      <div class="reviews__avg-stars">${starsHTML(Math.round(avg))}</div>
+      <span class="reviews__count">${list.length} vélemény alapján</span>
+    </div>`;
+}
 function reviewsSectionHTML(reviews, contact) {
-  const items = (reviews && reviews.items) || [];
-  let summary = "";
-  if (items.length) {
-    const nums = items.map((r) => Math.max(1, Math.min(5, parseInt(r.rating, 10) || 5)));
-    const avg = nums.reduce((a, b) => a + b, 0) / nums.length;
-    summary = `<div class="reviews__summary">
-        <span class="reviews__avg">${avg.toFixed(1).replace(".", ",")}</span>
-        <div class="reviews__avg-stars">${starsHTML(Math.round(avg))}</div>
-        <span class="reviews__count">${items.length} vélemény alapján</span>
-      </div>`;
-  }
-  const list = items.length
-    ? `<div class="cards reviews__list">${items.map(reviewCardHTML).join("")}</div>`
-    : `<p class="reviews__empty">Még nincs közzétett vélemény – <strong>legyél te az első!</strong></p>`;
-  const key = reviews && reviews.form_access_key;
-  const email = contact && isSet(contact.email) ? contact.email : "";
+  const apiUrl = reviews && isSet(reviews.api_url) ? reviews.api_url : "";
   const fbUrl = contact && isSet(contact.facebook_url) ? contact.facebook_url : "";
-  const useKey = isSet(key);
   const starBtns = [1, 2, 3, 4, 5].map((i) => `<button type="button" class="star-btn" data-v="${i}" aria-label="${i} csillag">★</button>`).join("");
   let form = "";
-  if (useKey || email) {
+  if (apiUrl) {
     form = `<div class="review-form-card">
       <h3 class="review-form-card__title">Írj véleményt vagy hozzászólást</h3>
-      <form class="review-form" ${useKey ? 'action="https://api.web3forms.com/submit" method="POST"' : `data-mailto="${esc(email)}"`}>
-        ${useKey ? `<input type="hidden" name="access_key" value="${esc(key)}" /><input type="hidden" name="subject" value="Új vélemény – Horváth Lámpapolír weboldal" />` : ""}
+      <form class="review-form" data-api="${esc(apiUrl)}">
         <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" />
         <div class="form-row"><label for="rv-name">Neved</label><input id="rv-name" type="text" name="name" required maxlength="60" /></div>
         <div class="form-row"><span class="form-label">Értékelés</span>
@@ -269,25 +263,43 @@ function reviewsSectionHTML(reviews, contact) {
         </div>
         <div class="form-row"><label for="rv-msg">Véleményed / hozzászólásod</label><textarea id="rv-msg" name="message" rows="4" required maxlength="1000"></textarea></div>
         <button type="submit" class="btn btn--primary">Küldés</button>
-        <p class="review-form__note">A beküldött vélemények <strong>moderálás után</strong> jelennek meg.</p>
+        <p class="review-form__note">A véleményed a küldés után <strong>azonnal megjelenik</strong> az oldalon.</p>
       </form>
       ${fbUrl ? `<p class="review-or">…vagy <a href="${esc(fbUrl)}" target="_blank" rel="noopener">értékelj a Facebookon</a></p>` : ""}
     </div>`;
   } else if (fbUrl) {
-    form = `<div class="review-cta">
-      <p>Elégedett voltál? Örülnénk a véleményednek – pár kattintás:</p>
-      <a class="btn btn--primary" href="${esc(fbUrl)}" target="_blank" rel="noopener">Értékelés a Facebookon</a>
-    </div>`;
+    form = `<div class="review-cta"><p>Elégedett voltál? Örülnénk a véleményednek:</p>
+      <a class="btn btn--primary" href="${esc(fbUrl)}" target="_blank" rel="noopener">Értékelés a Facebookon</a></div>`;
   }
   return `<section class="reviews" id="velemenyek"><div class="container"><div class="reviews__panel">
     <h2 class="page__title">${esc((reviews && reviews.heading) || "Vélemények")}</h2>
     ${reviews && reviews.intro ? `<div class="rich page__intro">${mdBlock(reviews.intro)}</div>` : ""}
-    ${summary}
-    ${list}
+    <div id="reviews-summary"></div>
+    <div class="cards reviews__list" id="reviews-list"></div>
     <div class="review-form-wrap">${form}</div>
   </div></div></section>`;
 }
-function wireReviewForm(scope) {
+async function initReviews(reviews, scope) {
+  const curated = (reviews && reviews.items) || [];
+  const apiUrl = reviews && isSet(reviews.api_url) ? reviews.api_url.replace(/\/+$/, "") : "";
+  let apiReviews = [];
+  if (apiUrl) {
+    try {
+      const res = await fetch(apiUrl + "/list", { cache: "no-store" });
+      if (res.ok) { const d = await res.json(); if (Array.isArray(d)) apiReviews = d; }
+    } catch (e) { /* ha nem elérhető, csak a kézi vélemények látszanak */ }
+  }
+  const all = curated.concat(apiReviews);
+  const listBox = document.getElementById("reviews-list");
+  const summaryBox = document.getElementById("reviews-summary");
+  const renderAll = () => {
+    if (summaryBox) summaryBox.innerHTML = reviewsSummaryHTML(all);
+    if (listBox) listBox.innerHTML = all.length
+      ? all.map(reviewCardHTML).join("")
+      : `<p class="reviews__empty">Még nincs közzétett vélemény – <strong>legyél te az első!</strong></p>`;
+  };
+  renderAll();
+
   const form = scope.querySelector(".review-form");
   if (!form) return;
   const starBtns = [...scope.querySelectorAll(".star-btn")];
@@ -295,36 +307,32 @@ function wireReviewForm(scope) {
   const paint = (v) => starBtns.forEach((s) => s.classList.toggle("on", Number(s.dataset.v) <= v));
   paint(Number(ratingInput.value) || 5);
   starBtns.forEach((s) => s.addEventListener("click", () => { ratingInput.value = s.dataset.v; paint(Number(s.dataset.v)); }));
+
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const hp = form.querySelector('input[name="botcheck"]');
     if (hp && hp.checked) return; // spam-csapda
     const val = (n) => (form.querySelector('[name="' + n + '"]') || {}).value || "";
-    const nm = val("name").trim(), rt = val("rating"), msg = val("message").trim();
-    if (!nm || !msg) return;
-
-    // E-mail fallback (nincs Web3Forms kulcs): a látogató levelezőjében nyílik meg az üzenet
-    const mailto = form.getAttribute("data-mailto");
-    if (mailto) {
-      const subject = encodeURIComponent("Vélemény – Horváth Lámpapolír");
-      const body = encodeURIComponent("Név: " + nm + "\nÉrtékelés: " + rt + "/5\n\n" + msg);
-      window.location.href = "mailto:" + mailto + "?subject=" + subject + "&body=" + body;
-      form.innerHTML = '<p class="review-form__ok">Köszönjük! A levelezőprogramodban megnyílt az üzenet – csak küldd el, és moderálás után megjelenik. 🙏</p>';
-      return;
-    }
-
-    // Web3Forms (ha van kulcs)
+    const name = val("name").trim(), rating = val("rating"), message = val("message").trim();
+    if (name.length < 2 || message.length < 3) { alert("Kérlek, add meg a neved és a véleményed."); return; }
+    const api = form.getAttribute("data-api");
     const btn = form.querySelector('button[type="submit"]');
     const orig = btn.textContent; btn.disabled = true; btn.textContent = "Küldés…";
     try {
-      const res = await fetch(form.action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } });
+      const res = await fetch(api.replace(/\/+$/, "") + "/submit", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, rating, message, botcheck: "" }),
+      });
       const data = await res.json();
-      if (data.success) {
-        form.innerHTML = '<p class="review-form__ok">Köszönjük a véleményed! Moderálás után megjelenik az oldalon. 🙏</p>';
-      } else { throw new Error(data.message || "hiba"); }
+      if (data.success && data.review) {
+        all.unshift(data.review);
+        renderAll();
+        const card = form.closest(".review-form-card");
+        if (card) card.innerHTML = '<p class="review-form__ok">Köszönjük a véleményed! Már meg is jelent az oldalon. 🙏</p>';
+      } else { throw new Error((data && data.error) || "Ismeretlen hiba."); }
     } catch (err) {
       btn.disabled = false; btn.textContent = orig;
-      alert("Nem sikerült elküldeni a véleményt. Kérlek, próbáld újra később.");
+      alert("Nem sikerült elküldeni: " + (err && err.message ? err.message : "próbáld újra később."));
     }
   });
 }
@@ -413,7 +421,7 @@ async function renderHome(app, contact) {
   const why = `<div class="container"><section class="why"><h2 class="page__title">Miért válassz engem?</h2><div class="why-grid">${whyCards}</div></section></div>`;
 
   app.innerHTML = h + tickerBand(hero.ticker) + aboutHTML + quick + why + reviewsSectionHTML(reviews, contact);
-  wireReviewForm(app);
+  await initReviews(reviews, app);
 }
 
 function renderCardsPage(app, data, defTitle, kind) {
