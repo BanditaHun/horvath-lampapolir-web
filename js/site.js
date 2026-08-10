@@ -482,17 +482,17 @@ function renderGallery(app, gallery) {
 
 function renderContact(app, contact) {
   const phone = isSet(contact.phone) ? contact.phone : "";
-  const infoRow = (ic, label, valueHTML) =>
+  const infoRow = (ic, label, valueHTML, vClass) =>
     `<li class="contact-info__item">
        <span class="contact-info__ic">${ic}</span>
        <span class="contact-info__body">
          <span class="contact-info__label">${label}</span>
-         <span class="contact-info__value">${valueHTML}</span>
+         <span class="contact-info__value${vClass ? " " + vClass : ""}">${valueHTML}</span>
        </span>
      </li>`;
   const rows = [];
   if (phone) rows.push(infoRow(ICON_PHONE, "Telefon", `<a href="${telHref(phone)}">${esc(phone)}</a>`));
-  if (isSet(contact.email)) rows.push(infoRow(ICON_MAIL, "E-mail", `<a href="mailto:${esc(contact.email)}">${esc(contact.email)}</a>`));
+  if (isSet(contact.email)) rows.push(infoRow(ICON_MAIL, "E-mail", `<a href="mailto:${esc(contact.email)}">${esc(contact.email)}</a>`, "contact-info__value--email"));
   if (isSet(contact.facebook_url)) rows.push(infoRow(ICON_FB, "Facebook", `<a href="${esc(contact.facebook_url)}" target="_blank" rel="noopener">Írj üzenetet</a>`));
   if (isSet(contact.instagram_url)) rows.push(infoRow(ICON_IG, "Instagram", `<a href="${esc(contact.instagram_url)}" target="_blank" rel="noopener">Megnézem</a>`));
 
@@ -511,10 +511,16 @@ function renderContact(app, contact) {
 }
 
 function bookingFormHTML(contact) {
-  const services = ["Fényszóró-felújítás – ALAP", "Fényszóró-felújítás – STANDARD", "Fényszóró-felújítás – PRÉMIUM", "Szélvédő- / üvegkezelés", "Egyéb (a megjegyzésbe írom)"];
-  const opts = services.map((s) => `<option value="${esc(s)}">${esc(s)}</option>`).join("");
+  const groups = [
+    ["Fényszóró-felújítás", ["Fényszóró-felújítás – ALAP", "Fényszóró-felújítás – STANDARD", "Fényszóró-felújítás – PRÉMIUM"]],
+    ["Kombó csomagok (fényszóró + üveg)", ["Kombó: Fényszóró-felújítás + szélvédő-vízlepergető", "Kombó: Fényszóró-felújítás + teljes üvegkezelés"]],
+    ["Egyéb szolgáltatás", ["Szélvédő- / üvegkezelés", "Egyéb – a megjegyzésbe írom"]],
+  ];
+  const opts = groups.map(([g, arr]) => `<optgroup label="${esc(g)}">${arr.map((s) => `<option value="${esc(s)}">${esc(s)}</option>`).join("")}</optgroup>`).join("");
+  const dayparts = ["Bármelyik napszak jó", "Délelőtt", "Kora délután", "Késő délután / kora este"];
+  const dayOpts = dayparts.map((s) => `<option value="${esc(s)}">${esc(s)}</option>`).join("");
   return `<section class="booking">
-    <h2 class="booking__title">Időpontkérés</h2>
+    <h2 class="booking__title">Időpont igénylése</h2>
     <p class="booking__lead">Töltsd ki pár másodperc alatt, és e-mailben elküldöd nekem az igényed. Sürgős esetben inkább <a href="${telHref(contact.phone)}">hívj</a>.</p>
     <form class="booking__form" id="booking-form" novalidate>
       <div class="booking__row">
@@ -531,10 +537,17 @@ function bookingFormHTML(contact) {
       </div>
       <label class="booking__field"><span>Település / helyszín</span>
         <input type="text" name="place" placeholder="pl. Szekszárd" /></label>
-      <label class="booking__field"><span>Megjegyzés, kért időpont</span>
-        <textarea name="message" rows="4" placeholder="pl. Hétvégén ráérek, mindkét fényszóró homályos."></textarea></label>
+      <div class="booking__row">
+        <label class="booking__field"><span>Kért időpont (nap)</span>
+          <input type="date" name="date_pref" /></label>
+        <label class="booking__field"><span>Napszak</span>
+          <select name="daypart">${dayOpts}</select></label>
+      </div>
+      <label class="booking__field"><span>Megjegyzés</span>
+        <textarea name="message" rows="4" placeholder="pl. Mindkét fényszóró homályos, hétvégén érek rá."></textarea></label>
+      <p class="booking__info">ℹ️ Ez egy <strong>időpont-igénylő lap</strong>, nem végleges foglalás. Miután elküldted, <strong>rövid időn belül visszahívlak</strong>, és közösen egyeztetjük a pontos időpontot.</p>
       <div class="booking__actions">
-        <button type="submit" class="btn btn--primary">Időpontkérés küldése</button>
+        <button type="submit" class="btn btn--primary">Igénylés elküldése</button>
         <a class="btn btn--ghost" href="${telHref(contact.phone)}">Inkább hívlak</a>
       </div>
       <p class="booking__note" id="booking-note" hidden></p>
@@ -555,25 +568,29 @@ function wireBookingForm(contact) {
       if (note) { note.hidden = false; note.className = "booking__note booking__note--err"; note.textContent = "Kérlek add meg a neved és a telefonszámod."; }
       return;
     }
+    const dateP = (f.get("date_pref") || "").toString().trim();
+    const daypart = (f.get("daypart") || "").toString().trim();
+    const idopont = [dateP, daypart].filter(Boolean).join(" – ") || "—";
     const lines = [
-      "Időpontkérés a weboldalról",
+      "Időpont-igénylés a weboldalról",
       "",
       "Név: " + name,
       "Telefon: " + phone,
       "Autó: " + ((f.get("car") || "").toString().trim() || "—"),
       "Szolgáltatás: " + ((f.get("service") || "").toString().trim() || "—"),
       "Helyszín: " + ((f.get("place") || "").toString().trim() || "—"),
+      "Kért időpont: " + idopont,
       "",
       "Megjegyzés:",
       (f.get("message") || "").toString().trim() || "—",
     ];
     const to = isSet(contact.email) ? contact.email : "";
-    const subject = "Időpontkérés – " + name;
+    const subject = "Időpont-igénylés – " + name;
     const href = "mailto:" + encodeURIComponent(to) +
       "?subject=" + encodeURIComponent(subject) +
       "&body=" + encodeURIComponent(lines.join("\n"));
     window.location.href = href;
-    if (note) { note.hidden = false; note.className = "booking__note booking__note--ok"; note.textContent = "Megnyílik a leveleződ a kész üzenettel – csak küldd el. Ha nem nyílt meg, hívj a fenti számon."; }
+    if (note) { note.hidden = false; note.className = "booking__note booking__note--ok"; note.textContent = "Megnyílik a leveleződ a kész üzenettel – csak küldd el. Ezután rövid időn belül visszahívlak az egyeztetéshez. Ha a levelező nem nyílt meg, hívj a fenti számon."; }
   });
 }
 

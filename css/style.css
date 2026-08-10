@@ -607,3 +607,18 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
   .contact-layout { grid-template-columns: 1fr; gap: 18px; }
   .contact-aside { position: static; }
 }
+
+/* ---------- Idopont-igenylo lap: extra elemek ---------- */
+.booking__field input,
+.booking__field select,
+.booking__field textarea { color-scheme: dark; }
+.booking__field input[type="date"] { min-height: 44px; }
+.booking__info {
+  margin: 2px 0 0; padding: 12px 15px; font-size: .9rem; line-height: 1.55;
+  color: var(--chrome); background: rgba(240,180,41,0.07);
+  border: 1px solid rgba(240,180,41,0.28); border-left: 3px solid var(--gold);
+  border-radius: 10px;
+}
+.booking__info strong { color: #fff; }
+/* Hosszu e-mail cim a panelen: kisebb betu, szep tordeles */
+.contact-info__value--email a { font-size: .95rem; overflow-wrap: anywhere; }
