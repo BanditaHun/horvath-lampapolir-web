@@ -120,7 +120,7 @@ function buildFooter() {
         <img class="site-footer__logo" src="images/logo.png" alt="" onerror="this.style.display='none'" />
         <div class="site-footer__brandtext">
           <strong>Horváth Lámpapolír</strong>
-          <span>Mobil fényszóró-felújítás · Tolna megye, kb. 50 km-es körzet</span>
+          <span>Mobil fényszóró-felújítás Tolna megyében, 50 km-es körzetben</span>
           <span class="site-footer__tags">Házhoz megyünk · 1 év garancia · Számlát adunk</span>
         </div>
       </div>
