@@ -362,7 +362,10 @@ section:last-of-type { border-bottom: none; }
 .site-footer__link { display: inline-flex; align-items: center; gap: 8px; color: var(--chrome); font-weight: 600; font-size: .95rem; }
 .site-footer__link svg { color: var(--gold); flex: none; }
 .site-footer__link:hover { color: var(--gold); text-decoration: none; }
-.site-footer__bottom { text-align: center; padding: 14px 20px; color: var(--chrome-dim); font-size: .85rem; border-top: 1px solid var(--line); }
+.site-footer__bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 18px; padding: 14px clamp(16px,3vw,44px); color: var(--chrome-dim); font-size: .85rem; border-top: 1px solid var(--line); }
+.site-footer__legal a { color: var(--chrome-dim); }
+.site-footer__legal a:hover { color: var(--gold); }
+@media (max-width: 640px) { .site-footer__bottom { justify-content: flex-start; } }
 @media (max-width: 640px) { .site-footer__inner { flex-direction: column; align-items: flex-start; gap: 18px; } }
 
 /* ---------- Futó szalaghirdetés (ticker) ---------- */

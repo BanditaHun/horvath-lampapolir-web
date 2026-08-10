@@ -125,7 +125,10 @@ function buildFooter() {
       </div>
       <div class="site-footer__contact" id="footer-contact"></div>
     </div>
-    <div class="site-footer__bottom">© <span id="year"></span> Horváth Lámpapolír – mobil fényszóró-felújítás</div>
+    <div class="site-footer__bottom">
+      <span>© <span id="year"></span> Horváth Lámpapolír – mobil fényszóró-felújítás</span>
+      <span class="site-footer__legal"><a href="adatvedelem.html">Adatvédelmi tájékoztató</a> · <a href="impresszum.html">Impresszum</a></span>
+    </div>
   </footer>`;
 }
 function populateFooter(contact) {
@@ -410,6 +413,11 @@ function renderCardsPage(app, data, defTitle, kind) {
   cont.appendChild(grid);
 }
 
+function renderDoc(app, data, defTitle) {
+  app.innerHTML = pageHead(data.heading || defTitle, "") +
+    `<div class="container"><div class="rich prose">${mdBlock(data.body || "")}</div></div>`;
+}
+
 function renderGallery(app, gallery) {
   app.innerHTML = pageHead(gallery.heading || "Munkáink", "");
   const cont = app.querySelector(".container");
@@ -466,6 +474,8 @@ async function initSite() {
       case "kiszallas": renderCardsPage(app, await loadJSON("content/delivery.json"), "Kiszállási díj", "delivery"); break;
       case "galeria": renderGallery(app, await loadJSON("content/gallery.json")); break;
       case "kapcsolat": renderContact(app, contact || (await loadJSON("content/contact.json"))); break;
+      case "adatvedelem": renderDoc(app, await loadJSON("content/privacy.json"), "Adatvédelmi tájékoztató"); break;
+      case "impresszum": renderDoc(app, await loadJSON("content/imprint.json"), "Impresszum"); break;
     }
   } catch (err) {
     console.error(err);
