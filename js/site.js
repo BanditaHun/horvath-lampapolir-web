@@ -386,7 +386,18 @@ async function renderHome(app, contact) {
     <a class="neon-card neon-card--link" href="kapcsolat.html" style="animation-delay:.7s"><h3 class="neon-card__title">Kapcsolat</h3><p class="neon-card__desc">Hívj vagy írj, és egyeztetünk egy időpontot – házhoz megyünk Tolna megyében, 50 km-es körzetben.</p><span class="neon-card__more">Kapcsolat →</span></a>
   </div></div>`;
 
-  app.innerHTML = h + tickerBand(hero.ticker) + aboutHTML + quick + reviewsSectionHTML(reviews, contact);
+  const WHY = [
+    ["🏠", "Házhoz megyek", "Nem kell autót bevinni sehova – Tolna megyében, 50 km-es körzetben, otthonra vagy munkahelyre."],
+    ["⏱️", "Gyors, ~40 perc", "A lámpa kiszerelése nélkül, helyben – a kért szolgáltatástól függően legfeljebb 1 óra."],
+    ["🛡️", "1 év garancia", "Felületi garancia a felújított fényszóróra, igény szerint összesen 2 évre bővíthető."],
+    ["🧾", "Számlát adok", "Magánszemélyeknek és cégeknek egyaránt – átlátható, korrekt elszámolás."],
+    ["✨", "Tartós UV-védelem", "Gyári vagy annál is jobb minőség, amely nem mattul vissza, és karcállóságot ad."],
+    ["🚚", "Cégeknek, flottáknak is", "Fuvarozóknak, autókereskedéseknek és flottáknak is szívesen dolgozom."],
+  ];
+  const whyCards = WHY.map(([ic, t, d]) => `<div class="why-item"><span class="why-item__ic" aria-hidden="true">${ic}</span><h3>${esc(t)}</h3><p>${esc(d)}</p></div>`).join("");
+  const why = `<div class="container"><section class="why"><h2 class="page__title">Miért válassz engem?</h2><div class="why-grid">${whyCards}</div></section></div>`;
+
+  app.innerHTML = h + tickerBand(hero.ticker) + aboutHTML + quick + why + reviewsSectionHTML(reviews, contact);
   wireReviewForm(app);
 }
 
