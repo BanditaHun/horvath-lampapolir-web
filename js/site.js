@@ -417,7 +417,7 @@ async function renderHome(app, contact) {
     ["🏠", "Házhoz megyek", "Nem kell autót bevinni sehova – Tolna megyében, 50 km-es körzetben, otthonra vagy munkahelyre."],
     ["⏱️", "Gyors, ~40 perc", "A lámpa kiszerelése nélkül, helyben – a kért szolgáltatástól függően legfeljebb 1 óra."],
     ["🛡️", "1 év garancia", "Felületi garancia a felújított fényszóróra, igény szerint összesen 2 évre bővíthető."],
-    ["🧾", "Számlát adok", "Magánszemélyeknek és cégeknek egyaránt – átlátható, korrekt elszámolás."],
+    ["🧾", "Számlaképes vállalkozás", "Bejelentett egyéni vállalkozóként magánszemélyeknek és cégeknek egyaránt adok számlát – átlátható, korrekt elszámolás."],
     ["✨", "Tartós UV-védelem", "Gyári vagy annál is jobb minőség, amely nem mattul vissza, és karcállóságot ad."],
     ["🚚", "Cégeknek, flottáknak is", "Fuvarozóknak, autókereskedéseknek és flottáknak is szívesen dolgozom."],
   ];
