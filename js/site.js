@@ -104,7 +104,8 @@ function buildHeader(active) {
       </div>
       <div class="nav__right">
         <a class="topbar__phone" id="top-phone" href="#" hidden>${ICON_PHONE}<span id="top-phone-text"></span></a>
-        <a class="topbar__social topbar__social--fb" id="top-fb" href="#" target="_blank" rel="noopener" aria-label="Facebook" hidden>${ICON_FB}<span class="topbar__social-label">Facebook</span></a>
+        <a class="topbar__phone" id="top-email" href="#" hidden>${ICON_MAIL}<span id="top-email-text"></span></a>
+        <a class="topbar__social topbar__social--fb" id="top-fb" href="#" target="_blank" rel="noopener" aria-label="Facebook" hidden>${ICON_FB}</a>
         <button class="nav__toggle" id="nav-toggle" aria-label="Menü" aria-expanded="false"><span></span><span></span><span></span></button>
       </div>
     </div>
@@ -197,6 +198,10 @@ function populateTopbar(contact) {
   if (isSet(contact.phone)) {
     document.getElementById("top-phone-text").textContent = contact.phone;
     const tp = document.getElementById("top-phone"); tp.href = telHref(contact.phone); tp.hidden = false;
+  }
+  if (isSet(contact.email)) {
+    document.getElementById("top-email-text").textContent = contact.email;
+    const te = document.getElementById("top-email"); te.href = "mailto:" + contact.email; te.hidden = false;
   }
   if (isSet(contact.facebook_url)) { const t = document.getElementById("top-fb"); t.href = contact.facebook_url; t.hidden = false; }
 }

@@ -74,11 +74,8 @@ a:hover { text-decoration: underline; }
   transition: color .15s ease, border-color .15s ease, transform .12s ease, background .15s ease;
 }
 .topbar__social:hover { color: var(--gold); border-color: var(--gold); background: rgba(240,180,41,0.10); transform: translateY(-1px); }
-/* Facebook gomb – valódi kék, jól látható */
-.topbar__social--fb {
-  width: auto; height: auto; border-radius: 40px; padding: 8px 16px; gap: 8px;
-  background: #1877F2; border-color: #1877F2; color: #fff; font-weight: 700; font-size: .9rem;
-}
+/* Facebook – kör alakú, valódi kék ikon (felirat nélkül) */
+.topbar__social--fb { background: #1877F2; border-color: #1877F2; color: #fff; }
 .topbar__social--fb:hover { background: #1466d8; border-color: #1466d8; color: #fff; transform: translateY(-1px); }
 .topbar__social--fb svg { color: #fff; }
 @media (max-width: 560px) {
@@ -506,6 +503,7 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
   .nav__title { display: none; }
   .nav__right { gap: 10px; }
   .nav__right .topbar__social { display: none; }
+  .nav__right #top-email { display: none; }
   .topbar__phone span { font-size: .95rem; }
   .nav__links {
     flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 0;
