@@ -511,3 +511,63 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
   .nav__links a { padding: 12px 10px; border-radius: 8px; }
   .nav__cta { text-align: center; margin-top: 6px; }
 }
+
+/* ---------- Időpontkérő űrlap ---------- */
+.booking {
+  background: linear-gradient(180deg, rgba(240,180,41,0.05), rgba(20,20,20,0.6));
+  border: 1px solid rgba(240,180,41,0.28); border-radius: var(--radius);
+  padding: 26px clamp(18px, 3vw, 34px); margin: 0 auto 30px; max-width: 860px;
+}
+.booking__title { font-family: var(--font-heading); color: #fff; font-size: 1.5rem; margin: 0 0 6px; }
+.booking__lead { color: var(--chrome-dim); margin: 0 0 20px; font-size: .96rem; }
+.booking__lead a { color: var(--gold); }
+.booking__form { display: flex; flex-direction: column; gap: 14px; }
+.booking__row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.booking__field { display: flex; flex-direction: column; gap: 6px; }
+.booking__field > span { color: var(--chrome); font-size: .86rem; font-weight: 600; }
+.booking__field input,
+.booking__field select,
+.booking__field textarea {
+  width: 100%; background: #0f0f0f; color: #fff;
+  border: 1px solid var(--line); border-radius: 10px; padding: 11px 13px;
+  font-family: inherit; font-size: .96rem; transition: border-color .15s ease, box-shadow .15s ease;
+}
+.booking__field input::placeholder,
+.booking__field textarea::placeholder { color: #6b7079; }
+.booking__field input:focus,
+.booking__field select:focus,
+.booking__field textarea:focus {
+  outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(240,180,41,0.15);
+}
+.booking__field textarea { resize: vertical; min-height: 96px; }
+.booking__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 4px; }
+.booking__note { margin: 6px 0 0; font-size: .9rem; padding: 10px 14px; border-radius: 10px; }
+.booking__note--ok { color: #bff0c8; background: rgba(40,120,60,0.18); border: 1px solid rgba(80,180,110,0.4); }
+.booking__note--err { color: #ffc9c9; background: rgba(150,40,40,0.18); border: 1px solid rgba(200,90,90,0.45); }
+
+/* ---------- GYIK harmonika ---------- */
+.faq { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+.faq__item {
+  background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius);
+  overflow: hidden; transition: border-color .15s ease, background .15s ease;
+}
+.faq__item[open] { border-color: rgba(240,180,41,0.45); background: #191919; }
+.faq__q {
+  cursor: pointer; list-style: none; padding: 16px 46px 16px 20px; position: relative;
+  color: #fff; font-family: var(--font-heading); font-size: 1.06rem; font-weight: 600;
+}
+.faq__q::-webkit-details-marker { display: none; }
+.faq__q::after {
+  content: "+"; position: absolute; right: 18px; top: 50%; transform: translateY(-50%);
+  color: var(--gold); font-size: 1.5rem; line-height: 1; transition: transform .2s ease;
+}
+.faq__item[open] .faq__q::after { content: "–"; }
+.faq__q:hover { color: var(--gold); }
+.faq__a { padding: 0 20px 18px; color: var(--chrome); font-size: .97rem; line-height: 1.65; }
+.faq__a a { color: var(--gold); }
+.faq__a p:first-child { margin-top: 0; }
+
+@media (max-width: 640px) {
+  .booking__row { grid-template-columns: 1fr; }
+  .booking__actions .btn { width: 100%; text-align: center; }
+}

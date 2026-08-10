@@ -81,6 +81,7 @@ const NAV = [
   { href: "szolgaltatasok.html", label: "Szolgáltatások", page: "szolgaltatasok" },
   { href: "kiszallas.html", label: "Kiszállás", page: "kiszallas" },
   { href: "galeria.html", label: "Galéria", page: "galeria" },
+  { href: "gyik.html", label: "GYIK", page: "gyik" },
   { href: "kapcsolat.html", label: "Kapcsolat", page: "kapcsolat", cta: true },
 ];
 const ICON_PHONE = '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.2 1l-2.3 2.2z"/></svg>';
@@ -136,6 +137,7 @@ function buildFooter() {
           <a href="szolgaltatasok.html">Szolgáltatások</a>
           <a href="kiszallas.html">Kiszállás</a>
           <a href="galeria.html">Galéria</a>
+          <a href="gyik.html">GYIK</a>
           <a href="kapcsolat.html">Kapcsolat</a>
         </div>
       </nav>
@@ -489,8 +491,111 @@ function renderContact(app, contact) {
   if (isSet(contact.instagram_url)) links.push(`<a class="btn btn--ghost" href="${esc(contact.instagram_url)}" target="_blank" rel="noopener">Instagram</a>`);
   if (isSet(contact.email)) links.push(`<a class="btn btn--ghost" href="mailto:${esc(contact.email)}">${esc(contact.email)}</a>`);
   if (links.length) parts.push(`<div class="neon-card"><h3 class="neon-card__title">Kövess / írj</h3><div class="neon-card__links">${links.join("")}</div></div>`);
+
   app.innerHTML = pageHead(contact.heading || "Elérhetőség", "") +
-    `<div class="container"><div class="cards cards--2">${parts.join("")}</div></div>`;
+    `<div class="container">${bookingFormHTML(contact)}
+      <div class="cards cards--2">${parts.join("")}</div></div>`;
+  wireBookingForm(contact);
+}
+
+function bookingFormHTML(contact) {
+  const services = ["Fényszóró-felújítás – ALAP", "Fényszóró-felújítás – STANDARD", "Fényszóró-felújítás – PRÉMIUM", "Szélvédő- / üvegkezelés", "Egyéb (a megjegyzésbe írom)"];
+  const opts = services.map((s) => `<option value="${esc(s)}">${esc(s)}</option>`).join("");
+  return `<section class="booking">
+    <h2 class="booking__title">Időpontkérés</h2>
+    <p class="booking__lead">Töltsd ki pár másodperc alatt, és e-mailben elküldöd nekem az igényed. Sürgős esetben inkább <a href="${telHref(contact.phone)}">hívj</a>.</p>
+    <form class="booking__form" id="booking-form" novalidate>
+      <div class="booking__row">
+        <label class="booking__field"><span>Neved *</span>
+          <input type="text" name="name" required autocomplete="name" placeholder="pl. Kovács János" /></label>
+        <label class="booking__field"><span>Telefonszámod *</span>
+          <input type="tel" name="phone" required autocomplete="tel" placeholder="pl. +36 20 123 4567" /></label>
+      </div>
+      <div class="booking__row">
+        <label class="booking__field"><span>Autó típusa</span>
+          <input type="text" name="car" autocomplete="off" placeholder="pl. Opel Astra H, 2008" /></label>
+        <label class="booking__field"><span>Mit szeretnél?</span>
+          <select name="service">${opts}</select></label>
+      </div>
+      <label class="booking__field"><span>Település / helyszín</span>
+        <input type="text" name="place" placeholder="pl. Szekszárd" /></label>
+      <label class="booking__field"><span>Megjegyzés, kért időpont</span>
+        <textarea name="message" rows="4" placeholder="pl. Hétvégén ráérek, mindkét fényszóró homályos."></textarea></label>
+      <div class="booking__actions">
+        <button type="submit" class="btn btn--primary">Időpontkérés küldése</button>
+        <a class="btn btn--ghost" href="${telHref(contact.phone)}">Inkább hívlak</a>
+      </div>
+      <p class="booking__note" id="booking-note" hidden></p>
+    </form>
+  </section>`;
+}
+
+function wireBookingForm(contact) {
+  const form = document.getElementById("booking-form");
+  if (!form) return;
+  const note = document.getElementById("booking-note");
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const f = new FormData(form);
+    const name = (f.get("name") || "").toString().trim();
+    const phone = (f.get("phone") || "").toString().trim();
+    if (!name || !phone) {
+      if (note) { note.hidden = false; note.className = "booking__note booking__note--err"; note.textContent = "Kérlek add meg a neved és a telefonszámod."; }
+      return;
+    }
+    const lines = [
+      "Időpontkérés a weboldalról",
+      "",
+      "Név: " + name,
+      "Telefon: " + phone,
+      "Autó: " + ((f.get("car") || "").toString().trim() || "—"),
+      "Szolgáltatás: " + ((f.get("service") || "").toString().trim() || "—"),
+      "Helyszín: " + ((f.get("place") || "").toString().trim() || "—"),
+      "",
+      "Megjegyzés:",
+      (f.get("message") || "").toString().trim() || "—",
+    ];
+    const to = isSet(contact.email) ? contact.email : "";
+    const subject = "Időpontkérés – " + name;
+    const href = "mailto:" + encodeURIComponent(to) +
+      "?subject=" + encodeURIComponent(subject) +
+      "&body=" + encodeURIComponent(lines.join("\n"));
+    window.location.href = href;
+    if (note) { note.hidden = false; note.className = "booking__note booking__note--ok"; note.textContent = "Megnyílik a leveleződ a kész üzenettel – csak küldd el. Ha nem nyílt meg, hívj a fenti számon."; }
+  });
+}
+
+function renderFaq(app, data) {
+  app.innerHTML = pageHead(data.heading || "Gyakori kérdések", data.intro || "");
+  const cont = app.querySelector(".container");
+  const items = (data.items || []).filter((it) => isSet(it.q));
+  const list = el("div", "faq");
+  items.forEach((it, i) => {
+    const d = el("details", "faq__item");
+    if (i === 0) d.open = true;
+    const sum = el("summary", "faq__q", esc(it.q));
+    const ans = el("div", "faq__a rich");
+    ans.innerHTML = mdBlock(it.a || "");
+    d.appendChild(sum); d.appendChild(ans);
+    list.appendChild(d);
+  });
+  cont.appendChild(list);
+  // FAQPage strukturált adat (Google gazdag találat)
+  if (items.length) {
+    const ld = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": items.map((it) => ({
+        "@type": "Question",
+        "name": it.q,
+        "acceptedAnswer": { "@type": "Answer", "text": (it.a || "").replace(/[#*_`>]/g, "").trim() },
+      })),
+    };
+    const s = document.createElement("script");
+    s.type = "application/ld+json";
+    s.textContent = JSON.stringify(ld);
+    document.head.appendChild(s);
+  }
 }
 
 // ---------- Indítás ----------
@@ -515,6 +620,7 @@ async function initSite() {
       case "szolgaltatasok": renderCardsPage(app, await loadJSON("content/services.json"), "Szolgáltatások", "services"); break;
       case "kiszallas": renderCardsPage(app, await loadJSON("content/delivery.json"), "Kiszállási díj", "delivery"); break;
       case "galeria": renderGallery(app, await loadJSON("content/gallery.json")); break;
+      case "gyik": renderFaq(app, await loadJSON("content/faq.json")); break;
       case "kapcsolat": renderContact(app, contact || (await loadJSON("content/contact.json"))); break;
       case "adatvedelem": renderDoc(app, await loadJSON("content/privacy.json"), "Adatvédelmi tájékoztató"); break;
       case "impresszum": renderDoc(app, await loadJSON("content/imprint.json"), "Impresszum"); break;

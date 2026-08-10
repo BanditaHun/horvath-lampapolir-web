@@ -1,0 +1,42 @@
+{
+  "heading": "Gyakori kérdések",
+  "intro": "A leggyakoribb kérdések a mobil fényszóró-felújításról. Ha valami kimaradt, [hívj](kapcsolat.html) vagy írj bátran.",
+  "items": [
+    {
+      "q": "Mennyi ideig tart egy fényszóró-felújítás?",
+      "a": "A legtöbb autónál **kb. 30–60 perc**, a fényszórók állapotától és a kért csomagtól függően. A lámpát nem kell kiszerelni, helyben, az autón végzem el a munkát."
+    },
+    {
+      "q": "Meddig tart a hatás? Nem homályosodik vissza?",
+      "a": "A záró UV-védelemmel ellátott felület **tartósan tiszta marad** – nem mattul vissza néhány hét alatt, mint a védelem nélküli csiszolásnál. A felújításra **1 év garanciát** vállalok, amely igény szerint összesen 2 évre bővíthető."
+    },
+    {
+      "q": "Házhoz jössz? Meddig mész el?",
+      "a": "Igen, **házhoz megyek** – otthonhoz vagy munkahelyre egyaránt. Tolna megyében és környékén, nagyjából **50 km-es körzetben** dolgozom. A kiszállási díjról a [Kiszállás](kiszallas.html) oldalon tájékozódhatsz."
+    },
+    {
+      "q": "Mire van szükség a helyszínen? Kell áram vagy víz?",
+      "a": "Alap esetben **mindent viszek magammal**, saját eszközzel dolgozom. Ha van a közelben elérhető **konnektor**, az segít, de nem feltétel – előre egyeztetjük."
+    },
+    {
+      "q": "Rossz időben, esőben is vállalod?",
+      "a": "A polírozáshoz **száraz felület** kell, ezért szakadó esőben nem ideális a munka. Ilyenkor egyeztetünk egy másik időpontot, vagy egy fedett helyen (garázs, kocsibeálló) meg tudjuk oldani."
+    },
+    {
+      "q": "Minden autótípusra jó? A nagyon sárga, repedezett lámpán is segít?",
+      "a": "**Minden személyautóra és haszonjárműre** alkalmas. Az erősen megsárgult, oxidálódott fényszórók is jelentősen javulnak. Ha a lámpa **belülről párás** vagy fizikailag repedt, azt a felújítás nem oldja meg – ilyenkor őszintén megmondom, mi várható."
+    },
+    {
+      "q": "Mennyibe kerül?",
+      "a": "A csomagok **10 000 Ft-tól** indulnak, a fényszórók állapota és a választott csomag szerint. A pontos árakat a [Csomagok](csomagok.html) oldalon találod – a kiszállási díj ehhez adódik."
+    },
+    {
+      "q": "Adsz számlát? Céges autót is vállalsz?",
+      "a": "Igen. **Bejelentett, számlaképes egyéni vállalkozó** vagyok, magánszemélyeknek és cégeknek egyaránt **adok számlát**. Fuvarozóknak, autókereskedéseknek és flottáknak is szívesen dolgozom."
+    },
+    {
+      "q": "Hogyan tudok időpontot kérni?",
+      "a": "A legegyszerűbb, ha **[telefonon hívsz](kapcsolat.html)**, vagy kitöltöd a [Kapcsolat](kapcsolat.html) oldalon lévő rövid **időpontkérő űrlapot** – utána egyeztetjük a részleteket."
+    }
+  ]
+}

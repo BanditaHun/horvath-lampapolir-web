@@ -172,6 +172,24 @@ collections:
               - { name: "image", label: "Kép", widget: "image" }
               - { name: "caption", label: "Képaláírás", widget: "string", required: false }
 
+  # ---- GYIK (gyakori kérdések) ----
+  - name: "faq"
+    label: "GYIK (gyakori kérdések)"
+    files:
+      - name: "faq"
+        label: "Kérdések és válaszok"
+        file: "content/faq.json"
+        format: "json"
+        fields:
+          - { name: "heading", label: "Szakasz címe", widget: "string" }
+          - { name: "intro", label: "Bevezető szöveg (opcionális)", widget: "markdown", required: false }
+          - name: "items"
+            label: "Kérdések"
+            widget: "list"
+            fields:
+              - { name: "q", label: "Kérdés", widget: "string" }
+              - { name: "a", label: "Válasz", widget: "markdown", hint: "Félkövér, lista, link is használható." }
+
   # ---- Vélemények (a kezdőlap alján) ----
   - name: "reviews"
     label: "Vélemények"
