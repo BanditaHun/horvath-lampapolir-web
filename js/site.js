@@ -104,8 +104,7 @@ function buildHeader(active) {
       </div>
       <div class="nav__right">
         <a class="topbar__phone" id="top-phone" href="#" hidden>${ICON_PHONE}<span id="top-phone-text"></span></a>
-        <a class="topbar__social" id="top-fb" href="#" target="_blank" rel="noopener" aria-label="Facebook" hidden>${ICON_FB}</a>
-        <a class="topbar__social" id="top-ig" href="#" target="_blank" rel="noopener" aria-label="Instagram" hidden>${ICON_IG}</a>
+        <a class="topbar__social topbar__social--fb" id="top-fb" href="#" target="_blank" rel="noopener" aria-label="Facebook" hidden>${ICON_FB}<span class="topbar__social-label">Facebook</span></a>
         <button class="nav__toggle" id="nav-toggle" aria-label="Menü" aria-expanded="false"><span></span><span></span><span></span></button>
       </div>
     </div>
@@ -152,8 +151,7 @@ function populateFooter(contact) {
   const parts = [];
   if (isSet(contact.phone)) parts.push(`<a class="site-footer__link" href="${telHref(contact.phone)}">${ICON_PHONE}<span>${esc(contact.phone)}</span></a>`);
   if (isSet(contact.email)) parts.push(`<a class="site-footer__link" href="mailto:${esc(contact.email)}">${ICON_MAIL}<span>${esc(contact.email)}</span></a>`);
-  if (isSet(contact.facebook_url)) parts.push(`<a class="site-footer__link" href="${esc(contact.facebook_url)}" target="_blank" rel="noopener">${ICON_FB}<span>Facebook</span></a>`);
-  if (isSet(contact.instagram_url)) parts.push(`<a class="site-footer__link" href="${esc(contact.instagram_url)}" target="_blank" rel="noopener">${ICON_IG}<span>Instagram</span></a>`);
+  if (isSet(contact.facebook_url)) parts.push(`<a class="site-footer__link site-footer__link--fb" href="${esc(contact.facebook_url)}" target="_blank" rel="noopener">${ICON_FB}<span>Facebook</span></a>`);
   box.innerHTML = parts.join("");
 }
 
@@ -201,7 +199,6 @@ function populateTopbar(contact) {
     const tp = document.getElementById("top-phone"); tp.href = telHref(contact.phone); tp.hidden = false;
   }
   if (isSet(contact.facebook_url)) { const t = document.getElementById("top-fb"); t.href = contact.facebook_url; t.hidden = false; }
-  if (isSet(contact.instagram_url)) { const t = document.getElementById("top-ig"); t.href = contact.instagram_url; t.hidden = false; }
 }
 
 // ---------- Neon kártyák ----------
