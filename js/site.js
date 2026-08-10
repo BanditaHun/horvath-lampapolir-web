@@ -121,7 +121,7 @@ function buildFooter() {
         <div class="site-footer__brandtext">
           <strong>Horváth Lámpapolír</strong>
           <span>Mobil fényszóró-felújítás Tolna megyében, 50 km-es körzetben</span>
-          <span class="site-footer__tags">Házhoz megyünk · 1 év garancia · Számlát adunk</span>
+          <span class="site-footer__tags">Házhoz megyünk – magánszemélyeknek, cégeknek és flottáknak egyaránt –, a munkára 1 év garanciát és számlát adunk.</span>
         </div>
       </div>
       <div class="site-footer__col">
