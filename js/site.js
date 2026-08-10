@@ -274,9 +274,13 @@ function reviewsSectionHTML(reviews, contact) {
   return `<section class="reviews" id="velemenyek"><div class="container"><div class="reviews__panel">
     <h2 class="page__title">${esc((reviews && reviews.heading) || "Vélemények")}</h2>
     ${reviews && reviews.intro ? `<div class="rich page__intro">${mdBlock(reviews.intro)}</div>` : ""}
-    <div id="reviews-summary"></div>
-    <div class="cards reviews__list" id="reviews-list"></div>
-    <div class="review-form-wrap">${form}</div>
+    <div class="reviews__grid">
+      <div class="reviews__main">
+        <div id="reviews-summary"></div>
+        <div class="reviews__list" id="reviews-list"></div>
+      </div>
+      <aside class="reviews__aside">${form}</aside>
+    </div>
   </div></div></section>`;
 }
 async function initReviews(reviews, scope) {
