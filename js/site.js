@@ -671,8 +671,10 @@ function buildToTop() {
   b.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 5.7l6.3 6.3-1.4 1.4L13 9.5V19h-2V9.5l-3.9 3.9-1.4-1.4z"/></svg>';
   b.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
   document.body.appendChild(b);
-  const onScroll = () => b.classList.toggle("to-top--show", window.scrollY > 400);
+  const scrollPos = () => window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+  const onScroll = () => b.classList.toggle("to-top--show", scrollPos() > 250);
   window.addEventListener("scroll", onScroll, { passive: true });
+  document.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 }
 
