@@ -68,6 +68,25 @@ collections:
             field: { name: "text", label: "Szöveg", widget: "string" }
             hint: "Ezek folyamatosan futnak balról jobbra a kezdőlapon. Adj hozzá rövid, ütős üzeneteket."
 
+  # ---- Akció / kiemelt ajánlat (kezdőlap) ----
+  - name: "promo"
+    label: "Akció (kezdőlap)"
+    files:
+      - name: "promo"
+        label: "Kiemelt akció"
+        file: "content/promo.json"
+        format: "json"
+        fields:
+          - { name: "active", label: "Akció bekapcsolva?", widget: "boolean", default: true, hint: "Kikapcsolva eltűnik a kezdőlapról – nem kell törölni." }
+          - { name: "badge", label: "Kör-jelvény szövege (pl. -10%)", widget: "string", required: false }
+          - { name: "eyebrow", label: "Kis felső címke (pl. Őszi akció)", widget: "string", required: false }
+          - { name: "heading", label: "Fő cím", widget: "string" }
+          - { name: "text", label: "Leírás", widget: "markdown", hint: "Félkövér, lista is használható." }
+          - { name: "valid_text", label: "Érvényesség / feltétel", widget: "string", required: false }
+          - { name: "cta_label", label: "Gomb felirata", widget: "string", required: false, default: "Kérj időpontot" }
+          - { name: "cta_href", label: "Gomb hivatkozása", widget: "string", required: false, default: "kapcsolat.html" }
+          - { name: "image", label: "Háttérkép", widget: "image", required: false }
+
   # ---- Bemutatkozás ----
   - name: "about"
     label: "Bemutatkozás"

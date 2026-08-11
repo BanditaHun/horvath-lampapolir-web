@@ -388,11 +388,33 @@ function flankSide(side, imgs, chips) {
   return `<aside class="hero-flank hero-flank--${side}" aria-hidden="true">${inner}</aside>`;
 }
 
+function promoSection(promo) {
+  if (!promo || promo.active === false || promo.active === "false") return "";
+  if (!isSet(promo.heading) && !isSet(promo.text)) return "";
+  const bg = isSet(promo.image) ? `style="background-image:url('${esc(rel(promo.image))}')"` : "";
+  return `<div class="container"><section class="promo" ${bg}>
+    <div class="promo__overlay"></div>
+    <div class="promo__inner">
+      ${isSet(promo.badge) ? `<span class="promo__badge">${esc(promo.badge)}</span>` : ""}
+      <div class="promo__body">
+        ${isSet(promo.eyebrow) ? `<span class="promo__eyebrow">🍂 ${esc(promo.eyebrow)}</span>` : ""}
+        ${isSet(promo.heading) ? `<h2 class="promo__title">${mdInline(promo.heading)}</h2>` : ""}
+        ${isSet(promo.text) ? `<div class="promo__text rich">${mdBlock(promo.text)}</div>` : ""}
+        <div class="promo__cta-row">
+          ${isSet(promo.cta_label) ? `<a class="btn btn--primary" href="${esc(isSet(promo.cta_href) ? promo.cta_href : "kapcsolat.html")}">${esc(promo.cta_label)}</a>` : ""}
+          ${isSet(promo.valid_text) ? `<span class="promo__valid">${esc(promo.valid_text)}</span>` : ""}
+        </div>
+      </div>
+    </div>
+  </section></div>`;
+}
+
 async function renderHome(app, contact) {
-  const [hero, about, reviews] = await Promise.all([
+  const [hero, about, reviews, promo] = await Promise.all([
     loadJSON("content/hero.json"),
     loadJSON("content/about.json").catch(() => null),
     loadJSON("content/reviews.json").catch(() => null),
+    loadJSON("content/promo.json").catch(() => null),
   ]);
 
   let h = `<header class="hero${hero.banner ? " hero--banner" : ""}">
@@ -445,7 +467,7 @@ async function renderHome(app, contact) {
     <p class="areas__note">A településed nincs a listán? <a href="kapcsolat.html">Kérdezz rá</a> – ha belefér a körzetbe, szívesen kimegyek.</p>
   </section></div>`;
 
-  app.innerHTML = h + tickerBand(hero.ticker) + aboutHTML + quick + why + areas + reviewsSectionHTML(reviews, contact);
+  app.innerHTML = h + tickerBand(hero.ticker) + promoSection(promo) + aboutHTML + quick + why + areas + reviewsSectionHTML(reviews, contact);
   await initReviews(reviews, app);
 }
 

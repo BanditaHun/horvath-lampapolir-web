@@ -1,0 +1,11 @@
+{
+  "active": true,
+  "badge": "-10%",
+  "eyebrow": "Őszi akció",
+  "heading": "Most 10% kedvezmény minden fényszóró-felújításra!",
+  "text": "Az ősz a fényszóró-felújítás ideális időszaka: a korán sötétedő, ködös és esős estéken a tiszta, erős fény sokat számít a biztonságos vezetésben. Foglalj időpontot még ma, és a fényszóró-felújítási munkádból **10% kedvezményt** adok.",
+  "valid_text": "Az akció 2026. november 30-ig érvényes. Az időpont-igényléskor jelezd, hogy az őszi akcióra jelentkezel.",
+  "cta_label": "Kérj időpontot",
+  "cta_href": "kapcsolat.html",
+  "image": "images/osz-akcio.jpg"
+}

@@ -671,3 +671,43 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 @media (max-width: 860px) {
   body.has-mbar .to-top { bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
 }
+
+/* ---------- Őszi akció blokk (kezdőlap) ---------- */
+.promo {
+  position: relative; border-radius: var(--radius); overflow: hidden;
+  border: 1px solid rgba(240,180,41,0.45);
+  background-size: cover; background-position: center;
+  margin: 6px 0 4px; box-shadow: 0 0 34px rgba(240,180,41,0.14);
+}
+.promo__overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.86) 42%, rgba(12,10,4,0.5) 100%);
+}
+.promo__inner {
+  position: relative; display: flex; align-items: center;
+  gap: clamp(16px, 3vw, 36px); padding: clamp(20px, 3.4vw, 40px);
+}
+.promo__badge {
+  flex: none; width: clamp(86px, 13vw, 124px); height: clamp(86px, 13vw, 124px); border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--font-heading); font-weight: 800; font-size: clamp(1.6rem, 3.6vw, 2.5rem);
+  color: #1a1400; background: radial-gradient(circle at 35% 30%, #ffd970, var(--gold));
+  box-shadow: 0 8px 22px rgba(240,180,41,0.5); border: 3px solid rgba(255,255,255,0.22);
+  transform: rotate(-8deg); animation: promoPulse 2.4s ease-in-out infinite;
+}
+@keyframes promoPulse {
+  0%, 100% { box-shadow: 0 8px 22px rgba(240,180,41,0.45); }
+  50% { box-shadow: 0 8px 34px rgba(240,180,41,0.8); }
+}
+.promo__eyebrow { color: var(--gold); font-weight: 800; letter-spacing: 1px; text-transform: uppercase; font-size: .88rem; }
+.promo__title { font-family: var(--font-heading); color: #fff; font-size: clamp(1.3rem, 3vw, 2rem); line-height: 1.2; margin: 7px 0 9px; }
+.promo__text { color: var(--chrome); max-width: 640px; line-height: 1.6; margin: 0 0 16px; }
+.promo__text p:first-child { margin-top: 0; } .promo__text p:last-child { margin-bottom: 0; }
+.promo__cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+.promo__valid { color: var(--chrome-dim); font-size: .84rem; max-width: 340px; }
+@media (max-width: 640px) {
+  .promo__inner { flex-direction: column; text-align: center; }
+  .promo__overlay { background: linear-gradient(180deg, rgba(10,10,10,0.8), rgba(10,10,10,0.93)); }
+  .promo__cta-row { justify-content: center; }
+  .promo__text { max-width: none; }
+}
