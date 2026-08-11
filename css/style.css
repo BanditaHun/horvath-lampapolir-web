@@ -355,7 +355,7 @@ section:last-of-type { border-bottom: none; }
 
 /* ---------- Lábléc ---------- */
 .site-footer { border-top: 1px solid rgba(240,180,41,0.20); background: linear-gradient(180deg, rgba(15,13,9,0.65), rgba(9,9,9,0.92)); margin-top: 28px; }
-.site-footer__inner { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 34px; padding: 44px clamp(16px,3vw,44px); }
+.site-footer__inner { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 30px; padding: 44px clamp(16px,3vw,44px); }
 .site-footer__brand { display: flex; align-items: flex-start; gap: 16px; }
 .site-footer__logo { height: 64px; width: auto; border-radius: 14px; border: 1px solid rgba(240,180,41,0.35); }
 .site-footer__brandtext { display: flex; flex-direction: column; gap: 5px; }
@@ -373,7 +373,7 @@ section:last-of-type { border-bottom: none; }
 .site-footer__bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 18px; padding: 16px clamp(16px,3vw,44px); color: var(--chrome-dim); font-size: .85rem; border-top: 1px solid var(--line); }
 .site-footer__legal a { color: var(--chrome-dim); }
 .site-footer__legal a:hover { color: var(--gold); }
-@media (max-width: 820px) { .site-footer__inner { grid-template-columns: 1fr 1fr; } .site-footer__brand { grid-column: 1 / -1; } }
+@media (max-width: 960px) { .site-footer__inner { grid-template-columns: 1fr 1fr; } .site-footer__brand { grid-column: 1 / -1; } }
 @media (max-width: 520px) { .site-footer__inner { grid-template-columns: 1fr; gap: 26px; } .site-footer__bottom { justify-content: flex-start; } }
 
 /* ---------- Futó szalaghirdetés (ticker) ---------- */

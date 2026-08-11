@@ -144,8 +144,15 @@ function buildFooter() {
           <a href="szolgaltatasok.html">Szolgáltatások</a>
           <a href="kiszallas.html">Kiszállás</a>
           <a href="galeria.html">Galéria</a>
-          <a href="gyik.html">GYIK</a>
           <a href="kapcsolat.html">Kapcsolat</a>
+        </div>
+      </nav>
+      <nav class="site-footer__col" aria-label="Információk">
+        <h4 class="site-footer__h">Információk</h4>
+        <div class="site-footer__links">
+          <a href="gyik.html">GYIK – Gyakori kérdések</a>
+          <a href="adatvedelem.html">Adatvédelmi tájékoztató</a>
+          <a href="impresszum.html">Impresszum</a>
         </div>
       </nav>
     </div>
