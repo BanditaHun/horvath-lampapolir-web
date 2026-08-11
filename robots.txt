@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://banditahun.github.io/horvath-lampapolir-web/sitemap.xml
+Sitemap: https://horvathlampapolir.hu/sitemap.xml

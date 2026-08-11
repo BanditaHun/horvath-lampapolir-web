@@ -681,7 +681,7 @@ function buildToTop() {
 // LocalBusiness strukturált adat (Google helyi találat / térkép)
 function injectLocalBusiness(contact) {
   if (!contact || document.getElementById("ld-localbusiness")) return;
-  const base = "https://banditahun.github.io/horvath-lampapolir-web/";
+  const base = "https://horvathlampapolir.hu/";
   const data = {
     "@context": "https://schema.org",
     "@type": "AutoRepair",
