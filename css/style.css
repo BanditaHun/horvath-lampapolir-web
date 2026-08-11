@@ -623,7 +623,7 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 /* Hosszu e-mail cim a panelen: kisebb betu, szep tordeles */
 .contact-info__value--email a { font-size: .95rem; overflow-wrap: anywhere; }
 
-/* ---------- Lebego mobil gyorssav (Hivas + Viber) ---------- */
+/* ---------- Lebego mobil gyorssav (Hivas + WhatsApp) ---------- */
 .mbar { display: none; }
 @media (max-width: 860px) {
   .mbar {
@@ -639,7 +639,7 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
   }
   .mbar__btn svg { width: 18px; height: 18px; }
   .mbar__btn--call { background: var(--gold); color: #1a1400; }
-  .mbar__btn--viber { background: rgba(240,180,41,0.10); color: var(--gold); border: 1px solid rgba(240,180,41,0.5); }
+  .mbar__btn--wa { background: #25D366; color: #04351b; }
   .mbar__btn:active { transform: translateY(1px); }
   body.has-mbar .site-footer { padding-bottom: 84px; }
 }

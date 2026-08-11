@@ -24,11 +24,11 @@ function telHref(phone) {
   const digits = (phone || "").replace(/[^\d+]/g, "");
   return digits ? "tel:" + digits : "kapcsolat.html";
 }
-function viberHref(phone) {
+function whatsappHref(phone) {
   let d = (phone || "").replace(/[^\d]/g, "");
   if (!d) return "";
   if (d.charAt(0) === "0" && d.charAt(1) === "6") d = "36" + d.slice(2); // 06.. -> 36..
-  return "viber://chat?number=" + encodeURIComponent("+" + d);
+  return "https://wa.me/" + d + "?text=" + encodeURIComponent("Szia! A weboldaladról írok, fényszóró-felújítás iránt érdeklődöm.");
 }
 function mdBlock(str) {
   if (str == null || str === "") return "";
@@ -92,7 +92,7 @@ const NAV = [
 ];
 const ICON_PHONE = '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.2 1l-2.3 2.2z"/></svg>';
 const ICON_FB = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"/></svg>';
-const ICON_VIBER = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 2C6.6 2 2.2 6 2.2 11c0 2.3.9 4.4 2.5 6.1L4 22l5-1.4c.9.2 1.9.4 3 .4 5.4 0 9.8-4 9.8-9S17.4 2 12 2zm5 12.7c-.2.6-1.1 1.1-1.7 1.2-.5.1-1 .2-3.2-.7-2.7-1.1-4.4-3.9-4.6-4.1-.1-.2-1-1.4-1-2.6 0-1.2.6-1.8.9-2 .2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.5.7 1.7.7 1.8.1.2.1.3 0 .5l-.3.4-.4.4c-.1.1-.3.3-.1.5.1.3.6 1 1.3 1.6.9.8 1.6 1 1.9 1.2.2.1.4.1.6-.1l.6-.7c.2-.2.3-.2.6-.1.2.1 1.5.7 1.7.8.2.1.4.2.4.3.1.1.1.6 0 .8z"/></svg>';
+const ICON_WHATSAPP = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M17.5 14.4c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.2-.6.2-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.7-.9-2.9-1.6-4-3.6-.3-.5.3-.5.8-1.6.1-.2 0-.4 0-.5-.1-.1-.6-1.5-.9-2.1-.2-.5-.4-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.9.9-1.1 2-.7 3.3.5 1.5 1.5 2.9 1.7 3.1.2.3 2.6 4 6.3 5.5.9.4 1.6.6 2.1.8.9.3 1.7.2 2.3.1.7-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.1-1.3c1.4.8 3.1 1.3 4.9 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3C4.4 15.1 4 13.6 4 12c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8z"/></svg>';
 const ICON_IG = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2-.1-1.3-.1-1.7-.1-4.9s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4 1.3-.1 1.7-.1 4.9-.1zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.2.4-.3 1-.4 2.1C4 8.5 4 8.9 4 12s0 3.5.1 4.7c.1 1.1.2 1.7.4 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.2 1 .3 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.2 2.1-.4.5-.2.9-.4 1.3-.8.4-.4.6-.8.8-1.3.2-.4.3-1 .4-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-1.1-.2-1.7-.4-2.1-.2-.5-.4-.9-.8-1.3-.4-.4-.8-.6-1.3-.8-.4-.2-1-.3-2.1-.4-1.2-.1-1.6-.1-4.7-.1zm0 3.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8zm0 8.1a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zm6.3-8.3a1.1 1.1 0 1 1-2.3 0 1.1 1.1 0 0 1 2.3 0z"/></svg>';
 
 function buildHeader(active) {
@@ -158,7 +158,6 @@ function buildFooter() {
     </div>
     <div class="site-footer__bottom">
       <span>© <span id="year"></span> Horváth Lámpapolír – mobil fényszóró-felújítás</span>
-      <span class="site-footer__legal"><a href="adatvedelem.html">Adatvédelmi tájékoztató</a> · <a href="impresszum.html">Impresszum</a></span>
     </div>
   </footer>`;
 }
@@ -536,7 +535,7 @@ function renderContact(app, contact) {
      </li>`;
   const rows = [];
   if (phone) rows.push(infoRow(ICON_PHONE, "Telefon", `<a href="${telHref(phone)}">${esc(phone)}</a>`));
-  if (phone) rows.push(infoRow(ICON_VIBER, "Viber", `<a href="${viberHref(phone)}">Írj Viberen</a>`));
+  if (phone) rows.push(infoRow(ICON_WHATSAPP, "WhatsApp", `<a href="${whatsappHref(phone)}" target="_blank" rel="noopener">Írj vagy hívj WhatsAppon</a>`));
   if (isSet(contact.email)) rows.push(infoRow(ICON_MAIL, "E-mail", `<a href="mailto:${esc(contact.email)}">${esc(contact.email)}</a>`, "contact-info__value--email"));
   if (isSet(contact.facebook_url)) rows.push(infoRow(ICON_FB, "Facebook", `<a href="${esc(contact.facebook_url)}" target="_blank" rel="noopener">Írj üzenetet</a>`));
   if (isSet(contact.instagram_url)) rows.push(infoRow(ICON_IG, "Instagram", `<a href="${esc(contact.instagram_url)}" target="_blank" rel="noopener">Megnézem</a>`));
@@ -676,16 +675,16 @@ function renderFaq(app, data) {
 const TOWNS = ["Szekszárd", "Paks", "Bonyhád", "Dombóvár", "Tolna", "Tamási", "Bátaszék", "Simontornya", "Nagymányok"];
 const TOWNS_UNIQUE = [...new Set(TOWNS)];
 
-// Lebegő mobil gyorssáv (Hívás + Viber) – csak mobilon látszik
+// Lebegő mobil gyorssáv (Hívás + WhatsApp) – csak mobilon látszik
 function buildMobileBar(contact) {
   if (!contact || !isSet(contact.phone) || document.querySelector(".mbar")) return;
   const bar = document.createElement("div");
   bar.className = "mbar";
   bar.setAttribute("aria-label", "Gyors kapcsolat");
-  const viber = viberHref(contact.phone);
+  const wa = whatsappHref(contact.phone);
   bar.innerHTML =
     `<a class="mbar__btn mbar__btn--call" href="${telHref(contact.phone)}">${ICON_PHONE}<span>Hívás</span></a>` +
-    (viber ? `<a class="mbar__btn mbar__btn--viber" href="${viber}">${ICON_VIBER}<span>Viber</span></a>` : "");
+    (wa ? `<a class="mbar__btn mbar__btn--wa" href="${wa}" target="_blank" rel="noopener">${ICON_WHATSAPP}<span>WhatsApp</span></a>` : "");
   document.body.appendChild(bar);
   document.body.classList.add("has-mbar");
 }
