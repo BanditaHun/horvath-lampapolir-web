@@ -95,6 +95,86 @@ const ICON_FB = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="tr
 const ICON_WHATSAPP = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M17.5 14.4c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.2-.6.2-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.7-.9-2.9-1.6-4-3.6-.3-.5.3-.5.8-1.6.1-.2 0-.4 0-.5-.1-.1-.6-1.5-.9-2.1-.2-.5-.4-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.9.9-1.1 2-.7 3.3.5 1.5 1.5 2.9 1.7 3.1.2.3 2.6 4 6.3 5.5.9.4 1.6.6 2.1.8.9.3 1.7.2 2.3.1.7-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.1-1.3c1.4.8 3.1 1.3 4.9 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3C4.4 15.1 4 13.6 4 12c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8z"/></svg>';
 const ICON_IG = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2-.1-1.3-.1-1.7-.1-4.9s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4 1.3-.1 1.7-.1 4.9-.1zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.2.4-.3 1-.4 2.1C4 8.5 4 8.9 4 12s0 3.5.1 4.7c.1 1.1.2 1.7.4 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.2 1 .3 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.2 2.1-.4.5-.2.9-.4 1.3-.8.4-.4.6-.8.8-1.3.2-.4.3-1 .4-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-1.1-.2-1.7-.4-2.1-.2-.5-.4-.9-.8-1.3-.4-.4-.8-.6-1.3-.8-.4-.2-1-.3-2.1-.4-1.2-.1-1.6-.1-4.7-.1zm0 3.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8zm0 8.1a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zm6.3-8.3a1.1 1.1 0 1 1-2.3 0 1.1 1.1 0 0 1 2.3 0z"/></svg>';
 
+const ICON_CHAT = '<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.9 3 3 6.6 3 11c0 2.1.9 4 2.4 5.4-.1 1.1-.5 2.3-1.3 3.3-.2.3 0 .8.4.7 1.7-.3 3.1-.9 4.1-1.6 1 .3 2.2.5 3.4.5 5.1 0 9-3.6 9-8s-3.9-8-9-8zm-4 9a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4zm4 0a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4zm4 0a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4z"/></svg>';
+const ICON_SEND = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M3.4 20.4l17.4-8.4c.7-.3.7-1.3 0-1.6L3.4 2C2.8 1.7 2.1 2.3 2.3 3l1.8 6.4c.1.3.3.5.6.5l8.3 1.1c.3 0 .3.4 0 .5l-8.3 1.1c-.3 0-.5.2-.6.5L2.3 21c-.2.7.5 1.3 1.1 1z"/></svg>';
+
+function buildAiWidget(ai) {
+  if (!ai || ai.enabled === false || ai.enabled === "false" || !isSet(ai.api_url)) return;
+  if (document.querySelector(".ai-fab")) return;
+  const title = isSet(ai.title) ? ai.title : "AI segéd";
+  const label = isSet(ai.launch_label) ? ai.launch_label : "Kérdezz!";
+  const greeting = isSet(ai.greeting) ? ai.greeting : "Szia! Miben segíthetek?";
+
+  const fab = document.createElement("button");
+  fab.className = "ai-fab"; fab.type = "button"; fab.setAttribute("aria-label", title);
+  fab.innerHTML = ICON_CHAT + `<span>${esc(label)}</span>`;
+
+  const panel = document.createElement("section");
+  panel.className = "ai-panel"; panel.hidden = true; panel.setAttribute("aria-label", title);
+  panel.innerHTML =
+    `<header class="ai-head"><span class="ai-head__dot"></span><span class="ai-head__title">${esc(title)}</span>` +
+    `<button class="ai-head__close" type="button" aria-label="Bezárás">&times;</button></header>` +
+    `<div class="ai-msgs" id="ai-msgs"></div>` +
+    `<form class="ai-form" id="ai-form"><input type="text" id="ai-input" autocomplete="off" ` +
+    `placeholder="Írd ide a kérdésed…" maxlength="500" /><button type="submit" aria-label="Küldés">${ICON_SEND}</button></form>` +
+    `<div class="ai-note">Tájékoztató jellegű – pontos időpontért hívj vagy írj WhatsAppon: +36 20 541 8369.</div>`;
+
+  document.body.append(fab, panel);
+  const msgsBox = panel.querySelector("#ai-msgs");
+  const input = panel.querySelector("#ai-input");
+  const history = [];
+  let busy = false;
+
+  const addMsg = (who, text) => {
+    const m = document.createElement("div");
+    m.className = "ai-msg ai-msg--" + who;
+    m.textContent = text;
+    msgsBox.appendChild(m);
+    msgsBox.scrollTop = msgsBox.scrollHeight;
+    return m;
+  };
+  addMsg("bot", greeting);
+
+  const openPanel = () => { panel.hidden = false; fab.classList.add("ai-fab--hidden"); setTimeout(() => input.focus(), 50); };
+  const closePanel = () => { panel.hidden = true; fab.classList.remove("ai-fab--hidden"); };
+  fab.addEventListener("click", openPanel);
+  panel.querySelector(".ai-head__close").addEventListener("click", closePanel);
+
+  panel.querySelector("#ai-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (busy) return;
+    const text = input.value.trim();
+    if (!text) return;
+    input.value = "";
+    addMsg("user", text);
+    history.push({ role: "user", text });
+    busy = true;
+    const typing = addMsg("bot", "…");
+    typing.classList.add("ai-msg--typing");
+    try {
+      const res = await fetch(ai.api_url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: history.slice(-12) }),
+      });
+      const data = await res.json().catch(() => ({}));
+      typing.remove();
+      if (data && data.reply) {
+        addMsg("bot", data.reply);
+        history.push({ role: "model", text: data.reply });
+      } else {
+        addMsg("bot", (data && data.error) || "Elnézést, most nem tudok válaszolni. Hívj: +36 20 541 8369.");
+      }
+    } catch (err) {
+      typing.remove();
+      addMsg("bot", "Hiba történt a kapcsolatban. Kérlek hívj: +36 20 541 8369.");
+    } finally {
+      busy = false;
+      input.focus();
+    }
+  });
+}
+
 function buildHeader(active) {
   const links = NAV.map((n) => {
     const cls = [n.cta ? "nav__cta" : "", n.page === active ? "is-active" : ""].filter(Boolean).join(" ");
@@ -753,6 +833,7 @@ async function initSite() {
   buildMobileBar(contact);
   buildToTop();
   injectLocalBusiness(contact);
+  try { buildAiWidget(await loadJSON("content/ai.json")); } catch (e) { /* nincs AI beállítva */ }
 
   const app = document.getElementById("app");
   try {

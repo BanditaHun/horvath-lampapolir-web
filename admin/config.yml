@@ -87,6 +87,21 @@ collections:
           - { name: "cta_href", label: "Gomb hivatkozása", widget: "string", required: false, default: "kapcsolat.html" }
           - { name: "image", label: "Háttérkép", widget: "image", required: false }
 
+  # ---- AI chat-segéd ----
+  - name: "ai"
+    label: "AI segéd"
+    files:
+      - name: "ai"
+        label: "AI chat-segéd beállításai"
+        file: "content/ai.json"
+        format: "json"
+        fields:
+          - { name: "enabled", label: "AI segéd bekapcsolva?", widget: "boolean", default: true, hint: "Kikapcsolva eltűnik a chat-buborék az oldalról." }
+          - { name: "launch_label", label: "Buborék felirata", widget: "string", required: false, default: "Kérdezz!" }
+          - { name: "title", label: "Chat fejléc címe", widget: "string", required: false, default: "Lámpa-segéd" }
+          - { name: "greeting", label: "Üdvözlő üzenet", widget: "text", hint: "Ezzel a szöveggel indul a beszélgetés." }
+          - { name: "api_url", label: "AI Worker címe", widget: "string", hint: "A Cloudflare Worker URL-je – ne töröld, csak ha új Workert állítasz be." }
+
   # ---- Bemutatkozás ----
   - name: "about"
     label: "Bemutatkozás"
