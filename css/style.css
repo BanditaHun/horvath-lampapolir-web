@@ -757,3 +757,6 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 @media (max-width: 860px) {
   body.has-mbar .ai-fab { bottom: calc(78px + env(safe-area-inset-bottom, 0px)); }
 }
+
+/* Fix: a hidden attributum legyozze a display:flex-et (kulonben a panel mindig nyitva van) */
+.ai-panel[hidden] { display: none !important; }
