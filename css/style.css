@@ -378,14 +378,17 @@ section:last-of-type { border-bottom: none; }
 
 /* ---------- Futó szalaghirdetés (ticker) ---------- */
 .ticker {
-  width: 100%; overflow: hidden;
-  background: linear-gradient(180deg, rgba(240,180,41,0.13), rgba(240,180,41,0.05));
-  border-top: 1px solid rgba(240,180,41,0.35);
-  border-bottom: 1px solid rgba(240,180,41,0.35);
-  padding: 12px 0; margin-top: 8px;
+  position: relative; width: 100%; overflow: hidden;
+  background: linear-gradient(180deg, rgba(26,20,7,0.92), rgba(13,10,3,0.92));
+  border-top: 1px solid rgba(240,180,41,0.28);
+  border-bottom: 1px solid rgba(240,180,41,0.28);
+  padding: 13px 0; margin-top: 8px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
 }
-.ticker__track { display: inline-flex; white-space: nowrap; will-change: transform; animation: tickerMove 34s linear infinite; }
-.ticker__item { color: var(--gold); font-weight: 700; font-size: 1rem; letter-spacing: .3px; padding: 0 30px; text-shadow: 0 0 10px rgba(240,180,41,0.4); }
+.ticker__track { display: inline-flex; align-items: center; white-space: nowrap; will-change: transform; animation: tickerMove 36s linear infinite; }
+.ticker__item { color: #efe0bd; font-weight: 600; font-size: .95rem; letter-spacing: .4px; padding: 0 6px; }
+.ticker__sep { color: var(--gold); font-size: .6rem; padding: 0 24px; opacity: .8; }
 @keyframes tickerMove { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 .ticker:hover .ticker__track { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) { .ticker__track { animation: none; white-space: normal; text-align: center; } }

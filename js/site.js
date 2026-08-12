@@ -462,8 +462,10 @@ function tickerBand(items) {
   const norm = (t) => (typeof t === "string" ? t : (t && (t.text || t.value)) || "");
   let list = Array.isArray(items) ? items.map(norm).filter(Boolean) : [];
   if (!list.length) list = TICKER_DEFAULT;
-  const one = list.map((t) => `<span class="ticker__item">✦ ${esc(t)}</span>`).join("");
-  return `<div class="ticker" aria-hidden="true"><div class="ticker__track">${one}${one}</div></div>`;
+  const sep = '<span class="ticker__sep" aria-hidden="true">◆</span>';
+  const seq = list.map((t) => `<span class="ticker__item">${esc(t)}</span>`).join(sep);
+  const half = seq + sep;
+  return `<div class="ticker" aria-hidden="true"><div class="ticker__track">${half}${half}</div></div>`;
 }
 
 // Oldalsó elem: a feltöltött kép(ek) egymás alatt; ha egy sincs, az animált buborékok
