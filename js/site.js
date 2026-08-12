@@ -462,10 +462,13 @@ function tickerBand(items) {
   const norm = (t) => (typeof t === "string" ? t : (t && (t.text || t.value)) || "");
   let list = Array.isArray(items) ? items.map(norm).filter(Boolean) : [];
   if (!list.length) list = TICKER_DEFAULT;
-  const sep = '<span class="ticker__sep" aria-hidden="true">◆</span>';
-  const seq = list.map((t) => `<span class="ticker__item">${esc(t)}</span>`).join(sep);
-  const half = seq + sep;
-  return `<div class="ticker" aria-hidden="true"><div class="ticker__track">${half}${half}</div></div>`;
+  const N = list.length;
+  const H = 46; // a sáv magassága px-ben (a henger geometriájához)
+  const radius = Math.max(30, Math.round((H / 2) / Math.tan(Math.PI / N)));
+  const faces = list.map((t, i) =>
+    `<div class="ticker__face" style="transform: rotateX(${((360 / N) * i).toFixed(2)}deg) translateZ(${radius}px);">${esc(t)}</div>`
+  ).join("");
+  return `<div class="ticker" aria-hidden="true"><div class="ticker__drum" style="--tdur:${(N * 2.8).toFixed(1)}s;">${faces}</div></div>`;
 }
 
 // Oldalsó elem: a feltöltött kép(ek) egymás alatt; ha egy sincs, az animált buborékok

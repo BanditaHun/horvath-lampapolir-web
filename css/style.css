@@ -378,20 +378,29 @@ section:last-of-type { border-bottom: none; }
 
 /* ---------- Futó szalaghirdetés (ticker) ---------- */
 .ticker {
-  position: relative; width: 100%; overflow: hidden;
-  background: linear-gradient(180deg, rgba(26,20,7,0.92), rgba(13,10,3,0.92));
+  width: 100%; height: 46px; overflow: hidden; margin-top: 8px;
+  perspective: 800px;
+  background: linear-gradient(180deg, rgba(10,8,3,0.96), rgba(32,24,8,0.96) 50%, rgba(10,8,3,0.96));
   border-top: 1px solid rgba(240,180,41,0.28);
   border-bottom: 1px solid rgba(240,180,41,0.28);
-  padding: 13px 0; margin-top: 8px;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
-          mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
 }
-.ticker__track { display: inline-flex; align-items: center; white-space: nowrap; will-change: transform; animation: tickerMove 36s linear infinite; }
-.ticker__item { color: #efe0bd; font-weight: 600; font-size: .95rem; letter-spacing: .4px; padding: 0 6px; }
-.ticker__sep { color: var(--gold); font-size: .6rem; padding: 0 24px; opacity: .8; }
-@keyframes tickerMove { from { transform: translateX(-50%); } to { transform: translateX(0); } }
-.ticker:hover .ticker__track { animation-play-state: paused; }
-@media (prefers-reduced-motion: reduce) { .ticker__track { animation: none; white-space: normal; text-align: center; } }
+.ticker__drum {
+  position: relative; width: 100%; height: 100%;
+  transform-style: preserve-3d; will-change: transform;
+  animation: drumSpin var(--tdur, 16s) linear infinite;
+}
+.ticker:hover .ticker__drum { animation-play-state: paused; }
+.ticker__face {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  color: #f0e2c0; font-weight: 600; font-size: clamp(.82rem, 2.4vw, .98rem);
+  letter-spacing: .4px; white-space: nowrap; padding: 0 7%;
+}
+@keyframes drumSpin { from { transform: rotateX(0deg); } to { transform: rotateX(360deg); } }
+@media (prefers-reduced-motion: reduce) { .ticker__drum { animation: none; } }
 
 /* ---------- Aloldalak: fejléc + hasáb ---------- */
 .page__head { padding: 46px 0 6px; }
