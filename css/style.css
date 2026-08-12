@@ -797,3 +797,18 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 .nav__links a.is-active:not(.nav__cta)::after { transform: scaleX(1); }
 .neon-card__more { transition: letter-spacing .2s ease; }
 .neon-card:hover .neon-card__more { letter-spacing: .5px; }
+
+/* ---------- Kezdőlapi rövid leírás ---------- */
+.home-intro {
+  max-width: 800px; margin: 26px auto 2px; text-align: center;
+  color: var(--chrome); font-size: 1.08rem; line-height: 1.7;
+}
+.home-intro strong, .home-intro b { color: var(--gold); }
+
+/* ---------- Lábléc-kép ---------- */
+.site-footer__brand { flex-wrap: wrap; }
+.site-footer__photo {
+  flex-basis: 100%; width: 100%; max-height: 150px; object-fit: cover;
+  border-radius: 12px; border: 1px solid rgba(240,180,41,0.28); margin-top: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+}

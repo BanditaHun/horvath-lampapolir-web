@@ -96,6 +96,7 @@ collections:
         file: "content/home.json"
         format: "json"
         fields:
+          - { name: "intro", label: "Rövid leírás (a bizalmi sáv alatt a kezdőlapon)", widget: "text", required: false, hint: "**félkövér** használható." }
           - name: "quick"
             label: "Kiemelt kártyák (3 db)"
             widget: "list"
@@ -134,6 +135,7 @@ collections:
         fields:
           - { name: "subtitle", label: "Alcím (a logó mellett)", widget: "string" }
           - { name: "tags", label: "Kiemelt sor (arany szöveg)", widget: "text" }
+          - { name: "image", label: "Lábléc kép (opcionális – pl. munka közbeni fotó)", widget: "image", required: false }
 
   # ---- AI chat-segéd ----
   - name: "ai"

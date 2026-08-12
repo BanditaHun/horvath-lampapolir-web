@@ -211,6 +211,7 @@ function buildFooter() {
           <span id="footer-subtitle">Mobil fényszóró-felújítás Tolna megyében, 50 km-es körzetben</span>
           <span class="site-footer__tags" id="footer-tags">Házhoz megyünk – magánszemélyeknek, cégeknek és flottáknak egyaránt –, a munkára 1 év garanciát és számlát adunk.</span>
         </div>
+        <img class="site-footer__photo" id="footer-photo" src="" alt="Horváth Lámpapolír – fényszóró-felújítás" hidden />
       </div>
       <div class="site-footer__col">
         <h4 class="site-footer__h">Elérhetőség</h4>
@@ -567,7 +568,9 @@ async function renderHome(app, contact) {
     trustItems.map((t) => `<div class="trustbar__item"><span class="trustbar__ic">${esc(t.icon || "✓")}</span> ${mdInline(t.text || "")}</div>`).join("") +
     `</div></div>`;
 
-  app.innerHTML = h + tickerBand(hero.ticker) + trust + promoSection(promo) + aboutHTML + quick + why + areas + reviewsSectionHTML(reviews, contact);
+  const introHTML = isSet(H.intro) ? `<div class="container"><p class="home-intro">${mdInline(H.intro)}</p></div>` : "";
+
+  app.innerHTML = h + tickerBand(hero.ticker) + trust + introHTML + promoSection(promo) + aboutHTML + quick + why + areas + reviewsSectionHTML(reviews, contact);
   await initReviews(reviews, app);
 }
 
@@ -848,6 +851,7 @@ async function initSite() {
     if (f) {
       const sub = document.getElementById("footer-subtitle"); if (sub && isSet(f.subtitle)) sub.textContent = f.subtitle;
       const tg = document.getElementById("footer-tags"); if (tg && isSet(f.tags)) tg.textContent = f.tags;
+      const ph = document.getElementById("footer-photo"); if (ph && isSet(f.image)) { ph.src = rel(f.image); ph.hidden = false; }
     }
   } catch (e) { /* marad az alap szöveg */ }
 
