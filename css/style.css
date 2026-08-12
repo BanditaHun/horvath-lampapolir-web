@@ -178,7 +178,7 @@ a:hover { text-decoration: underline; }
 @media (max-width: 520px) { .hero:not(.hero--banner) { min-height: 380px; padding: 56px 18px 48px; } }
 
 /* Banner-mód: rugalmas szélesség (zoomkor együtt igazodik), ésszerű maximummal, keretezve */
-.hero--banner { display: block; padding: 22px 20px 12px; min-height: 0; }
+.hero--banner { display: block; padding: 22px 20px 6px; min-height: 0; position: relative; z-index: 2; }
 .hero--banner .hero__overlay { display: none; }
 .hero__banner {
   display: block;
@@ -378,11 +378,12 @@ section:last-of-type { border-bottom: none; }
 
 /* ---------- Futó szalaghirdetés (ticker) ---------- */
 .ticker {
-  width: calc(100% - 32px); max-width: 1080px; margin: 16px auto;
-  overflow: hidden; padding: 11px 26px; border-radius: 100px;
-  background: linear-gradient(180deg, rgba(32,24,8,0.95), rgba(14,10,3,0.95));
+  position: relative; z-index: 1;
+  width: calc(100% - 24px); max-width: 1320px; margin: -24px auto 18px;
+  overflow: hidden; padding: 28px 32px 12px; border-radius: 80px;
+  background: linear-gradient(180deg, rgba(32,24,8,0.97), rgba(14,10,3,0.97));
   border: 1px solid rgba(240,180,41,0.42);
-  box-shadow: 0 6px 22px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.45), inset 0 18px 18px -12px rgba(0,0,0,0.85);
 }
 .ticker__track { display: inline-flex; align-items: center; white-space: nowrap; will-change: transform; animation: tickerMove 32s linear infinite; }
 .ticker__item { color: #e8dcc0; font-weight: 500; font-size: .92rem; letter-spacing: .3px; padding: 0 4px; }
