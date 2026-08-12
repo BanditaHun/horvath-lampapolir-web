@@ -2,6 +2,6 @@
   "enabled": true,
   "api_url": "https://horvath-ai.andras-horvat1989.workers.dev",
   "launch_label": "Kérdezz!",
-  "title": "Lámpa-segéd",
-  "greeting": "Szia! 🚗 A Horváth Lámpapolír AI-segédje vagyok. Kérdezz bátran a fényszóró-felújításról, az árakról vagy a kiszállásról – igyekszem segíteni!"
+  "title": "Autós asszisztens",
+  "greeting": "Szia! 🚗 A Horváth Lámpapolír autós asszisztense vagyok. Kérdezz bátran a fényszóró-felújításról, az árakról vagy a kiszállásról – szívesen segítek!"
 }

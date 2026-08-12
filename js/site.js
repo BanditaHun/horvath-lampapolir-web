@@ -107,7 +107,8 @@ function buildAiWidget(ai) {
 
   const fab = document.createElement("button");
   fab.className = "ai-fab"; fab.type = "button"; fab.setAttribute("aria-label", title);
-  fab.innerHTML = ICON_CHAT + `<span>${esc(label)}</span>`;
+  fab.innerHTML = ICON_CHAT;
+  fab.title = label;
 
   const panel = document.createElement("section");
   panel.className = "ai-panel"; panel.hidden = true; panel.setAttribute("aria-label", title);
