@@ -555,7 +555,14 @@ async function renderHome(app, contact) {
     <p class="areas__note">A településed nincs a listán? <a href="kapcsolat.html">Kérdezz rá</a> – ha belefér a körzetbe, szívesen kimegyek.</p>
   </section></div>`;
 
-  app.innerHTML = h + tickerBand(hero.ticker) + promoSection(promo) + aboutHTML + quick + why + areas + reviewsSectionHTML(reviews, contact);
+  const trust = `<div class="container"><div class="trustbar">
+    <div class="trustbar__item"><span class="trustbar__ic">🛡️</span> <b>1 év</b> garancia</div>
+    <div class="trustbar__item"><span class="trustbar__ic">🧾</span> <b>Számlaképes</b> vállalkozás</div>
+    <div class="trustbar__item"><span class="trustbar__ic">🏠</span> <b>Házhoz</b> megyünk</div>
+    <div class="trustbar__item"><span class="trustbar__ic">📍</span> Tolna megye, <b>50 km</b></div>
+  </div></div>`;
+
+  app.innerHTML = h + tickerBand(hero.ticker) + trust + promoSection(promo) + aboutHTML + quick + why + areas + reviewsSectionHTML(reviews, contact);
   await initReviews(reviews, app);
 }
 
@@ -854,6 +861,29 @@ async function initSite() {
     console.error(err);
     app.innerHTML = `<div class="container"><p style="margin-top:30px;color:#ffbcbc;background:#2a0f0f;border:1px solid #a33;padding:14px 18px;border-radius:12px;">A tartalom betöltése nem sikerült. Helyi megnyitásnál indíts szervert (lásd README).</p></div>`;
   }
+
+  initReveal();
+}
+
+// Görgetéses beúszás: a szakaszok/kártyák finoman felúsznak, ahogy láthatóvá válnak.
+function initReveal() {
+  if (!("IntersectionObserver" in window)) return;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const targets = document.querySelectorAll(
+    ".home-about, .why, .areas, .promo, .reviews, .booking, .contact-aside, .page__head, .cards > *, .why-item, .gallery > figure, .faq__item, .trustbar__item"
+  );
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("reveal--in"); io.unobserve(e.target); } });
+  }, { threshold: 0.06, rootMargin: "0px 0px -50px 0px" });
+  targets.forEach((elm) => {
+    elm.classList.add("reveal");
+    const sibs = elm.parentElement ? Array.prototype.filter.call(elm.parentElement.children, (c) => c.matches && c.matches(".cards > *, .why-item, .trustbar__item, .gallery > figure")) : [];
+    const idx = sibs.indexOf(elm);
+    if (idx > 0) elm.style.transitionDelay = Math.min(idx * 70, 350) + "ms";
+    io.observe(elm);
+  });
+  // Biztonsági háló: ha 2.5s múlva bármi rejtve maradna (IO nem tüzelt), mutassuk meg.
+  setTimeout(() => { document.querySelectorAll(".reveal:not(.reveal--in)").forEach((elm) => { if (elm.getBoundingClientRect().top < (window.innerHeight || 800)) elm.classList.add("reveal--in"); }); }, 2500);
 }
 
 document.addEventListener("DOMContentLoaded", initSite);
