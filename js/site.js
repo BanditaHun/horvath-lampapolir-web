@@ -208,8 +208,8 @@ function buildFooter() {
         <img class="site-footer__logo" src="images/logo.png" alt="" onerror="this.style.display='none'" />
         <div class="site-footer__brandtext">
           <strong>Horváth Lámpapolír</strong>
-          <span>Mobil fényszóró-felújítás Tolna megyében, 50 km-es körzetben</span>
-          <span class="site-footer__tags">Házhoz megyünk – magánszemélyeknek, cégeknek és flottáknak egyaránt –, a munkára 1 év garanciát és számlát adunk.</span>
+          <span id="footer-subtitle">Mobil fényszóró-felújítás Tolna megyében, 50 km-es körzetben</span>
+          <span class="site-footer__tags" id="footer-tags">Házhoz megyünk – magánszemélyeknek, cégeknek és flottáknak egyaránt –, a munkára 1 év garanciát és számlát adunk.</span>
         </div>
       </div>
       <div class="site-footer__col">
@@ -498,12 +498,14 @@ function promoSection(promo) {
 }
 
 async function renderHome(app, contact) {
-  const [hero, about, reviews, promo] = await Promise.all([
+  const [hero, about, reviews, promo, home] = await Promise.all([
     loadJSON("content/hero.json"),
     loadJSON("content/about.json").catch(() => null),
     loadJSON("content/reviews.json").catch(() => null),
     loadJSON("content/promo.json").catch(() => null),
+    loadJSON("content/home.json").catch(() => null),
   ]);
+  const H = home || {};
 
   let h = `<header class="hero${hero.banner ? " hero--banner" : ""}">
     <div class="hero__overlay"></div>`;
@@ -530,37 +532,40 @@ async function renderHome(app, contact) {
     <div class="rich prose">${mdBlock(about.text || "")}</div>
   </section></div>` : "";
 
-  const quick = `<div class="container"><div class="cards cards--3">
-    <a class="neon-card neon-card--link" href="csomagok.html" style="animation-delay:0s"><h3 class="neon-card__title">Csomagok &amp; árak</h3><p class="neon-card__desc">ALAP · STANDARD · PRÉMIUM csomagok: csiszolás, polírozás, UV-védelem és garancia – már 12 000 Ft-tól, minden autótípusra.</p><span class="neon-card__more">Megnézem →</span></a>
-    <a class="neon-card neon-card--link" href="szolgaltatasok.html" style="animation-delay:.35s"><h3 class="neon-card__title">Szolgáltatások</h3><p class="neon-card__desc">A fényszóró-felújítás mellett szélvédőmosó, fagyálló, ablaktörlő-csere, vízlepergető kezelés és ingyenes állapotfelmérés – mind helyben.</p><span class="neon-card__more">Megnézem →</span></a>
-    <a class="neon-card neon-card--link" href="kapcsolat.html" style="animation-delay:.7s"><h3 class="neon-card__title">Kapcsolat</h3><p class="neon-card__desc">Hívj vagy írj, és egyeztetünk egy időpontot – házhoz megyünk Tolna megyében, 50 km-es körzetben.</p><span class="neon-card__more">Kapcsolat →</span></a>
-  </div></div>`;
-
-  const WHY = [
-    ["🏠", "Házhoz megyek", "Nem kell autót bevinni sehova – Tolna megyében, 50 km-es körzetben, otthonra vagy munkahelyre."],
-    ["⏱️", "Gyors, ~40 perc", "A lámpa kiszerelése nélkül, helyben – a kért szolgáltatástól függően legfeljebb 1 óra."],
-    ["🛡️", "1 év garancia", "Felületi garancia a felújított fényszóróra, igény szerint összesen 2 évre bővíthető."],
-    ["🧾", "Számlaképes vállalkozás", "Bejelentett egyéni vállalkozóként magánszemélyeknek és cégeknek egyaránt adok számlát – átlátható, korrekt elszámolás."],
-    ["✨", "Tartós UV-védelem", "Gyári vagy annál is jobb minőség, amely nem mattul vissza, és karcállóságot ad."],
-    ["🚚", "Cégeknek, flottáknak is", "Fuvarozóknak, autókereskedéseknek és flottáknak is szívesen dolgozom."],
+  const DQUICK = [
+    { title: "Csomagok & árak", text: "ALAP · STANDARD · PRÉMIUM csomagok – már 12 000 Ft-tól, minden autótípusra.", link: "csomagok.html", more: "Megnézem →" },
+    { title: "Szolgáltatások", text: "Fényszóró-felújítás, üvegkezelés, állapotfelmérés – mind helyben.", link: "szolgaltatasok.html", more: "Megnézem →" },
+    { title: "Kapcsolat", text: "Hívj vagy írj, és egyeztetünk egy időpontot – házhoz megyünk.", link: "kapcsolat.html", more: "Kapcsolat →" },
   ];
-  const whyCards = WHY.map(([ic, t, d]) => `<div class="why-item"><span class="why-item__ic" aria-hidden="true">${ic}</span><h3>${esc(t)}</h3><p>${esc(d)}</p></div>`).join("");
-  const why = `<div class="container"><section class="why"><h2 class="page__title">Miért válassz engem?</h2><div class="why-grid">${whyCards}</div></section></div>`;
+  const quickItems = Array.isArray(H.quick) && H.quick.length ? H.quick : DQUICK;
+  const quick = `<div class="container"><div class="cards cards--3">` +
+    quickItems.map((q, i) => `<a class="neon-card neon-card--link" href="${esc(q.link || "#")}" style="animation-delay:${(i * 0.35).toFixed(2)}s"><h3 class="neon-card__title">${esc(q.title || "")}</h3><p class="neon-card__desc">${esc(q.text || "")}</p><span class="neon-card__more">${esc(q.more || "Megnézem →")}</span></a>`).join("") +
+    `</div></div>`;
 
-  const townTags = TOWNS_UNIQUE.map((t) => `<span class="areas__tag">${esc(t)}</span>`).join("");
+  const whyItems = Array.isArray(H.why) ? H.why : [];
+  const whyCards = whyItems.map((w) => `<div class="why-item"><span class="why-item__ic" aria-hidden="true">${esc(w.icon || "✦")}</span><h3>${esc(w.title || "")}</h3><p>${esc(w.text || "")}</p></div>`).join("");
+  const why = whyItems.length ? `<div class="container"><section class="why"><h2 class="page__title">${esc(H.why_heading || "Miért válassz engem?")}</h2><div class="why-grid">${whyCards}</div></section></div>` : "";
+
+  const townsRaw = Array.isArray(H.areas_towns) && H.areas_towns.length ? H.areas_towns : TOWNS_UNIQUE;
+  const towns = townsRaw.map((t) => (typeof t === "string" ? t : (t && (t.name || t.value)) || "")).filter(Boolean);
+  const townTags = towns.map((t) => `<span class="areas__tag">${esc(t)}</span>`).join("");
   const areas = `<div class="container"><section class="areas">
-    <h2 class="page__title">Hol dolgozom?</h2>
-    <p class="areas__lead">Házhoz megyek Tolna megyében és környékén, nagyjából 50 km-es körzetben – többek között ezeken a településeken és a köztük lévő falvakban:</p>
+    <h2 class="page__title">${esc(H.areas_heading || "Hol dolgozom?")}</h2>
+    ${isSet(H.areas_lead) ? `<p class="areas__lead">${esc(H.areas_lead)}</p>` : ""}
     <div class="areas__tags">${townTags}</div>
-    <p class="areas__note">A településed nincs a listán? <a href="kapcsolat.html">Kérdezz rá</a> – ha belefér a körzetbe, szívesen kimegyek.</p>
+    ${isSet(H.areas_note) ? `<p class="areas__note">${mdInline(H.areas_note)}</p>` : ""}
   </section></div>`;
 
-  const trust = `<div class="container"><div class="trustbar">
-    <div class="trustbar__item"><span class="trustbar__ic">🛡️</span> <b>1 év</b> garancia</div>
-    <div class="trustbar__item"><span class="trustbar__ic">🧾</span> <b>Számlaképes</b> vállalkozás</div>
-    <div class="trustbar__item"><span class="trustbar__ic">🏠</span> <b>Házhoz</b> megyünk</div>
-    <div class="trustbar__item"><span class="trustbar__ic">📍</span> Tolna megye, <b>50 km</b></div>
-  </div></div>`;
+  const DTRUST = [
+    { icon: "🛡️", text: "**1 év** garancia" },
+    { icon: "🧾", text: "**Számlaképes** vállalkozás" },
+    { icon: "🏠", text: "**Házhoz** megyünk" },
+    { icon: "📍", text: "Tolna megye, **50 km**" },
+  ];
+  const trustItems = Array.isArray(H.trust) && H.trust.length ? H.trust : DTRUST;
+  const trust = `<div class="container"><div class="trustbar">` +
+    trustItems.map((t) => `<div class="trustbar__item"><span class="trustbar__ic">${esc(t.icon || "✓")}</span> ${mdInline(t.text || "")}</div>`).join("") +
+    `</div></div>`;
 
   app.innerHTML = h + tickerBand(hero.ticker) + trust + promoSection(promo) + aboutHTML + quick + why + areas + reviewsSectionHTML(reviews, contact);
   await initReviews(reviews, app);
@@ -838,6 +843,13 @@ async function initSite() {
   // A topbar-hoz mindig kell a kapcsolat
   let contact = null;
   try { contact = await loadJSON("content/contact.json"); populateTopbar(contact); populateFooter(contact); } catch (e) {}
+  try {
+    const f = await loadJSON("content/footer.json");
+    if (f) {
+      const sub = document.getElementById("footer-subtitle"); if (sub && isSet(f.subtitle)) sub.textContent = f.subtitle;
+      const tg = document.getElementById("footer-tags"); if (tg && isSet(f.tags)) tg.textContent = f.tags;
+    }
+  } catch (e) { /* marad az alap szöveg */ }
 
   buildMobileBar(contact);
   buildToTop();

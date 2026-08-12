@@ -1,0 +1,26 @@
+{
+  "quick": [
+    { "title": "Csomagok & árak", "text": "ALAP · STANDARD · PRÉMIUM csomagok: csiszolás, polírozás, UV-védelem és garancia – már 12 000 Ft-tól, minden autótípusra.", "link": "csomagok.html", "more": "Megnézem →" },
+    { "title": "Szolgáltatások", "text": "A fényszóró-felújítás mellett szélvédőmosó, fagyálló, ablaktörlő-csere, vízlepergető kezelés és ingyenes állapotfelmérés – mind helyben.", "link": "szolgaltatasok.html", "more": "Megnézem →" },
+    { "title": "Kapcsolat", "text": "Hívj vagy írj, és egyeztetünk egy időpontot – házhoz megyünk Tolna megyében, 50 km-es körzetben.", "link": "kapcsolat.html", "more": "Kapcsolat →" }
+  ],
+  "trust": [
+    { "icon": "🛡️", "text": "**1 év** garancia" },
+    { "icon": "🧾", "text": "**Számlaképes** vállalkozás" },
+    { "icon": "🏠", "text": "**Házhoz** megyünk" },
+    { "icon": "📍", "text": "Tolna megye, **50 km**" }
+  ],
+  "why_heading": "Miért válassz engem?",
+  "why": [
+    { "icon": "🏠", "title": "Házhoz megyek", "text": "Nem kell autót bevinni sehova – Tolna megyében, 50 km-es körzetben, otthonra vagy munkahelyre." },
+    { "icon": "⏱️", "title": "Gyors, ~40 perc", "text": "A lámpa kiszerelése nélkül, helyben – a kért szolgáltatástól függően legfeljebb 1 óra." },
+    { "icon": "🛡️", "title": "1 év garancia", "text": "Felületi garancia a felújított fényszóróra, igény szerint összesen 2 évre bővíthető." },
+    { "icon": "🧾", "title": "Számlaképes vállalkozás", "text": "Bejelentett egyéni vállalkozóként magánszemélyeknek és cégeknek egyaránt adok számlát – átlátható, korrekt elszámolás." },
+    { "icon": "✨", "title": "Tartós UV-védelem", "text": "Gyári vagy annál is jobb minőség, amely nem mattul vissza, és karcállóságot ad." },
+    { "icon": "🚚", "title": "Cégeknek, flottáknak is", "text": "Fuvarozóknak, autókereskedéseknek és flottáknak is szívesen dolgozom." }
+  ],
+  "areas_heading": "Hol dolgozom?",
+  "areas_lead": "Házhoz megyek Tolna megyében és környékén, nagyjából 50 km-es körzetben – többek között ezeken a településeken és a köztük lévő falvakban:",
+  "areas_towns": ["Szekszárd", "Paks", "Bonyhád", "Dombóvár", "Tolna", "Tamási", "Bátaszék", "Simontornya", "Nagymányok"],
+  "areas_note": "A településed nincs a listán? [Kérdezz rá](kapcsolat.html) – ha belefér a körzetbe, szívesen kimegyek."
+}

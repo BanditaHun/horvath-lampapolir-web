@@ -87,6 +87,54 @@ collections:
           - { name: "cta_href", label: "Gomb hivatkozása", widget: "string", required: false, default: "kapcsolat.html" }
           - { name: "image", label: "Háttérkép", widget: "image", required: false }
 
+  # ---- Kezdőlap tartalom (kártyák, bizalmi sáv, „Miért válassz", települések) ----
+  - name: "home"
+    label: "Kezdőlap tartalom"
+    files:
+      - name: "home"
+        label: "Kezdőlapi blokkok"
+        file: "content/home.json"
+        format: "json"
+        fields:
+          - name: "quick"
+            label: "Kiemelt kártyák (3 db)"
+            widget: "list"
+            fields:
+              - { name: "title", label: "Cím", widget: "string" }
+              - { name: "text", label: "Szöveg", widget: "text" }
+              - { name: "link", label: "Hivatkozás (pl. csomagok.html)", widget: "string" }
+              - { name: "more", label: "Gomb-felirat (pl. Megnézem →)", widget: "string", required: false }
+          - name: "trust"
+            label: "Bizalmi sáv (a hero alatt)"
+            widget: "list"
+            fields:
+              - { name: "icon", label: "Ikon (emoji)", widget: "string" }
+              - { name: "text", label: "Szöveg (**félkövér** használható)", widget: "string" }
+          - { name: "why_heading", label: "„Miért válassz engem?” – szakaszcím", widget: "string" }
+          - name: "why"
+            label: "„Miért válassz engem?” – érvek"
+            widget: "list"
+            fields:
+              - { name: "icon", label: "Ikon (emoji)", widget: "string" }
+              - { name: "title", label: "Cím", widget: "string" }
+              - { name: "text", label: "Szöveg", widget: "text" }
+          - { name: "areas_heading", label: "„Hol dolgozom?” – szakaszcím", widget: "string" }
+          - { name: "areas_lead", label: "„Hol dolgozom?” – bevezető szöveg", widget: "text" }
+          - { name: "areas_towns", label: "Kiszolgált települések (soronként/vesszővel)", widget: "list" }
+          - { name: "areas_note", label: "„Hol dolgozom?” – megjegyzés (link is használható)", widget: "string", required: false }
+
+  # ---- Lábléc ----
+  - name: "footer"
+    label: "Lábléc"
+    files:
+      - name: "footer"
+        label: "Lábléc szövegek"
+        file: "content/footer.json"
+        format: "json"
+        fields:
+          - { name: "subtitle", label: "Alcím (a logó mellett)", widget: "string" }
+          - { name: "tags", label: "Kiemelt sor (arany szöveg)", widget: "text" }
+
   # ---- AI chat-segéd ----
   - name: "ai"
     label: "AI segéd"
