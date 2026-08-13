@@ -135,7 +135,7 @@ collections:
         fields:
           - { name: "subtitle", label: "Alcím (a logó mellett)", widget: "string" }
           - { name: "tags", label: "Kiemelt sor (arany szöveg)", widget: "text" }
-          - { name: "image", label: "Lábléc kép (opcionális – pl. munka közbeni fotó)", widget: "image", required: false }
+          - { name: "payment", label: "Fizetési sor (a kártya-ikon mellett)", widget: "string", required: false }
 
   # ---- AI chat-segéd ----
   - name: "ai"

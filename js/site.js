@@ -201,6 +201,8 @@ function buildHeader(active) {
   </nav>`;
 }
 const ICON_MAIL = '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1.4 2 7.6 5.3L19.6 7H4.4zM20 8.9l-8 5.6-8-5.6V17h16V8.9z"/></svg>';
+const ICON_CARD = '<svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true"><rect x="3" y="9" width="26" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><rect x="3.9" y="13" width="24.2" height="4" fill="currentColor"/><rect x="6.5" y="21.5" width="7" height="4.5" rx="1" fill="currentColor"/><path d="M31 14a7 7 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M34.6 11a12 12 0 0 1 0 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+
 function buildFooter() {
   return `<footer class="site-footer">
     <div class="container site-footer__inner">
@@ -211,7 +213,10 @@ function buildFooter() {
           <span id="footer-subtitle">Mobil fényszóró-felújítás Tolna megyében, 50 km-es körzetben</span>
           <span class="site-footer__tags" id="footer-tags">Házhoz megyünk – magánszemélyeknek, cégeknek és flottáknak egyaránt –, a munkára 1 év garanciát és számlát adunk.</span>
         </div>
-        <img class="site-footer__photo" id="footer-photo" src="" alt="Horváth Lámpapolír – fényszóró-felújítás" hidden />
+        <div class="site-footer__pay">
+          <span class="site-footer__pay-ic">${ICON_CARD}</span>
+          <span class="site-footer__pay-txt" id="footer-pay-text">Bankkártyás fizetés – érintéses is · Készpénz</span>
+        </div>
       </div>
       <div class="site-footer__col">
         <h4 class="site-footer__h">Elérhetőség</h4>
@@ -851,7 +856,7 @@ async function initSite() {
     if (f) {
       const sub = document.getElementById("footer-subtitle"); if (sub && isSet(f.subtitle)) sub.textContent = f.subtitle;
       const tg = document.getElementById("footer-tags"); if (tg && isSet(f.tags)) tg.textContent = f.tags;
-      const ph = document.getElementById("footer-photo"); if (ph && isSet(f.image)) { ph.src = rel(f.image); ph.hidden = false; }
+      const pay = document.getElementById("footer-pay-text"); if (pay && isSet(f.payment)) pay.textContent = f.payment;
     }
   } catch (e) { /* marad az alap szöveg */ }
 
