@@ -838,8 +838,22 @@ function injectLocalBusiness(contact) {
   document.head.appendChild(s);
 }
 
+// Anonim (süti nélküli) látogatás-számláló – csak egy pinget küld a stats Workernek.
+const STATS_URL = "https://horvath-stats.andras-horvat1989.workers.dev";
+function trackVisit() {
+  try {
+    fetch(STATS_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ path: location.pathname }),
+      keepalive: true,
+    }).catch(() => {});
+  } catch (e) { /* semmi baj */ }
+}
+
 // ---------- Indítás ----------
 async function initSite() {
+  trackVisit();
   buildStarfield();
   const page = document.body.dataset.page || "home";
   document.getElementById("site-header").innerHTML = buildHeader(page);

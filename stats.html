@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Látogatottság – Horváth Lámpapolír</title>
+<link rel="icon" type="image/png" href="images/favicon.png" />
+<style>
+  :root { --gold:#f0b429; --bg:#0a0a0a; --card:#161616; --line:#2a2a2a; --chrome:#d6d9de; --dim:#9aa0a8; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--chrome); font-family:"Segoe UI",system-ui,Arial,sans-serif; line-height:1.5; padding:24px 16px 60px; }
+  .wrap { max-width:920px; margin:0 auto; }
+  h1 { font-size:1.5rem; color:#fff; letter-spacing:.3px; }
+  .sub { color:var(--dim); font-size:.92rem; margin-top:4px; }
+  .bar-top { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:22px; border-bottom:1px solid var(--line); padding-bottom:16px; }
+  .btn { background:var(--gold); color:#1a1400; border:none; border-radius:9px; padding:9px 16px; font-weight:700; cursor:pointer; font-size:.92rem; }
+  .btn--ghost { background:transparent; color:var(--dim); border:1px solid var(--line); }
+  .btn:hover { filter:brightness(1.05); }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin-bottom:26px; }
+  .stat { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px 20px; }
+  .stat__label { color:var(--dim); font-size:.82rem; text-transform:uppercase; letter-spacing:.6px; }
+  .stat__num { font-size:2.1rem; font-weight:800; color:#fff; margin-top:4px; line-height:1.1; }
+  .stat__num--gold { color:var(--gold); }
+  .stat__sub { color:var(--dim); font-size:.85rem; margin-top:2px; }
+  .panel { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px; margin-bottom:20px; }
+  .panel h2 { font-size:1.05rem; color:#fff; margin-bottom:16px; }
+  .chart { display:flex; align-items:flex-end; gap:6px; height:170px; }
+  .chart__col { flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; min-width:0; }
+  .chart__bar { width:100%; max-width:34px; background:linear-gradient(180deg,var(--gold),#c9962a); border-radius:5px 5px 0 0; min-height:3px; transition:height .4s ease; position:relative; }
+  .chart__bar span { position:absolute; top:-18px; left:50%; transform:translateX(-50%); font-size:.72rem; color:var(--gold); font-weight:700; white-space:nowrap; }
+  .chart__day { font-size:.66rem; color:var(--dim); white-space:nowrap; }
+  table { width:100%; border-collapse:collapse; }
+  td, th { padding:8px 6px; border-bottom:1px solid var(--line); text-align:left; font-size:.92rem; }
+  th { color:var(--dim); font-weight:600; font-size:.8rem; text-transform:uppercase; }
+  td:last-child, th:last-child { text-align:right; color:var(--gold); font-weight:700; }
+  .login { max-width:420px; margin:60px auto; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:26px; text-align:center; }
+  .login input { width:100%; margin:14px 0; padding:11px 14px; border-radius:9px; border:1px solid var(--line); background:#0f0f0f; color:#fff; font-size:.95rem; }
+  .msg { color:#ffbcbc; font-size:.88rem; margin-top:10px; min-height:1.2em; }
+  .hint { color:var(--dim); font-size:.82rem; margin-top:14px; }
+  .hidden { display:none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="login" class="login hidden">
+    <h1>Látogatottsági statisztika</h1>
+    <p class="sub">Add meg a hozzáférési kulcsot a megtekintéshez.</p>
+    <input type="password" id="token" placeholder="Hozzáférési kulcs" autocomplete="off" />
+    <button class="btn" id="loginBtn" style="width:100%">Megnézem</button>
+    <div class="msg" id="loginMsg"></div>
+    <p class="hint">A statisztika süti nélküli, névtelen – IP-t nem tárolunk.</p>
+  </div>
+
+  <div id="dash" class="hidden">
+    <div class="bar-top">
+      <div>
+        <h1>Látogatottság</h1>
+        <div class="sub">Horváth Lámpapolír · <span id="updated"></span></div>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button class="btn" id="refreshBtn">Frissítés</button>
+        <button class="btn btn--ghost" id="logoutBtn">Kijelentkezés</button>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="stat"><div class="stat__label">Összes megtekintés</div><div class="stat__num" id="s-total">–</div></div>
+      <div class="stat"><div class="stat__label">Egyedi látogató</div><div class="stat__num stat__num--gold" id="s-uv">–</div></div>
+      <div class="stat"><div class="stat__label">Ma</div><div class="stat__num" id="s-today">–</div><div class="stat__sub" id="s-today-sub"></div></div>
+    </div>
+
+    <div class="panel">
+      <h2>Elmúlt 14 nap – egyedi látogatók</h2>
+      <div class="chart" id="chart"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Legnézettebb oldalak</h2>
+      <table><thead><tr><th>Oldal</th><th>Megtekintés</th></tr></thead><tbody id="pages"></tbody></table>
+    </div>
+  </div>
+</div>
+
+<script>
+  var API = "https://horvath-stats.andras-horvat1989.workers.dev";
+  var KEY = "hlp_stats_token";
+  var $ = function (id) { return document.getElementById(id); };
+  function nf(n) { return (n || 0).toLocaleString("hu-HU"); }
+
+  function showLogin(msg) {
+    $("login").classList.remove("hidden");
+    $("dash").classList.add("hidden");
+    $("loginMsg").textContent = msg || "";
+    $("token").focus();
+  }
+  function showDash() { $("login").classList.add("hidden"); $("dash").classList.remove("hidden"); }
+
+  async function load() {
+    var t = localStorage.getItem(KEY) || "";
+    if (!t) { showLogin(); return; }
+    try {
+      var res = await fetch(API + "/stats?token=" + encodeURIComponent(t));
+      var data = await res.json();
+      if (!res.ok || data.error) { localStorage.removeItem(KEY); showLogin(data.error || "Hibás kulcs."); return; }
+      render(data); showDash();
+    } catch (e) { showLogin("Nem sikerült betölteni – próbáld újra."); }
+  }
+
+  function render(d) {
+    $("s-total").textContent = nf(d.total);
+    $("s-uv").textContent = nf(d.uvtotal);
+    $("s-today").textContent = nf(d.today ? d.today.visitors : 0);
+    $("s-today-sub").textContent = "látogató · " + nf(d.today ? d.today.views : 0) + " megtekintés";
+    $("updated").textContent = "frissítve: " + new Date().toLocaleString("hu-HU");
+
+    var max = Math.max(1, ...d.days.map(function (x) { return x.visitors; }));
+    $("chart").innerHTML = d.days.map(function (x) {
+      var h = Math.round((x.visitors / max) * 150);
+      var dm = x.date.slice(5).replace("-", ".");
+      return '<div class="chart__col"><div class="chart__bar" style="height:' + (h + 3) + 'px">' +
+        (x.visitors ? '<span>' + x.visitors + '</span>' : '') + '</div><div class="chart__day">' + dm + '</div></div>';
+    }).join("");
+
+    $("pages").innerHTML = (d.pages && d.pages.length)
+      ? d.pages.map(function (p) { return '<tr><td>' + (p.path === "/" ? "Kezdőlap" : p.path.replace(/^\//, "")) + '</td><td>' + nf(p.count) + '</td></tr>'; }).join("")
+      : '<tr><td colspan="2" style="color:var(--dim)">Még nincs adat.</td></tr>';
+  }
+
+  $("loginBtn").addEventListener("click", function () {
+    var v = $("token").value.trim();
+    if (!v) { $("loginMsg").textContent = "Add meg a kulcsot."; return; }
+    localStorage.setItem(KEY, v); load();
+  });
+  $("token").addEventListener("keydown", function (e) { if (e.key === "Enter") $("loginBtn").click(); });
+  $("refreshBtn").addEventListener("click", load);
+  $("logoutBtn").addEventListener("click", function () { localStorage.removeItem(KEY); showLogin(); });
+
+  load();
+</script>
+</body>
+</html>
