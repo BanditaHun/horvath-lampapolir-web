@@ -7,5 +7,7 @@
   "valid_text": "Az akció 2026. november 30-ig érvényes. Az időpont-igényléskor jelezd, hogy az őszi akcióra jelentkezel.",
   "cta_label": "Kérj időpontot",
   "cta_href": "kapcsolat.html",
-  "image": "images/osz-akcio.jpg"
+  "image": "images/osz-akcio.jpg",
+  "multicar_active": true,
+  "multicar_text": "Ha egy helyszínen, egy alkalommal két vagy több autót kell felújítani, arra kedvezményt adok."
 }

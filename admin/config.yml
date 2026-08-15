@@ -86,6 +86,8 @@ collections:
           - { name: "cta_label", label: "Gomb felirata", widget: "string", required: false, default: "Kérj időpontot" }
           - { name: "cta_href", label: "Gomb hivatkozása", widget: "string", required: false, default: "kapcsolat.html" }
           - { name: "image", label: "Háttérkép", widget: "image", required: false }
+          - { name: "multicar_active", label: "Több autós kedvezmény bekapcsolva?", widget: "boolean", default: true, hint: "Az AI ennek megfelelően válaszol a „2 autóra jár kedvezmény?” kérdésre. Kikapcsolva azt mondja, hogy nincs meghirdetve." }
+          - { name: "multicar_text", label: "Több autós kedvezmény szövege", widget: "text", required: false }
 
   # ---- Kezdőlap tartalom (kártyák, bizalmi sáv, „Miért válassz", települések) ----
   - name: "home"
