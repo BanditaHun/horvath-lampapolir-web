@@ -242,8 +242,9 @@ collections:
           - { name: "email", label: "E-mail (opcionális)", widget: "string", required: false }
           - { name: "google_url", label: "Google Cégprofil link (a profilra visz)", widget: "string", required: false, hint: "Pl. https://g.page/r/XXXX – a láblécben és a Kapcsolat oldalon jelenik meg." }
           - { name: "google_review_url", label: "Google értékelés-kérő link (/review)", widget: "string", required: false, hint: "Pl. https://g.page/r/XXXX/review – az „Értékelj a Google-on” gombra." }
-          - { name: "map_query", label: "Térkép középpontja (Kapcsolat oldal)", widget: "string", required: false, hint: "Pl. „Szekszárd, Tolna megye”. Üresen hagyva nincs térkép." }
-          - { name: "map_zoom", label: "Térkép nagyítás (1–20, kb. 9 = megye)", widget: "string", required: false, default: "9" }
+          - { name: "map_lat", label: "Térkép – székhely szélesség (lat)", widget: "string", required: false, hint: "A piros kör középpontja. Pl. 46.4256 (Tolna). Üresen hagyva nincs térkép." }
+          - { name: "map_lng", label: "Térkép – székhely hosszúság (lng)", widget: "string", required: false, hint: "Pl. 18.7817." }
+          - { name: "map_radius_km", label: "Piros kör sugara (km)", widget: "string", required: false, default: "50" }
 
   # ---- Galéria ----
   - name: "gallery"

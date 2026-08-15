@@ -671,13 +671,11 @@ function renderContact(app, contact) {
       ${contact.note ? `<div class="contact-aside__note rich">${mdBlock(contact.note)}</div>` : ""}
     </aside>`;
 
-  const mapSection = isSet(contact.map_query) ? `<div class="container"><section class="contact-map" id="contact-map">
-      <div class="contact-map__ph">
-        <div class="contact-map__ic" aria-hidden="true">📍</div>
-        <div class="contact-map__t">Kiszolgált terület – Tolna megye, kb. 50 km-es körzet</div>
-        <button class="btn btn--ghost" id="map-load" type="button" data-q="${esc(contact.map_query)}" data-z="${esc(contact.map_zoom || "9")}">Térkép betöltése</button>
-        <div class="contact-map__note">A térkép a Google-tól tölt be, csak kattintásra – adatvédelmi okból.</div>
-      </div>
+  const hasMap = isSet(contact.map_lat) && isSet(contact.map_lng);
+  const mapSection = hasMap ? `<div class="container"><section class="area-map-wrap">
+      <h2 class="area-map-title">Kiszolgált terület</h2>
+      <p class="area-map-lead">Házhoz megyek Tolna megyében és környékén – a pirossal jelölt, kb. ${esc(contact.map_radius_km || "50")} km-es körzetben.</p>
+      <div id="area-map" class="area-map"></div>
     </section></div>` : "";
 
   app.innerHTML = pageHead(contact.heading || "Kapcsolat", "") +
@@ -686,19 +684,34 @@ function renderContact(app, contact) {
        ${aside}
      </div></div>` + mapSection;
   wireBookingForm(contact);
-  wireMap();
+  wireMap(contact);
 }
 
-function wireMap() {
-  const btn = document.getElementById("map-load");
-  if (!btn) return;
-  btn.addEventListener("click", () => {
-    const q = encodeURIComponent(btn.dataset.q || "");
-    const z = btn.dataset.z || "9";
-    const box = document.getElementById("contact-map");
-    if (!box) return;
-    box.classList.add("contact-map--loaded");
-    box.innerHTML = `<iframe title="Kiszolgált terület térkép" src="https://maps.google.com/maps?q=${q}&z=${z}&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>`;
+function loadLeaflet(cb) {
+  if (window.L) { cb(); return; }
+  if (!document.getElementById("leaflet-css")) {
+    const l = document.createElement("link"); l.id = "leaflet-css"; l.rel = "stylesheet"; l.href = "css/leaflet.css";
+    document.head.appendChild(l);
+  }
+  const existing = document.getElementById("leaflet-js");
+  if (existing) { existing.addEventListener("load", cb); return; }
+  const s = document.createElement("script"); s.id = "leaflet-js"; s.src = "js/leaflet.js"; s.onload = cb; s.onerror = cb;
+  document.body.appendChild(s);
+}
+
+function wireMap(contact) {
+  const el = document.getElementById("area-map");
+  if (!el || !contact) return;
+  const lat = parseFloat(contact.map_lat), lng = parseFloat(contact.map_lng);
+  if (isNaN(lat) || isNaN(lng)) return;
+  const km = parseFloat(contact.map_radius_km) || 50;
+  loadLeaflet(() => {
+    if (!window.L) { el.innerHTML = '<div class="area-map__err">A térkép most nem tölthető be.</div>'; return; }
+    const map = L.map(el, { scrollWheelZoom: false }).setView([lat, lng], 9);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "© OpenStreetMap közreműködők" }).addTo(map);
+    const circle = L.circle([lat, lng], { radius: km * 1000, color: "#e01e1e", weight: 2, fillColor: "#e01e1e", fillOpacity: 0.12 }).addTo(map);
+    L.circleMarker([lat, lng], { radius: 6, color: "#a00", weight: 2, fillColor: "#e01e1e", fillOpacity: 1 }).addTo(map).bindPopup("Horváth Lámpapolír – kb. " + km + " km-es körzet");
+    setTimeout(() => { map.invalidateSize(); map.fitBounds(circle.getBounds(), { padding: [24, 24] }); }, 300);
   });
 }
 
