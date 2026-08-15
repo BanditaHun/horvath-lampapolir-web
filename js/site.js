@@ -175,6 +175,9 @@ function buildAiWidget(ai) {
   });
 }
 
+const ICON_SUN = '<svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><g stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="4.2"/><line x1="12" y1="19.8" x2="12" y2="22"/><line x1="2" y1="12" x2="4.2" y2="12"/><line x1="19.8" y1="12" x2="22" y2="12"/><line x1="4.9" y1="4.9" x2="6.5" y2="6.5"/><line x1="17.5" y1="17.5" x2="19.1" y2="19.1"/><line x1="4.9" y1="19.1" x2="6.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="19.1" y2="4.9"/></g></svg>';
+const ICON_MOON = '<svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M20.5 14.6A8.2 8.2 0 0 1 9.4 3.5a8.2 8.2 0 1 0 11.1 11.1z"/></svg>';
+
 function buildHeader(active) {
   const links = NAV.map((n) => {
     const cls = [n.cta ? "nav__cta" : "", n.page === active ? "is-active" : ""].filter(Boolean).join(" ");
@@ -194,6 +197,7 @@ function buildHeader(active) {
         <a class="topbar__phone" id="top-phone" href="#" hidden>${ICON_PHONE}<span id="top-phone-text"></span></a>
         <a class="topbar__social" id="top-email" href="#" aria-label="E-mail küldése" hidden>${ICON_MAIL}</a>
         <a class="topbar__social" id="top-fb" href="#" target="_blank" rel="noopener" aria-label="Facebook" hidden>${ICON_FB}</a>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Sötét / világos mód"><span class="ic-sun">${ICON_SUN}</span><span class="ic-moon">${ICON_MOON}</span></button>
         <button class="nav__toggle" id="nav-toggle" aria-label="Menü" aria-expanded="false"><span></span><span></span><span></span></button>
       </div>
     </div>
@@ -852,6 +856,18 @@ function injectLocalBusiness(contact) {
   document.head.appendChild(s);
 }
 
+// Sötét / világos mód kapcsoló
+function wireTheme() {
+  const btn = document.getElementById("theme-toggle");
+  if (!btn) return;
+  btn.addEventListener("click", () => {
+    const cur = document.documentElement.getAttribute("data-theme");
+    const next = cur === "light" ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", next);
+    try { localStorage.setItem("hlp_theme", next); } catch (e) {}
+  });
+}
+
 // Anonim (süti nélküli) látogatás-számláló – csak egy pinget küld a stats Workernek.
 const STATS_URL = "https://horvath-stats.andras-horvat1989.workers.dev";
 function trackVisit() {
@@ -873,6 +889,7 @@ async function initSite() {
   document.getElementById("site-header").innerHTML = buildHeader(page);
   document.getElementById("site-footer").innerHTML = buildFooter();
   wireNav();
+  wireTheme();
 
   try { applyTheme(await loadJSON("content/theme.json")); } catch (e) { /* alap marad */ }
 

@@ -826,3 +826,120 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 .multicar__body span { color: var(--chrome); font-size: .95rem; line-height: 1.55; }
 .multicar__body a { color: var(--gold); font-weight: 700; white-space: nowrap; }
 @media (max-width: 480px) { .multicar { flex-direction: column; text-align: center; } }
+
+/* ================= SÖTÉT / VILÁGOS KAPCSOLÓ ================= */
+.theme-toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; border-radius: 50%; flex: none; cursor: pointer;
+  border: 1px solid rgba(240,180,41,0.4); color: var(--gold);
+  background: rgba(240,180,41,0.06);
+  transition: color .15s ease, border-color .15s ease, transform .12s ease, background .15s ease;
+}
+.theme-toggle:hover { border-color: var(--gold); background: rgba(240,180,41,0.14); transform: translateY(-1px); }
+.theme-toggle .ic-moon { display: none; }
+:root[data-theme="light"] .theme-toggle .ic-sun { display: none; }
+:root[data-theme="light"] .theme-toggle .ic-moon { display: inline-flex; }
+
+/* ================= VILÁGOS TÉMA ================= */
+:root[data-theme="light"] {
+  --bg: #eef0f3;
+  --bg-elev: #ffffff;
+  --bg-card: #ffffff;
+  --gold: #e0a41c;
+  --gold-dim: #a9760a;
+  --chrome: #23262b;
+  --chrome-dim: #5c636e;
+  --line: #e3e6ea;
+}
+:root[data-theme="light"] body { background: var(--bg); color: var(--chrome); }
+:root[data-theme="light"] .starfield { display: none; }
+
+:root[data-theme="light"] .nav { background: rgba(255,255,255,0.9); border-bottom-color: #ece4cf; box-shadow: 0 2px 16px rgba(0,0,0,0.07); }
+:root[data-theme="light"] .nav__logo { background: #fff; }
+:root[data-theme="light"] .nav__title-main { background: none; -webkit-background-clip: initial; background-clip: initial; -webkit-text-fill-color: #23262b; color: #23262b; }
+:root[data-theme="light"] .nav__title-sub { color: #7a818b; }
+:root[data-theme="light"] .nav__links a { color: #3a3f47; }
+:root[data-theme="light"] .nav__links a:hover, :root[data-theme="light"] .nav__links a.is-active { color: var(--gold-dim); background: rgba(224,164,28,0.10); }
+:root[data-theme="light"] .topbar { background: #fff; }
+:root[data-theme="light"] .topbar__phone { color: #23262b; }
+
+:root[data-theme="light"] .hero__title { background: none; -webkit-text-fill-color: #23262b; color: #23262b; }
+:root[data-theme="light"] .hero { border-bottom-color: var(--line); }
+
+:root[data-theme="light"] .neon-card { background: #fff; border-color: #ece4cf; box-shadow: 0 4px 14px rgba(0,0,0,0.06); }
+:root[data-theme="light"] .neon-card:hover { border-color: var(--gold); box-shadow: 0 12px 28px rgba(0,0,0,0.13); }
+:root[data-theme="light"] .neon-card__title { color: #23262b; text-shadow: none; }
+:root[data-theme="light"] .neon-card__price { color: #23262b; }
+:root[data-theme="light"] a.neon-card__price, :root[data-theme="light"] .neon-card__more { color: var(--gold-dim); }
+:root[data-theme="light"] .neon-card__desc { color: #5c636e; }
+
+:root[data-theme="light"] .page__title, :root[data-theme="light"] .rich strong, :root[data-theme="light"] .rich b, :root[data-theme="light"] .rich h1, :root[data-theme="light"] .rich h2, :root[data-theme="light"] .rich h3, :root[data-theme="light"] .rich h4, :root[data-theme="light"] .prose h1, :root[data-theme="light"] .prose h2, :root[data-theme="light"] .prose h3, :root[data-theme="light"] .prose h4 { color: #23262b; }
+
+:root[data-theme="light"] .ticker { background: #fff; border-color: #ece4cf; }
+:root[data-theme="light"] .ticker__item { color: #3a3f47; }
+
+:root[data-theme="light"] .trustbar__item, :root[data-theme="light"] .multicar, :root[data-theme="light"] .areas__tag, :root[data-theme="light"] .booking, :root[data-theme="light"] .contact-aside { background: #fff; border-color: #ece4cf; }
+:root[data-theme="light"] .trustbar__item, :root[data-theme="light"] .multicar__body span, :root[data-theme="light"] .areas__lead, :root[data-theme="light"] .areas__note, :root[data-theme="light"] .home-intro, :root[data-theme="light"] .areas__tag { color: #3a3f47; }
+:root[data-theme="light"] .trustbar__item b, :root[data-theme="light"] .booking__title, :root[data-theme="light"] .contact-aside__title, :root[data-theme="light"] .contact-info__value a, :root[data-theme="light"] .booking__info strong, :root[data-theme="light"] .faq__q, :root[data-theme="light"] .multicar__body strong { color: #23262b; }
+:root[data-theme="light"] .multicar__body strong { color: var(--gold-dim); }
+:root[data-theme="light"] .home-intro strong { color: var(--gold-dim); }
+
+:root[data-theme="light"] .booking__field input, :root[data-theme="light"] .booking__field select, :root[data-theme="light"] .booking__field textarea, :root[data-theme="light"] .review-form input, :root[data-theme="light"] .review-form textarea { background: #fff; color: #23262b; border-color: #dfe3e8; color-scheme: light; }
+:root[data-theme="light"] .booking__info { background: rgba(224,164,28,0.08); }
+
+:root[data-theme="light"] .faq__item, :root[data-theme="light"] .faq__item[open] { background: #fff; border-color: #ece4cf; }
+:root[data-theme="light"] .faq__a { color: #4a4f57; }
+
+:root[data-theme="light"] .ai-panel { background: #fff; border-color: #ece4cf; }
+:root[data-theme="light"] .ai-head { background: linear-gradient(135deg, rgba(224,164,28,0.14), rgba(255,255,255,0.5)); border-bottom-color: rgba(224,164,28,0.2); }
+:root[data-theme="light"] .ai-head__title { color: #23262b; }
+:root[data-theme="light"] .ai-msg--bot { background: #f1f2f4; color: #23262b; border-color: #e3e6ea; }
+:root[data-theme="light"] .ai-msg--user { color: #23262b; }
+:root[data-theme="light"] .ai-form { border-top-color: #e3e6ea; }
+:root[data-theme="light"] .ai-form input { background: #fff; color: #23262b; color-scheme: light; }
+:root[data-theme="light"] .ai-note { color: #7a818b; }
+
+:root[data-theme="light"] .promo__title { color: #23262b; }
+:root[data-theme="light"] .promo__text { color: #3a3f47; }
+
+/* A lábléc SÖTÉT marad világos módban is (kontraszt + a fehér fizetési chipek jól mutatnak rajta) */
+:root[data-theme="light"] .site-footer { background: #121216; border-top: 1px solid #26262c; }
+
+/* Világos mód: az arany SZÖVEG sötétebb aranyra (a CMS inline --gold-ja miatt fix értékkel) */
+:root[data-theme="light"] .nav__links a.is-active,
+:root[data-theme="light"] .nav__links a:hover,
+:root[data-theme="light"] a.neon-card__price,
+:root[data-theme="light"] .neon-card__more,
+:root[data-theme="light"] .multicar__body strong,
+:root[data-theme="light"] .home-intro strong,
+:root[data-theme="light"] .rich a,
+:root[data-theme="light"] .prose a,
+:root[data-theme="light"] .faq__a a,
+:root[data-theme="light"] .areas__note a,
+:root[data-theme="light"] .booking__lead a,
+:root[data-theme="light"] .contact-info__label { color: #a9760a; }
+
+:root[data-theme="light"] .nav__links a.is-active { color: #23262b !important; }
+
+/* === Világos mód – kontraszt-javítások (lábléc, promó, vélemények) === */
+/* A lábléc SÖTÉT marad, ezért a szövege maradjon VILÁGOS */
+:root[data-theme="light"] .site-footer__brandtext span,
+:root[data-theme="light"] .site-footer__links a,
+:root[data-theme="light"] .site-footer__link,
+:root[data-theme="light"] .site-footer__bottom,
+:root[data-theme="light"] .site-footer__legal a { color: #c3c7cd !important; }
+:root[data-theme="light"] .site-footer__links a:hover,
+:root[data-theme="light"] .site-footer__link:hover,
+:root[data-theme="light"] .site-footer__legal a:hover { color: #f0b429 !important; }
+
+/* A promó SÖTÉT képes banner marad -> világos szöveg */
+:root[data-theme="light"] .promo__title { color: #fff; }
+:root[data-theme="light"] .promo__text { color: #e8e8ea; }
+
+/* Vélemények szekció világos módban */
+:root[data-theme="light"] .review-form-card__title,
+:root[data-theme="light"] .reviews__avg { color: #23262b; }
+:root[data-theme="light"] .review-form-card a { color: #a9760a; }
+:root[data-theme="light"] .review-card__text { color: #3a3f47; }
+:root[data-theme="light"] .review-card__meta,
+:root[data-theme="light"] .reviews__count { color: #6b7178; }
