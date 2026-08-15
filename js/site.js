@@ -177,6 +177,7 @@ function buildAiWidget(ai) {
 
 const ICON_SUN = '<svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><g stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="4.2"/><line x1="12" y1="19.8" x2="12" y2="22"/><line x1="2" y1="12" x2="4.2" y2="12"/><line x1="19.8" y1="12" x2="22" y2="12"/><line x1="4.9" y1="4.9" x2="6.5" y2="6.5"/><line x1="17.5" y1="17.5" x2="19.1" y2="19.1"/><line x1="4.9" y1="19.1" x2="6.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="19.1" y2="4.9"/></g></svg>';
 const ICON_MOON = '<svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M20.5 14.6A8.2 8.2 0 0 1 9.4 3.5a8.2 8.2 0 1 0 11.1 11.1z"/></svg>';
+const ICON_GOOGLE = '<svg viewBox="0 0 48 48" width="18" height="18" aria-hidden="true"><path fill="#4285F4" d="M45 24c0-1.6-.1-2.8-.4-4.1H24v7.7h12c-.2 1.9-1.5 4.8-4.3 6.7l6.6 5.1C42.6 36 45 30.6 45 24z"/><path fill="#34A853" d="M24 46c5.9 0 10.8-1.9 14.4-5.3l-6.6-5.1c-1.8 1.2-4.2 2.1-7.8 2.1-6 0-11-4-12.8-9.5l-6.8 5.3C7.9 40.6 15.3 46 24 46z"/><path fill="#FBBC05" d="M11.2 28.2c-.5-1.4-.7-2.8-.7-4.2s.2-2.8.7-4.2l-6.8-5.3C3 17.3 2 20.5 2 24s1 6.7 2.4 9.5l6.8-5.3z"/><path fill="#EA4335" d="M24 10.5c3.3 0 5.6 1.4 6.9 2.6l5.8-5.7C33.3 4.1 28.9 2 24 2 15.3 2 7.9 7.4 4.4 14.5l6.8 5.3C13 14.5 18 10.5 24 10.5z"/></svg>';
 
 function buildHeader(active) {
   const links = NAV.map((n) => {
@@ -262,6 +263,7 @@ function populateFooter(contact) {
   if (isSet(contact.phone)) parts.push(`<a class="site-footer__link" href="${telHref(contact.phone)}">${ICON_PHONE}<span>${esc(contact.phone)}</span></a>`);
   if (isSet(contact.email)) parts.push(`<a class="site-footer__link" href="mailto:${esc(contact.email)}">${ICON_MAIL}<span>${esc(contact.email)}</span></a>`);
   if (isSet(contact.facebook_url)) parts.push(`<a class="site-footer__link site-footer__link--fb" href="${esc(contact.facebook_url)}" target="_blank" rel="noopener">${ICON_FB}<span>Facebook</span></a>`);
+  if (isSet(contact.google_url)) parts.push(`<a class="site-footer__link" href="${esc(contact.google_url)}" target="_blank" rel="noopener">${ICON_GOOGLE}<span>Google</span></a>`);
   box.innerHTML = parts.join("");
 }
 
@@ -362,6 +364,7 @@ function reviewsSummaryHTML(list) {
 function reviewsSectionHTML(reviews, contact) {
   const apiUrl = reviews && isSet(reviews.api_url) ? reviews.api_url : "";
   const fbUrl = contact && isSet(contact.facebook_url) ? contact.facebook_url : "";
+  const googUrl = contact && isSet(contact.google_review_url) ? contact.google_review_url : "";
   const starBtns = [1, 2, 3, 4, 5].map((i) => `<button type="button" class="star-btn" data-v="${i}" aria-label="${i} csillag">★</button>`).join("");
   let form = "";
   if (apiUrl) {
@@ -378,7 +381,7 @@ function reviewsSectionHTML(reviews, contact) {
         <button type="submit" class="btn btn--primary">Küldés</button>
         <p class="review-form__note">A véleményed a küldés után <strong>azonnal megjelenik</strong> az oldalon.</p>
       </form>
-      ${fbUrl ? `<p class="review-or">…vagy <a href="${esc(fbUrl)}" target="_blank" rel="noopener">értékelj a Facebookon</a></p>` : ""}
+      ${(googUrl || fbUrl) ? `<p class="review-or">…vagy értékelj itt: ${googUrl ? `<a href="${esc(googUrl)}" target="_blank" rel="noopener">Google</a>` : ""}${googUrl && fbUrl ? " · " : ""}${fbUrl ? `<a href="${esc(fbUrl)}" target="_blank" rel="noopener">Facebook</a>` : ""}</p>` : ""}
     </div>`;
   } else if (fbUrl) {
     form = `<div class="review-cta"><p>Elégedett voltál? Örülnénk a véleményednek:</p>
@@ -387,6 +390,7 @@ function reviewsSectionHTML(reviews, contact) {
   return `<section class="reviews" id="velemenyek"><div class="container"><div class="reviews__panel">
     <h2 class="page__title">${esc((reviews && reviews.heading) || "Vélemények")}</h2>
     ${reviews && reviews.intro ? `<div class="rich page__intro">${mdBlock(reviews.intro)}</div>` : ""}
+    ${googUrl ? `<a class="btn btn--primary reviews__google-btn" href="${esc(googUrl)}" target="_blank" rel="noopener">${ICON_GOOGLE}<span>Értékelj minket a Google-on</span></a>` : ""}
     <div class="reviews__grid">
       <div class="reviews__main">
         <div id="reviews-summary"></div>
@@ -658,6 +662,7 @@ function renderContact(app, contact) {
   if (phone) rows.push(infoRow(ICON_WHATSAPP, "WhatsApp", `<a href="${whatsappHref(phone)}" target="_blank" rel="noopener">Írj vagy hívj WhatsAppon</a>`));
   if (isSet(contact.email)) rows.push(infoRow(ICON_MAIL, "E-mail", `<a href="mailto:${esc(contact.email)}">${esc(contact.email)}</a>`, "contact-info__value--email"));
   if (isSet(contact.facebook_url)) rows.push(infoRow(ICON_FB, "Facebook", `<a href="${esc(contact.facebook_url)}" target="_blank" rel="noopener">Írj üzenetet</a>`));
+  if (isSet(contact.google_url)) rows.push(infoRow(ICON_GOOGLE, "Google", `<a href="${esc(contact.google_url)}" target="_blank" rel="noopener">Nézd meg a Google-on</a>`));
   if (isSet(contact.instagram_url)) rows.push(infoRow(ICON_IG, "Instagram", `<a href="${esc(contact.instagram_url)}" target="_blank" rel="noopener">Megnézem</a>`));
 
   const aside = `<aside class="contact-aside">

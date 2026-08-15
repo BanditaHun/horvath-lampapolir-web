@@ -240,6 +240,8 @@ collections:
           - { name: "facebook_label", label: "Facebook gomb felirata", widget: "string", required: false }
           - { name: "instagram_url", label: "Instagram link (opcionális)", widget: "string", required: false, hint: "Ha kitöltöd, megjelenik a fejléc felső sávjában. Üresen hagyva elrejtve." }
           - { name: "email", label: "E-mail (opcionális)", widget: "string", required: false }
+          - { name: "google_url", label: "Google Cégprofil link (a profilra visz)", widget: "string", required: false, hint: "Pl. https://g.page/r/XXXX – a láblécben és a Kapcsolat oldalon jelenik meg." }
+          - { name: "google_review_url", label: "Google értékelés-kérő link (/review)", widget: "string", required: false, hint: "Pl. https://g.page/r/XXXX/review – az „Értékelj a Google-on” gombra." }
 
   # ---- Galéria ----
   - name: "gallery"
