@@ -242,6 +242,8 @@ collections:
           - { name: "email", label: "E-mail (opcionális)", widget: "string", required: false }
           - { name: "google_url", label: "Google Cégprofil link (a profilra visz)", widget: "string", required: false, hint: "Pl. https://g.page/r/XXXX – a láblécben és a Kapcsolat oldalon jelenik meg." }
           - { name: "google_review_url", label: "Google értékelés-kérő link (/review)", widget: "string", required: false, hint: "Pl. https://g.page/r/XXXX/review – az „Értékelj a Google-on” gombra." }
+          - { name: "map_query", label: "Térkép középpontja (Kapcsolat oldal)", widget: "string", required: false, hint: "Pl. „Szekszárd, Tolna megye”. Üresen hagyva nincs térkép." }
+          - { name: "map_zoom", label: "Térkép nagyítás (1–20, kb. 9 = megye)", widget: "string", required: false, default: "9" }
 
   # ---- Galéria ----
   - name: "gallery"

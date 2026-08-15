@@ -954,3 +954,14 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 .reviews__google-btn:hover { background: #f6f7f9 !important; filter: none; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.3); }
 .reviews__google-btn svg { flex: none; }
 .review-or a { color: var(--gold); font-weight: 700; }
+
+/* ---------- Kiszolgált terület térkép (kattintásra tölt) ---------- */
+.contact-map { max-width: 1000px; margin: 30px auto 0; border-radius: var(--radius); overflow: hidden; border: 1px solid rgba(240,180,41,0.32); box-shadow: 0 8px 24px rgba(0,0,0,0.32); }
+.contact-map__ph { min-height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 13px; text-align: center; padding: 32px 24px;
+  background: linear-gradient(180deg, rgba(240,180,41,0.06), rgba(20,20,20,0.5)); }
+.contact-map__ic { font-size: 2.6rem; line-height: 1; }
+.contact-map__t { color: var(--chrome); font-weight: 600; font-size: 1.05rem; }
+.contact-map__note { color: var(--chrome-dim); font-size: .82rem; max-width: 360px; }
+.contact-map iframe { display: block; width: 100%; height: 380px; border: 0; }
+:root[data-theme="light"] .contact-map { border-color: #ece4cf; }
+:root[data-theme="light"] .contact-map__ph { background: linear-gradient(180deg, rgba(224,164,28,0.07), #ffffff); }

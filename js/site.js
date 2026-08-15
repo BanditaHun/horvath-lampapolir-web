@@ -671,12 +671,35 @@ function renderContact(app, contact) {
       ${contact.note ? `<div class="contact-aside__note rich">${mdBlock(contact.note)}</div>` : ""}
     </aside>`;
 
+  const mapSection = isSet(contact.map_query) ? `<div class="container"><section class="contact-map" id="contact-map">
+      <div class="contact-map__ph">
+        <div class="contact-map__ic" aria-hidden="true">📍</div>
+        <div class="contact-map__t">Kiszolgált terület – Tolna megye, kb. 50 km-es körzet</div>
+        <button class="btn btn--ghost" id="map-load" type="button" data-q="${esc(contact.map_query)}" data-z="${esc(contact.map_zoom || "9")}">Térkép betöltése</button>
+        <div class="contact-map__note">A térkép a Google-tól tölt be, csak kattintásra – adatvédelmi okból.</div>
+      </div>
+    </section></div>` : "";
+
   app.innerHTML = pageHead(contact.heading || "Kapcsolat", "") +
     `<div class="container"><div class="contact-layout">
        <div class="contact-layout__main">${bookingFormHTML(contact)}</div>
        ${aside}
-     </div></div>`;
+     </div></div>` + mapSection;
   wireBookingForm(contact);
+  wireMap();
+}
+
+function wireMap() {
+  const btn = document.getElementById("map-load");
+  if (!btn) return;
+  btn.addEventListener("click", () => {
+    const q = encodeURIComponent(btn.dataset.q || "");
+    const z = btn.dataset.z || "9";
+    const box = document.getElementById("contact-map");
+    if (!box) return;
+    box.classList.add("contact-map--loaded");
+    box.innerHTML = `<iframe title="Kiszolgált terület térkép" src="https://maps.google.com/maps?q=${q}&z=${z}&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>`;
+  });
 }
 
 function bookingFormHTML(contact) {
