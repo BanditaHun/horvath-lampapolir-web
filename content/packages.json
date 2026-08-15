@@ -1,30 +1,30 @@
 {
   "heading": "Csomagok",
-  "intro": "A megfakult, homályos fényszóró **veszélyes**: szétszórja és elnyeli a fényt, így éjszaka jóval kevesebbet látsz az útból – ráadásul a műszaki vizsgán is hibapont lehet. A felújítás **visszaadja a kristálytiszta fényt**: jobb látótávolság, biztonságosabb éjszakai vezetés és megújult megjelenés – a fényszórócsere árának töredékéért. Minden csomag **helyszíni**, házhoz megyünk, bármilyen autótípusra. Ráadásul **minden csomaghoz ingyenes akkumulátor-állapot ellenőrzés és fagyálló-mérés is jár**. Az árak tájékoztató jellegűek, a végleges ár az ingyenes állapotfelmérés után derül ki.",
   "items": [
     {
       "name": "ALAP – Fényszóró polírozás",
-      "badge": "",
-      "description": "- Fényszóró külső felületének alapos megtisztítása\n- Fényszóró állapotának felmérése\n- Alap polírozás\n- Matt, elszíneződött felület javítása\n- A fényszóró átláthatóságának és megjelenésének javítása\n- Felületvédelem nélkül\n- **Ingyenes akkumulátor-állapot ellenőrzés és fagyálló-mérés** (benne van)\n\n**Ajánlott:** enyhébb mattulás és kisebb felületi oxidáció esetén.",
-      "price": "12 000 Ft-tól"
+      "description": "#### ALAP – Fényszóró polírozás\n\n• Fényszóró külső felületének alapos megtisztítása: Eltávolítjuk a fényszóró felületéről a port, sarat és a makacs szennyeződéseket.\n\n• Fényszóró állapotának felmérése: Szakértelemmel átvizsgáljuk a fényszóró burkolatának aktuális állapotát és károsodásait.\n\n• Egylépcsős felületjavítás és fényesítés: Eltüntetjük a kisebb felületi mattulásokat, majd visszaállítjuk a lámpatestek áttetszőségét és fényét.\n\n• Garancia nélkül: Ez a csomag kedvezőbb áron érhető el, garanciális vállalás nélkül.\n\n• Ingyenes akkumulátor-állapot ellenőrzés és fagyállómérés: Ajándék extra szolgáltatásként helyben átvizsgáljuk az akkumulátort és ellenőrizzük a hűtőfolyadék fagyállóságát.\n\n## A megadott összeg tájékoztató jellegű, a végleges ár a helyszíni állapotfelmérést követően fixálható.",
+      "price": "15 000 Ft-tól",
+      "badge": ""
     },
     {
       "name": "STANDARD – Fényszóró-felújítás + garancia",
-      "badge": "Legnépszerűbb",
       "description": "- Fényszóró alapos tisztítása és előkészítése\n- Szükség esetén csiszolás\n- 2 lépcsős polírozás vagy polimeres technológiás fényszóró-felújítás\n- Finiselés és végső felületkezelés\n- A fényszóró átláthatóságának és megjelenésének javítása\n- **1 év felületi garancia**\n- **Ingyenes akkumulátor-állapot ellenőrzés és fagyálló-mérés** (benne van)\n\n**Ajánlott:** közepesen vagy erősen matt, oxidálódott fényszórókhoz.",
-      "price": "16 000 Ft-tól"
+      "price": "16 000 Ft-tól",
+      "badge": "Legnépszerűbb"
     },
     {
       "name": "PRÉMIUM – Komplett felújítás + kerámia UV-védelem",
-      "badge": "Ajánlott",
       "description": "- Fényszóró teljes körű tisztítása\n- Alapos felület-előkészítés\n- Szükség esetén csiszolás\n- 2 lépcsős polírozás vagy polimeres technológiás felújítás\n- Finomító polírozás és végső felületkorrekció\n- Alapos zsírtalanítás\n- **Prémium kerámia UV-felületvédelem**\n- Végső ellenőrzés és minőségellenőrzés\n- **1 év felületi garancia**\n- Tartósabb és ellenállóbb felületvédelem\n- Prémium megjelenés és felületminőség\n- **Ingyenes akkumulátor-állapot ellenőrzés és fagyálló-mérés** (benne van)\n\n**Ajánlott:** erősen matt, oxidálódott vagy jelentősen elszíneződött fényszórókhoz, illetve azoknak, akik hosszabb távú UV-védelmet szeretnének.",
-      "price": "22 000 Ft-tól"
+      "price": "22 000 Ft-tól",
+      "badge": "Ajánlott"
     },
     {
       "name": "🛡️ +1 év felületi garancia",
-      "badge": "Kiegészítő",
       "description": "A **Standard** és **Prémium** csomaghoz járó 1 év felületi garancia további **1 évvel** meghosszabbítható – így összesen **2 év** felületi garanciát kapsz.\n\nA hosszabb védelem plusz nyugalmat ad, és tartósan megőrzi a kristálytiszta fényt.",
-      "price": "5 500 Ft"
+      "price": "5 500 Ft",
+      "badge": "Kiegészítő"
     }
-  ]
+  ],
+  "intro": "A megfakult, homályos fényszóró **veszélyes**: szétszórja és elnyeli a fényt, így éjszaka jóval kevesebbet látsz az útból – ráadásul a műszaki vizsgán is hibapont lehet. A felújítás **visszaadja a kristálytiszta fényt**: jobb látótávolság, biztonságosabb éjszakai vezetés és megújult megjelenés – a fényszórócsere árának töredékéért. Minden csomag **helyszíni**, házhoz megyünk, bármilyen autótípusra. Ráadásul **minden csomaghoz ingyenes akkumulátor-állapot ellenőrzés és fagyálló-mérés is jár**. Az árak tájékoztató jellegűek, a végleges ár az ingyenes állapotfelmérés után derül ki."
 }
