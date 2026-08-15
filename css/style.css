@@ -805,12 +805,10 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 }
 .home-intro strong, .home-intro b { color: var(--gold); }
 
-/* ---------- Lábléc fizetés-blokk ---------- */
+/* ---------- Lábléc fizetési módok ---------- */
 .site-footer__brand { flex-wrap: wrap; }
-.site-footer__pay {
-  flex-basis: 100%; display: inline-flex; align-items: center; gap: 11px; margin-top: 10px;
-  padding: 9px 15px; border-radius: 12px; width: fit-content; max-width: 100%;
-  background: rgba(240,180,41,0.06); border: 1px solid rgba(240,180,41,0.28);
-}
-.site-footer__pay-ic { color: var(--gold); display: inline-flex; flex: none; }
-.site-footer__pay-txt { color: var(--chrome); font-weight: 600; font-size: .9rem; }
+.site-footer__pay { flex-basis: 100%; margin-top: 12px; }
+.site-footer__pay-badges { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+.pay-badge { display: inline-flex; line-height: 0; border-radius: 5px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.16); }
+.pay-badge svg { display: block; }
+.site-footer__pay-txt { display: block; color: var(--chrome-dim); font-size: .84rem; margin-top: 8px; }

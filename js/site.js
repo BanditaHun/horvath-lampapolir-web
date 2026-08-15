@@ -201,7 +201,11 @@ function buildHeader(active) {
   </nav>`;
 }
 const ICON_MAIL = '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1.4 2 7.6 5.3L19.6 7H4.4zM20 8.9l-8 5.6-8-5.6V17h16V8.9z"/></svg>';
-const ICON_CARD = '<svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true"><rect x="3" y="9" width="26" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><rect x="3.9" y="13" width="24.2" height="4" fill="currentColor"/><rect x="6.5" y="21.5" width="7" height="4.5" rx="1" fill="currentColor"/><path d="M31 14a7 7 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M34.6 11a12 12 0 0 1 0 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+const PAY_BADGES =
+  '<span class="pay-badge" title="Bankkártya – érintéses"><svg viewBox="0 0 40 26" width="40" height="26" aria-hidden="true"><rect width="40" height="26" rx="3.5" fill="#fff"/><rect x="4" y="6.5" width="21" height="14" rx="2" fill="none" stroke="#374151" stroke-width="1.5"/><rect x="4.7" y="9.3" width="19.6" height="2.6" fill="#374151"/><path d="M30 9a5.5 5.5 0 0 1 0 8.5" fill="none" stroke="#16a34a" stroke-width="1.7" stroke-linecap="round"/><path d="M32.7 6.7a9 9 0 0 1 0 13.1" fill="none" stroke="#16a34a" stroke-width="1.7" stroke-linecap="round"/></svg></span>' +
+  '<span class="pay-badge" title="Mastercard"><svg viewBox="0 0 40 26" width="40" height="26" aria-hidden="true"><rect width="40" height="26" rx="3.5" fill="#fff"/><circle cx="16.5" cy="13" r="7.4" fill="#EB001B"/><circle cx="23.5" cy="13" r="7.4" fill="#F79E1B"/><path d="M20 7.5a7.4 7.4 0 0 0 0 11 7.4 7.4 0 0 0 0-11z" fill="#FF5F00"/></svg></span>' +
+  '<span class="pay-badge" title="Visa"><svg viewBox="0 0 40 26" width="40" height="26" aria-hidden="true"><rect width="40" height="26" rx="3.5" fill="#fff"/><text x="20" y="17.6" font-family="Arial,Helvetica,sans-serif" font-size="11.5" font-weight="800" font-style="italic" fill="#1A1F71" text-anchor="middle" letter-spacing="0.4">VISA</text></svg></span>' +
+  '<span class="pay-badge" title="Készpénz"><svg viewBox="0 0 40 26" width="40" height="26" aria-hidden="true"><rect width="40" height="26" rx="3.5" fill="#fff"/><rect x="5" y="7" width="30" height="12.5" rx="2" fill="#2f8f4e"/><circle cx="20" cy="13.2" r="3.4" fill="#eafbf0"/><rect x="7.6" y="9.4" width="1.8" height="7.6" rx="0.9" fill="#eafbf0" opacity="0.7"/><rect x="30.6" y="9.4" width="1.8" height="7.6" rx="0.9" fill="#eafbf0" opacity="0.7"/></svg></span>';
 
 function buildFooter() {
   return `<footer class="site-footer">
@@ -214,8 +218,8 @@ function buildFooter() {
           <span class="site-footer__tags" id="footer-tags">Házhoz megyünk – magánszemélyeknek, cégeknek és flottáknak egyaránt –, a munkára 1 év garanciát és számlát adunk.</span>
         </div>
         <div class="site-footer__pay">
-          <span class="site-footer__pay-ic">${ICON_CARD}</span>
-          <span class="site-footer__pay-txt" id="footer-pay-text">Bankkártyás fizetés – érintéses is · Készpénz</span>
+          <div class="site-footer__pay-badges" aria-label="Elfogadott fizetési módok">${PAY_BADGES}</div>
+          <span class="site-footer__pay-txt" id="footer-pay-text">Bankkártya (érintéses is), Mastercard, Visa és készpénz</span>
         </div>
       </div>
       <div class="site-footer__col">
