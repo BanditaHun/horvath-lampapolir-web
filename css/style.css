@@ -812,3 +812,17 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 .pay-badge { display: inline-flex; line-height: 0; border-radius: 5px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.16); }
 .pay-badge svg { display: block; }
 .site-footer__pay-txt { display: block; color: var(--chrome-dim); font-size: .84rem; margin-top: 8px; }
+
+/* ---------- Több autós kedvezmény blokk ---------- */
+.multicar {
+  display: flex; align-items: center; gap: 16px; max-width: 900px; margin: 22px auto 0;
+  padding: 15px 20px; border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(240,180,41,0.10), rgba(20,20,20,0.5));
+  border: 1px solid rgba(240,180,41,0.42);
+}
+.multicar__ic { font-size: 1.7rem; line-height: 1; flex: none; }
+.multicar__body { display: flex; flex-direction: column; gap: 3px; }
+.multicar__body strong { color: var(--gold); font-family: var(--font-heading); font-size: 1.08rem; letter-spacing: .3px; }
+.multicar__body span { color: var(--chrome); font-size: .95rem; line-height: 1.55; }
+.multicar__body a { color: var(--gold); font-weight: 700; white-space: nowrap; }
+@media (max-width: 480px) { .multicar { flex-direction: column; text-align: center; } }

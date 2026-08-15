@@ -507,6 +507,15 @@ function promoSection(promo) {
   </section></div>`;
 }
 
+function multicarNote(promo) {
+  if (!promo || promo.multicar_active === false || promo.multicar_active === "false") return "";
+  const txt = isSet(promo.multicar_text) ? promo.multicar_text : "Egy helyszínen két vagy több autó felújítására kedvezményt adok.";
+  return `<div class="container"><div class="multicar">
+    <span class="multicar__ic" aria-hidden="true">🚗🚗</span>
+    <div class="multicar__body"><strong>Több autós kedvezmény</strong><span>${mdInline(txt)} <a href="kapcsolat.html">Kérj ajánlatot →</a></span></div>
+  </div></div>`;
+}
+
 async function renderHome(app, contact) {
   const [hero, about, reviews, promo, home] = await Promise.all([
     loadJSON("content/hero.json"),
@@ -579,11 +588,11 @@ async function renderHome(app, contact) {
 
   const introHTML = isSet(H.intro) ? `<div class="container"><p class="home-intro">${mdInline(H.intro)}</p></div>` : "";
 
-  app.innerHTML = h + tickerBand(hero.ticker) + trust + introHTML + promoSection(promo) + aboutHTML + quick + why + areas + reviewsSectionHTML(reviews, contact);
+  app.innerHTML = h + tickerBand(hero.ticker) + trust + introHTML + promoSection(promo) + aboutHTML + quick + multicarNote(promo) + why + areas + reviewsSectionHTML(reviews, contact);
   await initReviews(reviews, app);
 }
 
-function renderCardsPage(app, data, defTitle, kind) {
+function renderCardsPage(app, data, defTitle, kind, promo) {
   app.innerHTML = pageHead(data.heading || defTitle, data.intro || "");
   const cont = app.querySelector(".container");
   const grid = el("div", "cards" + (kind === "delivery" ? " cards--4" : ""));
@@ -604,6 +613,7 @@ function renderCardsPage(app, data, defTitle, kind) {
     grid.appendChild(neonCard(i, inner));
   });
   cont.appendChild(grid);
+  if (kind === "packages" && promo) app.insertAdjacentHTML("beforeend", multicarNote(promo));
 }
 
 function renderDoc(app, data, defTitle) {
@@ -887,7 +897,7 @@ async function initSite() {
   try {
     switch (page) {
       case "home": await renderHome(app, contact); break;
-      case "csomagok": renderCardsPage(app, await loadJSON("content/packages.json"), "Csomagok", "packages"); break;
+      case "csomagok": renderCardsPage(app, await loadJSON("content/packages.json"), "Csomagok", "packages", await loadJSON("content/promo.json").catch(() => null)); break;
       case "szolgaltatasok": renderCardsPage(app, await loadJSON("content/services.json"), "Szolgáltatások", "services"); break;
       case "kiszallas": renderCardsPage(app, await loadJSON("content/delivery.json"), "Kiszállási díj", "delivery"); break;
       case "galeria": renderGallery(app, await loadJSON("content/gallery.json")); break;
