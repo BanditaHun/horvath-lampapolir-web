@@ -370,8 +370,8 @@ section:last-of-type { border-bottom: none; }
 .site-footer__links { display: flex; flex-direction: column; gap: 9px; }
 .site-footer__links a { color: var(--chrome-dim); font-size: .95rem; width: fit-content; }
 .site-footer__links a:hover { color: var(--gold); }
-.site-footer__links--icons a { display: flex; align-items: center; gap: 9px; }
-.site-footer__links--icons a svg { flex: none; width: 15px; height: 15px; opacity: .75; transition: opacity .15s; }
+.site-footer__links--icons a { display: flex; align-items: flex-start; gap: 9px; line-height: 1.35; }
+.site-footer__links--icons a svg { flex: none; width: 15px; height: 15px; margin-top: 1px; opacity: .75; transition: opacity .15s; }
 .site-footer__links--icons a:hover svg { opacity: 1; }
 .site-footer__bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 18px; padding: 16px clamp(16px,3vw,44px); color: var(--chrome-dim); font-size: .85rem; border-top: 1px solid var(--line); }
 .site-footer__legal a { color: var(--chrome-dim); }

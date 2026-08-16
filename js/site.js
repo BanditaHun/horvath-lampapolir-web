@@ -288,8 +288,8 @@ function buildFooter() {
       <nav class="site-footer__col" aria-label="Információk">
         <h4 class="site-footer__h">Információk</h4>
         <div class="site-footer__links site-footer__links--icons">
-          <a href="arlista.html" target="_blank" rel="noopener">${ICON_LI_RECEIPT}<span>Árlista (nyomtatható / PDF)</span></a>
-          <a href="garancia.html" target="_blank" rel="noopener">${ICON_LI_CERT}<span>Garancialevél (nyomtatható)</span></a>
+          <a href="arlista.html" target="_blank" rel="noopener">${ICON_LI_RECEIPT}<span>Árlista (PDF)</span></a>
+          <a href="garancia.html" target="_blank" rel="noopener">${ICON_LI_CERT}<span>Garancialevél (PDF)</span></a>
           <a href="gyik.html">${ICON_LI_FAQ}<span>GYIK – Gyakori kérdések</span></a>
           <a href="adatvedelem.html">${ICON_LI_LOCK}<span>Adatvédelmi tájékoztató</span></a>
           <a href="impresszum.html">${ICON_LI_INFO}<span>Impresszum</span></a>
