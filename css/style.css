@@ -955,6 +955,31 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 .reviews__google-btn svg { flex: none; }
 .review-or a { color: var(--gold); font-weight: 700; }
 
+/* ---------- Google-értékelések (Places proxy megjelenítés) ---------- */
+.greviews { margin: 4px 0 26px; }
+.greviews__head { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin-bottom: 16px; }
+.greviews__badge { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--chrome); font-size: 1.05rem; }
+.greviews__badge svg { flex: none; }
+.greviews__score { display: inline-flex; align-items: center; gap: 8px; color: var(--chrome); }
+.greviews__score strong { font-size: 1.5rem; color: var(--gold); line-height: 1; }
+.greviews__score .stars { --star-size: 1rem; }
+.greviews__count { color: var(--chrome-dim); font-size: .85rem; }
+.greviews__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.greview-card { padding: 18px; }
+.greview-card__head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.greview-card__avatar { flex: none; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-weight: 700; color: #1a1a1a; background: linear-gradient(135deg, #f0b429, #e0a41c); }
+.greview-card__who { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.greview-card__name { font-weight: 700; color: var(--chrome); font-size: .95rem; }
+.greview-card__src { display: inline-flex; align-items: center; gap: 6px; color: var(--chrome-dim); font-size: .78rem; }
+.greview-card__src svg { flex: none; width: 14px; height: 14px; }
+.greview-card .review-card__text { margin-top: 8px; }
+.greviews__more { display: inline-block; margin-top: 16px; color: var(--gold); font-weight: 700; text-decoration: none; }
+.greviews__more:hover { text-decoration: underline; }
+:root[data-theme="light"] .greview-card__avatar { color: #fff; }
+:root[data-theme="light"] .greviews__score strong,
+:root[data-theme="light"] .greviews__more { color: #a9760a; }
+
 /* ---------- Kiszolgált terület térkép (kattintásra tölt) ---------- */
 .contact-map { max-width: 1000px; margin: 30px auto 0; border-radius: var(--radius); overflow: hidden; border: 1px solid rgba(240,180,41,0.32); box-shadow: 0 8px 24px rgba(0,0,0,0.32); }
 .contact-map__ph { min-height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 13px; text-align: center; padding: 32px 24px;

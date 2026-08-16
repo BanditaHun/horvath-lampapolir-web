@@ -343,6 +343,44 @@ function starsHTML(n) {
   for (let i = 0; i < 5; i++) s += `<span class="star${i < n ? " star--on" : ""}">★</span>`;
   return `<div class="stars" aria-label="${n}/5 csillag">${s}</div>`;
 }
+// ---------- Google-értékelések (Places proxy) ----------
+const GREVIEWS_URL = "https://horvath-greviews.andras-horvat1989.workers.dev";
+function gReviewCardHTML(r) {
+  const text = esc(r.text || "").replace(/\n/g, "<br>");
+  const initial = esc((r.name || "G").trim().charAt(0).toUpperCase());
+  return `<article class="neon-card greview-card">
+    <div class="greview-card__head">
+      <span class="greview-card__avatar" aria-hidden="true">${initial}</span>
+      <div class="greview-card__who">
+        <span class="greview-card__name">${esc(r.name || "Google felhasználó")}</span>
+        <span class="greview-card__src">${ICON_GOOGLE}<span>${esc(r.time || "")}</span></span>
+      </div>
+    </div>
+    ${starsHTML(r.rating)}
+    <div class="review-card__text">${text}</div>
+  </article>`;
+}
+async function initGoogleReviews(contact) {
+  const box = document.getElementById("greviews");
+  if (!box) return;
+  let d = null;
+  try {
+    const res = await fetch(GREVIEWS_URL, { cache: "no-store" });
+    if (res.ok) d = await res.json();
+  } catch (e) { /* nem elérhető -> rejtve marad */ }
+  if (!d || !d.configured || !Array.isArray(d.reviews) || !d.reviews.length) return;
+
+  const moreUrl = isSet(d.url) ? d.url : (contact && isSet(contact.google_url) ? contact.google_url : "");
+  const ratingTxt = d.rating ? String(d.rating).replace(".", ",") : "";
+  const head = `<div class="greviews__head">
+      <span class="greviews__badge">${ICON_GOOGLE}<span>Google értékelések</span></span>
+      ${d.rating ? `<span class="greviews__score"><strong>${ratingTxt}</strong>${starsHTML(Math.round(d.rating))}${d.count ? `<span class="greviews__count">${d.count} értékelés</span>` : ""}</span>` : ""}
+    </div>`;
+  const grid = `<div class="greviews__grid">${d.reviews.map(gReviewCardHTML).join("")}</div>`;
+  const foot = moreUrl ? `<a class="greviews__more" href="${esc(moreUrl)}" target="_blank" rel="noopener">Összes értékelés a Google-on →</a>` : "";
+  box.innerHTML = head + grid + foot;
+  box.hidden = false;
+}
 function reviewCardHTML(r, i) {
   const text = esc(r.text || "").replace(/\n/g, "<br>"); // közönség által beküldött -> escape (XSS ellen)
   return `<article class="neon-card review-card" style="animation-delay:${(i % 6) * 0.35}s">
@@ -393,6 +431,7 @@ function reviewsSectionHTML(reviews, contact) {
     ${googUrl ? `<a class="btn btn--primary reviews__google-btn" href="${esc(googUrl)}" target="_blank" rel="noopener">${ICON_GOOGLE}<span>Értékelj minket a Google-on</span></a>` : ""}
     <div class="reviews__grid">
       <div class="reviews__main">
+        <div id="greviews" class="greviews" hidden></div>
         <div id="reviews-summary"></div>
         <div class="reviews__list" id="reviews-list"></div>
       </div>
@@ -400,7 +439,7 @@ function reviewsSectionHTML(reviews, contact) {
     </div>
   </div></div></section>`;
 }
-async function initReviews(reviews, scope) {
+async function initReviews(reviews, scope, contact) {
   const curated = (reviews && reviews.items) || [];
   const apiUrl = reviews && isSet(reviews.api_url) ? reviews.api_url.replace(/\/+$/, "") : "";
   let apiReviews = [];
@@ -420,6 +459,7 @@ async function initReviews(reviews, scope) {
       : `<p class="reviews__empty">Még nincs közzétett vélemény – <strong>legyél te az első!</strong></p>`;
   };
   renderAll();
+  initGoogleReviews(contact);
 
   const form = scope.querySelector(".review-form");
   if (!form) return;
@@ -597,7 +637,7 @@ async function renderHome(app, contact) {
   const introHTML = isSet(H.intro) ? `<div class="container"><p class="home-intro">${mdInline(H.intro)}</p></div>` : "";
 
   app.innerHTML = h + tickerBand(hero.ticker) + trust + introHTML + promoSection(promo) + aboutHTML + quick + multicarNote(promo) + why + areas + reviewsSectionHTML(reviews, contact);
-  await initReviews(reviews, app);
+  await initReviews(reviews, app, contact);
 }
 
 function renderCardsPage(app, data, defTitle, kind, promo) {
