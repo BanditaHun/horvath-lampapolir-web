@@ -281,7 +281,7 @@ function buildFooter() {
       <nav class="site-footer__col" aria-label="Információk">
         <h4 class="site-footer__h">Információk</h4>
         <div class="site-footer__links">
-          <a href="arlista.pdf" download="Horvath-Lampapolir-arlista.pdf">Árlista letöltése (PDF)</a>
+          <a href="arlista.html" target="_blank" rel="noopener">Árlista (nyomtatható / PDF)</a>
           <a href="gyik.html">GYIK – Gyakori kérdések</a>
           <a href="adatvedelem.html">Adatvédelmi tájékoztató</a>
           <a href="impresszum.html">Impresszum</a>
@@ -681,7 +681,7 @@ function renderCardsPage(app, data, defTitle, kind, promo) {
   app.innerHTML = pageHead(data.heading || defTitle, data.intro || "");
   const cont = app.querySelector(".container");
   if (kind === "packages") {
-    cont.insertAdjacentHTML("beforeend", `<div class="arlista-dl"><a class="arlista-dl__btn" href="arlista.pdf" download="Horvath-Lampapolir-arlista.pdf">${ICON_DOWNLOAD}<span>Teljes árlista letöltése (PDF)</span></a></div>`);
+    cont.insertAdjacentHTML("beforeend", `<div class="arlista-dl"><a class="arlista-dl__btn" href="arlista.html" target="_blank" rel="noopener">${ICON_DOWNLOAD}<span>Teljes árlista – nyomtatás / PDF mentése</span></a></div>`);
   }
   const grid = el("div", "cards" + (kind === "delivery" ? " cards--4" : ""));
   (data.items || []).forEach((it, i) => {
