@@ -212,6 +212,41 @@ const PAY_BADGES =
   '<span class="pay-badge" title="Visa"><svg viewBox="0 0 40 26" width="40" height="26" aria-hidden="true"><rect width="40" height="26" rx="3.5" fill="#fff"/><text x="20" y="17.6" font-family="Arial,Helvetica,sans-serif" font-size="11.5" font-weight="800" font-style="italic" fill="#1A1F71" text-anchor="middle" letter-spacing="0.4">VISA</text></svg></span>' +
   '<span class="pay-badge" title="Készpénz"><svg viewBox="0 0 40 26" width="40" height="26" aria-hidden="true"><rect width="40" height="26" rx="3.5" fill="#fff"/><rect x="5" y="7" width="30" height="12.5" rx="2" fill="#2f8f4e"/><circle cx="20" cy="13.2" r="3.4" fill="#eafbf0"/><rect x="7.6" y="9.4" width="1.8" height="7.6" rx="0.9" fill="#eafbf0" opacity="0.7"/><rect x="30.6" y="9.4" width="1.8" height="7.6" rx="0.9" fill="#eafbf0" opacity="0.7"/></svg></span>';
 
+// Saját prémium-jelvény (aranyszínű medál, márkanevek nélkül) – nincs jogi/hivatkozási kockázat.
+const ICON_PREMIUM_SEAL =
+  '<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Prémium alapanyagok jelvény">' +
+  '<defs><linearGradient id="hlpPrem" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe08a"/><stop offset="0.5" stop-color="#f0b429"/><stop offset="1" stop-color="#c1850f"/></linearGradient>' +
+  '<path id="hlpPremTop" d="M22,60 a38,38 0 0 1 76,0" fill="none"/></defs>' +
+  '<circle cx="60" cy="60" r="56" fill="none" stroke="url(#hlpPrem)" stroke-width="2.5" stroke-dasharray="1.5 4.5" stroke-linecap="round"/>' +
+  '<circle cx="60" cy="60" r="47" fill="#17171b" stroke="url(#hlpPrem)" stroke-width="3.5"/>' +
+  '<text font-family="Georgia, \'Times New Roman\', serif" font-size="8" font-weight="700" letter-spacing="0.5" fill="url(#hlpPrem)"><textPath href="#hlpPremTop" startOffset="50%" text-anchor="middle">PRÉMIUM MINŐSÉG</textPath></text>' +
+  '<path d="M60 39 L64.5 55.5 L81 60 L64.5 64.5 L60 81 L55.5 64.5 L39 60 L55.5 55.5 Z" fill="url(#hlpPrem)"/>' +
+  '<circle cx="60" cy="60" r="3.2" fill="#17171b"/>' +
+  '<text x="60" y="95" font-family="Georgia, \'Times New Roman\', serif" font-size="9" font-weight="700" letter-spacing="1.6" fill="url(#hlpPrem)" text-anchor="middle">ALAPANYAGOK</text>' +
+  '<text x="60" y="105.5" font-size="7.5" letter-spacing="2.5" fill="#f0b429" text-anchor="middle" opacity="0.9">★ ★ ★</text>' +
+  '</svg>';
+
+function premiumSection(H) {
+  const heading = isSet(H && H.premium_heading) ? H.premium_heading : "Prémium alapanyagokkal dolgozom";
+  const lead = isSet(H && H.premium_lead) ? H.premium_lead : "A minőség nálam az anyagnál kezdődik. Csak professzionális, bevált termékekkel dolgozom – ezért lesz tartós és igazán szép az eredmény.";
+  const DEF = [
+    { icon: "✨", title: "UV-álló védőréteg", text: "tartós, prémium védőbevonat, ami nem mattul vissza pár hónap alatt" },
+    { icon: "🧪", title: "Profi polírrendszer", text: "több lépcsős, minőségi csiszoló- és polírpaszták a kristálytiszta eredményért" },
+    { icon: "💧", title: "Tartós nano bevonat", text: "üvegre prémium vízlepergető réteg a jobb látásért esőben" },
+    { icon: "🛡️", title: "Nyugodt garancia", text: "a minőségi anyag miatt tudok jó szívvel garanciát adni a munkára" },
+  ];
+  const points = Array.isArray(H && H.premium_points) && H.premium_points.length ? H.premium_points : DEF;
+  const pts = points.map((p) => `<li><span class="premium__ic" aria-hidden="true">${esc(p.icon || "✓")}</span><span><strong>${esc(p.title || "")}</strong>${isSet(p.text) ? " – " + esc(p.text) : ""}</span></li>`).join("");
+  return `<div class="container"><section class="premium">
+    <div class="premium__badge">${ICON_PREMIUM_SEAL}</div>
+    <div class="premium__body">
+      <h2 class="premium__title">${esc(heading)}</h2>
+      <p class="premium__lead">${mdInline(lead)}</p>
+      <ul class="premium__points">${pts}</ul>
+    </div>
+  </section></div>`;
+}
+
 function buildFooter() {
   return `<footer class="site-footer">
     <div class="container site-footer__inner">
@@ -636,7 +671,7 @@ async function renderHome(app, contact) {
 
   const introHTML = isSet(H.intro) ? `<div class="container"><p class="home-intro">${mdInline(H.intro)}</p></div>` : "";
 
-  app.innerHTML = h + tickerBand(hero.ticker) + trust + introHTML + promoSection(promo) + aboutHTML + quick + multicarNote(promo) + why + areas + reviewsSectionHTML(reviews, contact);
+  app.innerHTML = h + tickerBand(hero.ticker) + trust + introHTML + promoSection(promo) + aboutHTML + quick + multicarNote(promo) + why + premiumSection(H) + areas + reviewsSectionHTML(reviews, contact);
   await initReviews(reviews, app, contact);
 }
 

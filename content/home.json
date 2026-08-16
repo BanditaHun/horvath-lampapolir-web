@@ -20,6 +20,14 @@
     { "icon": "✨", "title": "Tartós UV-védelem", "text": "Gyári vagy annál is jobb minőség, amely nem mattul vissza, és karcállóságot ad." },
     { "icon": "🚚", "title": "Cégeknek, flottáknak is", "text": "Fuvarozóknak, autókereskedéseknek és flottáknak is szívesen dolgozom." }
   ],
+  "premium_heading": "Prémium alapanyagokkal dolgozom",
+  "premium_lead": "A minőség nálam az anyagnál kezdődik. Csak professzionális, bevált termékekkel dolgozom – ezért lesz tartós és igazán szép az eredmény.",
+  "premium_points": [
+    { "icon": "✨", "title": "UV-álló védőréteg", "text": "tartós, prémium védőbevonat, ami nem mattul vissza pár hónap alatt" },
+    { "icon": "🧪", "title": "Profi polírrendszer", "text": "több lépcsős, minőségi csiszoló- és polírpaszták a kristálytiszta eredményért" },
+    { "icon": "💧", "title": "Tartós nano bevonat", "text": "üvegre prémium vízlepergető réteg a jobb látásért esőben" },
+    { "icon": "🛡️", "title": "Nyugodt garancia", "text": "a minőségi anyag miatt tudok jó szívvel garanciát adni a munkára" }
+  ],
   "areas_heading": "Hol dolgozom?",
   "areas_lead": "Házhoz megyek Tolna megyében és környékén, nagyjából 50 km-es körzetben – többek között ezeken a településeken és a köztük lévő falvakban:",
   "areas_towns": ["Szekszárd", "Paks", "Bonyhád", "Dombóvár", "Tolna", "Tamási", "Bátaszék", "Simontornya", "Nagymányok"],

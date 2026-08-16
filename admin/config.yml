@@ -121,6 +121,16 @@ collections:
               - { name: "icon", label: "Ikon (emoji)", widget: "string" }
               - { name: "title", label: "Cím", widget: "string" }
               - { name: "text", label: "Szöveg", widget: "text" }
+          - { name: "premium_heading", label: "„Prémium alapanyagok” – szakaszcím", widget: "string", required: false }
+          - { name: "premium_lead", label: "„Prémium alapanyagok” – bevezető szöveg", widget: "text", required: false }
+          - name: "premium_points"
+            label: "„Prémium alapanyagok” – pontok"
+            widget: "list"
+            required: false
+            fields:
+              - { name: "icon", label: "Ikon (emoji)", widget: "string" }
+              - { name: "title", label: "Cím", widget: "string" }
+              - { name: "text", label: "Szöveg", widget: "string", required: false }
           - { name: "areas_heading", label: "„Hol dolgozom?” – szakaszcím", widget: "string" }
           - { name: "areas_lead", label: "„Hol dolgozom?” – bevezető szöveg", widget: "text" }
           - { name: "areas_towns", label: "Kiszolgált települések (soronként/vesszővel)", widget: "list" }
