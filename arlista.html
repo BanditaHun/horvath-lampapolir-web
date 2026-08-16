@@ -85,7 +85,7 @@
   .nowrap { white-space: nowrap; }
   .loading { text-align: center; color: var(--dim); padding: 60px 0; }
 
-  @media (max-width: 780px) {
+  @media (max-width: 680px) {
     .sheet { width: 100%; min-height: 0; margin: 0; padding: 18px 14px 24px; box-shadow: none; }
     .pkgs { grid-template-columns: 1fr; }
     .two, .promo { grid-template-columns: 1fr; }
@@ -94,10 +94,14 @@
   }
 
   @media print {
-    @page { size: A4; margin: 12mm 12mm 10mm; }
+    @page { size: A4; margin: 10mm 12mm 8mm; }
     body { background: #fff; }
     .toolbar { display: none !important; }
     .sheet { width: auto; min-height: 0; margin: 0; padding: 0; box-shadow: none; }
+    /* Nyomtatásban mindig a tömör, több oszlopos elrendezés (hogy egy A4-re férjen) */
+    .pkgs { grid-template-columns: 1fr 1fr 1fr !important; }
+    .two, .promo { grid-template-columns: 1fr 1fr !important; }
+    .dels { grid-template-columns: repeat(4, 1fr) !important; }
     section { break-inside: avoid; }
     .pkg, .del, .promo__box { break-inside: avoid; }
   }
@@ -150,11 +154,16 @@ async function loadJSON(p){
 function pkgBlock(it){
   const d = parseDesc(it.description);
   const hl = /aj[aá]nlott/i.test(it.badge||"");
+  const parts = String(it.name||"").split(/\s+[–-]\s+/);
+  const nm = parts[0] || it.name || "";
+  const sub = parts.slice(1).join(" – ");
+  // A minden csomagban ismétlődő ingyenes akku-/fagyálló-pont kihagyása (a láblécben úgyis ott van), max 4 pont.
+  const pts = d.pts.filter(p => !/akkumul[aá]tor|fagy[aá]ll/i.test(p)).slice(0, 4);
   return '<div class="pkg'+(hl?' pkg--hl':'')+'">'
     + (it.badge ? '<span class="pkg__badge">'+esc(it.badge)+'</span>' : '')
-    + '<div class="pkg__head"><div><div class="pkg__name">'+esc(it.name)+'</div></div>'
+    + '<div class="pkg__head"><div><div class="pkg__name">'+esc(nm)+'</div>'+(sub?'<div class="pkg__sub">'+esc(sub)+'</div>':'')+'</div>'
     + '<div class="pkg__price">'+esc(it.price).replace(/ /g,"&nbsp;")+'</div></div>'
-    + '<ul class="pkg__pts">'+d.pts.map(p=>'<li>'+bold(p)+'</li>').join('')+'</ul>'
+    + '<ul class="pkg__pts">'+pts.map(p=>'<li>'+bold(p)+'</li>').join('')+'</ul>'
     + (d.note ? '<div class="pkg__note">'+bold(d.note)+'</div>' : '')
     + '</div>';
 }
