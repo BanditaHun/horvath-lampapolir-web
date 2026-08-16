@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Garancialevél – Horváth Lámpapolír</title>
+<link rel="icon" href="images/favicon.png">
+<style>
+  :root { --ink:#23262b; --dim:#5c636e; --faint:#6b7280; --gold:#a9760a; --gold2:#c8901a; --gold3:#e0a41c; --line:#e6ddca; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: #4a4d55; font-family: "Segoe UI", Arial, sans-serif; color: var(--ink); }
+
+  .toolbar { position: sticky; top: 0; z-index: 10; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: center;
+    background: #2c2e34; padding: 12px 16px; box-shadow: 0 2px 10px rgba(0,0,0,.35); }
+  .toolbar__msg { color: #cfd3da; font-size: 13.5px; margin-right: auto; }
+  .toolbar__msg b { color: #f0b429; }
+  .tbtn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 40px; border: 0; cursor: pointer;
+    font-size: 14px; font-weight: 700; text-decoration: none; }
+  .tbtn--print { background: linear-gradient(90deg,#e0a41c,#c8901a); color: #17171b; }
+  .tbtn--print:hover { filter: brightness(1.06); }
+  .tbtn--back { background: transparent; color: #cfd3da; border: 1px solid #565963; }
+  .tbtn--back:hover { background: rgba(255,255,255,.06); }
+
+  .sheet { width: 210mm; min-height: 297mm; margin: 18px auto; background: #fff; padding: 14mm 15mm 12mm;
+    box-shadow: 0 10px 40px rgba(0,0,0,.45); font-size: 11px; line-height: 1.5; }
+
+  header.head { display: flex; align-items: center; gap: 16px; border-bottom: 2.5px solid var(--gold3); padding-bottom: 12px; margin-bottom: 12px; }
+  header.head img.logo { width: 76px; height: 76px; object-fit: contain; }
+  .brand { flex: 1; }
+  .brand__name { font-size: 22px; font-weight: 800; letter-spacing: .3px; }
+  .brand__tag { color: var(--dim); font-size: 11px; margin-top: 2px; }
+  .brand__meta { margin-top: 6px; font-size: 10px; color: #3a3f47; display: flex; flex-wrap: wrap; gap: 4px 16px; }
+  .brand__meta b { color: var(--gold); }
+  .seal { width: 68px; flex: none; }
+  .seal svg { width: 100%; height: auto; }
+
+  .title { text-align: center; margin: 4px 0 12px; }
+  .title h1 { font-size: 25px; letter-spacing: 3px; margin: 0; color: var(--ink); }
+  .title .sub { display: inline-block; margin-top: 6px; font-size: 12px; font-weight: 700; color: #fff;
+    background: linear-gradient(90deg,var(--gold3),var(--gold2)); padding: 3px 14px; border-radius: 20px; letter-spacing: .5px; }
+  .title .serial { float: right; font-size: 10px; color: var(--faint); margin-top: 4px; }
+  .title .serial input { width: 90px; }
+
+  h2 { font-size: 12.5px; letter-spacing: .3px; margin: 12px 0 7px; color: var(--ink); text-transform: uppercase; }
+  h2 .bar { display: inline-block; width: 22px; height: 3px; background: linear-gradient(90deg,var(--gold3),var(--gold2)); border-radius: 2px; vertical-align: middle; margin-right: 8px; }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 26px; }
+  .field { display: flex; align-items: baseline; gap: 8px; }
+  .field > label { flex: none; color: var(--dim); font-weight: 600; font-size: 10px; min-width: 118px; }
+  .field .val { flex: 1; border-bottom: 1px solid #b9beC6; min-height: 20px; }
+  input.val, .full input.val { border: 0; border-bottom: 1px solid #b9bec6; font: inherit; color: var(--ink); background: transparent; padding: 1px 4px 3px; width: 100%; outline: none; }
+  input.val:focus { border-bottom-color: var(--gold2); }
+  .full { grid-column: 1 / -1; }
+  .prefill { color: var(--ink); font-weight: 600; }
+
+  .terms { border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; background: #fffdf8; }
+  .terms p { margin: 0 0 7px; }
+  .terms .lead b { color: var(--gold); }
+  .terms ul { margin: 3px 0 8px; padding-left: 18px; }
+  .terms li { margin-bottom: 2px; }
+  .terms .dur { display: inline-block; background: #fff3d8; border: 1px solid #f0d79a; color: #7a560a; font-weight: 700; padding: 1px 8px; border-radius: 5px; }
+
+  .sign { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 16px; }
+  .sign__box { text-align: center; }
+  .sign__line { border-top: 1px solid #6b7280; margin: 26px 8px 5px; }
+  .sign__cap { font-size: 10px; color: var(--dim); }
+  .kelt { margin-top: 12px; font-size: 10.5px; color: var(--ink); }
+  .kelt input.val { display: inline-block; width: 200px; }
+
+  footer.foot { margin-top: 12px; border-top: 2px solid var(--gold3); padding-top: 8px; font-size: 9px; color: var(--faint); }
+  footer.foot b { color: var(--ink); }
+
+  @media (max-width: 780px) {
+    .sheet { width: 100%; min-height: 0; margin: 0; padding: 18px 14px 24px; box-shadow: none; }
+    .grid, .sign { grid-template-columns: 1fr; }
+    body { background: #fff; }
+  }
+  @media print {
+    @page { size: A4; margin: 14mm 15mm 12mm; }
+    body { background: #fff; }
+    .toolbar { display: none !important; }
+    .sheet { width: auto; min-height: 0; margin: 0; padding: 0; box-shadow: none; }
+    section, .terms, .sign { break-inside: avoid; }
+    input.val { border-bottom: 1px solid #999; }
+  }
+</style>
+</head>
+<body>
+  <div class="toolbar">
+    <span class="toolbar__msg">Töltsd ki a mezőket (a gépen is lehet), majd <b>nyomtasd ki</b> vagy mentsd PDF-be:</span>
+    <button class="tbtn tbtn--print" onclick="window.print()">🖨️ Nyomtatás / PDF mentése</button>
+    <a class="tbtn tbtn--back" href="csomagok.html">← Vissza az oldalra</a>
+  </div>
+
+  <div class="sheet">
+    <header class="head">
+      <img class="logo" src="images/logo.png" alt="" onerror="this.style.display='none'">
+      <div class="brand">
+        <div class="brand__name">Horváth Lámpapolír</div>
+        <div class="brand__tag">Mobil fényszóró-felújítás – házhoz megyünk Tolna megyében</div>
+        <div class="brand__meta" id="meta">
+          <span><b>Tel:</b> +36 20 541 8369</span>
+          <span><b>Web:</b> horvathlampapolir.hu</span>
+          <span><b>Terület:</b> Tolna megye, 50 km</span>
+        </div>
+      </div>
+      <div class="seal" id="seal"></div>
+    </header>
+
+    <div class="title">
+      <span class="serial">Sorszám: <input class="val" type="text" placeholder="………"></span>
+      <h1>GARANCIALEVÉL</h1>
+      <div class="sub">Kiegészítő felületi garancia · +1 év</div>
+    </div>
+
+    <section>
+      <h2><span class="bar"></span>Ügyfél és szolgáltatás adatai</h2>
+      <div class="grid">
+        <div class="field"><label>Ügyfél neve</label><input class="val" type="text"></div>
+        <div class="field"><label>Telefon / e-mail</label><input class="val" type="text"></div>
+        <div class="field"><label>Jármű típusa</label><input class="val" type="text"></div>
+        <div class="field"><label>Rendszám</label><input class="val" type="text"></div>
+        <div class="field full"><label>Elvégzett szolgáltatás</label><input class="val" type="text" value="Fényszóró-felújítás (Standard) + kiegészítő +1 év felületi garancia"></div>
+        <div class="field"><label>Szolgáltatás dátuma</label><input class="val" type="text" placeholder="20__. __ hó __ nap"></div>
+        <div class="field"><label>Garancia lejárata</label><input class="val" type="text" placeholder="20__. __ hó __ nap"></div>
+      </div>
+    </section>
+
+    <section>
+      <h2><span class="bar"></span>A garancia tartalma és feltételei</h2>
+      <div class="terms">
+        <p class="lead">A <b>Horváth Lámpapolír</b> garanciát vállal a felújított fényszóró(k) <b>felületi állapotára</b>: rendeltetésszerű használat mellett a kezelt felület megőrzi átlátszóságát, és nem mattul, oxidálódik vagy sárgul vissza a garancia időtartama alatt.</p>
+        <p><b>Időtartam:</b> a szolgáltatás napjától számított <span class="dur">összesen 2 év</span> – a Standard csomag 1 éves garanciája + a megvásárolt <b>+1 év</b> kiegészítő felületi garancia.</p>
+        <p style="margin-bottom:3px"><b>Feltételek:</b></p>
+        <ul>
+          <li>rendeltetésszerű használat és kímélő, karcmentes tisztítás;</li>
+          <li>a jelen garancialevél megőrzése és garanciális igény esetén bemutatása.</li>
+        </ul>
+        <p style="margin-bottom:3px"><b>A garancia nem terjed ki:</b></p>
+        <ul>
+          <li>mechanikai sérülésre (kőfelverődés, ütés, repedés, törés, karcolás);</li>
+          <li>balesetből, nem megfelelő tisztításból vagy agresszív vegyszer használatából eredő károkra;</li>
+          <li>a lámpatest belső páralecsapódására, elektromos vagy gyári hibájára;</li>
+          <li>a szokásos elhasználódáson túli, külső behatásból eredő elváltozásokra.</li>
+        </ul>
+        <p style="margin-bottom:0"><b>Érvényesítés:</b> garanciális igény esetén kérjük, jelezze elérhetőségeinken. A garancia a jelen levél bemutatásával érvényesíthető; indokolt esetben az érintett felület a garanciaidőn belül <b>díjmentesen</b> újrakezelésre kerül.</p>
+      </div>
+    </section>
+
+    <div class="kelt">Kelt: <input class="val" type="text" placeholder="hely, dátum"></div>
+
+    <div class="sign">
+      <div class="sign__box"><div class="sign__line"></div><div class="sign__cap">Szolgáltató – Horváth Lámpapolír</div></div>
+      <div class="sign__box"><div class="sign__line"></div><div class="sign__cap">Ügyfél aláírása</div></div>
+    </div>
+
+    <footer class="foot">
+      <div><b>Horváth Lámpapolír</b> · Számlaképes egyéni vállalkozás · Tolna megye, 50 km-es körzet · +36 20 541 8369 · horvathlampapolir.hu</div>
+      <div style="margin-top:3px">Ez a garancialevél a fent megnevezett szolgáltatásra és járműre érvényes. A garancia nem érinti a fogyasztót a jogszabály alapján megillető jogokat.</div>
+    </footer>
+  </div>
+
+<script>
+document.getElementById("seal").innerHTML =
+  '<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8b43a"/><stop offset="0.5" stop-color="#c8901a"/><stop offset="1" stop-color="#9a6c0c"/></linearGradient><path id="t" d="M22,60 a38,38 0 0 1 76,0" fill="none"/></defs>' +
+  '<circle cx="60" cy="60" r="56" fill="none" stroke="url(#g)" stroke-width="2.5" stroke-dasharray="1.5 4.5" stroke-linecap="round"/>' +
+  '<circle cx="60" cy="60" r="47" fill="#fff" stroke="url(#g)" stroke-width="3.5"/>' +
+  '<text font-family="Georgia,serif" font-size="8" font-weight="700" letter-spacing="0.5" fill="#a9760a"><textPath href="#t" startOffset="50%" text-anchor="middle">PRÉMIUM MINŐSÉG</textPath></text>' +
+  '<path d="M60 39 L64.5 55.5 L81 60 L64.5 64.5 L60 81 L55.5 64.5 L39 60 L55.5 55.5 Z" fill="url(#g)"/><circle cx="60" cy="60" r="3.2" fill="#fff"/>' +
+  '<text x="60" y="95" font-family="Georgia,serif" font-size="9" font-weight="700" letter-spacing="1.6" fill="#a9760a" text-anchor="middle">ALAPANYAGOK</text>' +
+  '<text x="60" y="105.5" font-size="7.5" letter-spacing="2.5" fill="#c8901a" text-anchor="middle">★ ★ ★</text></svg>';
+
+// A telefonszám élőben a contact.json-ból (ha elérhető), hogy egyezzen az oldallal.
+fetch("content/contact.json?_=" + Date.now(), { cache: "no-store" })
+  .then(r => r.ok ? r.json() : null)
+  .then(ct => { if (ct && ct.phone) { const m = document.querySelector("#meta span b"); if (m) m.parentNode.innerHTML = "<b>Tel:</b> " + ct.phone; } })
+  .catch(() => {});
+</script>
+</body>
+</html>
