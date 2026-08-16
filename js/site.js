@@ -683,6 +683,7 @@ async function renderHome(app, contact) {
 
   app.innerHTML = h + tickerBand(hero.ticker) + trust + introHTML + promoSection(promo) + aboutHTML + quick + multicarNote(promo) + why + premiumSection(H) + areas + reviewsSectionHTML(reviews, contact);
   await initReviews(reviews, app, contact);
+  wireHeroPolish();
 }
 
 function renderCardsPage(app, data, defTitle, kind, promo) {
@@ -1008,6 +1009,56 @@ function trackVisit() {
       keepalive: true,
     }).catch(() => {});
   } catch (e) { /* semmi baj */ }
+}
+
+// „Fénypolír" hero-effekt: a homályos/oxidált fátyol ott fényesedik ki, ahol az egér/ujj elhalad
+// (mint a fényszóró polírozásakor). Csak akkor fut, ha támogatott és nincs mozgáscsökkentés.
+function wireHeroPolish() {
+  const hero = document.querySelector(".hero");
+  if (!hero) return;
+  const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce) return;
+
+  // Az egeret/ujjat követő meleg fényfolt (interaktív) a hero fölött
+  const glow = document.createElement("div"); glow.className = "hero-polish-glow";
+  hero.appendChild(glow);
+
+  let cx = 50, cy = 42, tx = 50, ty = 42, t = 0, auto = true, idle = 0, running = true;
+  const set = (x, y) => { hero.style.setProperty("--mx", x.toFixed(2) + "%"); hero.style.setProperty("--my", y.toFixed(2) + "%"); };
+  set(cx, cy);
+  requestAnimationFrame(() => hero.classList.add("is-polishing"));
+
+  hero.addEventListener("pointermove", (e) => {
+    const r = hero.getBoundingClientRect();
+    tx = ((e.clientX - r.left) / r.width) * 100;
+    ty = ((e.clientY - r.top) / r.height) * 100;
+    auto = false; idle = 0;
+  });
+
+  function loop() {
+    if (!running) return;
+    t += 0.016;
+    if (auto) {                       // „bemutató" sarkanmozgás – lassú polírozó pálya
+      tx = 50 + Math.cos(t * 0.62) * 30;
+      ty = 44 + Math.sin(t * 0.97) * 20;
+    } else {
+      idle += 0.016;
+      if (idle > 2.4) auto = true;     // ha megáll az egér, magától folytatja
+    }
+    cx += (tx - cx) * 0.11; cy += (ty - cy) * 0.11;
+    set(cx, cy);
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  // Teljesítmény: ne pörögjön, ha a hero nincs a képernyőn
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver((es) => {
+      const vis = es[0].isIntersecting;
+      if (vis && !running) { running = true; loop(); }
+      else if (!vis) running = false;
+    }, { threshold: 0 }).observe(hero);
+  }
 }
 
 // ---------- Indítás ----------

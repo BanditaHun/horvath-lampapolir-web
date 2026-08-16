@@ -177,6 +177,29 @@ a:hover { text-decoration: underline; }
 }
 @media (max-width: 520px) { .hero:not(.hero--banner) { min-height: 380px; padding: 56px 18px 48px; } }
 
+/* ---------- Hero: az egeret/ujjat követő meleg fényfolt (interaktív, additív) ---------- */
+.hero-polish-glow {
+  position: absolute; inset: 0; z-index: 3; pointer-events: none; mix-blend-mode: screen; opacity: 0; transition: opacity .9s ease; will-change: opacity;
+  background: radial-gradient(circle 130px at var(--mx,50%) var(--my,42%), rgba(255,216,140,0.20), rgba(255,198,90,0.05) 46%, transparent 66%);
+}
+.hero.is-polishing .hero-polish-glow { opacity: 1; }
+@media (max-width: 520px) { .hero-polish-glow { background: radial-gradient(circle 90px at var(--mx,50%) var(--my,42%), rgba(255,216,140,0.18), transparent 64%); } }
+@media (prefers-reduced-motion: reduce) { .hero-polish-glow { display: none; } }
+
+/* ---------- Szakaszcímek arany fénycsillanása (mint a fény a polírozott krómon) ---------- */
+.page__title {
+  background: linear-gradient(100deg, #fff 0%, #fff 43%, #fff6d8 47.5%, #ffdc86 50%, #fff6d8 52.5%, #fff 57%, #fff 100%);
+  background-size: 300% 100%; background-position: 120% 0;
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  animation: titleSheen 7s ease-in-out 1.8s infinite;
+}
+@keyframes titleSheen { 0% { background-position: 120% 0; } 20%, 100% { background-position: -60% 0; } }
+:root[data-theme="light"] .page__title {
+  background: linear-gradient(100deg, #23262b 0%, #23262b 43%, #8a6410 47.5%, #c8901a 50%, #8a6410 52.5%, #23262b 57%, #23262b 100%);
+  background-size: 300% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+@media (prefers-reduced-motion: reduce) { .page__title { animation: none; background-position: -60% 0; } }
+
 /* Banner-mód: rugalmas szélesség (zoomkor együtt igazodik), ésszerű maximummal, keretezve */
 .hero--banner { display: block; padding: 22px 20px 14px; min-height: 0; }
 .hero--banner .hero__overlay { display: none; }
