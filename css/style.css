@@ -1000,6 +1000,16 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 :root[data-theme="light"] .premium { background: linear-gradient(135deg, rgba(224,164,28,0.10), #ffffff); border-color: #ece4cf; }
 :root[data-theme="light"] .premium__points strong { color: #a9760a; }
 
+/* ---------- Árlista letöltése gomb (Csomagok oldal) ---------- */
+.arlista-dl { display: flex; justify-content: center; margin: 4px 0 26px; }
+.arlista-dl__btn { display: inline-flex; align-items: center; gap: 9px; padding: 11px 22px; border-radius: 40px;
+  font-weight: 700; text-decoration: none; color: var(--gold);
+  background: rgba(240,180,41,0.08); border: 1px solid rgba(240,180,41,0.45);
+  transition: background .18s, transform .18s, box-shadow .18s; }
+.arlista-dl__btn:hover { background: rgba(240,180,41,0.16); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.28); }
+.arlista-dl__btn svg { flex: none; }
+:root[data-theme="light"] .arlista-dl__btn { color: #a9760a; background: rgba(224,164,28,0.10); border-color: #e0c98f; }
+
 /* ---------- Kiszolgált terület térkép (kattintásra tölt) ---------- */
 .contact-map { max-width: 1000px; margin: 30px auto 0; border-radius: var(--radius); overflow: hidden; border: 1px solid rgba(240,180,41,0.32); box-shadow: 0 8px 24px rgba(0,0,0,0.32); }
 .contact-map__ph { min-height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 13px; text-align: center; padding: 32px 24px;

@@ -96,6 +96,7 @@ const ICON_IG = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="tr
 
 const ICON_CHAT = '<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.9 3 3 6.6 3 11c0 2.1.9 4 2.4 5.4-.1 1.1-.5 2.3-1.3 3.3-.2.3 0 .8.4.7 1.7-.3 3.1-.9 4.1-1.6 1 .3 2.2.5 3.4.5 5.1 0 9-3.6 9-8s-3.9-8-9-8zm-4 9a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4zm4 0a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4zm4 0a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4z"/></svg>';
 const ICON_SEND = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M3.4 20.4l17.4-8.4c.7-.3.7-1.3 0-1.6L3.4 2C2.8 1.7 2.1 2.3 2.3 3l1.8 6.4c.1.3.3.5.6.5l8.3 1.1c.3 0 .3.4 0 .5l-8.3 1.1c-.3 0-.5.2-.6.5L2.3 21c-.2.7.5 1.3 1.1 1z"/></svg>';
+const ICON_DOWNLOAD = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 3a1 1 0 0 1 1 1v8.6l2.3-2.3a1 1 0 1 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 1 1 1.4-1.4l2.3 2.3V4a1 1 0 0 1 1-1zM5 18a1 1 0 0 1 1 1v1h12v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1z"/></svg>';
 
 function buildAiWidget(ai) {
   if (!ai || ai.enabled === false || ai.enabled === "false" || !isSet(ai.api_url)) return;
@@ -280,6 +281,7 @@ function buildFooter() {
       <nav class="site-footer__col" aria-label="Információk">
         <h4 class="site-footer__h">Információk</h4>
         <div class="site-footer__links">
+          <a href="arlista.pdf" download="Horvath-Lampapolir-arlista.pdf">Árlista letöltése (PDF)</a>
           <a href="gyik.html">GYIK – Gyakori kérdések</a>
           <a href="adatvedelem.html">Adatvédelmi tájékoztató</a>
           <a href="impresszum.html">Impresszum</a>
@@ -678,6 +680,9 @@ async function renderHome(app, contact) {
 function renderCardsPage(app, data, defTitle, kind, promo) {
   app.innerHTML = pageHead(data.heading || defTitle, data.intro || "");
   const cont = app.querySelector(".container");
+  if (kind === "packages") {
+    cont.insertAdjacentHTML("beforeend", `<div class="arlista-dl"><a class="arlista-dl__btn" href="arlista.pdf" download="Horvath-Lampapolir-arlista.pdf">${ICON_DOWNLOAD}<span>Teljes árlista letöltése (PDF)</span></a></div>`);
+  }
   const grid = el("div", "cards" + (kind === "delivery" ? " cards--4" : ""));
   (data.items || []).forEach((it, i) => {
     let inner = "";
