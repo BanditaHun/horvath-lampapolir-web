@@ -97,6 +97,13 @@ const ICON_IG = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="tr
 const ICON_CHAT = '<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.9 3 3 6.6 3 11c0 2.1.9 4 2.4 5.4-.1 1.1-.5 2.3-1.3 3.3-.2.3 0 .8.4.7 1.7-.3 3.1-.9 4.1-1.6 1 .3 2.2.5 3.4.5 5.1 0 9-3.6 9-8s-3.9-8-9-8zm-4 9a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4zm4 0a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4zm4 0a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4z"/></svg>';
 const ICON_SEND = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M3.4 20.4l17.4-8.4c.7-.3.7-1.3 0-1.6L3.4 2C2.8 1.7 2.1 2.3 2.3 3l1.8 6.4c.1.3.3.5.6.5l8.3 1.1c.3 0 .3.4 0 .5l-8.3 1.1c-.3 0-.5.2-.6.5L2.3 21c-.2.7.5 1.3 1.1 1z"/></svg>';
 const ICON_DOWNLOAD = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 3a1 1 0 0 1 1 1v8.6l2.3-2.3a1 1 0 1 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 1 1 1.4-1.4l2.3 2.3V4a1 1 0 0 1 1-1zM5 18a1 1 0 0 1 1 1v1h12v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1z"/></svg>';
+// Footer „Információk" ikonok (currentColor, öröklik a link színét)
+const IC_ATTR = 'viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"';
+const ICON_LI_RECEIPT = '<svg ' + IC_ATTR + '><path d="M14 3H7a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>';
+const ICON_LI_CERT = '<svg ' + IC_ATTR + '><path d="M12 3l7 3v5c0 4.5-3 7.4-7 9-4-1.6-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>';
+const ICON_LI_FAQ = '<svg ' + IC_ATTR + '><circle cx="12" cy="12" r="9"/><path d="M9.5 9.2a2.5 2.5 0 1 1 3.4 2.3c-.8.4-1.1.9-1.1 1.7"/><path d="M12 16.5h.01"/></svg>';
+const ICON_LI_LOCK = '<svg ' + IC_ATTR + '><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+const ICON_LI_INFO = '<svg ' + IC_ATTR + '><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg>';
 
 function buildAiWidget(ai) {
   if (!ai || ai.enabled === false || ai.enabled === "false" || !isSet(ai.api_url)) return;
@@ -280,11 +287,12 @@ function buildFooter() {
       </nav>
       <nav class="site-footer__col" aria-label="Információk">
         <h4 class="site-footer__h">Információk</h4>
-        <div class="site-footer__links">
-          <a href="arlista.html" target="_blank" rel="noopener">Árlista (nyomtatható / PDF)</a>
-          <a href="gyik.html">GYIK – Gyakori kérdések</a>
-          <a href="adatvedelem.html">Adatvédelmi tájékoztató</a>
-          <a href="impresszum.html">Impresszum</a>
+        <div class="site-footer__links site-footer__links--icons">
+          <a href="arlista.html" target="_blank" rel="noopener">${ICON_LI_RECEIPT}<span>Árlista (nyomtatható / PDF)</span></a>
+          <a href="garancia.html" target="_blank" rel="noopener">${ICON_LI_CERT}<span>Garancialevél (nyomtatható)</span></a>
+          <a href="gyik.html">${ICON_LI_FAQ}<span>GYIK – Gyakori kérdések</span></a>
+          <a href="adatvedelem.html">${ICON_LI_LOCK}<span>Adatvédelmi tájékoztató</span></a>
+          <a href="impresszum.html">${ICON_LI_INFO}<span>Impresszum</span></a>
         </div>
       </nav>
     </div>
