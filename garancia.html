@@ -60,15 +60,21 @@
   .terms li { margin-bottom: 2px; }
   .terms .dur { display: inline-block; background: #fff3d8; border: 1px solid #f0d79a; color: #7a560a; font-weight: 700; padding: 1px 8px; border-radius: 5px; }
 
-  .sign { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 16px; }
+  .sign { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 10px; }
   .sign__box { text-align: center; }
-  .sign__line { border-top: 1px solid #6b7280; margin: 26px 8px 5px; }
+  .sign__line { border-top: 1px solid #6b7280; margin: 20px 8px 5px; }
   .sign__cap { font-size: 10px; color: var(--dim); }
-  .kelt { margin-top: 12px; font-size: 10.5px; color: var(--ink); }
+  .kelt { margin-top: 8px; font-size: 10.5px; color: var(--ink); }
   .kelt input.val { display: inline-block; width: 200px; }
 
   footer.foot { margin-top: 12px; border-top: 2px solid var(--gold3); padding-top: 8px; font-size: 9px; color: var(--faint); }
   footer.foot b { color: var(--ink); }
+  .foot-flex { display: flex; align-items: center; gap: 18px; }
+  .foot-txt { flex: 1; min-width: 0; }
+  .qr-visit { flex: none; display: flex; align-items: center; gap: 10px; }
+  .qr-cap { font-size: 8.5px; color: var(--dim); line-height: 1.35; text-align: right; white-space: nowrap; }
+  .qr-cap b { display: block; color: var(--gold); font-size: 10.5px; }
+  .qr-svg { width: 66px; height: 66px; display: block; }
 
   @media (max-width: 780px) {
     .sheet { width: 100%; min-height: 0; margin: 0; padding: 18px 14px 24px; box-shadow: none; }
@@ -154,8 +160,16 @@
     </div>
 
     <footer class="foot">
-      <div><b>Horváth Lámpapolír</b> · Számlaképes egyéni vállalkozás · Tolna megye, 50 km-es körzet · +36 20 541 8369 · horvathlampapolir.hu</div>
-      <div style="margin-top:3px">Ez a garancialevél a fent megnevezett szolgáltatásra és járműre érvényes. A garancia nem érinti a fogyasztót a jogszabály alapján megillető jogokat.</div>
+      <div class="foot-flex">
+        <div class="foot-txt">
+          <div><b>Horváth Lámpapolír</b> · Számlaképes egyéni vállalkozás · Tolna megye, 50 km-es körzet · +36 20 541 8369 · horvathlampapolir.hu</div>
+          <div style="margin-top:3px">Ez a garancialevél a fent megnevezett szolgáltatásra és járműre érvényes. A garancia nem érinti a fogyasztót a jogszabály alapján megillető jogokat.</div>
+        </div>
+        <div class="qr-visit">
+          <div class="qr-cap">Nézd meg online:<b>www.horvathlampapolir.hu</b>Olvasd be a QR-kódot</div>
+          <svg class="qr-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h37v37H0z"/><path stroke="#000000" d="M4 4.5h7m1 0h1m1 0h1m1 0h1m2 0h3m4 0h7M4 5.5h1m5 0h1m2 0h1m1 0h4m1 0h1m3 0h1m1 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m1 0h2m4 0h6m2 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m3 0h2m2 0h1m2 0h3m2 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m2 0h1m3 0h3m1 0h2m3 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m1 0h3m4 0h1m4 0h1m1 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M13 11.5h1m1 0h2m1 0h3m1 0h1M4 12.5h1m1 0h1m3 0h2m1 0h6m4 0h2m2 0h1m2 0h1m1 0h1M8 13.5h1m4 0h6m3 0h3m1 0h2m3 0h2M5 14.5h2m2 0h3m2 0h3m2 0h1m1 0h5m1 0h1m1 0h2m1 0h1M4 15.5h1m1 0h1m1 0h1m2 0h2m1 0h4m6 0h1m2 0h3M6 16.5h1m1 0h3m2 0h1m1 0h3m1 0h2m3 0h1m1 0h2m4 0h1M4 17.5h1m1 0h2m1 0h1m4 0h3m3 0h2m1 0h2m1 0h1m4 0h2M5 18.5h2m3 0h1m1 0h2m2 0h3m1 0h1m2 0h2m7 0h1M4 19.5h1m2 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m2 0h3M4 20.5h2m4 0h1m3 0h2m1 0h2m1 0h1m3 0h1m1 0h1m5 0h1M5 21.5h1m6 0h1m1 0h1m2 0h2m2 0h1m1 0h5m2 0h3M4 22.5h2m3 0h3m1 0h2m1 0h1m2 0h1m1 0h1m1 0h4m2 0h1m2 0h1M7 23.5h3m1 0h1m1 0h3m1 0h1m2 0h1m3 0h1m1 0h2M4 24.5h2m1 0h2m1 0h2m1 0h2m2 0h1m1 0h1m3 0h7m1 0h1M12 25.5h1m2 0h2m2 0h3m1 0h2m3 0h3m1 0h1M4 26.5h7m1 0h1m1 0h9m1 0h1m1 0h1m1 0h1m3 0h1M4 27.5h1m5 0h1m7 0h1m3 0h3m3 0h1M4 28.5h1m1 0h3m1 0h1m3 0h2m1 0h2m1 0h1m2 0h7m1 0h2M4 29.5h1m1 0h3m1 0h1m6 0h4m1 0h2m1 0h1m1 0h4m1 0h1M4 30.5h1m1 0h3m1 0h1m1 0h2m1 0h2m2 0h2m1 0h3m3 0h1m2 0h2M4 31.5h1m5 0h1m4 0h2m1 0h3m3 0h2m1 0h3M4 32.5h7m1 0h2m2 0h1m1 0h1m1 0h1m1 0h1m1 0h2m2 0h1m3 0h1"/></svg>
+        </div>
+      </div>
     </footer>
   </div>
 
