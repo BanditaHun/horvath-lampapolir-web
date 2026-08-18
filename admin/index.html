@@ -10,5 +10,25 @@
   <!-- Sveltia CMS (a Decap/Netlify CMS modern, karbantartott utódja) -->
   <!-- Ugyanazt a config.yml-t használja; GitHub backend + Cloudflare Worker OAuth -->
   <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+
+  <!-- Lebegő gyorslink a látogatottsági statisztikához -->
+  <script>
+    (function () {
+      function addLink() {
+        if (document.getElementById("hlp-stats-link")) return;
+        var a = document.createElement("a");
+        a.id = "hlp-stats-link";
+        a.href = "../stats.html";
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.textContent = "📊 Statisztika";
+        a.title = "Látogatottsági statisztika – hányan nézték meg az oldalt";
+        a.style.cssText = "position:fixed;bottom:14px;left:14px;z-index:2147483647;display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border-radius:40px;background:#17171b;color:#f0b429;font:600 13px/1 'Segoe UI',Arial,sans-serif;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4);border:1px solid rgba(240,180,41,.55)";
+        document.body.appendChild(a);
+      }
+      addLink();
+      setInterval(addLink, 2000); // ha a CMS újrarajzolja a felületet, visszatesszük
+    })();
+  </script>
 </body>
 </html>
