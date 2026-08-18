@@ -1068,7 +1068,7 @@ function wireHeroPolish() {
 
 // Képnagyító (lightbox): a nagyítható képek kattintásra nagy nézetben nyílnak meg.
 function wireLightbox() {
-  document.querySelectorAll(".gallery img, .rich img, .prose img, .home-about img, .hero-flank img, .review-card img")
+  document.querySelectorAll(".hero__banner, .gallery img, .rich img, .prose img, .home-about img, .hero-flank img, .review-card img")
     .forEach((im) => im.classList.add("zoomable"));
   if (!document.querySelector("img.zoomable")) return;
 
