@@ -1002,6 +1002,11 @@ function wireTheme() {
 const STATS_URL = "https://horvath-stats.andras-horvat1989.workers.dev";
 function trackVisit() {
   try {
+    // Saját eszköz kihagyása: a „?notrack" megnyitás megjelöli a böngészőt, „?track=1" törli.
+    var qs = location.search || "";
+    if (/[?&]notrack/i.test(qs)) { try { localStorage.setItem("hlp_notrack", "1"); } catch (e) {} }
+    if (/[?&]track=1/i.test(qs)) { try { localStorage.removeItem("hlp_notrack"); } catch (e) {} }
+    try { if (localStorage.getItem("hlp_notrack") === "1") return; } catch (e) {} // saját látogatás – nem számít
     fetch(STATS_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

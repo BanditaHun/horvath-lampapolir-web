@@ -79,6 +79,15 @@
       <h2>Legnézettebb oldalak</h2>
       <table><thead><tr><th>Oldal</th><th>Megtekintés</th></tr></thead><tbody id="pages"></tbody></table>
     </div>
+
+    <div class="panel">
+      <h2>Saját látogatás kihagyása</h2>
+      <label style="display:flex; align-items:center; gap:11px; cursor:pointer; color:var(--chrome); font-size:.95rem;">
+        <input type="checkbox" id="notrack" style="width:19px; height:19px; accent-color:var(--gold); cursor:pointer; flex:none;" />
+        <span>Ne számítsanak a saját látogatásaim <b>ezen a böngészőn</b></span>
+      </label>
+      <p class="hint" id="notrackHint" style="margin-top:10px;"></p>
+    </div>
   </div>
 </div>
 
@@ -135,6 +144,21 @@
   $("token").addEventListener("keydown", function (e) { if (e.key === "Enter") $("loginBtn").click(); });
   $("refreshBtn").addEventListener("click", load);
   $("logoutBtn").addEventListener("click", function () { localStorage.removeItem(KEY); showLogin(); });
+
+  // Saját látogatás kihagyása (ugyanaz az origin, mint az oldal → a követő-kód ezt olvassa)
+  var NT = "hlp_notrack";
+  function syncNotrack() {
+    var on = localStorage.getItem(NT) === "1";
+    $("notrack").checked = on;
+    $("notrackHint").textContent = on
+      ? "Bekapcsolva ✓ – ezen a böngészőn a te látogatásaid mostantól NEM számítanak bele. (Minden eszközön/böngészőn külön be kell kapcsolni.)"
+      : "Kikapcsolva – ezen a böngészőn a látogatásaid is beleszámítanak a statisztikába.";
+  }
+  $("notrack").addEventListener("change", function () {
+    if (this.checked) localStorage.setItem(NT, "1"); else localStorage.removeItem(NT);
+    syncNotrack();
+  });
+  syncNotrack();
 
   load();
 </script>
