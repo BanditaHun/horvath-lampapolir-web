@@ -200,6 +200,19 @@ a:hover { text-decoration: underline; }
 }
 @media (prefers-reduced-motion: reduce) { .page__title { animation: none; background-position: -60% 0; } }
 
+/* ---------- Képnagyító (lightbox) ---------- */
+img.zoomable { cursor: zoom-in; transition: filter .2s, transform .2s; }
+img.zoomable:hover { filter: brightness(1.06); }
+.lightbox { position: fixed; inset: 0; z-index: 9999; display: none; align-items: center; justify-content: center; padding: 24px;
+  background: rgba(8,8,11,0.93); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+.lightbox.is-open { display: flex; animation: lbFade .22s ease; }
+.lightbox__img { max-width: 94vw; max-height: 90vh; border-radius: 8px; box-shadow: 0 24px 70px rgba(0,0,0,0.65); cursor: zoom-out; animation: lbZoom .24s cubic-bezier(.2,.7,.2,1); }
+.lightbox__close { position: absolute; top: 16px; right: 18px; width: 46px; height: 46px; border-radius: 50%; border: 0; cursor: pointer;
+  background: rgba(255,255,255,0.13); color: #fff; font-size: 20px; line-height: 1; transition: background .15s; }
+.lightbox__close:hover { background: rgba(255,255,255,0.24); }
+@keyframes lbFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes lbZoom { from { opacity: 0; transform: scale(.9); } to { opacity: 1; transform: none; } }
+
 /* Banner-mód: rugalmas szélesség (zoomkor együtt igazodik), ésszerű maximummal, keretezve */
 .hero--banner { display: block; padding: 22px 20px 14px; min-height: 0; }
 .hero--banner .hero__overlay { display: none; }

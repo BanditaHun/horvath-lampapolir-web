@@ -725,7 +725,7 @@ function renderGallery(app, gallery) {
     const grid = el("div", "gallery");
     gallery.items.forEach((g) => {
       const fig = el("figure");
-      const img = el("img"); img.src = rel(g.image); img.alt = g.caption || "Munka"; img.loading = "lazy";
+      const img = el("img"); img.src = rel(g.image); img.alt = g.caption || "Munka"; img.loading = "lazy"; img.className = "zoomable";
       fig.appendChild(img);
       if (g.caption) fig.appendChild(el("figcaption", null, esc(g.caption)));
       grid.appendChild(fig);
@@ -1061,6 +1061,34 @@ function wireHeroPolish() {
   }
 }
 
+// Képnagyító (lightbox): a nagyítható képek kattintásra nagy nézetben nyílnak meg.
+function wireLightbox() {
+  document.querySelectorAll(".gallery img, .rich img, .prose img, .home-about img, .hero-flank img, .review-card img")
+    .forEach((im) => im.classList.add("zoomable"));
+  if (!document.querySelector("img.zoomable")) return;
+
+  let lb = document.getElementById("lightbox");
+  if (!lb) {
+    lb = document.createElement("div");
+    lb.id = "lightbox"; lb.className = "lightbox"; lb.setAttribute("aria-hidden", "true");
+    lb.innerHTML = '<button class="lightbox__close" type="button" aria-label="Bezárás">✕</button><img class="lightbox__img" alt="">';
+    document.body.appendChild(lb);
+  }
+  const lbImg = lb.querySelector(".lightbox__img");
+  const open = (src, alt) => { lbImg.src = src; lbImg.alt = alt || ""; lb.classList.add("is-open"); document.body.style.overflow = "hidden"; };
+  const close = () => { lb.classList.remove("is-open"); document.body.style.overflow = ""; };
+
+  if (!lb.dataset.wired) {
+    lb.dataset.wired = "1";
+    document.addEventListener("click", (e) => {
+      const im = e.target.closest && e.target.closest("img.zoomable");
+      if (im) { open(im.currentSrc || im.src, im.alt); return; }
+      if (e.target === lb || (e.target.closest && e.target.closest(".lightbox__close")) || e.target.classList.contains("lightbox__img")) close();
+    });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+  }
+}
+
 // ---------- Indítás ----------
 async function initSite() {
   trackVisit();
@@ -1109,6 +1137,7 @@ async function initSite() {
   }
 
   initReveal();
+  wireLightbox();
 }
 
 // Görgetéses beúszás: a szakaszok/kártyák finoman felúsznak, ahogy láthatóvá válnak.
