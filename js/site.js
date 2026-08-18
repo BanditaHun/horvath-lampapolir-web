@@ -623,9 +623,9 @@ async function renderHome(app, contact) {
     <div class="hero__overlay"></div>`;
   if (hero.banner) {
     h += `<div class="hero-stage">
-        ${flankSide("left", [hero.side_left, hero.side_left_2], FLANK_LEFT)}
+        ${flankSide("left", [hero.side_left, hero.side_left_2, hero.side_left_3 || hero.side_right], FLANK_LEFT)}
         <img class="hero__banner" src="${esc(rel(hero.banner))}" alt="${esc(hero.title || "")}" />
-        ${flankSide("right", [hero.side_right, hero.side_right_2], FLANK_RIGHT)}
+        ${flankSide("right", [hero.side_right, hero.side_right_2, hero.side_right_3 || hero.side_left_2], FLANK_RIGHT)}
       </div>`;
   } else {
     h += `<div class="hero__content">
