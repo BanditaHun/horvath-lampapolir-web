@@ -230,8 +230,8 @@ img.zoomable:hover { filter: brightness(1.06); }
 .hero--banner .hero__cta { margin-top: 0; }
 
 /* Banner + két oldalán animált "reklám" buborékok */
-.hero-stage { display: flex; align-items: center; justify-content: center; gap: 28px; width: 100%; }
-.hero-stage .hero__banner { flex: 0 1 1232px; width: 100%; max-width: 1232px; margin: 0; }
+.hero-stage { display: flex; align-items: stretch; justify-content: center; gap: 28px; width: 100%; }
+.hero-stage .hero__banner { flex: 0 1 1232px; width: 100%; max-width: 1232px; margin: 0; align-self: center; }
 .hero-flank { flex: 1 1 0; display: flex; flex-direction: column; gap: 16px; max-width: 300px; }
 .hero-flank--left { align-items: flex-end; }
 .hero-flank--right { align-items: flex-start; }
@@ -245,6 +245,7 @@ img.zoomable:hover { filter: brightness(1.06); }
 .flank-chip__ic { color: var(--gold); font-size: 1rem; text-shadow: 0 0 8px rgba(240,180,41,0.6); }
 .flank-imgwrap {
   position: relative; margin: 0; width: 100%; max-width: 300px;
+  flex: 1 1 0; min-height: 0; /* nyúljon, hogy kitöltse a banner magasságát */
   border-radius: 14px; overflow: hidden;
   border: 1px solid rgba(240,180,41,0.45);
   animation: flankFloat 4.4s ease-in-out infinite;
@@ -254,7 +255,7 @@ img.zoomable:hover { filter: brightness(1.06); }
   background: linear-gradient(180deg, rgba(240,180,41,0.10) 0%, rgba(10,10,10,0.10) 32%, rgba(10,10,10,0.64) 100%);
   box-shadow: inset 0 0 42px rgba(0,0,0,0.5);
 }
-.flank-img { display: block; width: 100%; height: auto; max-height: 250px; object-fit: cover; filter: saturate(1.05) contrast(1.03); }
+.flank-img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(1.05) contrast(1.03); }
 @keyframes flankFloat {
   0%, 100% { transform: translateY(0); box-shadow: 0 0 18px rgba(240,180,41,0.16); }
   50%      { transform: translateY(-10px); box-shadow: 0 0 34px rgba(240,180,41,0.42); }
