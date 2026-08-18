@@ -378,9 +378,9 @@ section:last-of-type { border-bottom: none; }
 .row__price { color: var(--gold); font-weight: 700; white-space: nowrap; }
 
 /* ---------- Galéria ---------- */
-.gallery { margin-top: 26px; display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+.gallery { margin-top: 26px; display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); align-items: start; }
 .gallery figure { margin: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--bg-card); }
-.gallery img { width: 100%; height: 180px; object-fit: cover; display: block; }
+.gallery img { width: 100%; height: auto; display: block; }
 .gallery figcaption { padding: 8px 12px; font-size: .88rem; color: var(--chrome-dim); }
 .gallery__empty { color: var(--chrome-dim); margin-top: 20px; font-style: italic; }
 
