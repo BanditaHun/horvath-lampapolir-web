@@ -3,14 +3,32 @@
   "subtitle": "Mobil fényszóró-felújítás – házhoz megyünk Tolna megyében, 50 km-es körzetben",
   "banner": "/images/uploads/Banner Jpg.png",
   "side_left_images": [
-    { "image": "/images/uploads/side-left.jpg", "size": "m" },
-    { "image": "/images/uploads/side-left-2.jpg", "size": "m" },
-    { "image": "/images/uploads/Képernyőkép 2026-08-18 084027.png", "size": "l" }
+    {
+      "image": "/images/uploads/side-left.jpg",
+      "size": "l"
+    },
+    {
+      "image": "/images/uploads/side-left-2.jpg",
+      "size": "l"
+    },
+    {
+      "image": "/images/uploads/Képernyőkép 2026-08-18 084027.png",
+      "size": "l"
+    }
   ],
   "side_right_images": [
-    { "image": "/images/uploads/side-right.jpg", "size": "m" },
-    { "image": "/images/uploads/side-right-2.jpg", "size": "m" },
-    { "image": "/images/uploads/Képernyőkép 2026-08-18 084447.png", "size": "l" }
+    {
+      "image": "/images/uploads/side-right.jpg",
+      "size": "l"
+    },
+    {
+      "image": "/images/uploads/side-right-2.jpg",
+      "size": "l"
+    },
+    {
+      "image": "/images/uploads/Képernyőkép 2026-08-18 084447.png",
+      "size": "l"
+    }
   ],
   "ticker": [
     "Házhoz megyünk Tolna megyében",
