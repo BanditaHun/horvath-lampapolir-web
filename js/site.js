@@ -570,11 +570,15 @@ function tickerBand(items) {
   return `<div class="ticker" aria-hidden="true"><div class="ticker__track">${half}${half}</div></div>`;
 }
 
-// Oldalsó elem: a feltöltött kép(ek) egymás alatt; ha egy sincs, az animált buborékok
-function flankSide(side, imgs, chips) {
-  const pics = (Array.isArray(imgs) ? imgs : [imgs]).filter(isSet);
-  const inner = pics.length
-    ? pics.map((src) => `<figure class="flank-imgwrap"><img class="flank-img" src="${esc(rel(src))}" alt="" loading="lazy" /></figure>`).join("")
+// Oldalsó elem: a feltöltött kép(ek) egymás alatt, kép-méret szerint arányosan; ha egy sincs, animált buborékok.
+// items: [{image, size}] objektumok VAGY egyszerű string-ek (régi formátum). size: "s" | "m" | "l".
+const FLANK_GROW = { s: 1, m: 1.7, l: 2.9 };
+function flankSide(side, items, chips) {
+  const list = (Array.isArray(items) ? items : [items])
+    .map((it) => (typeof it === "string" ? { image: it, size: "m" } : { image: it && it.image, size: (it && it.size) || "m" }))
+    .filter((x) => isSet(x.image));
+  const inner = list.length
+    ? list.map((x) => `<figure class="flank-imgwrap" style="flex-grow:${FLANK_GROW[x.size] || 1.7}"><img class="flank-img" src="${esc(rel(x.image))}" alt="" loading="lazy" /></figure>`).join("")
     : flankChips(chips);
   return `<aside class="hero-flank hero-flank--${side}" aria-hidden="true">${inner}</aside>`;
 }
@@ -622,10 +626,17 @@ async function renderHome(app, contact) {
   let h = `<header class="hero${hero.banner ? " hero--banner" : ""}">
     <div class="hero__overlay"></div>`;
   if (hero.banner) {
+    // Új listás formátum (kép + méret); ha nincs, visszaesik a régi mezőkre.
+    const leftList = (Array.isArray(hero.side_left_images) && hero.side_left_images.length)
+      ? hero.side_left_images
+      : [hero.side_left, hero.side_left_2, hero.side_left_3 || hero.side_right];
+    const rightList = (Array.isArray(hero.side_right_images) && hero.side_right_images.length)
+      ? hero.side_right_images
+      : [hero.side_right, hero.side_right_2, hero.side_right_3 || hero.side_left_2];
     h += `<div class="hero-stage">
-        ${flankSide("left", [hero.side_left, hero.side_left_2, hero.side_left_3 || hero.side_right], FLANK_LEFT)}
+        ${flankSide("left", leftList, FLANK_LEFT)}
         <img class="hero__banner" src="${esc(rel(hero.banner))}" alt="${esc(hero.title || "")}" />
-        ${flankSide("right", [hero.side_right, hero.side_right_2, hero.side_right_3 || hero.side_left_2], FLANK_RIGHT)}
+        ${flankSide("right", rightList, FLANK_RIGHT)}
       </div>`;
   } else {
     h += `<div class="hero__content">
