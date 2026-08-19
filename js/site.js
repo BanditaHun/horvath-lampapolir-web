@@ -572,7 +572,7 @@ function tickerBand(items) {
 
 // Oldalsó elem: a feltöltött kép(ek) egymás alatt, kép-méret szerint arányosan; ha egy sincs, animált buborékok.
 // items: [{image, size}] objektumok VAGY egyszerű string-ek (régi formátum). size: "s" | "m" | "l".
-const FLANK_GROW = { s: 1, m: 1.7, l: 2.9 };
+const FLANK_GROW = { s: 1, m: 2, l: 4 };
 function flankSide(side, items, chips) {
   const list = (Array.isArray(items) ? items : [items])
     .map((it) => (typeof it === "string" ? { image: it, size: "m" } : { image: it && it.image, size: (it && it.size) || "m" }))
