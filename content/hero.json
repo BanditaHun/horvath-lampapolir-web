@@ -5,29 +5,29 @@
   "side_left_images": [
     {
       "image": "/images/uploads/side-left.jpg",
-      "size": "s"
+      "size": "l"
     },
     {
       "image": "/images/uploads/side-left-2.jpg",
-      "size": "m"
+      "size": "l"
     },
     {
       "image": "/images/uploads/Képernyőkép 2026-08-18 084027.png",
-      "size": "m"
+      "size": "l"
     }
   ],
   "side_right_images": [
     {
       "image": "/images/uploads/side-right.jpg",
-      "size": "m"
+      "size": "l"
     },
     {
       "image": "/images/uploads/side-right-2.jpg",
-      "size": "m"
+      "size": "l"
     },
     {
       "image": "/images/uploads/Képernyőkép 2026-08-18 084447.png",
-      "size": "m"
+      "size": "l"
     }
   ],
   "ticker": [
