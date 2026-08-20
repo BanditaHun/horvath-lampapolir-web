@@ -570,15 +570,15 @@ function tickerBand(items) {
   return `<div class="ticker" aria-hidden="true"><div class="ticker__track">${half}${half}</div></div>`;
 }
 
-// Oldalsó elem: a feltöltött kép(ek) egymás alatt, kép-méret szerint arányosan; ha egy sincs, animált buborékok.
-// items: [{image, size}] objektumok VAGY egyszerű string-ek (régi formátum). size: "s" | "m" | "l".
-const FLANK_GROW = { s: 1, m: 2, l: 4 };
+// Oldalsó elem: a feltöltött kép(ek) egymás alatt; a kép a kereten belül TELJESEN látszik (contain).
+// A méret a keret magasságát (így a kép nagyságát) állítja. items: [{image, size}] VAGY string. size: "s"|"m"|"l".
+const FLANK_GROW = { s: 1, m: 1.5, l: 2.2 };
 function flankSide(side, items, chips) {
   const list = (Array.isArray(items) ? items : [items])
     .map((it) => (typeof it === "string" ? { image: it, size: "m" } : { image: it && it.image, size: (it && it.size) || "m" }))
     .filter((x) => isSet(x.image));
   const inner = list.length
-    ? list.map((x) => `<figure class="flank-imgwrap" style="flex-grow:${FLANK_GROW[x.size] || 1.7}"><img class="flank-img" src="${esc(rel(x.image))}" alt="" loading="lazy" /></figure>`).join("")
+    ? list.map((x) => `<figure class="flank-imgwrap" style="flex-grow:${FLANK_GROW[x.size] || 2}"><img class="flank-img" src="${esc(rel(x.image))}" alt="" loading="lazy" /></figure>`).join("")
     : flankChips(chips);
   return `<aside class="hero-flank hero-flank--${side}" aria-hidden="true">${inner}</aside>`;
 }
