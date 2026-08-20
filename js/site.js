@@ -572,7 +572,7 @@ function tickerBand(items) {
 
 // Oldalsó elem: a feltöltött kép(ek) egymás alatt; a kép a kereten belül TELJESEN látszik (contain).
 // A méret a keret magasságát (így a kép nagyságát) állítja. items: [{image, size}] VAGY string. size: "s"|"m"|"l".
-const FLANK_GROW = { s: 1, m: 1.5, l: 2.2 };
+const FLANK_GROW = { s: 1, m: 2, l: 3.5 };
 function flankSide(side, items, chips) {
   const list = (Array.isArray(items) ? items : [items])
     .map((it) => (typeof it === "string" ? { image: it, size: "m" } : { image: it && it.image, size: (it && it.size) || "m" }))
