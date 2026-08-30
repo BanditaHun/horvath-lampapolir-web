@@ -1,36 +1,36 @@
 {
   "heading": "Csomagok",
+  "intro": "A megfakult, homályos fényszóró **veszélyes**: szétszórja és elnyeli a fényt, így éjszaka jóval kevesebbet látsz az útból – ráadásul a műszaki vizsgán is hibapont lehet. A felújítás **visszaadja a kristálytiszta fényt**: jobb látótávolság, biztonságosabb éjszakai vezetés és megújult megjelenés – a fényszórócsere árának töredékéért. Minden csomag **helyszíni**, házhoz megyünk, bármilyen autótípusra. Ráadásul **minden csomaghoz ingyenes akkumulátor-állapot ellenőrzés és fagyálló-mérés is jár**. Az árak tájékoztató jellegűek, a végleges ár az ingyenes állapotfelmérés után derül ki.",
   "items": [
     {
       "name": "ALAP – Fényszóró polírozás",
-      "description": "- Fényszóró külső felületének alapos tisztítása (por, sár, makacs szennyeződés).\n- A fényszóró állapotának szakszerű felmérése.\n- Egylépcsős felületjavítás és fényesítés – visszaadja a lámpatest áttetszőségét és fényét.\n- **Felületvédelem és garancia nélkül** – kedvezőbb áron, gyors felfrissítés.\n- **Ingyenes** akkumulátor-állapot ellenőrzés és fagyálló-mérés.\n\n*Ajánlott: enyhébb mattulás, kisebb felületi oxidáció esetén.*",
-      "price": "15 000 Ft-tól",
-      "badge": ""
+      "badge": "",
+      "description": "- ALAP – Sima fényszóró-polírozás\n- Fényszóró külső felületének alapos tisztítása (por, sár, makacs szennyeződés).\n- A fényszóró állapotának szakszerű felmérése.\n- **Egylépcsős polírozás és felületjavítás** – a matt, opálos felület felfrissítése, a lámpatest áttetszőségének és fényének javítása.\n- **Sima polírozás, külön felületvédelem nélkül** – kedvezőbb árú, gyors megoldás a fényszórók látványos felfrissítésére.\n- **Fontos:** mivel a polírozás után nincs UV-védő bevonat, a felület **idővel – akár néhány hónap elteltével – ismét mattulhat és oxidálódhat**. A tartósabb eredményhez a garanciás, UV-védett felújítást javasoljuk.\n- **Ingyenes** akkumulátor-állapot ellenőrzés és fagyálló-mérés.\n\n_Ajánlott: enyhébb mattulás, kisebb felületi oxidáció és esztétikai felfrissítés esetén._",
+      "price": "15 000 Ft-tól"
     },
     {
       "name": "STANDARD – Fényszóró-felújítás + garancia",
-      "description": "- Alapos tisztítás és felület-előkészítés.\n- Szükség esetén többlépcsős vizes csiszolás (oxidáció, matt réteg, apró karcok eltávolítása).\n- Választható technológia: **2 lépcsős gépi polírozás** vagy **gőzölős polimeres** felújítás.\n- Finiselés és záró felületkezelés a tartós csillogásért.\n- **1 év felületi garancia.**\n- **Ingyenes** akkumulátor-állapot ellenőrzés és fagyálló-mérés.\n\n*Ajánlott: közepesen vagy erősen matt, oxidálódott, sárgult fényszórókhoz.*",
-      "price": "20 000 Ft-tól",
-      "badge": "Legnépszerűbb"
+      "badge": "Legnépszerűbb",
+      "description": "- Alapos tisztítás és felület-előkészítés.\n- Szükség esetén többlépcsős vizes csiszolás (oxidáció, matt réteg, apró karcok eltávolítása).\n- Választható technológia: **2 lépcsős gépi polírozás** vagy **gőzölős polimeres** felújítás.\n- Finiselés és záró felületkezelés a tartós csillogásért.\n- **1 év felületi garancia.**\n- **Ingyenes** akkumulátor-állapot ellenőrzés és fagyálló-mérés.\n\n_Ajánlott: közepesen vagy erősen matt, oxidálódott, sárgult fényszórókhoz._",
+      "price": "20 000 Ft-tól"
     },
     {
       "name": "PRÉMIUM – Komplett felújítás + kerámia UV-védelem",
-      "description": "- Teljes körű tisztítás és alapos felület-előkészítés.\n- Mélyreható csiszolás és felületkorrekció a makacs sérülésekre.\n- 2 lépcsős polírozás vagy gőzölős polimeres felújítás, finomító polírozással.\n- Zsírtalanítás a védőréteg tökéletes tapadásáért.\n- **Prémium kerámia UV-felületvédelem** – tartós védelem és csillogás.\n- Végső minőség-ellenőrzés.\n- **2 év felületi garancia** (alapból benne van).\n- **Ingyenes** akkumulátor-állapot ellenőrzés és fagyálló-mérés.\n\n*Ajánlott: erősen matt, oxidálódott vagy elszíneződött fényszórókhoz, illetve a leghosszabb távú UV-védelemhez.*",
-      "price": "28 000 Ft-tól",
-      "badge": "Ajánlott"
+      "badge": "Ajánlott",
+      "description": "- Teljes körű tisztítás és alapos felület-előkészítés.\n- Mélyreható csiszolás és felületkorrekció a makacs sérülésekre.\n- 2 lépcsős polírozás vagy gőzölős polimeres felújítás, finomító polírozással.\n- Zsírtalanítás a védőréteg tökéletes tapadásáért.\n- **Prémium kerámia UV-felületvédelem** – tartós védelem és csillogás.\n- Végső minőség-ellenőrzés.\n- **2 év felületi garancia** (alapból benne van).\n- **Ingyenes** akkumulátor-állapot ellenőrzés és fagyálló-mérés.\n\n_Ajánlott: erősen matt, oxidálódott vagy elszíneződött fényszórókhoz, illetve a leghosszabb távú UV-védelemhez._",
+      "price": "28 000 Ft-tól"
     },
     {
       "name": "🛡️ +1 év felületi garancia (kiegészítő opció)",
+      "badge": "Kiegészítő",
       "description": "- A Standard csomag 1 év garanciája további **1 évvel** meghosszabbítható – így összesen **2 év**.\n- Plusz nyugalom, tartósan megőrzött kristálytiszta fény.\n\n*A Prémium csomag alapból 2 év garanciát tartalmaz – ez az opció a Standard mellé választható.*",
-      "price": "7 500 Ft",
-      "badge": "Kiegészítő"
+      "price": "7 500 Ft"
     },
     {
       "name": "Hátsó lámpák teljes körű felújítása (kiegészítő opció)",
+      "badge": "Kiegészítő",
       "description": "- 2 lépcsős gépi polírozás a felületi karcok, mattulás és oxidáció eltávolítására.\n- Visszaadja a hátsó lámpák fényáteresztő képességét és megjelenését.\n- Csiszolást nem tartalmaz – a kevésbé sérült, de fényét vesztett felületek frissítésére.",
-      "price": "12 000 Ft",
-      "badge": "Kiegészítő"
+      "price": "12 000 Ft"
     }
-  ],
-  "intro": "A megfakult, homályos fényszóró **veszélyes**: szétszórja és elnyeli a fényt, így éjszaka jóval kevesebbet látsz az útból – ráadásul a műszaki vizsgán is hibapont lehet. A felújítás **visszaadja a kristálytiszta fényt**: jobb látótávolság, biztonságosabb éjszakai vezetés és megújult megjelenés – a fényszórócsere árának töredékéért. Minden csomag **helyszíni**, házhoz megyünk, bármilyen autótípusra. Ráadásul **minden csomaghoz ingyenes akkumulátor-állapot ellenőrzés és fagyálló-mérés is jár**. Az árak tájékoztató jellegűek, a végleges ár az ingyenes állapotfelmérés után derül ki."
+  ]
 }
