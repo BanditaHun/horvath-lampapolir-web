@@ -411,6 +411,14 @@ section:last-of-type { border-bottom: none; }
 .site-footer__links--icons a { display: flex; align-items: flex-start; gap: 9px; line-height: 1.35; }
 .site-footer__links--icons a svg { flex: none; width: 15px; height: 15px; margin-top: 1px; opacity: .75; transition: opacity .15s; }
 .site-footer__links--icons a:hover svg { opacity: 1; }
+.site-footer__billing { padding: 12px clamp(16px,3vw,44px); font-size: .82rem; color: var(--chrome-dim); line-height: 1.55; border-top: 1px solid var(--line); }
+.site-footer__billing strong { color: var(--chrome); }
+.billing-notice { max-width: 1000px; margin: 28px auto 0; border: 1px solid rgba(240,180,41,0.35); border-left: 4px solid var(--gold); border-radius: var(--radius); background: rgba(240,180,41,0.06); padding: 16px 20px; }
+.billing-notice__title { font-family: var(--font-heading); color: var(--gold); font-size: 1.2rem; margin-bottom: 8px; letter-spacing: .3px; }
+.billing-notice p { color: var(--chrome); line-height: 1.65; margin: 0; }
+.billing-notice strong { color: var(--gold); }
+:root[data-theme="light"] .billing-notice { background: rgba(224,164,28,0.08); border-color: #e0c98f; }
+:root[data-theme="light"] .billing-notice__title, :root[data-theme="light"] .billing-notice strong { color: #a9760a; }
 .site-footer__bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 18px; padding: 16px clamp(16px,3vw,44px); color: var(--chrome-dim); font-size: .85rem; border-top: 1px solid var(--line); }
 .site-footer__legal a { color: var(--chrome-dim); }
 .site-footer__legal a:hover { color: var(--gold); }

@@ -296,6 +296,9 @@ function buildFooter() {
         </div>
       </nav>
     </div>
+    <div class="site-footer__billing">
+      🧾 Minden értékesítésről és szolgáltatásról <strong>számlát állítunk ki</strong>. A megrendeléshez kérjük a <strong>neve és címe</strong> megadását (a számla kiállításához szükséges). A szolgáltatás igénybevételével Ön hozzájárul ezen adatok megadásához.
+    </div>
     <div class="site-footer__bottom">
       <span>© <span id="year"></span> Horváth Lámpapolír – mobil fényszóró-felújítás</span>
     </div>
@@ -778,11 +781,16 @@ function renderContact(app, contact) {
       <div id="area-map" class="area-map"></div>
     </section></div>` : "";
 
+  const billingNotice = `<div class="container"><section class="billing-notice">
+      <h3 class="billing-notice__title">🧾 Számlázási tájékoztató</h3>
+      <p>Vállalkozásunk <strong>minden értékesítésről és szolgáltatásról számlát állít ki</strong>. A megrendelés leadásakor (személyesen, telefonon vagy e-mailben) kérjük a <strong>neve és címe</strong> megadását, mivel ezek a számla kiállításához szükségesek – ezek hiányában a szolgáltatást nem áll módunkban teljesíteni. A szolgáltatás igénybevételével Ön hozzájárul a név és cím adatainak megadásához a számla kiállítása céljából.</p>
+    </section></div>`;
+
   app.innerHTML = pageHead(contact.heading || "Kapcsolat", "") +
     `<div class="container"><div class="contact-layout">
        <div class="contact-layout__main">${bookingFormHTML(contact)}</div>
        ${aside}
-     </div></div>` + mapSection;
+     </div></div>` + billingNotice + mapSection;
   wireBookingForm(contact);
   wireMap(contact);
 }
