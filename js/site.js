@@ -296,9 +296,6 @@ function buildFooter() {
         </div>
       </nav>
     </div>
-    <div class="site-footer__billing">
-      🧾 Minden értékesítésről és szolgáltatásról <strong>számlát állítunk ki</strong>. A megrendeléshez kérjük a <strong>neve és címe</strong> megadását (a számla kiállításához szükséges). A szolgáltatás igénybevételével Ön hozzájárul ezen adatok megadásához.
-    </div>
     <div class="site-footer__bottom">
       <span>© <span id="year"></span> Horváth Lámpapolír – mobil fényszóró-felújítás</span>
     </div>
