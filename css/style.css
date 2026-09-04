@@ -415,8 +415,12 @@ section:last-of-type { border-bottom: none; }
 .site-footer__billing strong { color: var(--chrome); }
 .billing-notice { max-width: 1000px; margin: 28px auto 0; border: 1px solid rgba(240,180,41,0.35); border-left: 4px solid var(--gold); border-radius: var(--radius); background: rgba(240,180,41,0.06); padding: 16px 20px; }
 .billing-notice__title { font-family: var(--font-heading); color: var(--gold); font-size: 1.2rem; margin-bottom: 8px; letter-spacing: .3px; }
-.billing-notice p { color: var(--chrome); line-height: 1.65; margin: 0; }
+.billing-notice p { color: var(--chrome); line-height: 1.65; margin: 0 0 6px; }
+.billing-notice p:last-child { margin-bottom: 0; }
 .billing-notice strong { color: var(--gold); }
+.billing-notice__list { margin: 6px 0 8px; padding-left: 20px; color: var(--chrome); line-height: 1.6; }
+.billing-notice__list li { margin-bottom: 3px; }
+:root[data-theme="light"] .billing-notice__list strong { color: #a9760a; }
 :root[data-theme="light"] .billing-notice { background: rgba(224,164,28,0.08); border-color: #e0c98f; }
 :root[data-theme="light"] .billing-notice__title, :root[data-theme="light"] .billing-notice strong { color: #a9760a; }
 .site-footer__bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 18px; padding: 16px clamp(16px,3vw,44px); color: var(--chrome-dim); font-size: .85rem; border-top: 1px solid var(--line); }
