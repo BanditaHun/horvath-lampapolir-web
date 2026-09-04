@@ -764,7 +764,7 @@ function renderContact(app, contact) {
   if (phone) rows.push(infoRow(ICON_PHONE, "Telefon", `<a href="${telHref(phone)}">${esc(phone)}</a>`));
   if (phone) rows.push(infoRow(ICON_WHATSAPP, "WhatsApp", `<a href="${whatsappHref(phone)}" target="_blank" rel="noopener">Írj vagy hívj WhatsAppon</a>`));
   if (isSet(contact.email)) rows.push(infoRow(ICON_MAIL, "E-mail", `<a href="mailto:${esc(contact.email)}">${esc(contact.email)}</a>`, "contact-info__value--email"));
-  if (isSet(contact.facebook_url)) rows.push(infoRow(ICON_FB, "Facebook", `<a href="${esc(contact.facebook_url)}" target="_blank" rel="noopener">Írj üzenetet</a>`));
+  if (isSet(contact.facebook_url)) rows.push(infoRow(ICON_FB, "Facebook", `<a href="${esc(contact.facebook_url)}" target="_blank" rel="noopener">Nézd meg a Facebookon</a>`));
   if (isSet(contact.google_url)) rows.push(infoRow(ICON_GOOGLE, "Google", `<a href="${esc(contact.google_url)}" target="_blank" rel="noopener">Nézd meg a Google-on</a>`));
   if (isSet(contact.instagram_url)) rows.push(infoRow(ICON_IG, "Instagram", `<a href="${esc(contact.instagram_url)}" target="_blank" rel="noopener">Megnézem</a>`));
 
