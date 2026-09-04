@@ -614,12 +614,13 @@ function multicarNote(promo) {
 }
 
 async function renderHome(app, contact) {
-  const [hero, about, reviews, promo, home] = await Promise.all([
+  const [hero, about, reviews, promo, home, gallery] = await Promise.all([
     loadJSON("content/hero.json"),
     loadJSON("content/about.json").catch(() => null),
     loadJSON("content/reviews.json").catch(() => null),
     loadJSON("content/promo.json").catch(() => null),
     loadJSON("content/home.json").catch(() => null),
+    loadJSON("content/gallery.json").catch(() => null),
   ]);
   const H = home || {};
 
@@ -692,7 +693,17 @@ async function renderHome(app, contact) {
 
   const introHTML = isSet(H.intro) ? `<div class="container"><p class="home-intro">${mdInline(H.intro)}</p></div>` : "";
 
-  app.innerHTML = h + tickerBand(hero.ticker) + trust + introHTML + promoSection(promo) + aboutHTML + quick + multicarNote(promo) + why + premiumSection(H) + areas + reviewsSectionHTML(reviews, contact);
+  const galItems = (gallery && Array.isArray(gallery.items) ? gallery.items : []).filter((g) => g && isSet(g.image));
+  const galleryPreview = galItems.length ? `<div class="container"><section class="home-gallery">
+    <h2 class="page__title">${esc((gallery && gallery.heading) || "Munkáink")}</h2>
+    <p class="home-gallery__lead">Nézd meg az eredményt – <strong>előtte</strong> és <strong>utána</strong>. Kattints a képre a nagyításhoz.</p>
+    <div class="home-gallery__grid">
+      ${galItems.slice(0, 6).map((g) => `<figure class="home-gallery__item"><span class="home-gallery__frame"><img class="zoomable" src="${esc(rel(g.image))}" alt="${esc(g.caption || "Fényszóró-felújítás munka")}" loading="lazy" /></span>${isSet(g.caption) ? `<figcaption>${esc(g.caption)}</figcaption>` : ""}</figure>`).join("")}
+    </div>
+    <div class="home-gallery__cta"><a class="btn btn--ghost" href="galeria.html">Teljes galéria →</a></div>
+  </section></div>` : "";
+
+  app.innerHTML = h + tickerBand(hero.ticker) + trust + introHTML + promoSection(promo) + aboutHTML + quick + multicarNote(promo) + why + premiumSection(H) + galleryPreview + areas + reviewsSectionHTML(reviews, contact);
   await initReviews(reviews, app, contact);
   wireHeroPolish();
 }
