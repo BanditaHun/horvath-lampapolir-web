@@ -735,9 +735,20 @@ function renderCardsPage(app, data, defTitle, kind, promo) {
   if (kind === "packages" && promo) app.insertAdjacentHTML("beforeend", multicarNote(promo));
 }
 
+function printLetterhead() {
+  return `<div class="print-only print-letterhead">
+    <strong>Horváth Lámpapolír</strong> · Mobil fényszóró-felújítás – házhoz megyünk<br>
+    +36 20 541 8369 · horvathlampapolir@gmail.com · horvathlampapolir.hu
+  </div>`;
+}
+function pdfBar(label) {
+  return `<div class="container arlista-dl no-print"><button type="button" class="arlista-dl__btn" onclick="window.print()">${ICON_DOWNLOAD}<span>${esc(label || "Letöltés PDF-ben")}</span></button></div>`;
+}
+
 function renderDoc(app, data, defTitle) {
-  app.innerHTML = pageHead(data.heading || defTitle, "") +
-    `<div class="container"><div class="rich prose">${mdBlock(data.body || "")}</div></div>`;
+  app.innerHTML = printLetterhead() + pageHead(data.heading || defTitle, "") +
+    `<div class="container"><div class="rich prose">${mdBlock(data.body || "")}</div></div>` +
+    pdfBar("Letöltés PDF-ben");
 }
 
 function renderGallery(app, gallery) {
@@ -921,7 +932,7 @@ function wireBookingForm(contact) {
 }
 
 function renderFaq(app, data) {
-  app.innerHTML = pageHead(data.heading || "Gyakori kérdések", data.intro || "");
+  app.innerHTML = printLetterhead() + pageHead(data.heading || "Gyakori kérdések", data.intro || "");
   const cont = app.querySelector(".container");
   const items = (data.items || []).filter((it) => isSet(it.q));
   const list = el("div", "faq");
@@ -935,6 +946,17 @@ function renderFaq(app, data) {
     list.appendChild(d);
   });
   cont.appendChild(list);
+  app.insertAdjacentHTML("beforeend", pdfBar("Letöltés PDF-ben"));
+  // Nyomtatáskor / PDF-mentéskor minden kérdés legyen nyitva, utána álljon vissza
+  if (!window.__faqPrintWired) {
+    window.__faqPrintWired = true;
+    window.addEventListener("beforeprint", () => {
+      document.querySelectorAll(".faq__item").forEach((d) => { d.dataset.wasopen = d.open ? "1" : "0"; d.open = true; });
+    });
+    window.addEventListener("afterprint", () => {
+      document.querySelectorAll(".faq__item").forEach((d) => { d.open = d.dataset.wasopen === "1"; });
+    });
+  }
   // FAQPage strukturált adat (Google gazdag találat)
   if (items.length) {
     const ld = {
