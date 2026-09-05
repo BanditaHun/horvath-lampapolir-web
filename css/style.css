@@ -1196,8 +1196,8 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
   img { break-inside: avoid; }
 }
 
-/* ---------- Évszakos, időjárás-szerű animáció a hero fölött ---------- */
-.season-fx { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 5; }
+/* ---------- Évszakos / időjárás-animáció – a TARTALOM MÖGÖTT (teljes oldalas háttér) ---------- */
+.season-fx { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: -1; }
 .season-p {
   position: absolute; top: -60px; opacity: 0; will-change: transform, opacity;
   animation-name: fx-fall; animation-timing-function: linear; animation-iteration-count: infinite;
@@ -1205,6 +1205,7 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 .season-p--emoji { line-height: 1; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }
 .season-p--snow { border-radius: 50%; background: #ffffff; box-shadow: 0 0 5px rgba(255,255,255,0.9), 0 1px 2px rgba(0,0,0,0.35); }
 .season-p--warm { border-radius: 50%; background: radial-gradient(circle, #ffe6a0 0%, rgba(255,200,90,0) 70%); }
+.season-p--rain { width: 2px; border-radius: 2px; background: linear-gradient(to bottom, rgba(160,195,235,0) 0%, rgba(165,200,240,0.85) 100%); }
 
 @keyframes fx-fall {
   0%   { transform: translate3d(0, -60px, 0) rotate(0deg); opacity: 0; }
@@ -1226,3 +1227,27 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 
 @media (prefers-reduced-motion: reduce) { .season-fx { display: none; } }
 @media print { .season-fx { display: none !important; } }
+
+/* ---------- „Időkép" widget a hero tetején (aktuális hőfok + időjárás) ---------- */
+.hero-weather {
+  display: flex; align-items: center; gap: 9px; width: fit-content; max-width: 92%;
+  margin: 2px auto 14px; padding: 8px 18px; position: relative; z-index: 4;
+  background: rgba(10,10,10,0.55); -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px);
+  border: 1px solid rgba(240,180,41,0.4); border-radius: 40px;
+  color: var(--chrome); font-weight: 600; font-size: .98rem;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+}
+.hero-weather__ic { font-size: 1.3rem; line-height: 1; }
+.hero-weather__temp { font-weight: 800; color: var(--gold); font-size: 1.1rem; }
+.hero-weather__desc { color: var(--chrome); }
+.hero-weather__loc { color: var(--chrome-dim); font-weight: 600; }
+.hero-weather__loc::before { content: "📍"; margin: 0 5px 0 4px; }
+:root[data-theme="light"] .hero-weather { background: rgba(255,255,255,0.82); border-color: #e0c98f; color: #23262b; box-shadow: 0 4px 14px rgba(0,0,0,0.12); }
+:root[data-theme="light"] .hero-weather__temp { color: #a9760a; }
+:root[data-theme="light"] .hero-weather__desc { color: #23262b; }
+:root[data-theme="light"] .hero-weather__loc { color: #3d434b; }
+@media (max-width: 480px) {
+  .hero-weather { font-size: .9rem; padding: 7px 14px; gap: 7px; max-width: 96%; }
+  .hero-weather__ic { font-size: 1.15rem; }
+  .hero-weather__loc { display: none; }
+}

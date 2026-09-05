@@ -719,68 +719,109 @@ async function renderHome(app, contact) {
   app.innerHTML = h + tickerBand(hero.ticker) + trust + introHTML + promoSection(promo) + aboutHTML + nightHTML + quick + multicarNote(promo) + why + infoHTML + premiumSection(H) + galleryPreview + areas + reviewsSectionHTML(reviews, contact);
   await initReviews(reviews, app, contact);
   wireHeroPolish();
-  seasonFx();
+  heroWeather();
 }
 
-// Évszakhoz igazodó, időjárás-szerű animáció a hero fölött
-// (ősz: falevelek + felhő, tél: hó + felhő, tavasz: szirmok, nyár: meleg fénypor)
-function seasonFx() {
-  const hero = document.querySelector(".hero");
-  if (!hero) return;
+// Évszakhoz / valós időjáráshoz igazodó animáció – a TARTALOM MÖGÖTT (teljes oldalas háttér)
+// (ősz: falevelek, tél: hó, tavasz: szirmok, nyár: fénypor; eső/hó a valós időjárás szerint)
+function seasonFx(override) {
   if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  const prev = hero.querySelector(".season-fx");
+  const prev = document.getElementById("season-fx");
   if (prev) prev.remove();
 
-  const m = new Date().getMonth(); // 0–11
-  let season;
-  if (m >= 2 && m <= 4) season = "spring";
-  else if (m >= 5 && m <= 7) season = "summer";
-  else if (m >= 8 && m <= 10) season = "autumn";
-  else season = "winter";
+  let mode = override;
+  if (!mode) {
+    const m = new Date().getMonth(); // 0–11
+    if (m >= 2 && m <= 4) mode = "spring";
+    else if (m >= 5 && m <= 7) mode = "summer";
+    else if (m >= 8 && m <= 10) mode = "autumn";
+    else mode = "winter";
+  }
 
   const CFG = {
-    autumn: { chars: ["🍂", "🍁", "🍂", "🍃"], count: 24, min: 7, max: 13, drift: 90, rot: 720, size: [18, 32], cloudy: true },
-    winter: { snow: true, count: 64, min: 6, max: 12, drift: 55, rot: 140, size: [4, 12], cloudy: true },
-    spring: { chars: ["🌸", "🌼", "🌸", "🌷"], count: 18, min: 8, max: 14, drift: 65, rot: 520, size: [15, 26], cloudy: false },
-    summer: { warm: true, count: 16, min: 9, max: 16, drift: 45, rot: 0, size: [4, 9], cloudy: false },
+    autumn: { chars: ["🍂", "🍁", "🍂", "🍃"], count: 22, min: 8, max: 15, drift: 90, rot: 720, size: [16, 30] },
+    winter: { snow: true, count: 70, min: 7, max: 14, drift: 55, rot: 140, size: [4, 12] },
+    spring: { chars: ["🌸", "🌼", "🌸", "🌷"], count: 18, min: 9, max: 15, drift: 65, rot: 520, size: [14, 24] },
+    summer: { warm: true, count: 16, min: 10, max: 18, drift: 45, rot: 0, size: [4, 9] },
+    snow:   { snow: true, count: 80, min: 6, max: 12, drift: 60, rot: 140, size: [4, 13] },
+    rain:   { rain: true, count: 72, min: 0.7, max: 1.5, drift: 12, rot: 0, size: [1.6, 2.6] },
   };
-  const cfg = CFG[season];
+  const cfg = CFG[mode] || CFG.autumn;
   const rnd = (a, b) => a + Math.random() * (b - a);
 
   const fx = document.createElement("div");
-  fx.className = "season-fx season-fx--" + season;
-  const setDist = () => fx.style.setProperty("--fall-dist", ((hero.offsetHeight || 560) + 60) + "px");
-  setDist();
-
-  if (cfg.cloudy) {
-    const clouds = document.createElement("div");
-    clouds.className = "season-clouds";
-    fx.appendChild(clouds);
-  }
+  fx.id = "season-fx";
+  fx.className = "season-fx season-fx--" + mode;
+  const dist = () => (window.innerHeight + 80) + "px";
+  fx.style.setProperty("--fall-dist", dist());
 
   for (let i = 0; i < cfg.count; i++) {
     const p = document.createElement("span");
-    p.className = "season-p" + (cfg.snow ? " season-p--snow" : cfg.warm ? " season-p--warm" : " season-p--emoji");
+    p.className = "season-p" + (cfg.snow ? " season-p--snow" : cfg.rain ? " season-p--rain" : cfg.warm ? " season-p--warm" : " season-p--emoji");
     if (cfg.chars) p.textContent = cfg.chars[i % cfg.chars.length];
     const size = rnd(cfg.size[0], cfg.size[1]);
     p.style.left = rnd(0, 100).toFixed(2) + "%";
     p.style.setProperty("--drift", rnd(-cfg.drift, cfg.drift).toFixed(0) + "px");
     p.style.setProperty("--rot", rnd(-cfg.rot, cfg.rot).toFixed(0) + "deg");
-    p.style.setProperty("--op", rnd(0.6, 0.95).toFixed(2));
+    p.style.setProperty("--op", rnd(0.5, 0.9).toFixed(2));
     p.style.animationDuration = rnd(cfg.min, cfg.max).toFixed(2) + "s";
     p.style.animationDelay = (-rnd(0, cfg.max)).toFixed(2) + "s";
     if (cfg.snow || cfg.warm) { p.style.width = size + "px"; p.style.height = size + "px"; }
+    else if (cfg.rain) { p.style.height = (size * 7).toFixed(0) + "px"; }
     else { p.style.fontSize = size.toFixed(0) + "px"; }
     fx.appendChild(p);
   }
-  hero.appendChild(fx);
+  document.body.appendChild(fx);
 
-  // A magasság frissítése betöltés/átméretezés után
-  window.addEventListener("load", setDist, { once: true });
   if (!window.__seasonResize) {
     window.__seasonResize = true;
     let t;
-    window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(setDist, 250); });
+    window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(() => { const f = document.getElementById("season-fx"); if (f) f.style.setProperty("--fall-dist", (window.innerHeight + 80) + "px"); }, 250); });
+  }
+}
+
+// WMO időjárás-kódok magyarul + hozzá tartozó háttér-effekt
+const WMO = {
+  0: { t: "Derült", i: "☀️" }, 1: { t: "Túlnyomóan derült", i: "🌤️" },
+  2: { t: "Közepesen felhős", i: "⛅" }, 3: { t: "Borult", i: "☁️" },
+  45: { t: "Ködös", i: "🌫️" }, 48: { t: "Zúzmarás köd", i: "🌫️" },
+  51: { t: "Enyhe szitálás", i: "🌦️", fx: "rain" }, 53: { t: "Szitálás", i: "🌦️", fx: "rain" }, 55: { t: "Erős szitálás", i: "🌧️", fx: "rain" },
+  56: { t: "Ónos szitálás", i: "🌧️", fx: "rain" }, 57: { t: "Ónos szitálás", i: "🌧️", fx: "rain" },
+  61: { t: "Gyenge eső", i: "🌦️", fx: "rain" }, 63: { t: "Eső", i: "🌧️", fx: "rain" }, 65: { t: "Erős eső", i: "🌧️", fx: "rain" },
+  66: { t: "Ónos eső", i: "🌧️", fx: "rain" }, 67: { t: "Ónos eső", i: "🌧️", fx: "rain" },
+  71: { t: "Gyenge havazás", i: "🌨️", fx: "snow" }, 73: { t: "Havazás", i: "🌨️", fx: "snow" }, 75: { t: "Erős havazás", i: "❄️", fx: "snow" },
+  77: { t: "Hószemcsék", i: "🌨️", fx: "snow" },
+  80: { t: "Zápor", i: "🌦️", fx: "rain" }, 81: { t: "Zápor", i: "🌧️", fx: "rain" }, 82: { t: "Heves zápor", i: "⛈️", fx: "rain" },
+  85: { t: "Hózápor", i: "🌨️", fx: "snow" }, 86: { t: "Erős hózápor", i: "❄️", fx: "snow" },
+  95: { t: "Zivatar", i: "⛈️", fx: "rain" }, 96: { t: "Zivatar jégesővel", i: "⛈️", fx: "rain" }, 99: { t: "Heves zivatar", i: "⛈️", fx: "rain" },
+};
+
+// „Időkép"-szerű widget a hero tetején: aktuális hőfok + időjárás (Tolna)
+async function heroWeather() {
+  const hero = document.querySelector(".hero");
+  if (!hero) return;
+  let w = hero.querySelector(".hero-weather");
+  if (!w) {
+    w = document.createElement("div");
+    w.className = "hero-weather";
+    hero.insertBefore(w, hero.firstChild);
+  }
+  w.innerHTML = `<span class="hero-weather__ic">⛅</span><span class="hero-weather__desc">Időjárás betöltése…</span>`;
+  try {
+    const r = await fetch("https://api.open-meteo.com/v1/forecast?latitude=46.4256&longitude=18.7817&current=temperature_2m,weather_code&timezone=auto", { cache: "no-store" });
+    const d = await r.json();
+    const cur = d && d.current;
+    if (!cur || cur.temperature_2m == null) throw new Error("no data");
+    const info = WMO[cur.weather_code] || { t: "Időjárás", i: "🌡️" };
+    const temp = Math.round(cur.temperature_2m);
+    w.innerHTML =
+      `<span class="hero-weather__ic">${info.i}</span>` +
+      `<span class="hero-weather__temp">${temp}°C</span>` +
+      `<span class="hero-weather__desc">${esc(info.t)}</span>` +
+      `<span class="hero-weather__loc">Tolna</span>`;
+    if (info.fx) seasonFx(info.fx); // valós eső/hó felülírja az évszakos effektet
+  } catch (e) {
+    if (w) w.remove(); // ha nem elérhető, ne mutassunk hibás widgetet
   }
 }
 
@@ -1256,6 +1297,7 @@ function wireLightbox() {
 async function initSite() {
   trackVisit();
   buildStarfield();
+  seasonFx();
   const page = document.body.dataset.page || "home";
   document.getElementById("site-header").innerHTML = buildHeader(page);
   document.getElementById("site-footer").innerHTML = buildFooter();
