@@ -504,6 +504,10 @@ section:last-of-type { border-bottom: none; }
   transition: transform .28s ease, border-color .28s ease, box-shadow .28s ease;
 }
 .neon-card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: 0 12px 30px rgba(0,0,0,0.45), 0 0 22px rgba(240,180,41,0.16); }
+.neon-card__media { margin: -26px -22px 8px; border-radius: 15px 15px 0 0; overflow: hidden; border-bottom: 1px solid rgba(240,180,41,0.2); }
+.neon-card__media img { width: 100%; height: 200px; object-fit: cover; display: block; cursor: zoom-in; transition: transform .4s ease; }
+.neon-card:hover .neon-card__media img { transform: scale(1.05); }
+:root[data-theme="light"] .neon-card__media { border-bottom-color: #ece4cf; }
 .neon-card__badge { align-self: flex-start; font-size: .72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #1a1200; background: var(--gold); padding: 4px 10px; border-radius: 20px; }
 .neon-card__title { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: var(--gold); letter-spacing: .4px; text-shadow: 0 0 10px rgba(240,180,41,0.2); }
 .neon-card__desc { color: var(--chrome-dim); flex: 1; }

@@ -5,11 +5,13 @@
     {
       "name": "Szezonális szélvédőmosó szintellenőrzés és feltöltés",
       "description": "A tiszta szélvédő a biztonságos vezetés alapja.\n\n**Miért jó?** Az évszakhoz illő mosófolyadék azonnal eltünteti a rárakódott rovart, sót és port, télen pedig **megakadályozza a fúvókák és a szélvédő befagyását**. Az anyagot hozzuk – neked csak szólnod kell.",
+      "image": "/images/uploads/Képernyőkép 2026-08-18 083910.png",
       "price": "2 500 Ft-tól"
     },
     {
       "name": "Fagyálló ellenőrzés és utántöltés",
       "description": "**Miért fontos?** A fagyálló nemcsak a fagyáspontot állítja be, hanem **véd a korróziótól** is a hűtőrendszerben. Télen megóvja a motort a szétfagyástól – a javítás sokszorosába kerül a feltöltésnek –, nyáron pedig a túlmelegedéstől.\n\nAz ár a szükséges **mennyiségtől függ**.",
+      "image": "/images/uploads/Képernyőkép 2026-08-18 084027.png",
       "price": "3 500 Ft-tól"
     },
     {
@@ -24,7 +26,8 @@
     },
     {
       "name": "Állapotfelmérés",
-      "description": "Megnézem a fényszóród – és ha már ott vagyok, akár az egész autód – állapotát, és **őszintén megmondom**, mi a legjobb, legköltséghatékonyabb megoldás. Semmire nem kötelez.\n\n**Hogyan működik?**\n\n- Ha **valamilyen munka miatt** kint vagyok nálad, a felmérés **teljesen ingyenes** – ilyenkor mindent átnézek, és szólok, ha valami odafigyelést igényel.\n- Ha **csak felmérésért** hívsz ki külön (munka nélkül), szívesen megcsinálom, de ilyenkor a **kiszállási (úti) díjat** kérem érte – a díjakat a **Kiszállás** oldalon találod.",
+      "description": "Megnézem a fényszóród – és ha már ott vagyok, akár az egész autód – állapotát (pl. **akkumulátor állapot-ellenőrzés** műszerrel), és **őszintén megmondom**, mi a legjobb, legköltséghatékonyabb megoldás. Semmire nem kötelez.\n\n**Hogyan működik?**\n\n- Ha **valamilyen munka miatt** kint vagyok nálad, a felmérés **teljesen ingyenes** – ilyenkor mindent átnézek, és szólok, ha valami odafigyelést igényel.\n- Ha **csak felmérésért** hívsz ki külön (munka nélkül), szívesen megcsinálom, de ilyenkor a **kiszállási (úti) díjat** kérem érte – a díjakat a **Kiszállás** oldalon találod.",
+      "image": "/images/uploads/Képernyőkép 2026-08-18 084447.png",
       "price": "Munka mellett ingyenes"
     },
     {
