@@ -651,10 +651,23 @@ async function renderHome(app, contact) {
   }
   h += `</header>`;
 
-  const aboutHTML = about ? `<div class="container"><section class="home-about">
-    <h2 class="page__title">${esc(about.heading || "Bemutatkozás")}</h2>
-    <div class="rich prose">${mdBlock(about.text || "")}</div>
+  const aboutHTML = about ? `<div class="container"><section class="home-about home-about--split">
+    <div class="home-about__text">
+      <h2 class="page__title">${esc(about.heading || "Bemutatkozás")}</h2>
+      <div class="rich prose">${mdBlock(about.text || "")}</div>
+    </div>
+    <figure class="home-about__media">
+      <img class="zoomable" src="images/uploads/auto-felirat.png" alt="Horváth Lámpapolír – feliratozott szervizautó, házhoz megyünk" loading="lazy" />
+    </figure>
   </section></div>` : "";
+
+  const nightHTML = `<div class="container"><section class="home-showcase">
+    <img class="zoomable home-showcase__img" src="images/uploads/ejszakai-elotte-utana.jpg" alt="A sötét út a lámpapolírozás előtt és után – éjszakai láthatóság" loading="lazy" />
+  </section></div>`;
+
+  const infoHTML = `<div class="container"><section class="home-showcase">
+    <img class="zoomable home-showcase__img" src="images/uploads/miert-fontos-infografika.jpg" alt="Miért fontos a tiszta fényszóró? – professzionális útmutató a láthatósághoz" loading="lazy" />
+  </section></div>`;
 
   const DQUICK = [
     { title: "Csomagok & árak", text: "ALAP · STANDARD · PRÉMIUM csomagok – már 12 000 Ft-tól, minden autótípusra.", link: "csomagok.html", more: "Megnézem →" },
@@ -703,7 +716,7 @@ async function renderHome(app, contact) {
     <div class="home-gallery__cta"><a class="btn btn--ghost" href="galeria.html">Teljes galéria →</a></div>
   </section></div>` : "";
 
-  app.innerHTML = h + tickerBand(hero.ticker) + trust + introHTML + promoSection(promo) + aboutHTML + quick + multicarNote(promo) + why + premiumSection(H) + galleryPreview + areas + reviewsSectionHTML(reviews, contact);
+  app.innerHTML = h + tickerBand(hero.ticker) + trust + introHTML + promoSection(promo) + aboutHTML + nightHTML + quick + multicarNote(promo) + why + infoHTML + premiumSection(H) + galleryPreview + areas + reviewsSectionHTML(reviews, contact);
   await initReviews(reviews, app, contact);
   wireHeroPolish();
 }

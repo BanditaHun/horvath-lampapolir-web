@@ -518,6 +518,27 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 /* ---------- Bemutatkozás a kezdőlapon ---------- */
 .home-about { padding: 40px 0 6px; }
 
+/* Bemutatkozás: szöveg + kép egymás mellett */
+.home-about--split { display: flex; gap: 36px; align-items: center; }
+.home-about--split .home-about__text { flex: 1 1 55%; min-width: 0; }
+.home-about--split .home-about__text .prose { padding-bottom: 0; max-width: none; }
+.home-about__media { flex: 1 1 45%; min-width: 0; margin: 0; }
+.home-about__media img {
+  width: 100%; height: auto; display: block; border-radius: var(--radius);
+  border: 1px solid var(--line); box-shadow: 0 16px 40px rgba(0,0,0,0.45); cursor: zoom-in;
+}
+@media (max-width: 860px) {
+  .home-about--split { flex-direction: column; gap: 22px; align-items: stretch; }
+}
+
+/* Teljes szélességű, nagyítható kép-bemutatók (éjszakai / infografika) */
+.home-showcase { text-align: center; padding: 30px 0 6px; }
+.home-showcase__img {
+  width: 100%; height: auto; display: block; margin: 10px auto 0;
+  border-radius: var(--radius); border: 1px solid var(--line);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.45); cursor: zoom-in;
+}
+
 /* ---------- Miért válassz engem? ---------- */
 .why { padding: 42px 0 8px; }
 .why-grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-top: 24px; }
