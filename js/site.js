@@ -873,7 +873,6 @@ function renderCardsPage(app, data, defTitle, kind, promo) {
 
 // ---------- Kiszállási díj kalkulátor (térkép + távolság + díj) ----------
 const CALC_BASE = { lat: 46.4256, lng: 18.7817, name: "Tolna-Mözs (telephely)" };
-const FUEL_URL = "https://horvath-fuel.andras-horvat1989.workers.dev";
 
 function deliveryCalcHTML() {
   return `<div class="container"><section class="calc">
@@ -945,11 +944,9 @@ function wireDeliveryCalc(data) {
           <div class="calc__stat"><span class="calc__stat-k">Közúti távolság (egy út)</span><span class="calc__stat-v">${kmR.toLocaleString("hu-HU")} km</span></div>
           <div class="calc__stat"><span class="calc__stat-k">Kiszállási díj (oda-vissza)</span><span class="calc__stat-v">${feeHtml}</span></div>
         </div>
-        <p class="calc__addr">📍 ${esc(dest.label)}</p>
-        <div id="calc-fuel" class="calc__fuel" hidden></div>`;
+        <p class="calc__addr">📍 ${esc(dest.label)}</p>`;
 
       drawCalcMap(CALC_BASE, dest, geom);
-      loadFuelInfo(km);
     } catch (err) {
       resEl.innerHTML = '<p class="calc__err">Hiba történt a számítás közben. Ellenőrizd az internetkapcsolatot, és próbáld újra.</p>';
     } finally {
@@ -979,27 +976,6 @@ function drawCalcMap(base, dest, geom) {
     }
     setTimeout(() => { map.invalidateSize(); map.fitBounds(bounds, { padding: [30, 30] }); }, 250);
   });
-}
-
-async function loadFuelInfo(km) {
-  const box = document.getElementById("calc-fuel");
-  if (!box) return;
-  try {
-    const d = await fetch(FUEL_URL, { cache: "no-store" }).then((r) => r.json());
-    const benzin = d && d.benzin, gazolaj = d && d.gazolaj;
-    const price = gazolaj || benzin;
-    if (!price) return;
-    const liters = km * 2 * 8 / 100; // becsült 8 l/100 km, oda-vissza
-    const cost = Math.round(liters * price / 10) * 10;
-    box.innerHTML =
-      "Aktuális átlag üzemanyagár: " +
-      (benzin ? "benzin <b>" + benzin + " Ft/l</b>" : "") +
-      (benzin && gazolaj ? " · " : "") +
-      (gazolaj ? "gázolaj <b>" + gazolaj + " Ft/l</b>" : "") +
-      (d.updated ? ' <span class="calc__muted">(' + esc(String(d.updated)) + ")</span>" : "") +
-      '<br><span class="calc__muted">Becsült üzemanyagköltség oda-vissza (~8 l/100 km): kb. ' + cost.toLocaleString("hu-HU") + " Ft</span>";
-    box.hidden = false;
-  } catch (_) { /* ha a Worker nincs telepítve, egyszerűen nem jelenik meg */ }
 }
 
 function printLetterhead() {
