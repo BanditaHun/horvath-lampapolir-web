@@ -842,6 +842,11 @@ function renderCardsPage(app, data, defTitle, kind, promo) {
     }).join("");
     cont.insertAdjacentHTML("beforeend", `<h2 class="page__title dsec-title">Díjszabás távolság szerint</h2><div class="dtiers">${tiersHtml}</div>`);
 
+    cont.insertAdjacentHTML("beforeend", `<figure class="delivery-car">
+      <img class="zoomable" src="images/uploads/auto-felirat.png" alt="Horváth Lámpapolír – feliratos szervizautó (Renault Mégane)" loading="lazy" />
+      <figcaption>🚗 <strong>Ezzel érkezem hozzád</strong> – a feliratos szervizautómmal (Renault Mégane) megyek házhoz Tolna megyében.</figcaption>
+    </figure>`);
+
     if (isSet(data.intro)) {
       cont.insertAdjacentHTML("beforeend", `<aside class="dinfo"><h3 class="dinfo__h">💡 Jó tudni</h3><div class="rich dinfo__body">${mdBlock(data.intro)}</div></aside>`);
     }
