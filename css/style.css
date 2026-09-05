@@ -78,7 +78,18 @@ a:hover { text-decoration: underline; }
 .topbar__social:hover { color: var(--gold); border-color: var(--gold); background: rgba(240,180,41,0.14); transform: translateY(-1px); }
 .topbar__social svg { color: inherit; }
 @media (max-width: 560px) {
-  .topbar__inner { justify-content: center; gap: 16px; }
+  .topbar__inner { justify-content: center; gap: 10px; padding: 6px 12px; }
+  .nav__right .topbar__phone { padding: 6px 13px; gap: 6px; white-space: nowrap; }
+  .nav__right .topbar__phone span { font-size: .82rem; }
+  .nav__right .topbar__phone svg { width: 13px; height: 13px; }
+  .topbar__socials { gap: 8px; }
+  .topbar__social { width: 34px; height: 34px; }
+  .topbar__social svg { width: 15px; height: 15px; }
+}
+@media (max-width: 360px) {
+  .nav__right .topbar__phone { padding: 5px 11px; gap: 5px; }
+  .nav__right .topbar__phone span { font-size: .76rem; }
+  .topbar__social { width: 31px; height: 31px; }
 }
 
 /* ---------- Felső navigáció ---------- */
