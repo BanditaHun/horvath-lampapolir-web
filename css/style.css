@@ -390,6 +390,7 @@ section:last-of-type { border-bottom: none; }
 .gallery { margin-top: 26px; display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); align-items: start; }
 .gallery figure { margin: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--bg-card); }
 .gallery img { width: 100%; height: auto; display: block; }
+.gallery__video, .home-gallery__video { width: 100%; height: auto; display: block; background: #000; }
 .gallery figcaption { padding: 8px 12px; font-size: .88rem; color: var(--chrome-dim); }
 .gallery__empty { color: var(--chrome-dim); margin-top: 20px; font-style: italic; }
 

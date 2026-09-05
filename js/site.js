@@ -41,6 +41,7 @@ function mdInline(str) {
 const isSet = (v) => typeof v === "string" && v.trim() && v.trim() !== "#";
 // A "/images/..." abszolút útvonalat relatívvá teszi, hogy alkönyvtáron (pl. GitHub Pages) is működjön.
 const rel = (u) => (typeof u === "string" && u.charAt(0) === "/" && u.charAt(1) !== "/" ? u.slice(1) : u);
+const isVideoSrc = (u) => /\.(mp4|webm|ogg|mov)$/i.test(String(u || ""));
 
 // ---------- Betűtípusok (theme.json) ----------
 const SYSTEM_FONT = '"Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif';
@@ -714,7 +715,7 @@ async function renderHome(app, contact) {
     <h2 class="page__title">${esc((gallery && gallery.heading) || "Munkáink")}</h2>
     <p class="home-gallery__lead">Nézd meg az eredményt – <strong>előtte</strong> és <strong>utána</strong>. Kattints a képre a nagyításhoz.</p>
     <div class="home-gallery__grid">
-      ${galItems.slice(0, 6).map((g) => `<figure class="home-gallery__item"><span class="home-gallery__frame"><img class="zoomable" src="${esc(rel(g.image))}" alt="${esc(g.caption || "Fényszóró-felújítás munka")}" loading="lazy" /></span>${isSet(g.caption) ? `<figcaption>${esc(g.caption)}</figcaption>` : ""}</figure>`).join("")}
+      ${galItems.slice(0, 6).map((g) => { const s = rel(g.image); const media = isVideoSrc(s) ? `<video class="home-gallery__video" src="${esc(s)}" controls preload="metadata" playsinline></video>` : `<img class="zoomable" src="${esc(s)}" alt="${esc(g.caption || "Fényszóró-felújítás munka")}" loading="lazy" />`; return `<figure class="home-gallery__item"><span class="home-gallery__frame">${media}</span>${isSet(g.caption) ? `<figcaption>${esc(g.caption)}</figcaption>` : ""}</figure>`; }).join("")}
     </div>
     <div class="home-gallery__cta"><a class="btn btn--ghost" href="galeria.html">Teljes galéria →</a></div>
   </section></div>` : "";
@@ -1030,8 +1031,16 @@ function renderGallery(app, gallery) {
     const grid = el("div", "gallery");
     gallery.items.forEach((g) => {
       const fig = el("figure");
-      const img = el("img"); img.src = rel(g.image); img.alt = g.caption || "Munka"; img.loading = "lazy"; img.className = "zoomable";
-      fig.appendChild(img);
+      const src = rel(g.image);
+      if (isVideoSrc(src)) {
+        const v = document.createElement("video");
+        v.src = src; v.controls = true; v.preload = "metadata"; v.playsInline = true;
+        v.setAttribute("playsinline", ""); v.className = "gallery__video";
+        fig.appendChild(v);
+      } else {
+        const img = el("img"); img.src = src; img.alt = g.caption || "Munka"; img.loading = "lazy"; img.className = "zoomable";
+        fig.appendChild(img);
+      }
       if (g.caption) fig.appendChild(el("figcaption", null, esc(g.caption)));
       grid.appendChild(fig);
     });
