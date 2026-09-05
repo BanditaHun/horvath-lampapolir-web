@@ -1031,6 +1031,30 @@ function renderGallery(app, gallery) {
   }
 }
 
+// Az aktuális hónap naptára (mai nap kiemelve) – csak megjelenítés
+function contactCalendar() {
+  const now = new Date();
+  const y = now.getFullYear(), m = now.getMonth(), today = now.getDate();
+  const months = ["január", "február", "március", "április", "május", "június", "július", "augusztus", "szeptember", "október", "november", "december"];
+  const dayNames = ["vasárnap", "hétfő", "kedd", "szerda", "csütörtök", "péntek", "szombat"];
+  const wd = ["H", "K", "Sze", "Cs", "P", "Szo", "V"];
+  const startIdx = (new Date(y, m, 1).getDay() + 6) % 7; // hétfő = 0
+  const daysInMonth = new Date(y, m + 1, 0).getDate();
+  let cells = "";
+  for (let i = 0; i < startIdx; i++) cells += `<span class="cal__day cal__day--empty"></span>`;
+  for (let d = 1; d <= daysInMonth; d++) {
+    const wknd = (startIdx + d - 1) % 7 >= 5;
+    cells += `<span class="cal__day${d === today ? " cal__day--today" : ""}${wknd ? " cal__day--wknd" : ""}">${d}</span>`;
+  }
+  const heads = wd.map((w, i) => `<span class="cal__wd${i >= 5 ? " cal__wd--wknd" : ""}">${w}</span>`).join("");
+  return `<div class="cal" aria-label="Naptár – aktuális hónap">
+      <div class="cal__head"><span class="cal__title">${y}. ${months[m]}</span><span class="cal__todaybadge">Ma: ${today}.</span></div>
+      <div class="cal__grid cal__grid--wd">${heads}</div>
+      <div class="cal__grid">${cells}</div>
+      <div class="cal__foot">Ma: ${y}. ${months[m]} ${today}., ${dayNames[now.getDay()]}</div>
+    </div>`;
+}
+
 function renderContact(app, contact) {
   const phone = isSet(contact.phone) ? contact.phone : "";
   const infoRow = (ic, label, valueHTML, vClass) =>
@@ -1053,6 +1077,7 @@ function renderContact(app, contact) {
       <h2 class="contact-aside__title">Közvetlen elérhetőség</h2>
       <ul class="contact-info">${rows.join("")}</ul>
       ${contact.note ? `<div class="contact-aside__note rich">${mdBlock(contact.note)}</div>` : ""}
+      ${contactCalendar()}
     </aside>`;
 
   const hasMap = isSet(contact.map_lat) && isSet(contact.map_lng);

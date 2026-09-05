@@ -729,6 +729,23 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 }
 .contact-aside__note p:first-child { margin-top: 0; }
 
+/* Naptár (aktuális hónap) a Kapcsolat oldalon */
+.cal { margin-top: 20px; padding-top: 18px; border-top: 1px solid rgba(240,180,41,0.18); }
+.cal__head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
+.cal__title { font-family: var(--font-heading); font-weight: 700; color: var(--chrome); font-size: 1.05rem; }
+.cal__todaybadge { font-size: .78rem; font-weight: 800; color: #1a1200; background: var(--gold); padding: 3px 11px; border-radius: 20px; white-space: nowrap; }
+.cal__grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.cal__grid--wd { margin-bottom: 4px; }
+.cal__wd { text-align: center; font-size: .72rem; font-weight: 700; color: var(--chrome-dim); padding: 2px 0; }
+.cal__wd--wknd { color: var(--gold-dim); }
+.cal__day { text-align: center; padding: 7px 0; font-size: .92rem; color: var(--chrome); border-radius: 8px; background: rgba(255,255,255,0.03); }
+.cal__day--empty { visibility: hidden; background: none; }
+.cal__day--wknd { color: var(--gold); }
+.cal__day--today { background: linear-gradient(135deg, var(--gold), var(--gold-dim)); color: #1a1200 !important; font-weight: 800; box-shadow: 0 3px 10px rgba(240,180,41,0.35); }
+.cal__foot { margin-top: 12px; font-size: .84rem; color: var(--chrome-dim); }
+:root[data-theme="light"] .cal__day { color: #23262b; background: #f4f2ec; }
+:root[data-theme="light"] .cal__day--wknd { color: var(--gold-dim); }
+
 @media (max-width: 860px) {
   .contact-layout { grid-template-columns: 1fr; gap: 18px; }
   .contact-aside { position: static; }
