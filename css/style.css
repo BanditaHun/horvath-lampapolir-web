@@ -651,7 +651,19 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 .booking__row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .booking__field { display: flex; flex-direction: column; gap: 7px; }
 .booking__field > span { color: #eef0f3; font-size: 1rem; font-weight: 600; }
-.booking__field input,
+.booking__field > span em { color: var(--chrome-dim); font-style: normal; font-weight: 500; font-size: .88rem; }
+
+/* Szolgáltatás-választó (több is jelölhető) */
+.svc-picker { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 22px; background: #0f0f0f; border: 1px solid var(--line); border-radius: 10px; padding: 12px 15px; }
+.svc-group { display: flex; flex-direction: column; gap: 5px; }
+.svc-group__h { color: var(--gold); font-weight: 700; font-size: .82rem; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 2px; }
+.svc-check { display: flex; align-items: flex-start; gap: 8px; color: var(--chrome); font-size: .98rem; font-weight: 500; cursor: pointer; line-height: 1.35; }
+.svc-check input { flex: none; width: 18px; height: 18px; margin-top: 1px; accent-color: var(--gold); cursor: pointer; }
+.svc-check:hover { color: #fff; }
+:root[data-theme="light"] .svc-picker { background: #fff; border-color: #dfe3e8; }
+:root[data-theme="light"] .svc-check { color: #23262b; }
+@media (max-width: 560px) { .svc-picker { grid-template-columns: 1fr; gap: 10px; } }
+.booking__field input:not([type="checkbox"]),
 .booking__field select,
 .booking__field textarea {
   width: 100%; background: #0f0f0f; color: #fff;

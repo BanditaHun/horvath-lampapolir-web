@@ -1174,7 +1174,11 @@ function bookingFormHTML(contact) {
     ["Önálló szolgáltatások", ["Szélvédőmosó feltöltés", "Fagyálló ellenőrzés", "Ablaktörlő lapát csere", "Nano szélvédő vízlepergető kezelés", "Állapotfelmérés"]],
     ["Egyéb", ["Egyéb – a megjegyzésbe írom"]],
   ];
-  const opts = groups.map(([g, arr]) => `<optgroup label="${esc(g)}">${arr.map((s) => `<option value="${esc(s)}">${esc(s)}</option>`).join("")}</optgroup>`).join("");
+  const servicePicker = groups.map(([g, arr]) =>
+    `<div class="svc-group"><span class="svc-group__h">${esc(g)}</span>` +
+    arr.map((s) => `<label class="svc-check"><input type="checkbox" name="service" value="${esc(s)}" /> <span>${esc(s)}</span></label>`).join("") +
+    `</div>`
+  ).join("");
   const dayparts = ["Bármelyik napszak jó", "Délelőtt", "Kora délután", "Késő délután / kora este"];
   const dayOpts = dayparts.map((s) => `<option value="${esc(s)}">${esc(s)}</option>`).join("");
   return `<section class="booking">
@@ -1190,11 +1194,13 @@ function bookingFormHTML(contact) {
       <div class="booking__row">
         <label class="booking__field"><span>Autó típusa</span>
           <input type="text" name="car" autocomplete="off" placeholder="pl. Opel Astra H, 2008" /></label>
-        <label class="booking__field"><span>Mit szeretnél?</span>
-          <select name="service">${opts}</select></label>
+        <label class="booking__field"><span>Település / helyszín</span>
+          <input type="text" name="place" placeholder="pl. Szekszárd" /></label>
       </div>
-      <label class="booking__field"><span>Település / helyszín</span>
-        <input type="text" name="place" placeholder="pl. Szekszárd" /></label>
+      <div class="booking__field booking__field--svc">
+        <span>Mit szeretnél? <em>(többet is választhatsz)</em></span>
+        <div class="svc-picker">${servicePicker}</div>
+      </div>
       <div class="booking__row">
         <label class="booking__field"><span>Kért időpont (nap)</span>
           <input type="date" name="date_pref" /></label>
@@ -1229,13 +1235,15 @@ function wireBookingForm(contact) {
     const dateP = (f.get("date_pref") || "").toString().trim();
     const daypart = (f.get("daypart") || "").toString().trim();
     const idopont = [dateP, daypart].filter(Boolean).join(" – ") || "—";
+    const services = f.getAll("service").map((s) => s.toString().trim()).filter(Boolean);
+    const svcText = services.length ? services.join(", ") : "—";
     const lines = [
       "Időpont-igénylés a weboldalról",
       "",
       "Név: " + name,
       "Telefon: " + phone,
       "Autó: " + ((f.get("car") || "").toString().trim() || "—"),
-      "Szolgáltatás: " + ((f.get("service") || "").toString().trim() || "—"),
+      "Kért szolgáltatás(ok): " + svcText,
       "Helyszín: " + ((f.get("place") || "").toString().trim() || "—"),
       "Kért időpont: " + idopont,
       "",
@@ -1244,11 +1252,13 @@ function wireBookingForm(contact) {
     ];
     const to = isSet(contact.email) ? contact.email : "";
     const subject = "Időpont-igénylés – " + name;
-    const href = "mailto:" + encodeURIComponent(to) +
-      "?subject=" + encodeURIComponent(subject) +
+    // Küldéskor a Gmail levélíró (compose) nyílik meg, előre kitöltve.
+    const gmailUrl = "https://mail.google.com/mail/?view=cm&fs=1" +
+      "&to=" + encodeURIComponent(to) +
+      "&su=" + encodeURIComponent(subject) +
       "&body=" + encodeURIComponent(lines.join("\n"));
-    window.location.href = href;
-    if (note) { note.hidden = false; note.className = "booking__note booking__note--ok"; note.textContent = "Megnyílik a leveleződ a kész üzenettel – csak küldd el. Ezután rövid időn belül visszahívlak az egyeztetéshez. Ha a levelező nem nyílt meg, hívj a fenti számon."; }
+    window.open(gmailUrl, "_blank", "noopener");
+    if (note) { note.hidden = false; note.className = "booking__note booking__note--ok"; note.textContent = "Megnyílik a Gmail levélíró a kész üzenettel – csak küldd el. Ezután rövid időn belül visszahívlak az egyeztetéshez. Ha nem nyílt meg, hívj a fenti számon."; }
   });
 }
 
