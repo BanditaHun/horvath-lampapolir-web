@@ -857,16 +857,37 @@ function renderCardsPage(app, data, defTitle, kind, promo) {
 
   // Csomagok: kiemelt fő szolgáltatás + külön "Kiegészítő opciók" blokk
   if (kind === "packages") {
-    cont.insertAdjacentHTML("beforeend", `<figure class="pkg-hero"><img class="zoomable" src="images/uploads/jpg elötte utána hátsólámpa.png" alt="Hátsó lámpa felújítás előtte és utána" loading="lazy" /></figure>`);
-    cont.insertAdjacentHTML("beforeend", `<div class="arlista-dl"><a class="arlista-dl__btn" href="arlista.html" target="_blank" rel="noopener">${ICON_DOWNLOAD}<span>Teljes árlista – nyomtatás / PDF mentése</span></a></div>`);
+    cont.classList.add("pkgpage");
     const items = data.items || [];
     const isAddon = (it) => (it.badge || "").toLowerCase().indexOf("kieg") === 0;
     const mains = items.filter((it) => !isAddon(it));
     const addons = items.filter((it) => isAddon(it));
 
-    const mainGrid = el("div", "cards pkg-main");
-    mains.forEach((it, i) => mainGrid.appendChild(neonCard(i, `<span class="pkg-featured-tag">★ Fő szolgáltatás</span>` + pkgCardInner(it), "neon-card--featured")));
-    cont.appendChild(mainGrid);
+    // Látvány banner (előtte–utána)
+    cont.insertAdjacentHTML("beforeend", `<figure class="pkg-hero"><img class="zoomable" src="images/uploads/jpg elötte utána hátsólámpa.png" alt="Lámpafelújítás előtte és utána" loading="lazy" /></figure>`);
+
+    // Fő szolgáltatás – kétoszlopos kártya: balra előnyök, jobbra ár + CTA
+    const main = mains[0];
+    if (main) {
+      const featured = el("article", "neon-card neon-card--featured pkg-featured");
+      featured.style.animationDelay = "0s";
+      featured.innerHTML = `
+        <span class="pkg-featured-tag">★ Fő szolgáltatás</span>
+        <div class="pkg-featured__grid">
+          <div class="pkg-featured__main">
+            ${main.badge ? `<span class="neon-card__badge">${esc(main.badge)}</span>` : ""}
+            <h3 class="neon-card__title">${esc(main.name || "")}</h3>
+            ${main.description ? `<div class="neon-card__desc rich">${mdBlock(main.description)}</div>` : ""}
+          </div>
+          <aside class="pkg-featured__buy">
+            <div class="pkg-featured__pricelabel">Már</div>
+            <div class="neon-card__price pkg-featured__price">${esc(main.price || "")}</div>
+            <a class="btn btn--primary neon-card__order" href="kapcsolat.html">Megrendelem</a>
+            <a class="pkg-featured__pdf" href="arlista.html" target="_blank" rel="noopener">${ICON_DOWNLOAD}<span>Teljes árlista (PDF)</span></a>
+          </aside>
+        </div>`;
+      cont.appendChild(featured);
+    }
 
     if (addons.length) {
       cont.insertAdjacentHTML("beforeend", `<div class="pkg-addons-head"><h2 class="page__title">Kiegészítő opciók</h2><p class="pkg-addons-lead">A felújítás mellé választható extrák.</p></div>`);
@@ -874,7 +895,7 @@ function renderCardsPage(app, data, defTitle, kind, promo) {
       addons.forEach((it, i) => addGrid.appendChild(neonCard(i, pkgCardInner(it), "neon-card--addon")));
       cont.appendChild(addGrid);
     }
-    if (promo) app.insertAdjacentHTML("beforeend", multicarNote(promo));
+    if (promo) cont.insertAdjacentHTML("beforeend", multicarNote(promo));
     return;
   }
 
