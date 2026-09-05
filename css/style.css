@@ -4,11 +4,11 @@
   --bg-card: #1a1a1a;
   --gold: #f0b429;
   --gold-dim: #c9962a;
-  --chrome: #eceef2;
-  --chrome-dim: #c4c9d1;
+  --chrome: #f3f5f8;
+  --chrome-dim: #d7dbe1;
   --line: #2a2a2a;
   --radius: 14px;
-  --maxw: 1560px;
+  --maxw: min(96vw, 1920px);
   --nav-h: 84px;
 
   /* Tipográfia – ezeket a CMS „Megjelenés" menüje állítja (theme.json) */
@@ -490,8 +490,10 @@ section:last-of-type { border-bottom: none; }
 .cards--2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); max-width: 840px; }
 .cards--3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin: 44px 0 60px; }
 .cards--4 { grid-template-columns: repeat(auto-fit, minmax(228px, 1fr)); }
-/* Szolgáltatások: max 3 kártya soronként, középre igazítva */
-.cards--svc { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); max-width: 1160px; margin-left: auto; margin-right: auto; }
+/* Szolgáltatások: 3 kártya soronként, teljes szélességet kitöltve */
+.cards--svc { grid-template-columns: repeat(3, 1fr); max-width: min(95vw, 1700px); margin-left: auto; margin-right: auto; }
+@media (max-width: 1000px) { .cards--svc { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 660px) { .cards--svc { grid-template-columns: 1fr; } }
 
 /* Csomagok: kiemelt fő szolgáltatás + kiegészítők */
 .pkg-main { grid-template-columns: 1fr; max-width: 700px; margin: 8px auto 0; }
