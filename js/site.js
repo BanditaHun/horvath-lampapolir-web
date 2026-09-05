@@ -607,10 +607,12 @@ function promoSection(promo) {
 
 function multicarNote(promo) {
   if (!promo || promo.multicar_active === false || promo.multicar_active === "false") return "";
-  const txt = isSet(promo.multicar_text) ? promo.multicar_text : "Egy helyszínen két vagy több autó felújítására kedvezményt adok.";
+  const txt = isSet(promo.multicar_text) ? promo.multicar_text : "Ha egy helyszínen, egy alkalommal két vagy több autót újítasz fel, minden autó felújítási árából **10% kedvezményt** adok – a kiszállási díj pedig ilyenkor is csak egyszeri.";
+  const badge = isSet(promo.multicar_badge) ? promo.multicar_badge : "−10%";
   return `<div class="container"><div class="multicar">
-    <span class="multicar__ic" aria-hidden="true">🚗🚗</span>
-    <div class="multicar__body"><strong>Több autós kedvezmény</strong><span>${mdInline(txt)} <a href="kapcsolat.html">Kérj ajánlatot →</a></span></div>
+    <span class="multicar__badge" aria-hidden="true">${esc(badge)}</span>
+    <div class="multicar__body"><strong>Több autós kedvezmény</strong><span>${mdInline(txt)}</span></div>
+    <a class="multicar__cta" href="kapcsolat.html">Kérj ajánlatot →</a>
   </div></div>`;
 }
 

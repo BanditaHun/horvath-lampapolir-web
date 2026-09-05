@@ -9,5 +9,6 @@
   "cta_href": "kapcsolat.html",
   "image": "images/osz-akcio.jpg",
   "multicar_active": true,
-  "multicar_text": "Ha egy helyszínen, egy alkalommal két vagy több autót kell felújítani, arra kedvezményt adok."
+  "multicar_badge": "−10%",
+  "multicar_text": "Ha egy helyszínen, egy alkalommal két vagy több autót újítasz fel, minden autó felújítási árából **10% kedvezményt** adok – a kiszállási díj pedig ilyenkor is csak egyszeri."
 }
