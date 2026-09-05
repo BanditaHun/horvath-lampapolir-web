@@ -889,6 +889,9 @@ function renderCardsPage(app, data, defTitle, kind, promo) {
       cont.appendChild(featured);
     }
 
+    // Második látvány kép – első fényszóró előtte–utána
+    cont.insertAdjacentHTML("beforeend", `<figure class="pkg-hero pkg-hero--2"><img class="zoomable" src="images/uploads/Képernyőkép 2026-09-05 174059.png" alt="Első fényszóró felújítás előtte és utána" loading="lazy" /></figure>`);
+
     if (addons.length) {
       cont.insertAdjacentHTML("beforeend", `<div class="pkg-addons-head"><h2 class="page__title">Kiegészítő opciók</h2><p class="pkg-addons-lead">A felújítás mellé választható extrák.</p></div>`);
       const addGrid = el("div", "cards cards--2 pkg-addons");
