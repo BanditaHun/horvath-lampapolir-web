@@ -17,11 +17,13 @@
     {
       "name": "Ablaktörlő lapát csere",
       "description": "**Miért jó a csere?** A kopott, repedezett gumi **csíkoz, maszatol, sőt karcolhatja a szélvédőt** – esőben, hóban pedig veszélyesen ronthatja a látást. Friss lapáttal a törlés újra tiszta és egyenletes.\n\nAz ár **típustól függ**.",
+      "image": "/images/uploads/Ablaktörlő lapát csere.jpg",
       "price": "4 500 Ft-tól"
     },
     {
       "name": "Prémium nanotechnológiás szélvédő vízlepergető kezelés",
       "description": "**Hogyan működik:** nano-réteget képez a szélvédő üvegfelületén, amely mikroszkopikus szinten kitölti az egyenetlenségeket, így a felület teljesen simává és rendkívül víztaszítóvá válik.\n\n**Tartósság:** átlagosan 3–6 hónapig (vagy több ezer kilométeren át) megőrzi a hatását a használattól és az ablaktörlő igénybevételétől függően.\n\n**Fő előnyei:**\n\n- **Kiváló kilátás esőben:** 70–80 km/h felett a menetszél önmagától lefújja a vízcseppeket, így alig kell az ablaktörlő.\n- **Könnyebb tisztíthatóság:** a rászáradt sár, a bogarak és a téli jég/dér sokkal nehezebben tapad meg az üvegen.\n- **Biztonság:** jelentősen csökkenti a szembejövő forgalom vakító fényét éjszakai, esős vezetés során.\n\n**Ár:** személyautó szélvédőjére **6 000 Ft-tól**. Nagyobb felületnél – **teherautó, kamion, furgon** szélvédője – a lényegesen nagyobb üvegfelület (akár kétszeres) miatt magasabb; a pontos árat a helyszínen egyeztetjük.",
+      "image": "/images/uploads/Vízlepergető felvitele szélvédőre.jpg",
       "price": "6 000 Ft-tól"
     },
     {
@@ -33,6 +35,7 @@
     {
       "name": "Ajtótömítő kédergumik mélyápolása és fagyvédelme (kiegészítő opció)",
       "description": "- **Időjárás- és fagyvédelem:** Megakadályozza a téli ajtóbefagyást, a gumik kiszáradását, repedezését és az elöregedést.\n- **Zajcsökkentés és tökéletes zárás:** Visszaadja a gumitömítések rugalmasságát, megszünteti a kellemetlen nyikorgást és javítja az utastér szigetelését.\n- **Teljes körű kezelés:** Az összes ajtó, a csomagtérajtó és a motortér gumitömítéseinek zsírtalanítása és prémium mélyápolása.\n- 🚚 **Teherautók, furgonok & kamionok:** Nagyobb kabinméret és több felület esetén a helyszíni felmérés alapján egyedi árazás érvényes.\n- 🚗🚗 **Több járműves kedvezmény:** Családi autók vagy céges furgonok egyidejű ápolása esetén darabáras kedvezményt biztosítok.\n- _A feltüntetett alapár személyautókra érvényes_",
+      "image": "/images/uploads/Kédergumi ápolás.jpg",
       "price": "6 490  Ft"
     }
   ]
