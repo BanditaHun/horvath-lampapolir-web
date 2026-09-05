@@ -719,6 +719,69 @@ async function renderHome(app, contact) {
   app.innerHTML = h + tickerBand(hero.ticker) + trust + introHTML + promoSection(promo) + aboutHTML + nightHTML + quick + multicarNote(promo) + why + infoHTML + premiumSection(H) + galleryPreview + areas + reviewsSectionHTML(reviews, contact);
   await initReviews(reviews, app, contact);
   wireHeroPolish();
+  seasonFx();
+}
+
+// Évszakhoz igazodó, időjárás-szerű animáció a hero fölött
+// (ősz: falevelek + felhő, tél: hó + felhő, tavasz: szirmok, nyár: meleg fénypor)
+function seasonFx() {
+  const hero = document.querySelector(".hero");
+  if (!hero) return;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const prev = hero.querySelector(".season-fx");
+  if (prev) prev.remove();
+
+  const m = new Date().getMonth(); // 0–11
+  let season;
+  if (m >= 2 && m <= 4) season = "spring";
+  else if (m >= 5 && m <= 7) season = "summer";
+  else if (m >= 8 && m <= 10) season = "autumn";
+  else season = "winter";
+
+  const CFG = {
+    autumn: { chars: ["🍂", "🍁", "🍂", "🍃"], count: 24, min: 7, max: 13, drift: 90, rot: 720, size: [18, 32], cloudy: true },
+    winter: { snow: true, count: 64, min: 6, max: 12, drift: 55, rot: 140, size: [4, 12], cloudy: true },
+    spring: { chars: ["🌸", "🌼", "🌸", "🌷"], count: 18, min: 8, max: 14, drift: 65, rot: 520, size: [15, 26], cloudy: false },
+    summer: { warm: true, count: 16, min: 9, max: 16, drift: 45, rot: 0, size: [4, 9], cloudy: false },
+  };
+  const cfg = CFG[season];
+  const rnd = (a, b) => a + Math.random() * (b - a);
+
+  const fx = document.createElement("div");
+  fx.className = "season-fx season-fx--" + season;
+  const setDist = () => fx.style.setProperty("--fall-dist", ((hero.offsetHeight || 560) + 60) + "px");
+  setDist();
+
+  if (cfg.cloudy) {
+    const clouds = document.createElement("div");
+    clouds.className = "season-clouds";
+    fx.appendChild(clouds);
+  }
+
+  for (let i = 0; i < cfg.count; i++) {
+    const p = document.createElement("span");
+    p.className = "season-p" + (cfg.snow ? " season-p--snow" : cfg.warm ? " season-p--warm" : " season-p--emoji");
+    if (cfg.chars) p.textContent = cfg.chars[i % cfg.chars.length];
+    const size = rnd(cfg.size[0], cfg.size[1]);
+    p.style.left = rnd(0, 100).toFixed(2) + "%";
+    p.style.setProperty("--drift", rnd(-cfg.drift, cfg.drift).toFixed(0) + "px");
+    p.style.setProperty("--rot", rnd(-cfg.rot, cfg.rot).toFixed(0) + "deg");
+    p.style.setProperty("--op", rnd(0.6, 0.95).toFixed(2));
+    p.style.animationDuration = rnd(cfg.min, cfg.max).toFixed(2) + "s";
+    p.style.animationDelay = (-rnd(0, cfg.max)).toFixed(2) + "s";
+    if (cfg.snow || cfg.warm) { p.style.width = size + "px"; p.style.height = size + "px"; }
+    else { p.style.fontSize = size.toFixed(0) + "px"; }
+    fx.appendChild(p);
+  }
+  hero.appendChild(fx);
+
+  // A magasság frissítése betöltés/átméretezés után
+  window.addEventListener("load", setDist, { once: true });
+  if (!window.__seasonResize) {
+    window.__seasonResize = true;
+    let t;
+    window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(setDist, 250); });
+  }
 }
 
 function pkgCardInner(it) {

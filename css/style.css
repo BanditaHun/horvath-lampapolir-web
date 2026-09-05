@@ -1195,3 +1195,34 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
   h1, h2, h3, .page__title { break-after: avoid; }
   img { break-inside: avoid; }
 }
+
+/* ---------- Évszakos, időjárás-szerű animáció a hero fölött ---------- */
+.season-fx { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 5; }
+.season-p {
+  position: absolute; top: -60px; opacity: 0; will-change: transform, opacity;
+  animation-name: fx-fall; animation-timing-function: linear; animation-iteration-count: infinite;
+}
+.season-p--emoji { line-height: 1; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }
+.season-p--snow { border-radius: 50%; background: #ffffff; box-shadow: 0 0 5px rgba(255,255,255,0.9), 0 1px 2px rgba(0,0,0,0.35); }
+.season-p--warm { border-radius: 50%; background: radial-gradient(circle, #ffe6a0 0%, rgba(255,200,90,0) 70%); }
+
+@keyframes fx-fall {
+  0%   { transform: translate3d(0, -60px, 0) rotate(0deg); opacity: 0; }
+  8%   { opacity: var(--op, 0.85); }
+  90%  { opacity: var(--op, 0.85); }
+  100% { transform: translate3d(var(--drift, 30px), var(--fall-dist, 560px), 0) rotate(var(--rot, 360deg)); opacity: 0; }
+}
+
+/* Felhős ég (ősz/tél): lassan úszó, lágy felhő-réteg felül */
+.season-clouds {
+  position: absolute; left: -10%; right: -10%; top: -12%; height: 62%; pointer-events: none;
+  background:
+    radial-gradient(130px 62px at 20% 34%, rgba(188,193,203,0.22), transparent 70%),
+    radial-gradient(170px 74px at 54% 20%, rgba(176,181,191,0.18), transparent 70%),
+    radial-gradient(150px 64px at 84% 36%, rgba(192,197,207,0.20), transparent 70%);
+  animation: fx-clouds 42s ease-in-out infinite;
+}
+@keyframes fx-clouds { 0% { transform: translateX(-4%); } 50% { transform: translateX(4%); } 100% { transform: translateX(-4%); } }
+
+@media (prefers-reduced-motion: reduce) { .season-fx { display: none; } }
+@media print { .season-fx { display: none !important; } }
