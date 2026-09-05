@@ -493,6 +493,20 @@ section:last-of-type { border-bottom: none; }
 /* Szolgáltatások: max 3 kártya soronként, középre igazítva */
 .cards--svc { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); max-width: 1160px; margin-left: auto; margin-right: auto; }
 
+/* Csomagok: kiemelt fő szolgáltatás + kiegészítők */
+.pkg-main { grid-template-columns: 1fr; max-width: 700px; margin: 8px auto 0; }
+.neon-card--featured { border-color: var(--gold); box-shadow: 0 0 0 1px rgba(240,180,41,0.55), 0 18px 46px rgba(240,180,41,0.14), 0 12px 30px rgba(0,0,0,0.5); }
+.neon-card--featured .neon-card__price { font-size: 1.7rem; }
+.pkg-featured-tag { display: block; margin: -26px -22px 6px; background: linear-gradient(90deg, var(--gold), var(--gold-dim)); color: #1a1200; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-size: .8rem; text-align: center; padding: 9px 8px; border-radius: 15px 15px 0 0; }
+.pkg-addons-head { text-align: center; margin: 40px 0 4px; }
+.pkg-addons-head .page__title { display: inline-block; }
+.pkg-addons-head .page__title::after { left: 50%; transform: translateX(-50%); }
+.pkg-addons-lead { color: var(--chrome-dim); margin-top: 10px; font-size: 1.02rem; }
+.pkg-addons { max-width: 900px; margin-left: auto; margin-right: auto; margin-top: 18px; }
+.neon-card--addon { border-color: rgba(240,180,41,0.18); }
+.neon-card--addon .neon-card__title { font-size: 1.12rem; }
+.neon-card--addon .neon-card__price { font-size: 1.25rem; color: var(--chrome); }
+
 /* ---------- Neon (pulzáló) kártya ---------- */
 @keyframes neonPulse {
   0%, 100% { box-shadow: 0 0 0 1px rgba(240,180,41,0.5) inset, 0 0 12px rgba(240,180,41,0.18), 0 0 26px rgba(240,180,41,0.08); border-color: rgba(240,180,41,0.5); }

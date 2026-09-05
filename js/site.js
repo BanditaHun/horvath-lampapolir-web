@@ -721,12 +721,42 @@ async function renderHome(app, contact) {
   wireHeroPolish();
 }
 
+function pkgCardInner(it) {
+  const order = `<a class="btn btn--primary neon-card__order" href="kapcsolat.html">Megrendelem</a>`;
+  const media = isSet(it.image) ? `<figure class="neon-card__media"><img class="zoomable" src="${esc(rel(it.image))}" alt="${esc(it.name || "")}" loading="lazy" /></figure>` : "";
+  return `${media}${it.badge ? `<span class="neon-card__badge">${esc(it.badge)}</span>` : ""}
+    <h3 class="neon-card__title">${esc(it.name || "")}</h3>
+    ${it.description ? `<div class="neon-card__desc rich">${mdBlock(it.description)}</div>` : ""}
+    <div class="neon-card__price">${esc(it.price || "")}</div>
+    ${order}`;
+}
+
 function renderCardsPage(app, data, defTitle, kind, promo) {
   app.innerHTML = pageHead(data.heading || defTitle, data.intro || "");
   const cont = app.querySelector(".container");
+
+  // Csomagok: kiemelt fő szolgáltatás + külön "Kiegészítő opciók" blokk
   if (kind === "packages") {
     cont.insertAdjacentHTML("beforeend", `<div class="arlista-dl"><a class="arlista-dl__btn" href="arlista.html" target="_blank" rel="noopener">${ICON_DOWNLOAD}<span>Teljes árlista – nyomtatás / PDF mentése</span></a></div>`);
+    const items = data.items || [];
+    const isAddon = (it) => (it.badge || "").toLowerCase().indexOf("kieg") === 0;
+    const mains = items.filter((it) => !isAddon(it));
+    const addons = items.filter((it) => isAddon(it));
+
+    const mainGrid = el("div", "cards pkg-main");
+    mains.forEach((it, i) => mainGrid.appendChild(neonCard(i, `<span class="pkg-featured-tag">★ Fő szolgáltatás</span>` + pkgCardInner(it), "neon-card--featured")));
+    cont.appendChild(mainGrid);
+
+    if (addons.length) {
+      cont.insertAdjacentHTML("beforeend", `<div class="pkg-addons-head"><h2 class="page__title">Kiegészítő opciók</h2><p class="pkg-addons-lead">A felújítás mellé választható extrák.</p></div>`);
+      const addGrid = el("div", "cards cards--2 pkg-addons");
+      addons.forEach((it, i) => addGrid.appendChild(neonCard(i, pkgCardInner(it), "neon-card--addon")));
+      cont.appendChild(addGrid);
+    }
+    if (promo) app.insertAdjacentHTML("beforeend", multicarNote(promo));
+    return;
   }
+
   const grid = el("div", "cards" + (kind === "delivery" ? " cards--4" : (kind === "services" ? " cards--svc" : "")));
   (data.items || []).forEach((it, i) => {
     let inner = "";
@@ -735,18 +765,15 @@ function renderCardsPage(app, data, defTitle, kind, promo) {
         ${it.description ? `<div class="neon-card__desc rich">${mdBlock(it.description)}</div>` : ""}
         <div class="neon-card__price">${esc(it.fee || "")}</div>`;
     } else {
-      const order = kind === "packages" ? `<a class="btn btn--primary neon-card__order" href="kapcsolat.html">Megrendelem</a>` : "";
       const media = isSet(it.image) ? `<figure class="neon-card__media"><img class="zoomable" src="${esc(rel(it.image))}" alt="${esc(it.name || "")}" loading="lazy" /></figure>` : "";
       inner = `${media}${it.badge ? `<span class="neon-card__badge">${esc(it.badge)}</span>` : ""}
         <h3 class="neon-card__title">${esc(it.name || "")}</h3>
         ${it.description ? `<div class="neon-card__desc rich">${mdBlock(it.description)}</div>` : ""}
-        <div class="neon-card__price">${esc(it.price || "")}</div>
-        ${order}`;
+        <div class="neon-card__price">${esc(it.price || "")}</div>`;
     }
     grid.appendChild(neonCard(i, inner));
   });
   cont.appendChild(grid);
-  if (kind === "packages" && promo) app.insertAdjacentHTML("beforeend", multicarNote(promo));
 }
 
 function printLetterhead() {
