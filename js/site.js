@@ -267,7 +267,7 @@ function buildFooter() {
         </div>
         <div class="site-footer__pay">
           <div class="site-footer__pay-badges" aria-label="Elfogadott fizetési módok">${PAY_BADGES}</div>
-          <span class="site-footer__pay-txt" id="footer-pay-text">Bankkártya (érintéses is), Mastercard, Visa és készpénz</span>
+          <span class="site-footer__pay-txt" id="footer-pay-text">A helyszínen fizethetsz bankkártyával – érintésesen is – vagy készpénzzel (Mastercard, Visa).</span>
         </div>
       </div>
       <div class="site-footer__col">
