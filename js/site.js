@@ -715,7 +715,7 @@ async function renderHome(app, contact) {
     <h2 class="page__title">${esc((gallery && gallery.heading) || "Munkáink")}</h2>
     <p class="home-gallery__lead">Nézd meg az eredményt – <strong>előtte</strong> és <strong>utána</strong>. Kattints a képre a nagyításhoz.</p>
     <div class="home-gallery__grid">
-      ${galItems.slice(0, 6).map((g) => { const s = rel(g.image); const media = isVideoSrc(s) ? `<video class="home-gallery__video" src="${esc(s)}" controls preload="metadata" playsinline></video>` : `<img class="zoomable" src="${esc(s)}" alt="${esc(g.caption || "Fényszóró-felújítás munka")}" loading="lazy" />`; return `<figure class="home-gallery__item"><span class="home-gallery__frame">${media}</span>${isSet(g.caption) ? `<figcaption>${esc(g.caption)}</figcaption>` : ""}</figure>`; }).join("")}
+      ${galItems.slice(0, 6).map((g) => { const s = rel(g.image); const media = isVideoSrc(s) ? `<button type="button" class="gal-vthumb" data-src="${esc(s)}" aria-label="Videó lejátszása"><video src="${esc(s)}#t=0.1" muted preload="metadata" playsinline tabindex="-1"></video><span class="gal-vplay" aria-hidden="true">▶</span></button>` : `<img class="zoomable" src="${esc(s)}" alt="${esc(g.caption || "Fényszóró-felújítás munka")}" loading="lazy" />`; return `<figure class="home-gallery__item"><span class="home-gallery__frame">${media}</span>${isSet(g.caption) ? `<figcaption>${esc(g.caption)}</figcaption>` : ""}</figure>`; }).join("")}
     </div>
     <div class="home-gallery__cta"><a class="btn btn--ghost" href="galeria.html">Teljes galéria →</a></div>
   </section></div>` : "";
@@ -724,6 +724,7 @@ async function renderHome(app, contact) {
   await initReviews(reviews, app, contact);
   wireHeroPolish();
   heroWeather();
+  wireVideoThumbs();
 }
 
 // Háttér-animáció CSAK valós csapadék esetén (eső/hó) – évszakos falevél/szirom nincs.
@@ -1027,26 +1028,96 @@ function renderDoc(app, data, defTitle) {
 function renderGallery(app, gallery) {
   app.innerHTML = pageHead(gallery.heading || "Munkáink", "");
   const cont = app.querySelector(".container");
-  if (gallery.items && gallery.items.length) {
-    const grid = el("div", "gallery");
-    gallery.items.forEach((g) => {
-      const fig = el("figure");
-      const src = rel(g.image);
-      if (isVideoSrc(src)) {
-        const v = document.createElement("video");
-        v.src = src; v.controls = true; v.preload = "metadata"; v.playsInline = true;
-        v.setAttribute("playsinline", ""); v.className = "gallery__video";
-        fig.appendChild(v);
-      } else {
-        const img = el("img"); img.src = src; img.alt = g.caption || "Munka"; img.loading = "lazy"; img.className = "zoomable";
-        fig.appendChild(img);
-      }
-      if (g.caption) fig.appendChild(el("figcaption", null, esc(g.caption)));
-      grid.appendChild(fig);
-    });
-    cont.appendChild(grid);
-  } else {
+  const items = (gallery.items || []).filter((g) => g && isSet(g.image));
+  if (!items.length) {
     cont.appendChild(el("p", "gallery__empty", "Hamarosan feltöltjük az elkészült munkák képeit."));
+    return;
+  }
+  const videos = items.filter((g) => isVideoSrc(rel(g.image)));
+  const photos = items.filter((g) => !isVideoSrc(rel(g.image)));
+
+  // Videók külön szekcióban – bélyegkép, kattintásra mini lejátszó (modal)
+  if (videos.length) {
+    const vids = videos.map((g) => {
+      const s = esc(rel(g.image));
+      return `<figure class="gal-vfig">
+        <button type="button" class="gal-vthumb" data-src="${s}" aria-label="Videó lejátszása">
+          <video src="${s}#t=0.1" muted preload="metadata" playsinline tabindex="-1"></video>
+          <span class="gal-vplay" aria-hidden="true">▶</span>
+        </button>
+        ${isSet(g.caption) ? `<figcaption>${esc(g.caption)}</figcaption>` : ""}
+      </figure>`;
+    }).join("");
+    cont.insertAdjacentHTML("beforeend", `<section class="gal-section"><h2 class="gal-h">🎬 Videók</h2><div class="gal-video-grid">${vids}</div></section>`);
+    wireVideoThumbs();
+  }
+
+  // Képek – középre fókuszáló, vízszintesen görgethető carousel
+  if (photos.length) {
+    const slides = photos.map((g, i) =>
+      `<figure class="gal-item${i === 0 ? " is-center" : ""}" data-caption="${esc(g.caption || "")}"><img class="zoomable" src="${esc(rel(g.image))}" alt="${esc(g.caption || "Munka")}" loading="lazy" /></figure>`
+    ).join("");
+    cont.insertAdjacentHTML("beforeend", `<section class="gal-section">
+      <h2 class="gal-h">📷 Képek</h2>
+      <div class="gal-carousel">
+        <button type="button" class="gal-arrow gal-arrow--prev" id="gal-prev" aria-label="Előző kép">‹</button>
+        <div class="gal-track" id="gal-track">${slides}</div>
+        <button type="button" class="gal-arrow gal-arrow--next" id="gal-next" aria-label="Következő kép">›</button>
+      </div>
+      <p class="gal-caption" id="gal-caption">${esc(photos[0].caption || "")}</p>
+    </section>`);
+    wireGalleryCarousel();
+  }
+}
+
+function wireGalleryCarousel() {
+  const track = document.getElementById("gal-track");
+  if (!track) return;
+  const items = Array.prototype.slice.call(track.querySelectorAll(".gal-item"));
+  const cap = document.getElementById("gal-caption");
+  let active = 0, raf = null;
+  const centerOf = (el) => el.offsetLeft + el.offsetWidth / 2;
+  function update() {
+    const mid = track.scrollLeft + track.clientWidth / 2;
+    let best = 0, bd = Infinity;
+    items.forEach((it, i) => { const d = Math.abs(centerOf(it) - mid); if (d < bd) { bd = d; best = i; } });
+    if (best !== active || !items[best].classList.contains("is-center")) {
+      active = best;
+      items.forEach((it, i) => it.classList.toggle("is-center", i === active));
+      if (cap) cap.textContent = items[active].getAttribute("data-caption") || "";
+    }
+  }
+  function goTo(i) {
+    i = Math.max(0, Math.min(items.length - 1, i));
+    const it = items[i];
+    track.scrollTo({ left: it.offsetLeft - (track.clientWidth - it.offsetWidth) / 2, behavior: "smooth" });
+  }
+  track.addEventListener("scroll", () => { if (raf) cancelAnimationFrame(raf); raf = requestAnimationFrame(update); });
+  const prev = document.getElementById("gal-prev"), next = document.getElementById("gal-next");
+  if (prev) prev.addEventListener("click", () => goTo(active - 1));
+  if (next) next.addEventListener("click", () => goTo(active + 1));
+  setTimeout(() => { goTo(0); update(); }, 80);
+}
+
+// Videó bélyegkép → mini lejátszó (modal) native vezérlőkkel (start/stop, némítás, hangerő)
+function wireVideoThumbs() {
+  const thumbs = document.querySelectorAll(".gal-vthumb");
+  if (!thumbs.length) return;
+  let modal = document.getElementById("video-modal");
+  if (!modal) {
+    modal = document.createElement("div");
+    modal.id = "video-modal"; modal.className = "video-modal"; modal.setAttribute("aria-hidden", "true");
+    modal.innerHTML = '<button class="video-modal__close" type="button" aria-label="Bezárás">✕</button><video class="video-modal__player" controls playsinline></video>';
+    document.body.appendChild(modal);
+  }
+  const player = modal.querySelector(".video-modal__player");
+  const close = () => { try { player.pause(); } catch (e) {} modal.classList.remove("is-open"); player.removeAttribute("src"); try { player.load(); } catch (e) {} document.body.style.overflow = ""; };
+  const open = (src) => { player.src = src; modal.classList.add("is-open"); document.body.style.overflow = "hidden"; const p = player.play(); if (p && p.catch) p.catch(() => {}); };
+  thumbs.forEach((t) => t.addEventListener("click", () => open(t.getAttribute("data-src"))));
+  if (!modal.dataset.wired) {
+    modal.dataset.wired = "1";
+    modal.addEventListener("click", (e) => { if (e.target === modal || (e.target.closest && e.target.closest(".video-modal__close"))) close(); });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && modal.classList.contains("is-open")) close(); });
   }
 }
 
