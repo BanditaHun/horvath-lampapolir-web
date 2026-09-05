@@ -722,76 +722,29 @@ async function renderHome(app, contact) {
   heroWeather();
 }
 
-// Valódi falevél-rajz (SVG) – változatos forma + őszi színek, erezettel
-const LEAF_COLORS = ["#c0392b", "#a83214", "#c1440e", "#d35400", "#e07b1a", "#c98a12", "#9c4a1a", "#b45309"];
-const LEAF_SHAPES = [
-  "M14 2 C6 10 5 22 14 33 C23 22 22 10 14 2 Z",
-  "M14 3 C4 11 4 24 14 32 C24 24 24 11 14 3 Z",
-  "M13 3 C4 9 6 24 15 32 C22 23 21 10 13 3 Z",
-];
-function leafSVG() {
-  const c = LEAF_COLORS[(Math.random() * LEAF_COLORS.length) | 0];
-  const d = LEAF_SHAPES[(Math.random() * LEAF_SHAPES.length) | 0];
-  const vein = "rgba(70,35,12,0.55)";
-  return '<svg viewBox="0 0 28 40" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" aria-hidden="true">' +
-    '<path d="M14 31 L14 39" stroke="' + vein + '" stroke-width="1.4" fill="none" stroke-linecap="round"/>' +
-    '<path d="' + d + '" fill="' + c + '"/>' +
-    '<path d="M14 6 L14 32 M14 13 L8.5 11 M14 13 L19.5 11 M14 20 L7.8 18.6 M14 20 L20.2 18.6 M14 26 L9.6 25.4 M14 26 L18.4 25.4" stroke="' + vein + '" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.5"/>' +
-    '</svg>';
-}
-// Egyszerű, finom szirom-rajz (tavasz)
-const PETAL_COLORS = ["#f7c5d6", "#f4b6cd", "#efd0dc", "#f9d5e0", "#f6bcd0"];
-function petalSVG() {
-  const c = PETAL_COLORS[(Math.random() * PETAL_COLORS.length) | 0];
-  return '<svg viewBox="0 0 24 30" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" aria-hidden="true">' +
-    '<path d="M12 1 C3 8 3 22 12 29 C21 22 21 8 12 1 Z" fill="' + c + '"/>' +
-    '<path d="M12 5 L12 26" stroke="rgba(180,90,120,0.35)" stroke-width="1" fill="none"/></svg>';
-}
-
-// Évszakhoz / valós időjáráshoz igazodó animáció – a TARTALOM MÖGÖTT (teljes oldalas háttér)
-// (ősz: falevelek, tél: hó, tavasz: szirmok, nyár: fénypor; eső/hó a valós időjárás szerint)
-function seasonFx(override) {
-  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+// Háttér-animáció CSAK valós csapadék esetén (eső/hó) – évszakos falevél/szirom nincs.
+// A heroWeather hívja meg 'rain' vagy 'snow' értékkel, az aktuális időjárás szerint.
+function seasonFx(mode) {
   const prev = document.getElementById("season-fx");
   if (prev) prev.remove();
-
-  let mode = override;
-  if (!mode) {
-    const m = new Date().getMonth(); // 0–11
-    if (m >= 2 && m <= 4) mode = "spring";
-    else if (m >= 5 && m <= 7) mode = "summer";
-    else if (m >= 8 && m <= 10) mode = "autumn";
-    else mode = "winter";
-  }
+  if (mode !== "rain" && mode !== "snow") return; // más esetben nincs hulló részecske
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   const CFG = {
-    autumn: { leaf: true, count: 22, min: 8, max: 15, drift: 90, rot: 640, size: [18, 34] },
-    winter: { snow: true, count: 70, min: 7, max: 14, drift: 55, rot: 140, size: [4, 12] },
-    spring: { petal: true, count: 18, min: 9, max: 15, drift: 65, rot: 520, size: [12, 20] },
-    summer: { warm: true, count: 16, min: 10, max: 18, drift: 45, rot: 0, size: [4, 9] },
-    snow:   { snow: true, count: 80, min: 6, max: 12, drift: 60, rot: 140, size: [4, 13] },
-    rain:   { rain: true, count: 72, min: 0.7, max: 1.5, drift: 12, rot: 0, size: [1.6, 2.6] },
+    snow: { snow: true, count: 80, min: 6, max: 12, drift: 60, rot: 140, size: [4, 13] },
+    rain: { rain: true, count: 72, min: 0.7, max: 1.5, drift: 12, rot: 0, size: [1.6, 2.6] },
   };
-  const cfg = CFG[mode] || CFG.autumn;
+  const cfg = CFG[mode];
   const rnd = (a, b) => a + Math.random() * (b - a);
 
   const fx = document.createElement("div");
   fx.id = "season-fx";
   fx.className = "season-fx season-fx--" + mode;
-  const dist = () => (window.innerHeight + 80) + "px";
-  fx.style.setProperty("--fall-dist", dist());
+  fx.style.setProperty("--fall-dist", (window.innerHeight + 80) + "px");
 
   for (let i = 0; i < cfg.count; i++) {
     const p = document.createElement("span");
-    let cls = "season-p";
-    if (cfg.snow) cls += " season-p--snow";
-    else if (cfg.rain) cls += " season-p--rain";
-    else if (cfg.warm) cls += " season-p--warm";
-    else if (cfg.leaf) cls += " season-p--leaf";
-    else if (cfg.petal) cls += " season-p--petal";
-    p.className = cls;
-    if (cfg.leaf) p.innerHTML = leafSVG();
-    else if (cfg.petal) p.innerHTML = petalSVG();
+    p.className = "season-p " + (cfg.snow ? "season-p--snow" : "season-p--rain");
     const size = rnd(cfg.size[0], cfg.size[1]);
     p.style.left = rnd(0, 100).toFixed(2) + "%";
     p.style.setProperty("--drift", rnd(-cfg.drift, cfg.drift).toFixed(0) + "px");
@@ -799,9 +752,8 @@ function seasonFx(override) {
     p.style.setProperty("--op", rnd(0.55, 0.92).toFixed(2));
     p.style.animationDuration = rnd(cfg.min, cfg.max).toFixed(2) + "s";
     p.style.animationDelay = (-rnd(0, cfg.max)).toFixed(2) + "s";
-    if (cfg.snow || cfg.warm) { p.style.width = size + "px"; p.style.height = size + "px"; }
-    else if (cfg.rain) { p.style.height = (size * 7).toFixed(0) + "px"; }
-    else if (cfg.leaf || cfg.petal) { p.style.width = size.toFixed(0) + "px"; p.style.height = (size * 1.4).toFixed(0) + "px"; }
+    if (cfg.snow) { p.style.width = size + "px"; p.style.height = size + "px"; }
+    else { p.style.height = (size * 7).toFixed(0) + "px"; }
     fx.appendChild(p);
   }
   document.body.appendChild(fx);
@@ -1330,7 +1282,6 @@ function wireLightbox() {
 async function initSite() {
   trackVisit();
   buildStarfield();
-  seasonFx();
   const page = document.body.dataset.page || "home";
   document.getElementById("site-header").innerHTML = buildHeader(page);
   document.getElementById("site-footer").innerHTML = buildFooter();
