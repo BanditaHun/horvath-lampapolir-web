@@ -972,7 +972,7 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
   --gold: #e0a41c;
   --gold-dim: #a9760a;
   --chrome: #23262b;
-  --chrome-dim: #5c636e;
+  --chrome-dim: #3d434b;
   --line: #e3e6ea;
 }
 :root[data-theme="light"] body { background: var(--bg); color: var(--chrome); }
@@ -995,7 +995,7 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 :root[data-theme="light"] .neon-card__title { color: #23262b; text-shadow: none; }
 :root[data-theme="light"] .neon-card__price { color: #23262b; }
 :root[data-theme="light"] a.neon-card__price, :root[data-theme="light"] .neon-card__more { color: var(--gold-dim); }
-:root[data-theme="light"] .neon-card__desc { color: #5c636e; }
+:root[data-theme="light"] .neon-card__desc { color: #3d434b; }
 
 :root[data-theme="light"] .page__title, :root[data-theme="light"] .rich strong, :root[data-theme="light"] .rich b, :root[data-theme="light"] .rich h1, :root[data-theme="light"] .rich h2, :root[data-theme="light"] .rich h3, :root[data-theme="light"] .rich h4, :root[data-theme="light"] .prose h1, :root[data-theme="light"] .prose h2, :root[data-theme="light"] .prose h3, :root[data-theme="light"] .prose h4 { color: #23262b; }
 
