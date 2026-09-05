@@ -1,0 +1,7 @@
+name = "horvath-fuel"
+main = "worker.js"
+compatibility_date = "2024-11-01"
+
+# A weboldal erről az URL-ről kéri le az árat:
+#   https://horvath-fuel.andras-horvat1989.workers.dev
+# (a "name" + a te workers.dev aldomained adja ki, ugyanúgy, mint a horvath-stats-nál)

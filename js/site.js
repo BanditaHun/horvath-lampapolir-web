@@ -864,6 +864,142 @@ function renderCardsPage(app, data, defTitle, kind, promo) {
     grid.appendChild(neonCard(i, inner));
   });
   cont.appendChild(grid);
+
+  if (kind === "delivery") {
+    cont.insertAdjacentHTML("beforeend", deliveryCalcHTML());
+    wireDeliveryCalc(data);
+  }
+}
+
+// ---------- Kiszállási díj kalkulátor (térkép + távolság + díj) ----------
+const CALC_BASE = { lat: 46.4256, lng: 18.7817, name: "Tolna-Mözs (telephely)" };
+const FUEL_URL = "https://horvath-fuel.andras-horvat1989.workers.dev";
+
+function deliveryCalcHTML() {
+  return `<div class="container"><section class="calc">
+    <h2 class="calc__title">Kiszállási díj kalkulátor</h2>
+    <p class="calc__lead">Írd be a címed vagy a településed, és megmutatom, milyen messze vagy a telephelytől (Tolna-Mözs), és mennyi a kiszállási díj.</p>
+    <form class="calc__form" id="calc-form">
+      <input type="text" id="calc-addr" class="calc__input" placeholder="pl. Szekszárd, Béla tér 1 — vagy csak: Bonyhád" autocomplete="street-address" />
+      <button type="submit" class="btn btn--primary" id="calc-btn">Kiszámolom</button>
+    </form>
+    <div id="calc-result" class="calc__result" hidden></div>
+    <div id="calc-map" class="calc__map" hidden></div>
+    <p class="calc__foot">Tájékoztató számítás közúti távolság alapján; a végleges díjat egyeztetjük. Térkép és útvonal: © OpenStreetMap. Az üzemanyagár tájékoztató jellegű.</p>
+  </section></div>`;
+}
+
+function calcHaversine(a, b) {
+  const R = 6371, toRad = (x) => x * Math.PI / 180;
+  const dLat = toRad(b.lat - a.lat), dLng = toRad(b.lng - a.lng);
+  const s = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(a.lat)) * Math.cos(toRad(b.lat)) * Math.sin(dLng / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(s));
+}
+
+function wireDeliveryCalc(data) {
+  const form = document.getElementById("calc-form");
+  if (!form) return;
+
+  // Tarifasávok a delivery.json-ból (így a díj automatikusan szinkronban marad)
+  const tiers = (data.items || []).map((it) => {
+    const nums = (String(it.range || "").match(/\d+/g) || []).map(Number);
+    const lo = nums.length ? nums[0] : 0;
+    const hi = nums.length > 1 ? nums[1] : Infinity;
+    const feeNum = /ingyen/i.test(it.fee || "") ? 0 : parseInt((String(it.fee || "").match(/\d/g) || []).join(""), 10) || 0;
+    return { lo, hi, feeNum, feeText: it.fee || "" };
+  });
+  const maxHi = tiers.reduce((m, t) => Math.max(m, isFinite(t.hi) ? t.hi : 0), 0);
+  const feeForKm = (km) => { for (const t of tiers) { if (km > t.lo - 1e-6 && km <= t.hi + 1e-6) return t; } return null; };
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const q = (document.getElementById("calc-addr").value || "").trim();
+    const resEl = document.getElementById("calc-result");
+    const btn = document.getElementById("calc-btn");
+    if (!q) return;
+    btn.disabled = true; btn.textContent = "Számolás…";
+    resEl.hidden = false; resEl.innerHTML = '<p class="calc__loading">Cím keresése és távolság számítása…</p>';
+    try {
+      const g = await fetch(`https://nominatim.openstreetmap.org/search?format=json&countrycodes=hu&limit=1&q=${encodeURIComponent(q)}`, { headers: { Accept: "application/json" } }).then((r) => r.json());
+      if (!g || !g.length) { resEl.innerHTML = '<p class="calc__err">Nem találom ezt a címet. Próbáld pontosabban (település, utca), vagy csak a települést.</p>'; return; }
+      const dest = { lat: parseFloat(g[0].lat), lng: parseFloat(g[0].lon), label: g[0].display_name };
+
+      let km = null, geom = null;
+      try {
+        const r = await fetch(`https://router.project-osrm.org/route/v1/driving/${CALC_BASE.lng},${CALC_BASE.lat};${dest.lng},${dest.lat}?overview=full&geometries=geojson`).then((x) => x.json());
+        if (r && r.routes && r.routes[0]) { km = r.routes[0].distance / 1000; geom = r.routes[0].geometry; }
+      } catch (_) {}
+      if (km == null) km = calcHaversine(CALC_BASE, dest) * 1.3; // becslés, ha az útvonal-szolgáltatás nem elérhető
+      const kmR = Math.round(km * 10) / 10;
+
+      let feeHtml;
+      if (km <= maxHi + 1e-6) {
+        const t = feeForKm(km);
+        feeHtml = t ? (t.feeNum === 0 ? '<span class="calc__free">INGYENES</span>' : `<span class="calc__fee">${esc(t.feeText.replace(/^\+/, ""))}</span>`) : "—";
+      } else {
+        feeHtml = '<span class="calc__over">A vállalt ' + maxHi + ' km-es körzeten kívül – kérj egyéni ajánlatot!</span>';
+      }
+
+      resEl.innerHTML =
+        `<div class="calc__stats">
+          <div class="calc__stat"><span class="calc__stat-k">Közúti távolság (egy út)</span><span class="calc__stat-v">${kmR.toLocaleString("hu-HU")} km</span></div>
+          <div class="calc__stat"><span class="calc__stat-k">Kiszállási díj (oda-vissza)</span><span class="calc__stat-v">${feeHtml}</span></div>
+        </div>
+        <p class="calc__addr">📍 ${esc(dest.label)}</p>
+        <div id="calc-fuel" class="calc__fuel" hidden></div>`;
+
+      drawCalcMap(CALC_BASE, dest, geom);
+      loadFuelInfo(km);
+    } catch (err) {
+      resEl.innerHTML = '<p class="calc__err">Hiba történt a számítás közben. Ellenőrizd az internetkapcsolatot, és próbáld újra.</p>';
+    } finally {
+      btn.disabled = false; btn.textContent = "Kiszámolom";
+    }
+  });
+}
+
+function drawCalcMap(base, dest, geom) {
+  const el = document.getElementById("calc-map");
+  if (!el) return;
+  el.hidden = false;
+  loadLeaflet(() => {
+    if (!window.L) { el.hidden = true; return; }
+    if (el._map) { el._map.remove(); el._map = null; }
+    const map = L.map(el, { scrollWheelZoom: false });
+    el._map = map;
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "© OpenStreetMap közreműködők" }).addTo(map);
+    L.circleMarker([base.lat, base.lng], { radius: 7, color: "#a00", weight: 2, fillColor: "#e01e1e", fillOpacity: 1 }).addTo(map).bindPopup("Telephely – Tolna-Mözs");
+    L.circleMarker([dest.lat, dest.lng], { radius: 7, color: "#0a7", weight: 2, fillColor: "#12b886", fillOpacity: 1 }).addTo(map).bindPopup("A megadott cím");
+    let bounds;
+    if (geom && geom.coordinates) {
+      const line = L.geoJSON(geom, { style: { color: "#e0a41c", weight: 4, opacity: 0.9 } }).addTo(map);
+      bounds = line.getBounds();
+    } else {
+      bounds = L.latLngBounds([[base.lat, base.lng], [dest.lat, dest.lng]]);
+    }
+    setTimeout(() => { map.invalidateSize(); map.fitBounds(bounds, { padding: [30, 30] }); }, 250);
+  });
+}
+
+async function loadFuelInfo(km) {
+  const box = document.getElementById("calc-fuel");
+  if (!box) return;
+  try {
+    const d = await fetch(FUEL_URL, { cache: "no-store" }).then((r) => r.json());
+    const benzin = d && d.benzin, gazolaj = d && d.gazolaj;
+    const price = gazolaj || benzin;
+    if (!price) return;
+    const liters = km * 2 * 8 / 100; // becsült 8 l/100 km, oda-vissza
+    const cost = Math.round(liters * price / 10) * 10;
+    box.innerHTML =
+      "Aktuális átlag üzemanyagár: " +
+      (benzin ? "benzin <b>" + benzin + " Ft/l</b>" : "") +
+      (benzin && gazolaj ? " · " : "") +
+      (gazolaj ? "gázolaj <b>" + gazolaj + " Ft/l</b>" : "") +
+      (d.updated ? ' <span class="calc__muted">(' + esc(String(d.updated)) + ")</span>" : "") +
+      '<br><span class="calc__muted">Becsült üzemanyagköltség oda-vissza (~8 l/100 km): kb. ' + cost.toLocaleString("hu-HU") + " Ft</span>";
+    box.hidden = false;
+  } catch (_) { /* ha a Worker nincs telepítve, egyszerűen nem jelenik meg */ }
 }
 
 function printLetterhead() {
@@ -980,9 +1116,9 @@ function wireMap(contact) {
 
 function bookingFormHTML(contact) {
   const groups = [
-    ["Fényszóró-felújítás", ["Fényszóró-felújítás – ALAP", "Fényszóró-felújítás – STANDARD", "Fényszóró-felújítás – PRÉMIUM"]],
-    ["Kombó csomagok (fényszóró + üveg)", ["Kombó: Fényszóró-felújítás + szélvédő-vízlepergető", "Kombó: Fényszóró-felújítás + teljes üvegkezelés"]],
-    ["Egyéb szolgáltatás", ["Szélvédő- / üvegkezelés", "Egyéb – a megjegyzésbe írom"]],
+    ["Fényszóró-felújítás", ["Prémium fényszóró-felújítás", "+1 év kiegészítő garancia", "Hátsó lámpák felújítása"]],
+    ["Önálló szolgáltatások", ["Szélvédőmosó feltöltés", "Fagyálló ellenőrzés", "Ablaktörlő lapát csere", "Nano szélvédő vízlepergető kezelés", "Állapotfelmérés"]],
+    ["Egyéb", ["Egyéb – a megjegyzésbe írom"]],
   ];
   const opts = groups.map(([g, arr]) => `<optgroup label="${esc(g)}">${arr.map((s) => `<option value="${esc(s)}">${esc(s)}</option>`).join("")}</optgroup>`).join("");
   const dayparts = ["Bármelyik napszak jó", "Délelőtt", "Kora délután", "Késő délután / kora este"];
