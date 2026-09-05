@@ -1031,28 +1031,61 @@ function renderGallery(app, gallery) {
   }
 }
 
-// Az aktuális hónap naptára (mai nap kiemelve) – csak megjelenítés
+// Naptár a Kapcsolat oldalon: aktuális dátum + hónapok közti lapozás
+const CAL_MONTHS = ["január", "február", "március", "április", "május", "június", "július", "augusztus", "szeptember", "október", "november", "december"];
+const CAL_DAYNAMES = ["vasárnap", "hétfő", "kedd", "szerda", "csütörtök", "péntek", "szombat"];
+
 function contactCalendar() {
-  const now = new Date();
-  const y = now.getFullYear(), m = now.getMonth(), today = now.getDate();
-  const months = ["január", "február", "március", "április", "május", "június", "július", "augusztus", "szeptember", "október", "november", "december"];
-  const dayNames = ["vasárnap", "hétfő", "kedd", "szerda", "csütörtök", "péntek", "szombat"];
   const wd = ["H", "K", "Sze", "Cs", "P", "Szo", "V"];
-  const startIdx = (new Date(y, m, 1).getDay() + 6) % 7; // hétfő = 0
-  const daysInMonth = new Date(y, m + 1, 0).getDate();
-  let cells = "";
-  for (let i = 0; i < startIdx; i++) cells += `<span class="cal__day cal__day--empty"></span>`;
-  for (let d = 1; d <= daysInMonth; d++) {
-    const wknd = (startIdx + d - 1) % 7 >= 5;
-    cells += `<span class="cal__day${d === today ? " cal__day--today" : ""}${wknd ? " cal__day--wknd" : ""}">${d}</span>`;
-  }
   const heads = wd.map((w, i) => `<span class="cal__wd${i >= 5 ? " cal__wd--wknd" : ""}">${w}</span>`).join("");
-  return `<div class="cal" aria-label="Naptár – aktuális hónap">
-      <div class="cal__head"><span class="cal__title">${y}. ${months[m]}</span><span class="cal__todaybadge">Ma: ${today}.</span></div>
+  return `<div class="cal" id="cal" aria-label="Naptár">
+      <div class="cal__now" id="cal-now"></div>
+      <div class="cal__head">
+        <button type="button" class="cal__nav" id="cal-prev" aria-label="Előző hónap">‹</button>
+        <span class="cal__title" id="cal-title"></span>
+        <button type="button" class="cal__nav" id="cal-next" aria-label="Következő hónap">›</button>
+      </div>
       <div class="cal__grid cal__grid--wd">${heads}</div>
-      <div class="cal__grid">${cells}</div>
-      <div class="cal__foot">Ma: ${y}. ${months[m]} ${today}., ${dayNames[now.getDay()]}</div>
+      <div class="cal__grid" id="cal-grid"></div>
+      <button type="button" class="cal__today-btn" id="cal-today-btn" hidden>Ugrás a mai napra</button>
     </div>`;
+}
+
+function wireCalendar() {
+  const grid = document.getElementById("cal-grid");
+  const title = document.getElementById("cal-title");
+  if (!grid || !title) return;
+  const now = new Date();
+  const tY = now.getFullYear(), tM = now.getMonth(), tD = now.getDate();
+  const pad = (n) => String(n).padStart(2, "0");
+
+  const nowBox = document.getElementById("cal-now");
+  if (nowBox) nowBox.textContent = `${tY}. ${pad(tM + 1)}. ${pad(tD)}.`;
+
+  let vY = tY, vM = tM;
+  const todayBtn = document.getElementById("cal-today-btn");
+
+  function render() {
+    title.textContent = `${vY}. ${CAL_MONTHS[vM]}`;
+    const startIdx = (new Date(vY, vM, 1).getDay() + 6) % 7; // hétfő = 0
+    const daysInMonth = new Date(vY, vM + 1, 0).getDate();
+    let cells = "";
+    for (let i = 0; i < startIdx; i++) cells += `<span class="cal__day cal__day--empty"></span>`;
+    for (let d = 1; d <= daysInMonth; d++) {
+      const wknd = (startIdx + d - 1) % 7 >= 5;
+      const isToday = d === tD && vM === tM && vY === tY;
+      cells += `<span class="cal__day${isToday ? " cal__day--today" : ""}${wknd ? " cal__day--wknd" : ""}">${d}</span>`;
+    }
+    grid.innerHTML = cells;
+    if (todayBtn) todayBtn.hidden = (vY === tY && vM === tM);
+  }
+  function shift(delta) { vM += delta; if (vM < 0) { vM = 11; vY--; } else if (vM > 11) { vM = 0; vY++; } render(); }
+
+  const prev = document.getElementById("cal-prev"), next = document.getElementById("cal-next");
+  if (prev) prev.addEventListener("click", () => shift(-1));
+  if (next) next.addEventListener("click", () => shift(1));
+  if (todayBtn) todayBtn.addEventListener("click", () => { vY = tY; vM = tM; render(); });
+  render();
 }
 
 function renderContact(app, contact) {
@@ -1104,6 +1137,7 @@ function renderContact(app, contact) {
      </div></div>` + billingNotice + mapSection;
   wireBookingForm(contact);
   wireMap(contact);
+  wireCalendar();
 }
 
 function loadLeaflet(cb) {
