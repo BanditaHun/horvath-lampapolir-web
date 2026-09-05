@@ -9,7 +9,7 @@
   --line: #2a2a2a;
   --radius: 14px;
   --maxw: min(96vw, 1920px);
-  --nav-h: 84px;
+  --nav-h: 76px;
 
   /* Tipográfia – ezeket a CMS „Megjelenés" menüje állítja (theme.json) */
   --font-body: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
@@ -113,17 +113,14 @@ a:hover { text-decoration: underline; }
 .nav__brand { display: inline-flex; align-items: center; z-index: 1; }
 .nav__brand:hover { text-decoration: none; }
 .nav__logo {
-  height: 92px; width: auto;
-  border-radius: 16px; border: 1px solid rgba(240,180,41,0.45); background: #0a0a0a;
-  animation: logoBeam 4.2s ease-in-out infinite;
+  height: 68px; width: auto;
+  border-radius: 14px; border: 1px solid rgba(240,180,41,0.4); background: #0a0a0a;
+  animation: logoBeam 5s ease-in-out infinite;
 }
-/* Neon "pislogó fényszóró": kétszer felvillan, közte halvány arany fény */
+/* Finom, nyugodt arany fény a logó körül (nem villog) */
 @keyframes logoBeam {
-  0%, 40%, 100% { box-shadow: 0 0 0 1px rgba(240,180,41,0.4), 0 0 14px rgba(240,180,41,0.22); }
-  44% { box-shadow: 0 0 0 1px var(--gold), 0 0 26px rgba(255,255,255,0.6), 0 0 46px rgba(240,180,41,0.6); }
-  48% { box-shadow: 0 0 0 1px rgba(240,180,41,0.4), 0 0 14px rgba(240,180,41,0.22); }
-  52% { box-shadow: 0 0 0 1px var(--gold), 0 0 32px rgba(255,255,255,0.75), 0 0 52px rgba(240,180,41,0.7); }
-  56% { box-shadow: 0 0 0 1px rgba(240,180,41,0.4), 0 0 14px rgba(240,180,41,0.22); }
+  0%, 100% { box-shadow: 0 0 0 1px rgba(240,180,41,0.32), 0 0 14px rgba(240,180,41,0.16); }
+  50% { box-shadow: 0 0 0 1px rgba(240,180,41,0.55), 0 0 22px rgba(240,180,41,0.30); }
 }
 @media (prefers-reduced-motion: reduce) {
   .nav__logo { animation: none; box-shadow: 0 0 0 1px rgba(240,180,41,0.4), 0 0 14px rgba(240,180,41,0.22); }
@@ -134,8 +131,8 @@ a:hover { text-decoration: underline; }
   text-align: center; pointer-events: none; white-space: nowrap;
 }
 .nav__title-main {
-  font-family: var(--font-heading); font-weight: 800; letter-spacing: 1px;
-  font-size: clamp(1.3rem, 2.6vw, 2.1rem);
+  font-family: var(--font-heading); font-weight: 800; letter-spacing: .5px;
+  font-size: clamp(1.25rem, 2.4vw, 1.95rem);
   background: linear-gradient(180deg, #ffffff 0%, #e7e9ec 45%, var(--gold) 135%);
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
@@ -143,26 +140,26 @@ a:hover { text-decoration: underline; }
 .nav__right { display: flex; align-items: center; gap: 16px; z-index: 1; }
 
 .nav__links {
-  list-style: none; display: flex; justify-content: center; align-items: center; gap: 6px;
-  padding: 6px clamp(16px, 3vw, 44px) 12px; border-top: 1px solid rgba(240,180,41,0.12);
+  list-style: none; display: flex; justify-content: center; align-items: center; gap: 4px;
+  padding: 7px clamp(16px, 3vw, 44px) 11px; border-top: 1px solid rgba(240,180,41,0.10);
 }
 .nav__links a {
-  display: inline-block; padding: 9px 16px; border-radius: 8px;
-  color: var(--chrome); font-weight: 700; font-size: .82rem; letter-spacing: 1.2px; text-transform: uppercase;
-  transition: color .15s ease, background .15s ease;
+  display: inline-block; padding: 9px 18px; border-radius: 40px;
+  color: var(--chrome-dim); font-weight: 700; font-size: .8rem; letter-spacing: 1.1px; text-transform: uppercase;
+  transition: color .18s ease, background .18s ease;
 }
 .nav__links a:hover { color: var(--gold); background: rgba(240,180,41,0.08); text-decoration: none; }
 .nav__cta {
   color: #1a1200 !important;
   background: linear-gradient(180deg, var(--gold), var(--gold-dim)) !important;
-  font-weight: 800 !important;
+  font-weight: 800 !important; box-shadow: 0 4px 14px rgba(240,180,41,0.28);
 }
-.nav__cta:hover { filter: brightness(1.05); }
+.nav__cta:hover { filter: brightness(1.06); transform: translateY(-1px); }
 
-/* Aktív (éppen megnyitott) oldal a menüben – tartósan kijelölve marad */
-.nav__links a.is-active { color: var(--gold); background: rgba(240,180,41,0.12); box-shadow: inset 0 -2px 0 var(--gold); }
+/* Aktív (éppen megnyitott) oldal a menüben – letisztult arany pill */
+.nav__links a.is-active { color: var(--gold); background: rgba(240,180,41,0.14); }
 .nav__links a.is-active:hover { color: var(--gold); }
-.nav__cta.is-active { box-shadow: 0 0 0 2px rgba(255,255,255,0.28); }
+.nav__cta.is-active { box-shadow: 0 0 0 2px rgba(255,255,255,0.30), 0 4px 14px rgba(240,180,41,0.28); }
 
 .nav__toggle {
   display: none; flex-direction: column; gap: 5px; cursor: pointer;
@@ -950,13 +947,6 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 .btn { transition: transform .15s ease, box-shadow .2s ease, background .2s ease, color .2s ease, border-color .2s ease; }
 .btn--primary:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(240,180,41,0.32); }
 .btn--ghost:hover { transform: translateY(-2px); }
-.nav__links a { position: relative; }
-.nav__links a:not(.nav__cta)::after {
-  content: ""; position: absolute; left: 12px; right: 12px; bottom: 4px; height: 2px;
-  background: var(--gold); border-radius: 2px; transform: scaleX(0); transform-origin: left; transition: transform .25s ease; opacity: .9;
-}
-.nav__links a:not(.nav__cta):hover::after,
-.nav__links a.is-active:not(.nav__cta)::after { transform: scaleX(1); }
 .neon-card__more { transition: letter-spacing .2s ease; }
 .neon-card:hover .neon-card__more { letter-spacing: .5px; }
 
