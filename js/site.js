@@ -1064,10 +1064,10 @@ function renderContact(app, contact) {
 
   const billingNotice = `<div class="container"><section class="billing-notice">
       <h3 class="billing-notice__title">🧾 Számlázási tájékoztató</h3>
-      <p>Vállalkozásunk <strong>minden értékesítésről és szolgáltatásról számlát állít ki</strong>. A számla kiállításához a megrendeléskor (személyesen, telefonon vagy e-mailben) az alábbi adatokat kérjük:</p>
+      <p>Vállalkozásunk <strong>minden értékesítésről és szolgáltatásról számlát állít ki</strong>. A számla kiállításához és a szolgáltatáshoz a megrendeléskor (személyesen, telefonon vagy e-mailben) az alábbi adatokat kérjük:</p>
       <ul class="billing-notice__list">
-        <li><strong>Magánszemélyeknek:</strong> név és cím (lakcím).</li>
-        <li><strong>Cégeknek / vállalkozóknak:</strong> cégnév, székhely (számlázási cím) és adószám.</li>
+        <li><strong>Magánszemélyeknek:</strong> név, cím (lakcím), telefonszám és az autó típusa.</li>
+        <li><strong>Cégeknek / vállalkozóknak:</strong> cégnév, székhely (számlázási cím), adószám, telefonszám és az autó típusa.</li>
       </ul>
       <p>Ezen adatok hiányában a szolgáltatást nem áll módunkban teljesíteni. A szolgáltatás igénybevételével Ön hozzájárul a fenti adatok megadásához a számla kiállítása céljából.</p>
     </section></div>`;
