@@ -969,7 +969,7 @@ function wireDeliveryCalc(data) {
           <div class="calc__stat"><span class="calc__stat-k">Kiszállási díj (oda-vissza)</span><span class="calc__stat-v">${feeHtml}</span></div>
         </div>
         <p class="calc__addr">📍 ${esc(dest.label)}</p>` +
-        (overMax ? `<p class="calc__over-note">A vállalt ${maxHi} km-es körzeten túl vagy – ez <strong>tájékoztató ár</strong>. Ilyen távolságra előzetes egyeztetéssel megyek ki; kérlek, hívj a pontos díjért.</p>` : "");
+        (overMax ? `<p class="calc__over-note"><strong>Egyeztetés szükséges</strong> – a megadott cím a vállalt ${maxHi} km-es körzeten kívülre esik, ezért a fenti összeg <strong>tájékoztató ár</strong>. Ilyen távolságra előzetes egyeztetéssel megyek ki; kérlek, hívj a pontos díjért.</p>` : "");
 
       drawCalcMap(CALC_BASE, dest, geom);
     } catch (err) {
