@@ -1202,7 +1202,8 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
   position: absolute; top: -60px; opacity: 0; will-change: transform, opacity;
   animation-name: fx-fall; animation-timing-function: linear; animation-iteration-count: infinite;
 }
-.season-p--emoji { line-height: 1; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }
+.season-p--leaf, .season-p--petal { line-height: 0; filter: drop-shadow(0 3px 4px rgba(0,0,0,0.3)); }
+.season-p--leaf svg, .season-p--petal svg { display: block; width: 100%; height: 100%; }
 .season-p--snow { border-radius: 50%; background: #ffffff; box-shadow: 0 0 5px rgba(255,255,255,0.9), 0 1px 2px rgba(0,0,0,0.35); }
 .season-p--warm { border-radius: 50%; background: radial-gradient(circle, #ffe6a0 0%, rgba(255,200,90,0) 70%); }
 .season-p--rain { width: 2px; border-radius: 2px; background: linear-gradient(to bottom, rgba(160,195,235,0) 0%, rgba(165,200,240,0.85) 100%); }
