@@ -1240,6 +1240,8 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 .calc__loading { color: var(--chrome-dim); }
 .calc__err { color: #ff9a9a; }
 .calc__foot { color: var(--chrome-dim); font-size: .82rem; margin-top: 12px; line-height: 1.5; }
+.calc__over-note { margin-top: 12px; padding: 10px 14px; border-radius: 10px; font-size: .92rem; line-height: 1.55; color: var(--chrome); background: rgba(240,180,41,0.08); border: 1px solid rgba(240,180,41,0.3); }
+.calc__over-note strong { color: var(--gold); }
 :root[data-theme="light"] .calc__input, :root[data-theme="light"] .calc__stat { background: #fff; border-color: #ece4cf; }
 :root[data-theme="light"] .calc__map { border-color: #ece4cf; }
 @media (max-width: 600px) { .calc__stats { grid-template-columns: 1fr; } .calc__map { height: 320px; } }

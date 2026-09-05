@@ -951,11 +951,16 @@ function wireDeliveryCalc(data) {
       const kmR = Math.round(km * 10) / 10;
 
       let feeHtml;
-      if (km <= maxHi + 1e-6) {
+      const overMax = km > maxHi + 1e-6;
+      if (!overMax) {
         const t = feeForKm(km);
         feeHtml = t ? (t.feeNum === 0 ? '<span class="calc__free">INGYENES</span>' : `<span class="calc__fee">${esc(t.feeText.replace(/^\+/, ""))}</span>`) : "—";
       } else {
-        feeHtml = '<span class="calc__over">A vállalt ' + maxHi + ' km-es körzeten kívül – kérj egyéni ajánlatot!</span>';
+        // 50 km fölött a minta folytatása: minden megkezdett 20 km +2 500 Ft az utolsó sávhoz képest
+        const lastFee = tiers.length ? tiers[tiers.length - 1].feeNum : 5000;
+        const band = Math.ceil((km - maxHi) / 20);
+        const extra = lastFee + band * 2500;
+        feeHtml = `<span class="calc__fee">${extra.toLocaleString("hu-HU")} Ft</span>`;
       }
 
       resEl.innerHTML =
@@ -963,7 +968,8 @@ function wireDeliveryCalc(data) {
           <div class="calc__stat"><span class="calc__stat-k">Közúti távolság (egy út)</span><span class="calc__stat-v">${kmR.toLocaleString("hu-HU")} km</span></div>
           <div class="calc__stat"><span class="calc__stat-k">Kiszállási díj (oda-vissza)</span><span class="calc__stat-v">${feeHtml}</span></div>
         </div>
-        <p class="calc__addr">📍 ${esc(dest.label)}</p>`;
+        <p class="calc__addr">📍 ${esc(dest.label)}</p>` +
+        (overMax ? `<p class="calc__over-note">A vállalt ${maxHi} km-es körzeten túl vagy – ez <strong>tájékoztató ár</strong>. Ilyen távolságra előzetes egyeztetéssel megyek ki; kérlek, hívj a pontos díjért.</p>` : "");
 
       drawCalcMap(CALC_BASE, dest, geom);
     } catch (err) {
