@@ -857,7 +857,7 @@ function renderCardsPage(app, data, defTitle, kind, promo) {
 
   // Csomagok: kiemelt fő szolgáltatás + külön "Kiegészítő opciók" blokk
   if (kind === "packages") {
-    cont.insertAdjacentHTML("beforeend", `<figure class="pkg-hero"><img class="zoomable" src="images/uploads/Képernyőkép 2026-09-05 174059.png" alt="Fényszóró-felújítás előtte és utána" loading="lazy" /><figcaption><strong>Előtte – utána.</strong> Ezt az eredményt kapod a Prémium fényszóró-felújítással: a teljesen bemattult búra újra gyári szinten ragyog.</figcaption></figure>`);
+    cont.insertAdjacentHTML("beforeend", `<figure class="pkg-hero"><img class="zoomable" src="images/uploads/Képernyőkép 2026-09-05 174059.png" alt="Fényszóró-felújítás előtte és utána" loading="lazy" /></figure>`);
     cont.insertAdjacentHTML("beforeend", `<div class="arlista-dl"><a class="arlista-dl__btn" href="arlista.html" target="_blank" rel="noopener">${ICON_DOWNLOAD}<span>Teljes árlista – nyomtatás / PDF mentése</span></a></div>`);
     const items = data.items || [];
     const isAddon = (it) => (it.badge || "").toLowerCase().indexOf("kieg") === 0;
