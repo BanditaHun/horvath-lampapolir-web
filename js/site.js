@@ -844,7 +844,6 @@ function renderCardsPage(app, data, defTitle, kind, promo) {
 
     cont.insertAdjacentHTML("beforeend", `<figure class="delivery-car">
       <img class="zoomable" src="images/uploads/auto-felirat.png" alt="Horváth Lámpapolír – feliratos szervizautó (Renault Mégane)" loading="lazy" />
-      <figcaption>🚗 <strong>Ezzel érkezem hozzád</strong> – a feliratos szervizautómmal (Renault Mégane) megyek házhoz Tolna megyében.</figcaption>
     </figure>`);
 
     if (isSet(data.intro)) {
