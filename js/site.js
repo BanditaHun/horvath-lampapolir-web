@@ -671,7 +671,7 @@ async function renderHome(app, contact) {
   </section></div>`;
 
   const DQUICK = [
-    { title: "Csomagok & árak", text: "ALAP · STANDARD · PRÉMIUM csomagok – már 12 000 Ft-tól, minden autótípusra.", link: "csomagok.html", more: "Megnézem →" },
+    { title: "Csomagok & árak", text: "Prémium fényszóró-felújítás: csiszolás, polírozás, UV-védelem és 1 év garancia – 19 990 Ft-tól, minden autótípusra.", link: "csomagok.html", more: "Megnézem →" },
     { title: "Szolgáltatások", text: "Fényszóró-felújítás, üvegkezelés, állapotfelmérés – mind helyben.", link: "szolgaltatasok.html", more: "Megnézem →" },
     { title: "Kapcsolat", text: "Hívj vagy írj, és egyeztetünk egy időpontot – házhoz megyünk.", link: "kapcsolat.html", more: "Kapcsolat →" },
   ];
@@ -1152,7 +1152,7 @@ function injectLocalBusiness(contact) {
     "description": "Mobil fényszóró-felújítás – házhoz megyek Tolna megyében és környékén, kb. 50 km-es körzetben.",
     "url": base,
     "image": base + "images/og-cover.jpg",
-    "priceRange": "12 000 Ft-tól",
+    "priceRange": "19 990 Ft-tól",
     "areaServed": TOWNS_UNIQUE.map((t) => ({ "@type": "City", "name": t })),
     "address": { "@type": "PostalAddress", "addressRegion": "Tolna megye", "addressCountry": "HU" },
     "openingHoursSpecification": [{
