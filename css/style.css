@@ -1155,8 +1155,29 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 :root[data-theme="light"] .area-map { border-color: #ece4cf; }
 @media (max-width: 640px) { .area-map { height: 340px; } }
 
-/* ---------- Kiszállási díj kalkulátor ---------- */
-.calc { padding: 34px 0 6px; }
+/* ---------- Kiszállás oldal: lead, díjszabás-kártyák, infó ---------- */
+.dlead { color: var(--chrome-dim); font-size: 1.08rem; line-height: 1.65; max-width: 840px; margin: 2px 0 20px; }
+.dlead b { color: var(--chrome); }
+.dsec-title { margin-top: 42px; }
+.dtiers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 18px; }
+.dtier { background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 16px; text-align: center; transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; }
+.dtier:hover { transform: translateY(-4px); border-color: rgba(240,180,41,0.5); box-shadow: 0 12px 26px rgba(0,0,0,0.35); }
+.dtier__range { display: inline-block; font-weight: 800; font-size: .88rem; color: #1a1200; background: var(--gold); padding: 4px 13px; border-radius: 30px; letter-spacing: .3px; }
+.dtier__fee { font-size: 1.7rem; font-weight: 800; color: var(--gold); margin: 12px 0 8px; }
+.dtier--free { border-color: rgba(22,201,141,0.4); }
+.dtier--free .dtier__fee { color: #16c98d; }
+.dtier__desc { color: var(--chrome-dim); font-size: .9rem; line-height: 1.5; }
+.dinfo { margin-top: 34px; background: var(--bg-card); border: 1px solid var(--line); border-left: 4px solid var(--gold); border-radius: var(--radius); padding: 16px 20px; max-width: 920px; }
+.dinfo__h { color: var(--gold); font-size: 1.1rem; margin: 0 0 8px; }
+.dinfo__body { color: var(--chrome-dim); line-height: 1.65; }
+:root[data-theme="light"] .dtier, :root[data-theme="light"] .dinfo { background: #fff; border-color: #ece4cf; }
+:root[data-theme="light"] .dinfo { border-left-color: var(--gold); }
+@media (max-width: 900px) { .dtiers { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .dtiers { grid-template-columns: 1fr; } }
+
+/* ---------- Kiszállási díj kalkulátor (kiemelt panel) ---------- */
+.calc { margin-top: 6px; padding: 22px 22px 24px; background: linear-gradient(160deg, rgba(240,180,41,0.08), var(--bg-card) 70%); border: 1px solid rgba(240,180,41,0.38); border-radius: 18px; box-shadow: 0 12px 32px rgba(0,0,0,0.32); }
+:root[data-theme="light"] .calc { background: linear-gradient(160deg, rgba(224,164,28,0.10), #fff 70%); border-color: #e0c98f; }
 .calc__title { font-family: var(--font-heading); color: var(--chrome); font-size: 1.5rem; letter-spacing: .3px; margin-bottom: 6px; }
 .calc__lead { color: var(--chrome-dim); margin-bottom: 16px; max-width: 760px; line-height: 1.6; }
 .calc__form { display: flex; gap: 10px; flex-wrap: wrap; max-width: 720px; }

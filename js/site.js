@@ -822,8 +822,30 @@ function pkgCardInner(it) {
 }
 
 function renderCardsPage(app, data, defTitle, kind, promo) {
-  app.innerHTML = pageHead(data.heading || defTitle, data.intro || "");
+  app.innerHTML = pageHead(data.heading || defTitle, kind === "delivery" ? "" : (data.intro || ""));
   const cont = app.querySelector(".container");
+
+  // Kiszállás: modern elrendezés – kiemelt kalkulátor, díjszabás-kártyák, "Jó tudni" infó
+  if (kind === "delivery") {
+    cont.insertAdjacentHTML("beforeend", `<p class="dlead">Írd be a címed a kalkulátorba, és <b>másodpercek alatt</b> megtudod, milyen messze vagy tőlem és mennyi a kiszállási díj. Házhoz megyek Tolna megyében, kb. 50 km-es körzetben.</p>`);
+    cont.insertAdjacentHTML("beforeend", deliveryCalcHTML());
+
+    const tiersHtml = (data.items || []).map((it) => {
+      const free = /ingyen/i.test(it.fee || "");
+      return `<div class="dtier${free ? " dtier--free" : ""}">
+        <div class="dtier__range">${esc(it.range || "")}</div>
+        <div class="dtier__fee">${free ? "INGYENES" : esc((it.fee || "").replace(/^\+/, ""))}</div>
+        ${it.description ? `<div class="dtier__desc rich">${mdBlock(it.description)}</div>` : ""}
+      </div>`;
+    }).join("");
+    cont.insertAdjacentHTML("beforeend", `<h2 class="page__title dsec-title">Díjszabás távolság szerint</h2><div class="dtiers">${tiersHtml}</div>`);
+
+    if (isSet(data.intro)) {
+      cont.insertAdjacentHTML("beforeend", `<aside class="dinfo"><h3 class="dinfo__h">💡 Jó tudni</h3><div class="rich dinfo__body">${mdBlock(data.intro)}</div></aside>`);
+    }
+    wireDeliveryCalc(data);
+    return;
+  }
 
   // Csomagok: kiemelt fő szolgáltatás + külön "Kiegészítő opciók" blokk
   if (kind === "packages") {
@@ -864,11 +886,6 @@ function renderCardsPage(app, data, defTitle, kind, promo) {
     grid.appendChild(neonCard(i, inner));
   });
   cont.appendChild(grid);
-
-  if (kind === "delivery") {
-    cont.insertAdjacentHTML("beforeend", deliveryCalcHTML());
-    wireDeliveryCalc(data);
-  }
 }
 
 // ---------- Kiszállási díj kalkulátor (térkép + távolság + díj) ----------
