@@ -44,6 +44,11 @@
   input.val:focus { border-bottom-color: var(--gold2); }
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 22px; }
 
+  .svc-grp { margin: 6px 0 2px; font-weight: 700; color: var(--ink); }
+  .svc-list label { display: block; margin: 2px 0; }
+  .svc-list label input[type=checkbox] { margin-right: 5px; }
+  .svc-list .svc-price { color: var(--gold); font-weight: 700; }
+
   .fee-note { font-size: 9px; color: var(--faint); background: #fffdf8; border: 1px solid var(--line); border-radius: 6px; padding: 6px 9px; margin: 4px 0 6px; }
   .fee-note b { color: var(--gold); }
 
@@ -114,27 +119,8 @@
 
     <section>
       <h2>2. Megrendelt szolgáltatás(ok)</h2>
-      <p style="margin:0 0 2px"><b>Csomagok</b></p>
-      <p style="margin:0 0 6px; line-height:2">
-        <input type="checkbox"> Alap – fényszóró polírozás (15 000 Ft-tól) &nbsp;&nbsp;
-        <input type="checkbox"> Standard – felújítás + 1 év garancia (20 000 Ft-tól) &nbsp;&nbsp;
-        <input type="checkbox"> Prémium – kerámia UV-védelem (28 000 Ft-tól)
-      </p>
-      <p style="margin:0 0 2px"><b>Kiegészítők</b></p>
-      <p style="margin:0 0 6px; line-height:2">
-        <input type="checkbox"> +1 év felületi garancia (7 500 Ft-tól) &nbsp;&nbsp;
-        <input type="checkbox"> Hátsó lámpák teljes körű felújítása (12 000 Ft-tól)
-      </p>
-      <p style="margin:0 0 2px"><b>Önálló szolgáltatások</b></p>
-      <p style="margin:0 0 6px; line-height:2">
-        <input type="checkbox"> Szélvédőmosó szintellenőrzés, feltöltés (2 500 Ft-tól) &nbsp;&nbsp;
-        <input type="checkbox"> Fagyálló ellenőrzés, utántöltés (3 500 Ft-tól) &nbsp;&nbsp;
-        <input type="checkbox"> Ablaktörlő lapát csere (4 500 Ft-tól) &nbsp;&nbsp;
-        <input type="checkbox"> Nano szélvédő vízlepergető kezelés (6 000 Ft-tól) &nbsp;&nbsp;
-        <input type="checkbox"> Állapotfelmérés (munka mellett ingyenes) &nbsp;&nbsp;
-        <input type="checkbox"> Egyéb: <input class="val" type="text" style="max-width:220px">
-      </p>
-      <p style="margin:2px 0 0"><input type="checkbox"> Garancia igénybe véve a fenti csomaghoz (részletek a külön garanciajegyen)</p>
+      <div id="svc-list"><p style="color:var(--faint); margin:0">Szolgáltatások betöltése…</p></div>
+      <p style="margin:6px 0 0"><input type="checkbox"> Garancia igénybe véve a fenti csomaghoz (részletek a külön garanciajegyen)</p>
       <div class="fee-note">A garancia a felvitt UV-védő bevonatra vonatkozik, rendeltetésszerű használat mellett, arra, hogy a kezelt felület a garancia ideje alatt nem sárgul vissza, nem homályosodik el. Nem terjed ki mechanikai sérülésre (kavicsfelverődés, karcolás, baleset), nem rendeltetésszerű vegyszerhasználatra vagy házilagos beavatkozásra. A pontos feltételeket a külön kiállított garanciajegy tartalmazza.</div>
     </section>
 
@@ -177,5 +163,43 @@
       Készült 2 eredeti példányban, amelyből egy a Szolgáltatót, egy a Megrendelőt illeti. &nbsp;·&nbsp; horvathlampapolir.hu &nbsp;·&nbsp; +36 20 541 8369
     </footer>
   </div>
+
+  <script>
+    // A megrendelt szolgáltatások listáját a weboldal adataiból (packages.json + services.json)
+    // építjük fel, így az árak/nevek bármilyen módosítása automatikusan ide is átíródik.
+    (function () {
+      var box = document.getElementById("svc-list");
+      if (!box) return;
+      var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]; }); };
+      var row = function (name, price) {
+        return '<label><input type="checkbox"> ' + esc(name) + (price ? ' <span class="svc-price">(' + esc(price) + ')</span>' : '') + '</label>';
+      };
+      var isAddon = function (it) { return (it.badge || "").toLowerCase().indexOf("kieg") === 0; };
+      Promise.all([
+        fetch("content/packages.json", { cache: "no-store" }).then(function (r) { return r.json(); }),
+        fetch("content/services.json", { cache: "no-store" }).then(function (r) { return r.json(); })
+      ]).then(function (res) {
+        var pkg = res[0] || {}, svc = res[1] || {};
+        var items = pkg.items || [];
+        var mains = items.filter(function (it) { return !isAddon(it); });
+        var addons = items.filter(isAddon);
+        var svcs = svc.items || [];
+        var html = "";
+        if (mains.length) {
+          html += '<div class="svc-grp">Csomag</div><div class="svc-list">' + mains.map(function (it) { return row(it.name, it.price); }).join("") + "</div>";
+        }
+        if (addons.length) {
+          html += '<div class="svc-grp">Kiegészítők</div><div class="svc-list">' + addons.map(function (it) { return row(it.name, it.price); }).join("") + "</div>";
+        }
+        if (svcs.length) {
+          html += '<div class="svc-grp">Önálló szolgáltatások</div><div class="svc-list">' + svcs.map(function (it) { return row(it.name, it.price); }).join("") +
+            '<label><input type="checkbox"> Egyéb: <input class="val" type="text" style="max-width:220px"></label></div>';
+        }
+        box.innerHTML = html || '<p style="color:var(--faint); margin:0">Nincs elérhető szolgáltatás.</p>';
+      }).catch(function () {
+        box.innerHTML = '<p style="color:#a33; margin:0">A szolgáltatások betöltése nem sikerült (internetkapcsolat szükséges).</p>';
+      });
+    })();
+  </script>
 </body>
 </html>
