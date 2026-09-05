@@ -1234,22 +1234,33 @@ function wireBookingForm(contact) {
     }
     const dateP = (f.get("date_pref") || "").toString().trim();
     const daypart = (f.get("daypart") || "").toString().trim();
-    const idopont = [dateP, daypart].filter(Boolean).join(" – ") || "—";
     const services = f.getAll("service").map((s) => s.toString().trim()).filter(Boolean);
-    const svcText = services.length ? services.join(", ") : "—";
-    const lines = [
-      "Időpont-igénylés a weboldalról",
-      "",
-      "Név: " + name,
-      "Telefon: " + phone,
-      "Autó: " + ((f.get("car") || "").toString().trim() || "—"),
-      "Kért szolgáltatás(ok): " + svcText,
-      "Helyszín: " + ((f.get("place") || "").toString().trim() || "—"),
-      "Kért időpont: " + idopont,
-      "",
-      "Megjegyzés:",
-      (f.get("message") || "").toString().trim() || "—",
+    const car = (f.get("car") || "").toString().trim() || "—";
+    const place = (f.get("place") || "").toString().trim() || "—";
+    const message = (f.get("message") || "").toString().trim() || "—";
+
+    // Táblázatos (oszlopos) elrendezés a levélben – a levélíró csak sima szöveget fogad.
+    const LW = 18; // címke-oszlop szélessége
+    const pad = (s) => { s = String(s); return s.length >= LW ? s : s + " ".repeat(LW - s.length); };
+    const rowsData = [
+      ["Név", name],
+      ["Telefon", phone],
+      ["Autó típusa", car],
+      ["Szolgáltatás(ok)", services.length ? services : ["—"]],
+      ["Helyszín", place],
+      ["Kért nap", dateP ? dateP.replace(/-/g, ". ") + "." : "—"],
+      ["Napszak", daypart || "—"],
+      ["Megjegyzés", message],
     ];
+    const lines = ["IDŐPONT-IGÉNYLÉS A WEBOLDALRÓL", "=".repeat(44), pad("Adat") + "| Érték", "-".repeat(18) + "+" + "-".repeat(25)];
+    for (const [k, v] of rowsData) {
+      if (Array.isArray(v)) {
+        v.forEach((item, i) => lines.push(pad(i === 0 ? k : "") + "| " + item));
+      } else {
+        lines.push(pad(k) + "| " + v);
+      }
+    }
+    lines.push("=".repeat(44));
     const to = isSet(contact.email) ? contact.email : "";
     const subject = "Időpont-igénylés – " + name;
     // Küldéskor a Gmail levélíró (compose) nyílik meg, előre kitöltve.
