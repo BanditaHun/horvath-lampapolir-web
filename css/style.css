@@ -490,6 +490,8 @@ section:last-of-type { border-bottom: none; }
 .cards--2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); max-width: 840px; }
 .cards--3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin: 44px 0 60px; }
 .cards--4 { grid-template-columns: repeat(auto-fit, minmax(228px, 1fr)); }
+/* Szolgáltatások: max 3 kártya soronként, középre igazítva */
+.cards--svc { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); max-width: 1160px; margin-left: auto; margin-right: auto; }
 
 /* ---------- Neon (pulzáló) kártya ---------- */
 @keyframes neonPulse {

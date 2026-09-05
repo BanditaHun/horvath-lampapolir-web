@@ -727,7 +727,7 @@ function renderCardsPage(app, data, defTitle, kind, promo) {
   if (kind === "packages") {
     cont.insertAdjacentHTML("beforeend", `<div class="arlista-dl"><a class="arlista-dl__btn" href="arlista.html" target="_blank" rel="noopener">${ICON_DOWNLOAD}<span>Teljes árlista – nyomtatás / PDF mentése</span></a></div>`);
   }
-  const grid = el("div", "cards" + (kind === "delivery" ? " cards--4" : ""));
+  const grid = el("div", "cards" + (kind === "delivery" ? " cards--4" : (kind === "services" ? " cards--svc" : "")));
   (data.items || []).forEach((it, i) => {
     let inner = "";
     if (kind === "delivery") {
