@@ -855,7 +855,7 @@ function renderCardsPage(app, data, defTitle, kind, promo) {
     return;
   }
 
-  // Csomagok: kiemelt fő szolgáltatás + külön "Kiegészítő opciók" blokk
+  // Csomagok: minden szolgáltatás mellé a hozzá tartozó kép (soros elrendezés)
   if (kind === "packages") {
     cont.classList.add("pkgpage");
     const items = data.items || [];
@@ -863,40 +863,51 @@ function renderCardsPage(app, data, defTitle, kind, promo) {
     const mains = items.filter((it) => !isAddon(it));
     const addons = items.filter((it) => isAddon(it));
 
-    // Látvány banner (előtte–utána)
-    cont.insertAdjacentHTML("beforeend", `<figure class="pkg-hero"><img class="zoomable" src="images/uploads/jpg elötte utána hátsólámpa.png" alt="Lámpafelújítás előtte és utána" loading="lazy" /></figure>`);
+    const FRONT_IMG = "images/uploads/Képernyőkép 2026-09-05 174059.png";
+    const REAR_IMG = "images/uploads/jpg elötte utána hátsólámpa.png";
+    const mediaFig = (src, alt) => `<figure class="pkg-row__media"><img class="zoomable" src="${src}" alt="${esc(alt)}" loading="lazy" /></figure>`;
 
-    // Fő szolgáltatás – kétoszlopos kártya: balra előnyök, jobbra ár + CTA
+    // Szlogen sáv
+    cont.insertAdjacentHTML("beforeend", `<aside class="pkg-slogan"><p class="pkg-slogan__main">Biztonság az utakon – mert a családod otthon vár! 🚗❤️</p><p class="pkg-slogan__sub">Látni és látszani – tiszta fényszóróval minden méter számít.</p></aside>`);
+
+    // Fő szolgáltatás – első fényszóró kép balra, kártya jobbra
     const main = mains[0];
     if (main) {
-      const featured = el("article", "neon-card neon-card--featured pkg-featured");
-      featured.style.animationDelay = "0s";
-      featured.innerHTML = `
-        <span class="pkg-featured-tag">★ Fő szolgáltatás</span>
-        <div class="pkg-featured__grid">
-          <div class="pkg-featured__main">
-            ${main.badge ? `<span class="neon-card__badge">${esc(main.badge)}</span>` : ""}
-            <h3 class="neon-card__title">${esc(main.name || "")}</h3>
-            ${main.description ? `<div class="neon-card__desc rich">${mdBlock(main.description)}</div>` : ""}
-          </div>
-          <aside class="pkg-featured__buy">
-            <div class="pkg-featured__pricelabel">Már</div>
-            <div class="neon-card__price pkg-featured__price">${esc(main.price || "")}</div>
+      const row = el("div", "pkg-row");
+      row.innerHTML = `
+        ${mediaFig(FRONT_IMG, "Első fényszóró felújítás előtte és utána")}
+        <article class="neon-card neon-card--featured pkg-row__card">
+          <span class="pkg-featured-tag">★ Fő szolgáltatás</span>
+          ${main.badge ? `<span class="neon-card__badge">${esc(main.badge)}</span>` : ""}
+          <h3 class="neon-card__title">${esc(main.name || "")}</h3>
+          ${main.description ? `<div class="neon-card__desc rich">${mdBlock(main.description)}</div>` : ""}
+          <div class="pkg-buy">
+            <div class="neon-card__price pkg-buy__price">${esc(main.price || "")}</div>
             <a class="btn btn--primary neon-card__order" href="kapcsolat.html">Megrendelem</a>
             <a class="pkg-featured__pdf" href="arlista.html" target="_blank" rel="noopener">${ICON_DOWNLOAD}<span>Teljes árlista (PDF)</span></a>
-          </aside>
-        </div>`;
-      cont.appendChild(featured);
+          </div>
+        </article>`;
+      cont.appendChild(row);
     }
-
-    // Második látvány kép – első fényszóró előtte–utána
-    cont.insertAdjacentHTML("beforeend", `<figure class="pkg-hero pkg-hero--2"><img class="zoomable" src="images/uploads/Képernyőkép 2026-09-05 174059.png" alt="Első fényszóró felújítás előtte és utána" loading="lazy" /></figure>`);
 
     if (addons.length) {
       cont.insertAdjacentHTML("beforeend", `<div class="pkg-addons-head"><h2 class="page__title">Kiegészítő opciók</h2><p class="pkg-addons-lead">A felújítás mellé választható extrák.</p></div>`);
-      const addGrid = el("div", "cards cards--2 pkg-addons");
-      addons.forEach((it, i) => addGrid.appendChild(neonCard(i, pkgCardInner(it), "neon-card--addon")));
-      cont.appendChild(addGrid);
+      addons.forEach((it) => {
+        const rear = /h[áa]ts[óo]/i.test(it.name || "");
+        if (rear) {
+          // Hátsó lámpa felújítás – kártya balra, hátsó lámpa kép jobbra
+          const row = el("div", "pkg-row pkg-row--rev");
+          row.innerHTML = `
+            <article class="neon-card neon-card--addon pkg-row__card">${pkgCardInner(it)}</article>
+            ${mediaFig(REAR_IMG, "Hátsó lámpák felújítása előtte és utána")}`;
+          cont.appendChild(row);
+        } else {
+          // Kép nélküli opció (pl. garancia) – kompakt, középre igazított kártya
+          const wrap = el("div", "pkg-addon-single");
+          wrap.appendChild(neonCard(0, pkgCardInner(it), "neon-card--addon"));
+          cont.appendChild(wrap);
+        }
+      });
     }
     if (promo) cont.insertAdjacentHTML("beforeend", multicarNote(promo));
     return;
