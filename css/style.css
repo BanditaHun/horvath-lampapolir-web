@@ -785,6 +785,8 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
   border: 1px solid rgba(240,180,41,0.28); border-radius: var(--radius);
   padding: 26px 24px; position: sticky; top: 100px;
 }
+.contact-aside__photo { margin: 0 0 20px; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 8px 22px rgba(0,0,0,0.28); }
+.contact-aside__photo img { display: block; width: 100%; height: auto; }
 .contact-aside__title { font-family: var(--font-heading); color: #fff; font-size: 1.45rem; margin: 0 0 22px; }
 .contact-info { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 20px; }
 .contact-info__item { display: flex; gap: 15px; align-items: center; }

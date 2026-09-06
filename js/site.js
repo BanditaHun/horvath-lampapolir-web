@@ -1376,6 +1376,7 @@ function renderContact(app, contact) {
   if (isSet(contact.instagram_url)) rows.push(infoRow(ICON_IG, "Instagram", `<a href="${esc(contact.instagram_url)}" target="_blank" rel="noopener">Megnézem</a>`));
 
   const aside = `<aside class="contact-aside">
+      <figure class="contact-aside__photo"><img class="zoomable" src="images/uploads/auto-felirat.png" alt="Horváth Lámpapolír – feliratos szervizautó, házhoz megyünk" loading="lazy" /></figure>
       <h2 class="contact-aside__title">Közvetlen elérhetőség</h2>
       <ul class="contact-info">${rows.join("")}</ul>
       ${contact.note ? `<div class="contact-aside__note rich">${mdBlock(contact.note)}</div>` : ""}
