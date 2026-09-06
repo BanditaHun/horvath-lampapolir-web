@@ -785,16 +785,18 @@ async function renderHome(app, contact) {
       <div class="rich prose">${mdBlock(about.text || "")}</div>
     </div>
     <figure class="home-about__media">
-      <img class="zoomable" src="images/uploads/auto-felirat.png" alt="Horváth Lámpapolír – feliratozott szervizautó, házhoz megyünk" loading="lazy" />
+      <img class="zoomable" src="${esc(isSet(about.image) ? rel(about.image) : "images/uploads/auto-felirat.png")}" alt="Horváth Lámpapolír – feliratozott szervizautó, házhoz megyünk" loading="lazy" />
     </figure>
   </section></div>` : "";
 
+  const nightImg = isSet(H.night_image) ? rel(H.night_image) : "images/uploads/Lámpa polir elött után az észlelés.png";
+  const infoImg = isSet(H.info_image) ? rel(H.info_image) : "images/uploads/miert-fontos-infografika.jpg";
   const nightHTML = `<div class="container"><section class="home-showcase">
-    <img class="zoomable home-showcase__img" src="images/uploads/Lámpa polir elött után az észlelés.png" alt="Lámpapolírozás előtt és után – mennyivel hamarabb észreveszed az akadályt éjszaka" loading="lazy" />
+    <img class="zoomable home-showcase__img" src="${esc(nightImg)}" alt="Lámpapolírozás előtt és után – mennyivel hamarabb észreveszed az akadályt éjszaka" loading="lazy" />
   </section></div>`;
 
   const infoHTML = `<div class="container"><section class="home-showcase">
-    <img class="zoomable home-showcase__img" src="images/uploads/miert-fontos-infografika.jpg" alt="Miért fontos a tiszta fényszóró? – professzionális útmutató a láthatósághoz" loading="lazy" />
+    <img class="zoomable home-showcase__img" src="${esc(infoImg)}" alt="Miért fontos a tiszta fényszóró? – professzionális útmutató a láthatósághoz" loading="lazy" />
   </section></div>`;
 
   const DQUICK = [
@@ -952,8 +954,8 @@ async function heroWeather() {
 
 function pkgCardInner(it) {
   const order = `<a class="btn btn--primary neon-card__order" href="kapcsolat.html">Megrendelem</a>`;
-  const media = isSet(it.image) ? `<figure class="neon-card__media"><img class="zoomable" src="${esc(rel(it.image))}" alt="${esc(it.name || "")}" loading="lazy" /></figure>` : "";
-  return `${media}${it.badge ? `<span class="neon-card__badge">${esc(it.badge)}</span>` : ""}
+  // A csomag képét a "pkg-row" mutatja a kártya mellett, ezért itt NEM ismételjük meg.
+  return `${it.badge ? `<span class="neon-card__badge">${esc(it.badge)}</span>` : ""}
     <h3 class="neon-card__title">${esc(it.name || "")}</h3>
     ${it.description ? `<div class="neon-card__desc rich">${mdBlock(it.description)}</div>` : ""}
     <div class="neon-card__price">${esc(it.price || "")}</div>
@@ -980,7 +982,7 @@ function renderCardsPage(app, data, defTitle, kind, promo) {
     cont.insertAdjacentHTML("beforeend", `<h2 class="page__title dsec-title">Díjszabás távolság szerint</h2><div class="dtiers">${tiersHtml}</div>`);
 
     cont.insertAdjacentHTML("beforeend", `<figure class="delivery-car">
-      <img class="zoomable" src="images/uploads/auto-felirat.png" alt="Horváth Lámpapolír – feliratos szervizautó (Renault Mégane)" loading="lazy" />
+      <img class="zoomable" src="${esc(isSet(data.car_image) ? rel(data.car_image) : "images/uploads/auto-felirat.png")}" alt="Horváth Lámpapolír – feliratos szervizautó (Renault Mégane)" loading="lazy" />
     </figure>`);
 
     if (isSet(data.intro)) {
@@ -1010,7 +1012,7 @@ function renderCardsPage(app, data, defTitle, kind, promo) {
     if (main) {
       const row = el("div", "pkg-row");
       row.innerHTML = `
-        ${mediaFig(FRONT_IMG, "Első fényszóró felújítás előtte és utána")}
+        ${mediaFig(isSet(main.image) ? rel(main.image) : FRONT_IMG, "Első fényszóró felújítás előtte és utána")}
         <article class="neon-card neon-card--featured pkg-row__card">
           <span class="pkg-featured-tag">★ Fő szolgáltatás</span>
           ${main.badge ? `<span class="neon-card__badge">${esc(main.badge)}</span>` : ""}
@@ -1034,7 +1036,7 @@ function renderCardsPage(app, data, defTitle, kind, promo) {
           const row = el("div", "pkg-row pkg-row--rev");
           row.innerHTML = `
             <article class="neon-card neon-card--addon pkg-row__card">${pkgCardInner(it)}</article>
-            ${mediaFig(REAR_IMG, "Hátsó lámpák felújítása előtte és utána")}`;
+            ${mediaFig(isSet(it.image) ? rel(it.image) : REAR_IMG, "Hátsó lámpák felújítása előtte és utána")}`;
           cont.appendChild(row);
         } else {
           // Kép nélküli opció (pl. garancia) – kompakt, középre igazított kártya
@@ -1376,7 +1378,7 @@ function renderContact(app, contact) {
   if (isSet(contact.instagram_url)) rows.push(infoRow(ICON_IG, "Instagram", `<a href="${esc(contact.instagram_url)}" target="_blank" rel="noopener">Megnézem</a>`));
 
   const aside = `<aside class="contact-aside">
-      <figure class="contact-aside__photo"><img class="zoomable" src="images/uploads/auto-felirat.png" alt="Horváth Lámpapolír – feliratos szervizautó, házhoz megyünk" loading="lazy" /></figure>
+      <figure class="contact-aside__photo"><img class="zoomable" src="${esc(isSet(contact.photo) ? rel(contact.photo) : "images/uploads/auto-felirat.png")}" alt="Horváth Lámpapolír – feliratos szervizautó, házhoz megyünk" loading="lazy" /></figure>
       <h2 class="contact-aside__title">Közvetlen elérhetőség</h2>
       <ul class="contact-info">${rows.join("")}</ul>
       ${contact.note ? `<div class="contact-aside__note rich">${mdBlock(contact.note)}</div>` : ""}
@@ -1463,13 +1465,9 @@ function bookingFormHTML(contact) {
           <label class="booking__field"><span>Telefonszámod *</span>
             <input type="tel" name="phone" required autocomplete="tel" placeholder="pl. +36 20 123 4567" /></label>
         </div>
-        <label class="booking__field"><span>Település / helyszín <em>(a munkavégzés helye)</em></span>
-          <input type="text" name="place" placeholder="pl. Szekszárd, Kossuth u. 5." /></label>
-      </fieldset>
-
-      <fieldset class="booking__section">
-        <legend class="booking__section-h"><span class="booking__num">2</span> Számlázás</legend>
-        <label class="booking__field"><span id="billing-addr-label">Számlázási cím (lakcím) – település, utca, házszám</span>
+        <label class="booking__field"><span>E-mail cím</span>
+          <input type="email" name="email" autocomplete="email" placeholder="pl. nev@example.com" /></label>
+        <label class="booking__field"><span>Lakcím / a munkavégzés helye <em>– település, utca, házszám</em></span>
           <input type="text" name="billing_addr" autocomplete="street-address" placeholder="pl. 7100 Szekszárd, Fő utca 12." /></label>
         <label class="booking__2car"><input type="checkbox" id="biz-toggle" name="is_business" value="Igen" /> <span>Céges / jogi személyként kérem a számlát <em>(cég, Kft., Bt., egyéni vállalkozó)</em></span></label>
         <div class="booking__billing" id="biz-fields" hidden>
@@ -1480,11 +1478,13 @@ function bookingFormHTML(contact) {
             <label class="booking__field"><span>Adószám *</span>
               <input type="text" name="taxno" inputmode="numeric" placeholder="pl. 12345678-1-17" /></label>
           </div>
+          <label class="booking__field"><span>Székhely (számlázási cím) *</span>
+            <input type="text" name="hq" autocomplete="off" placeholder="pl. 7100 Szekszárd, Fő utca 1." /></label>
         </div>
       </fieldset>
 
       <fieldset class="booking__section">
-        <legend class="booking__section-h"><span class="booking__num">3</span> Autó adatai</legend>
+        <legend class="booking__section-h"><span class="booking__num">2</span> Autó adatai</legend>
         <div class="booking__row">
           <label class="booking__field"><span>Autó típusa</span>
             <input type="text" name="car" autocomplete="off" placeholder="pl. Opel Astra H" /></label>
@@ -1516,7 +1516,7 @@ function bookingFormHTML(contact) {
       </fieldset>
 
       <fieldset class="booking__section">
-        <legend class="booking__section-h"><span class="booking__num">4</span> Mit szeretnél?</legend>
+        <legend class="booking__section-h"><span class="booking__num">3</span> Mit szeretnél?</legend>
         <div class="booking__field booking__field--svc">
           <span>Válaszd ki a szolgáltatás(oka)t <em>(többet is választhatsz)</em></span>
           <div class="svc-picker">${servicePicker}</div>
@@ -1524,7 +1524,7 @@ function bookingFormHTML(contact) {
       </fieldset>
 
       <fieldset class="booking__section">
-        <legend class="booking__section-h"><span class="booking__num">5</span> Időpont és megjegyzés</legend>
+        <legend class="booking__section-h"><span class="booking__num">4</span> Időpont és megjegyzés</legend>
         <div class="booking__row">
           <label class="booking__field"><span>Kért időpont (nap)</span>
             <input type="date" name="date_pref" /></label>
@@ -1549,15 +1549,10 @@ function wireBookingForm(contact) {
   if (!form) return;
   const note = document.getElementById("booking-note");
 
-  // Céges/jogi személy pipa → megjelennek a céges számlázási mezők, a cím felirata "székhely"-re vált
+  // Céges/jogi személy pipa → lenyílik a céges számlázási blokk (cégnév, adószám, székhely)
   const bizToggle = document.getElementById("biz-toggle");
   const bizFields = document.getElementById("biz-fields");
-  const addrLabel = document.getElementById("billing-addr-label");
-  const syncBiz = () => {
-    const on = !!(bizToggle && bizToggle.checked);
-    if (bizFields) bizFields.hidden = !on;
-    if (addrLabel) addrLabel.textContent = on ? "Székhely (számlázási cím) – település, utca, házszám *" : "Számlázási cím (lakcím) – település, utca, házszám";
-  };
+  const syncBiz = () => { if (bizFields) bizFields.hidden = !(bizToggle && bizToggle.checked); };
   if (bizToggle) { bizToggle.addEventListener("change", syncBiz); syncBiz(); }
 
   // 2 autó egy helyszínen → második jármű mezői
@@ -1577,14 +1572,18 @@ function wireBookingForm(contact) {
       if (note) { note.hidden = false; note.className = "booking__note booking__note--err"; note.textContent = "Kérlek add meg a neved és a telefonszámod."; }
       return;
     }
-    // Számlázási adatok
+    const email = (f.get("email") || "").toString().trim();
+    // Cím: a lakcím / munkavégzés helye (egyben magánszemélynek a számlázási cím)
+    const addr = (f.get("billing_addr") || "").toString().trim();
+    // Számlázási adatok (jogi személy)
     const isBusiness = !!f.get("is_business");
     const billingType = isBusiness ? "Cég / jogi személy" : "Magánszemély";
     const company = (f.get("company") || "").toString().trim();
     const taxno = (f.get("taxno") || "").toString().trim();
-    const billingAddr = (f.get("billing_addr") || "").toString().trim();
-    if (isBusiness && (!company || !taxno || !billingAddr)) {
-      if (note) { note.hidden = false; note.className = "booking__note booking__note--err"; note.textContent = "Céges/vállalkozói számlához kérlek add meg a cég nevét, az adószámot és a székhelyet (számlázási címet)."; }
+    const hq = (f.get("hq") || "").toString().trim();
+    const billingAddr = isBusiness ? hq : addr; // számlázási cím: cégnél a székhely, magánszemélynél a lakcím
+    if (isBusiness && (!company || !taxno || !hq)) {
+      if (note) { note.hidden = false; note.className = "booking__note booking__note--err"; note.textContent = "Céges/jogi személy számlához kérlek add meg a cég nevét, az adószámot és a székhelyet."; }
       return;
     }
     const dateP = (f.get("date_pref") || "").toString().trim();
@@ -1592,7 +1591,7 @@ function wireBookingForm(contact) {
     const services = f.getAll("service").map((s) => s.toString().trim()).filter(Boolean);
     const car = (f.get("car") || "").toString().trim() || "—";
     const year = (f.get("year") || "").toString().trim();
-    const place = (f.get("place") || "").toString().trim() || "—";
+    const place = addr || "—"; // a munkavégzés helye = a megadott lakcím/cím
     const plate = (f.get("plate") || "").toString().trim();
     const vin = (f.get("vin") || "").toString().trim();
     const twoCarsVal = f.get("two_cars") ? "Igen – 2 autó egy helyszínen" : "";
@@ -1602,9 +1601,12 @@ function wireBookingForm(contact) {
     const vin2 = (f.get("vin2") || "").toString().trim();
     const message = (f.get("message") || "").toString().trim() || "—";
 
+    const idRows = [["Név", name], ["Telefon", phone]];
+    if (email) idRows.push(["E-mail", email]);
+    idRows.push(["Cím (lakcím / munkavégzés helye)", addr || "—"]);
     const billingRows = isBusiness
-      ? [["Számlázás", "Cég / jogi személy"], ["Cég neve", company], ["Adószám", taxno], ["Székhely", billingAddr]]
-      : [["Számlázás", "Magánszemély"], ["Száml. cím (lakcím)", billingAddr || "—"]];
+      ? [["Számlázás", "Cég / jogi személy"], ["Cég neve", company], ["Adószám", taxno], ["Székhely (száml. cím)", hq]]
+      : [["Számlázás", "Magánszemély"]];
     const carRows = [["Autó típusa", car + (year ? " (" + year + ")" : "")]];
     if (plate) carRows.push(["Rendszám", plate]);
     if (vin) carRows.push(["Alvázszám (VIN)", vin]);
@@ -1615,12 +1617,10 @@ function wireBookingForm(contact) {
       if (vin2) carRows.push(["2. alvázszám", vin2]);
     }
     const rowsData = [
-      ["Név", name],
-      ["Telefon", phone],
+      ...idRows,
       ...billingRows,
       ...carRows,
       ["Szolgáltatás(ok)", services.length ? services : ["—"]],
-      ["Helyszín", place],
       ["Kért nap", dateP ? dateP.replace(/-/g, ". ") + "." : "—"],
       ["Napszak", daypart || "—"],
       ["Megjegyzés", message],

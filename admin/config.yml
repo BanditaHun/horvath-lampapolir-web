@@ -113,6 +113,8 @@ collections:
         format: "json"
         fields:
           - { name: "intro", label: "Rövid leírás (a bizalmi sáv alatt a kezdőlapon)", widget: "text", required: false, hint: "**félkövér** használható." }
+          - { name: "night_image", label: "Kezdőlapi kép 1. – „éjszakai előtte–utána”", widget: "image", required: false, hint: "A Bemutatkozás után megjelenő nagy kép. Ha üres, az alapértelmezett éjszakai előtte–utána kép marad." }
+          - { name: "info_image", label: "Kezdőlapi kép 2. – „miért fontos” infografika", widget: "image", required: false, hint: "A „Miért válassz engem?” után megjelenő nagy kép. Ha üres, az alap infografika marad." }
           - name: "quick"
             label: "Kiemelt kártyák (3 db)"
             widget: "list"
@@ -189,6 +191,7 @@ collections:
         fields:
           - { name: "heading", label: "Szakasz címe", widget: "string" }
           - { name: "text", label: "Szöveg", widget: "markdown", hint: "Kijelöléssel félkövér (B), címsor és lista is beállítható a szerkesztő eszköztárában." }
+          - { name: "image", label: "Kép (a szöveg mellett)", widget: "image", required: false, hint: "Ha üres, a feliratos szervizautó képe jelenik meg. Ide bármilyen saját képet feltölthetsz." }
 
   # ---- Csomagok ----
   - name: "packages"
@@ -209,6 +212,7 @@ collections:
               - { name: "badge", label: "Címke (pl. Legnépszerűbb, Ajánlott, Kiegészítő) – opcionális", widget: "string", required: false }
               - { name: "description", label: "Leírás", widget: "markdown", required: false, hint: "Bővebb leírás – félkövér, címsor, lista is használható." }
               - { name: "price", label: "Ár", widget: "string" }
+              - { name: "image", label: "Kép (a csomag mellett)", widget: "image", required: false, hint: "A Csomagok oldalon a szolgáltatás MELLETT jelenik meg. Ha üres, az alapértelmezett előtte–utána kép marad." }
 
   # ---- Önálló szolgáltatások ----
   - name: "services"
@@ -228,6 +232,7 @@ collections:
               - { name: "name", label: "Megnevezés", widget: "string" }
               - { name: "description", label: "Leírás", widget: "markdown", required: false, hint: "Bővebb leírás – félkövér, címsor, lista is használható." }
               - { name: "price", label: "Ár", widget: "string" }
+              - { name: "image", label: "Kép (a kártyán)", widget: "image", required: false, hint: "A Szolgáltatások oldalon a kártya tetején jelenik meg. Opcionális." }
 
   # ---- Kiszállási díj ----
   - name: "delivery"
@@ -240,6 +245,7 @@ collections:
         fields:
           - { name: "heading", label: "Szakasz címe", widget: "string" }
           - { name: "intro", label: "Bevezető szöveg (az oldal tetején)", widget: "markdown", required: false }
+          - { name: "car_image", label: "Szervizautó képe (a díjszabás alatt)", widget: "image", required: false, hint: "Ha üres, a feliratos szervizautó alapképe jelenik meg." }
           - name: "items"
             label: "Sávok"
             widget: "list"
@@ -269,6 +275,7 @@ collections:
           - { name: "map_lat", label: "Térkép – székhely szélesség (lat)", widget: "string", required: false, hint: "A piros kör középpontja. Pl. 46.4256 (Tolna). Üresen hagyva nincs térkép." }
           - { name: "map_lng", label: "Térkép – székhely hosszúság (lng)", widget: "string", required: false, hint: "Pl. 18.7817." }
           - { name: "map_radius_km", label: "Piros kör sugara (km)", widget: "string", required: false, default: "50" }
+          - { name: "photo", label: "Kép (a Kapcsolat oldal jobb paneljén)", widget: "image", required: false, hint: "Ha üres, a feliratos szervizautó képe jelenik meg. Bármilyen saját képet feltölthetsz." }
 
   # ---- Galéria ----
   - name: "gallery"
