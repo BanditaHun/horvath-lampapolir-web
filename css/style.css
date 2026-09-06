@@ -1118,6 +1118,12 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 
 :root[data-theme="light"] .booking__field input, :root[data-theme="light"] .booking__field select, :root[data-theme="light"] .booking__field textarea, :root[data-theme="light"] .review-form input, :root[data-theme="light"] .review-form textarea { background: #fff; color: #23262b; border-color: #dfe3e8; color-scheme: light; }
 :root[data-theme="light"] .booking__info { background: rgba(224,164,28,0.08); }
+/* Világos mód – mezőcímkék és szekciófejlécek jól látszódjanak (ne fehéren fehéren) */
+:root[data-theme="light"] .booking__field > span { color: #23262b; }
+:root[data-theme="light"] .booking__field > span em { color: #6b7178; }
+:root[data-theme="light"] .svc-group__h { color: #a9760a; }
+:root[data-theme="light"] .svc-check:hover { color: #000; }
+:root[data-theme="light"] .booking__field input::placeholder, :root[data-theme="light"] .booking__field textarea::placeholder, :root[data-theme="light"] .calc__input::placeholder { color: #9aa0a8; }
 
 :root[data-theme="light"] .faq__item, :root[data-theme="light"] .faq__item[open] { background: #fff; border-color: #ece4cf; }
 :root[data-theme="light"] .faq__a { color: #4a4f57; }
