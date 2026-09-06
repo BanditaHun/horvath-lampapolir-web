@@ -44,7 +44,31 @@
     },
     {
       "q": "Hogyan tudok időpontot kérni?",
-      "a": "A legegyszerűbb, ha **[telefonon felhívsz](kapcsolat.html)**, vagy kitöltöd a **[Kapcsolat](kapcsolat.html)** oldalon lévő rövid **időpontkérő űrlapot** – abban megadhatod a neved, a telefonszámod, az autó típusát és hogy pontosan mit szeretnél. Ezután felveszem veled a kapcsolatot, és egyeztetjük az időpontot."
+      "a": "A legegyszerűbb, ha **[telefonon felhívsz](kapcsolat.html)**, vagy kitöltöd a **[Kapcsolat](kapcsolat.html)** oldalon lévő rövid **időpontkérő űrlapot** – abban megadhatod a neved, a telefonszámod, az e-mail-címed, a címet, az autó adatait (típus, évjárat, rendszám, ablaktörlő-cseréhez az alvázszámot is) és a kért szolgáltatás(oka)t. Az elküldés után **e-mailben megkapom az igényed, majd visszahívlak**, és közösen egyeztetjük a pontos időpontot – ez még nem végleges foglalás."
+    },
+    {
+      "q": "Mi történik, miután elküldtem az időpont-igénylést?",
+      "a": "Az igénylés **nem végleges foglalás**, hanem egy kérés. Miután megérkezett, **rövid időn belül visszahívlak** (vagy visszaírok), pontosítjuk a lámpák állapotát és a szolgáltatásokat, majd **közösen kitűzünk egy időpontot**. A végleges árat a helyszíni állapotfelmérés után rögzítjük, és a munkáról **számlát adok**."
+    },
+    {
+      "q": "Kell előleg vagy foglaló az időpontfoglaláshoz?",
+      "a": "**Nem kérek előleget vagy foglalót** – a szolgáltatás árát a munka végén, a helyszínen rendezed. Egyetlen kivétel: ha a megbeszélt időpontot **nem mondod le legalább 24 órával korábban**, és a kiszállás miattad hiúsul meg (nem vagy elérhető, a jármű nincs ott, vagy a helyszínen lemondod), akkor a **kiszállási (úti) díjat** ilyenkor is fel kell számítanom – ez csak az oda-vissza út költsége."
+    },
+    {
+      "q": "Több autót is felújíttatnék egyszerre – jár rá kedvezmény?",
+      "a": "Igen! Ha **egy helyszínen, egy alkalommal legalább két autót** újíttatsz fel, a teljes felújítás végösszegéből **kedvezményt adok**, a kiszállási díjat pedig csak **egyszer** számítom fel. A pontos kedvezményről telefonon egyeztessünk a **+36 20 541 8369** számon – flottáknak, fuvarozóknak és autókereskedéseknek is szívesen dolgozom."
+    },
+    {
+      "q": "A hátsó lámpát, indexet is fel tudod újítani?",
+      "a": "Igen. A fényszóró mellett a homályos, megkopott **hátsó lámpák és irányjelzők** is felújíthatók, hogy elöl-hátul egységes, ápolt legyen az autó – és a mögötted jövők is hamarabb észrevegyék a fék- és irányjelzést. A hátsó lámpák felújítása **kiegészítő szolgáltatásként** kérhető a fényszóró-felújítás mellé."
+    },
+    {
+      "q": "Mi az a vízlepergető (nano) szélvédőkezelés, és meddig tart?",
+      "a": "Ez egy **nanotechnológiás, víztaszító bevonat** az üvegen: eső esetén a víz apró cseppekként legördül, kb. **70–80 km/h felett** a menetszél magától letisztítja a szélvédőt, így tisztább a látás és kevesebb a káprázás. A hatás tartós, de kopó bevonat, ezért idővel (a futásteljesítménytől függően) érdemes felfrissíteni. Fontos: a **láthatóságot** javítja, kőfelverődés ellen nem véd."
+    },
+    {
+      "q": "Ablaktörlő lapátot is tudsz cserélni? Mi kell hozzá?",
+      "a": "Igen, az ablaktörlő lapát cseréjét is vállalom a kiszállás során. A pontos, illeszkedő lapáthoz jó, ha tudom az **autó pontos típusát és évjáratát**, illetve biztos illesztéshez az **alvázszámot (VIN)** – ezeket az időpont-igénylő űrlapon meg is adhatod."
     }
   ]
 }
