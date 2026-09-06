@@ -790,7 +790,7 @@ async function renderHome(app, contact) {
   </section></div>` : "";
 
   const nightHTML = `<div class="container"><section class="home-showcase">
-    <img class="zoomable home-showcase__img" src="images/uploads/ejszakai-elotte-utana.jpg" alt="A sötét út a lámpapolírozás előtt és után – éjszakai láthatóság" loading="lazy" />
+    <img class="zoomable home-showcase__img" src="images/uploads/Lámpa polir elött után az észlelés.png" alt="Lámpapolírozás előtt és után – mennyivel hamarabb észreveszed az akadályt éjszaka" loading="lazy" />
   </section></div>`;
 
   const infoHTML = `<div class="container"><section class="home-showcase">
