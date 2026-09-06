@@ -71,7 +71,8 @@
 <body>
   <div class="toolbar">
     <span class="toolbar__msg"><b>Meghiúsult kiszállás esetén</b> (nincs otthon): írd rá a pontos dátumot/időt, és dobd a postaládába. Aláírás az ügyféltől nem kell.</span>
-    <button class="tbtn tbtn--print" onclick="window.print()">🖨️ Nyomtatás / PDF mentése</button>
+    <button class="tbtn tbtn--print" id="pdf-btn">💾 PDF letöltése</button>
+    <button class="tbtn tbtn--back" onclick="window.print()">🖨️ Nyomtatás</button>
     <a class="tbtn tbtn--back" href="index.html">← Vissza</a>
   </div>
 
@@ -130,5 +131,23 @@
       A jelen értesítő a Polgári Törvénykönyvről szóló 2013. évi V. törvény és a fogyasztó és a vállalkozás közötti szerződések részletes szabályairól szóló 45/2014. (II. 26.) Korm. rendelet rendelkezésein alapul. A kiszállási díj megfizetésének kötelezettsége a felek között az időpont-egyeztetéskor létrejött megállapodáson alapul; a jelen dokumentum a meghiúsult kiszállás tényét és a díj megfizetésére vonatkozó felhívást tartalmazza. A fogyasztót jogszabály alapján megillető jogokat nem érinti.
     </footer>
   </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js"></script>
+  <script>
+  (function(){
+    var btn=document.getElementById("pdf-btn"); if(!btn) return;
+    btn.addEventListener("click", function(){
+      var sheet=document.querySelector(".sheet");
+      if(!sheet||!window.html2pdf){ window.print(); return; }
+      sheet.querySelectorAll("input[type=text]").forEach(function(i){ i.setAttribute("value", i.value); });
+      sheet.querySelectorAll("input[type=checkbox]").forEach(function(i){ if(i.checked) i.setAttribute("checked","checked"); else i.removeAttribute("checked"); });
+      sheet.querySelectorAll("textarea").forEach(function(x){ x.textContent=x.value; });
+      var old=btn.textContent; btn.disabled=true; btn.textContent="PDF készítése…";
+      window.html2pdf().set({ margin:0, filename:"Horvath-Lampapolir-Kiszallasi-dij-ertesito.pdf", image:{type:"jpeg",quality:0.98}, html2canvas:{scale:2, useCORS:true, backgroundColor:"#ffffff"}, jsPDF:{unit:"mm", format:"a4", orientation:"portrait"} }).from(sheet).save()
+        .then(function(){ btn.disabled=false; btn.textContent=old; })
+        .catch(function(){ btn.disabled=false; btn.textContent=old; window.print(); });
+    });
+  })();
+  </script>
 </body>
 </html>
