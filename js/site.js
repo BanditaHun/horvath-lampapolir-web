@@ -416,6 +416,7 @@ function buildFooter() {
           <a href="arlista.html" target="_blank" rel="noopener">${ICON_LI_RECEIPT}<span>Árlista (PDF)</span></a>
           <a href="garancia.html" target="_blank" rel="noopener">${ICON_LI_CERT}<span>Garancialevél (PDF)</span></a>
           <a href="megrendelo.html" target="_blank" rel="noopener">${ICON_LI_RECEIPT}<span>Megrendelő lap (PDF)</span></a>
+          <a href="kiszallasi-ertesito.html" target="_blank" rel="noopener">${ICON_LI_RECEIPT}<span>Kiszállási díj értesítő (PDF)</span></a>
           <a href="gyik.html">${ICON_LI_FAQ}<span>GYIK – Gyakori kérdések</span></a>
           <a href="adatvedelem.html">${ICON_LI_LOCK}<span>Adatvédelmi tájékoztató</span></a>
           <a href="impresszum.html">${ICON_LI_INFO}<span>Impresszum</span></a>
