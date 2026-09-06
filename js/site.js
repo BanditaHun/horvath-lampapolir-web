@@ -56,14 +56,15 @@ const FONT_MAP = {
   "Bebas Neue": { css: "'Bebas Neue', sans-serif", g: "Bebas+Neue" },
   Anton: { css: "'Anton', sans-serif", g: "Anton" },
 };
-function loadGoogleFonts(specs) {
-  const families = specs.filter(Boolean);
-  if (!families.length) return;
-  const p1 = el("link"); p1.rel = "preconnect"; p1.href = "https://fonts.googleapis.com";
-  const p2 = el("link"); p2.rel = "preconnect"; p2.href = "https://fonts.gstatic.com"; p2.crossOrigin = "anonymous";
-  const link = el("link"); link.rel = "stylesheet";
-  link.href = "https://fonts.googleapis.com/css2?" + families.map((f) => "family=" + f).join("&") + "&display=swap";
-  document.head.append(p1, p2, link);
+// Betűk SAJÁT tárhelyről töltődnek (adatvédelem: semmi nem megy a Google szerverére).
+// A helyi fonts.css a Montserrat + Oswald készletet tartalmazza; más CMS-ben választott
+// betűtípus a rendszer-fontra esik vissza (nem indít külső kérést).
+let _localFontsLoaded = false;
+function loadGoogleFonts(_specs) {
+  if (_localFontsLoaded) return;
+  _localFontsLoaded = true;
+  const link = el("link"); link.rel = "stylesheet"; link.href = rel("/fonts/fonts.css");
+  document.head.appendChild(link);
 }
 function applyTheme(theme) {
   if (!theme) return;
@@ -1759,6 +1760,22 @@ function wireLightbox() {
 }
 
 // ---------- Indítás ----------
+// Kis, nem blokkoló adatvédelmi tájékoztató sáv (nincs követő süti, ezért nincs elfogadás-kényszer).
+function buildPrivacyBar() {
+  try { if (localStorage.getItem("hlp_privacy_ok") === "1") return; } catch (e) {}
+  if (document.querySelector(".privacy-bar")) return;
+  const bar = document.createElement("div");
+  bar.className = "privacy-bar";
+  bar.setAttribute("role", "region");
+  bar.setAttribute("aria-label", "Adatvédelmi tájékoztatás");
+  bar.innerHTML = '<span class="privacy-bar__text">Ez az oldal csak a működéséhez szükséges tárolást használ (pl. a választott téma megjegyzése). Követő- és reklámsütiket nem alkalmazunk. Részletek: <a href="adatvedelem.html">Adatvédelem</a>.</span><button type="button" class="privacy-bar__ok">Rendben</button>';
+  document.body.appendChild(bar);
+  bar.querySelector(".privacy-bar__ok").addEventListener("click", () => {
+    try { localStorage.setItem("hlp_privacy_ok", "1"); } catch (e) {}
+    bar.remove();
+  });
+}
+
 async function initSite() {
   trackVisit();
   buildStarfield();
@@ -1784,6 +1801,7 @@ async function initSite() {
 
   buildMobileBar(contact);
   buildToTop();
+  buildPrivacyBar();
   injectLocalBusiness(contact);
   try { buildAiWidget(await loadJSON("content/ai.json")); } catch (e) { /* nincs AI beállítva */ }
 

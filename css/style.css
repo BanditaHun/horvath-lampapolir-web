@@ -1180,6 +1180,33 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 .reviews__google-btn svg { flex: none; }
 .review-or a { color: var(--gold); font-weight: 700; }
 
+/* ---------- Adatvédelmi info-sáv ---------- */
+.privacy-bar {
+  position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 70;
+  max-width: 880px; margin: 0 auto;
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  padding: 13px 18px; border-radius: 14px;
+  background: rgba(18,18,18,0.97); border: 1px solid rgba(240,180,41,0.45);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.privacy-bar__text { flex: 1; min-width: 220px; color: var(--chrome); font-size: .88rem; line-height: 1.5; }
+.privacy-bar__text a { color: var(--gold); font-weight: 700; }
+.privacy-bar__ok {
+  flex: none; cursor: pointer; border: none; border-radius: 22px; padding: 9px 22px;
+  font-family: inherit; font-weight: 700; font-size: .92rem;
+  background: linear-gradient(135deg, var(--gold), #e0a41c); color: #1a1400;
+}
+.privacy-bar__ok:hover { filter: brightness(1.06); }
+:root[data-theme="light"] .privacy-bar { background: #fff; border-color: #e6d199; }
+:root[data-theme="light"] .privacy-bar__text { color: #23262b; }
+:root[data-theme="light"] .privacy-bar__text a { color: #a9760a; }
+@media (max-width: 560px) {
+  .privacy-bar { left: 10px; right: 10px; bottom: 92px; padding: 12px 14px; gap: 10px; }
+  .privacy-bar__text { font-size: .82rem; }
+  .privacy-bar__ok { width: 100%; }
+}
+@media print { .privacy-bar { display: none !important; } }
+
 /* ---------- Google-értékelések (Places proxy megjelenítés) ---------- */
 .greviews { margin: 4px 0 26px; }
 .greviews__head { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin-bottom: 16px; }
