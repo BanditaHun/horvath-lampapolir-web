@@ -39,6 +39,10 @@
       "a": "Igen. **Bejelentett, számlaképes egyéni vállalkozó** vagyok, így magánszemélyeknek és cégeknek egyaránt **adok számlát** a munkáról. Fuvarozóknak, autókereskedéseknek és flottáknak is szívesen dolgozom – több autó esetén keress bátran, egyeztethetünk a részletekről."
     },
     {
+      "q": "Milyen adatokat kell megadnom a számlához?",
+      "a": "**Minden értékesítésről és szolgáltatásról számlát állítok ki.** A számla kiállításához a megrendeléskor (személyesen, telefonon vagy e-mailben) az alábbi adatokat kérem:\n\n- **Magánszemélyeknek:** a **név** és a **cím (lakcím)**.\n- **Cégeknek / vállalkozóknak:** a **cégnév**, a **székhely (számlázási cím)** és az **adószám**.\n\nEzen adatok hiányában sajnos a szolgáltatást **nem áll módomban teljesíteni**. A megadott adatokat kizárólag a számla kiállításához használom – a részletek az [Adatvédelmi tájékoztatóban](adatvedelem.html) olvashatók."
+    },
+    {
       "q": "Milyen fizetési módot fogadsz el?",
       "a": "Ahogy neked kényelmesebb: a helyszínen fizethetsz **bankkártyával – érintésesen is –** vagy **készpénzzel**, cégeknek pedig **banki átutalással** is. Mindegyikről **számlát adok**.\n\n- **Magánszemélyként** a munka végén, a helyszínen rendezheted: **kártyával (érintéses)** vagy **készpénzzel**.\n- **Cégeknek** kiállítom a számlát, amelyet **banki átutalással**, a fizetési határidőig egyenlíthettek ki.\n\nBejelentett, számlaképes egyéni vállalkozóként magánszemélyeknek és cégeknek is átlátható, korrekt elszámolást adok."
     },
