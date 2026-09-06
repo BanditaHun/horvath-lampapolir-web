@@ -1574,6 +1574,25 @@ function wireBookingForm(contact) {
       }
     }
     lines.push("=".repeat(44));
+
+    // Előre kitöltött MEGRENDELŐ LAP link – a beérkező levélből egy kattintással megnyílik,
+    // már az ügyfél adataival kitöltve; csak a hiányzókat (ár, rendszám, időpont) kell beírni.
+    try {
+      const op = new URLSearchParams();
+      op.set("type", isBusiness ? "company" : "person");
+      op.set("name", isBusiness ? (company || name) : name);
+      op.set("phone", phone);
+      if (place && place !== "—") op.set("place", place);
+      if (billingAddr) op.set("billaddr", billingAddr);
+      if (isBusiness && taxno) op.set("taxno", taxno);
+      if (services.length) op.set("services", services.join("|"));
+      if (dateP) op.set("date", dateP.replace(/-/g, ". ") + ".");
+      const orderUrl = new URL("megrendelo.html", location.href).href + "?" + op.toString();
+      lines.push("");
+      lines.push("ELŐRE KITÖLTÖTT MEGRENDELŐ LAP (kattints rá – csak az árat/rendszámot kell kitölteni):");
+      lines.push(orderUrl);
+    } catch (e) { /* ha valamiért nem megy, a fenti táblázat úgyis tartalmaz mindent */ }
+
     const to = isSet(contact.email) ? contact.email : "";
     const subject = "Időpont-igénylés – " + name;
     // Küldéskor a Gmail levélíró (compose) nyílik meg, előre kitöltve.
