@@ -1008,9 +1008,9 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 .btn { transition: transform .15s ease, box-shadow .2s ease, background .2s ease, color .2s ease, border-color .2s ease; }
 .btn--primary:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(240,180,41,0.32); }
 .btn--ghost:hover { transform: translateY(-2px); background: rgba(240,180,41,0.2); border-color: var(--gold); }
-/* Világos mód – legyen jól látható a másodlagos (arany körvonalas) gomb */
-:root[data-theme="light"] .btn--ghost { color: var(--gold-dim); background: rgba(224,164,28,0.12); border-color: #e0c98f; }
-:root[data-theme="light"] .btn--ghost:hover { background: rgba(224,164,28,0.2); border-color: var(--gold-dim); }
+/* Világos mód – jól olvasható másodlagos (arany körvonalas) gomb: sötét borostyán szöveg, meleg háttér, erős arany keret */
+:root[data-theme="light"] .btn--ghost { color: #7a5300; background: #fdf3d6; border-color: #d9a520; }
+:root[data-theme="light"] .btn--ghost:hover { background: #f7e6b6; border-color: #b8890c; color: #5f4000; }
 .neon-card__more { transition: letter-spacing .2s ease; }
 .neon-card:hover .neon-card__more { letter-spacing: .5px; }
 
@@ -1053,8 +1053,8 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
   transition: background .18s ease, border-color .18s ease, transform .18s ease;
 }
 .multicar__cta:hover { background: rgba(240,180,41,0.2); border-color: var(--gold); text-decoration: none; transform: translateY(-1px); }
-:root[data-theme="light"] .multicar__cta { color: var(--gold-dim); background: rgba(224,164,28,0.12); border-color: #e0c98f; }
-:root[data-theme="light"] .multicar__cta:hover { background: rgba(224,164,28,0.2); border-color: var(--gold-dim); }
+:root[data-theme="light"] .multicar__cta { color: #7a5300; background: #fdf3d6; border-color: #d9a520; }
+:root[data-theme="light"] .multicar__cta:hover { background: #f7e6b6; border-color: #b8890c; color: #5f4000; }
 @media (max-width: 560px) { .multicar { flex-direction: column; text-align: center; } .multicar__body { align-items: center; } }
 
 /* ================= SÖTÉT / VILÁGOS KAPCSOLÓ ================= */
