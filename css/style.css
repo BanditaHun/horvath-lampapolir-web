@@ -691,6 +691,8 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 .booking__lead a { color: var(--gold); }
 .booking__form { display: flex; flex-direction: column; gap: 16px; }
 .booking__row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.booking__billing { display: grid; gap: 14px; padding: 14px; border: 1px dashed rgba(240,180,41,0.35); border-radius: 12px; background: rgba(240,180,41,0.04); }
+:root[data-theme="light"] .booking__billing { border-color: #e0c98f; background: #fffaf0; }
 .booking__field { display: flex; flex-direction: column; gap: 7px; }
 .booking__field > span { color: #eef0f3; font-size: 1rem; font-weight: 600; }
 .booking__field > span em { color: var(--chrome-dim); font-style: normal; font-weight: 500; font-size: .88rem; }

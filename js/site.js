@@ -1466,6 +1466,22 @@ function bookingFormHTML(contact) {
         <label class="booking__field"><span>Település / helyszín</span>
           <input type="text" name="place" placeholder="pl. Szekszárd" /></label>
       </div>
+      <label class="booking__field"><span>Kinek állítsam ki a számlát?</span>
+        <select name="billing_type" id="billing-type">
+          <option value="Magánszemély">Magánszemély</option>
+          <option value="Egyéni vállalkozó">Egyéni vállalkozó</option>
+          <option value="Cég (Kft., Bt., Zrt. stb.)">Cég (Kft., Bt., Zrt. stb.)</option>
+        </select></label>
+      <div class="booking__billing" id="billing-fields">
+        <div class="booking__row" id="billing-company-row" hidden>
+          <label class="booking__field"><span id="company-label">Cég / vállalkozás neve *</span>
+            <input type="text" name="company" autocomplete="organization" placeholder="pl. Minta Kft." /></label>
+          <label class="booking__field"><span>Adószám *</span>
+            <input type="text" name="taxno" inputmode="numeric" placeholder="pl. 12345678-1-17" /></label>
+        </div>
+        <label class="booking__field"><span id="billing-addr-label">Számlázási cím (lakcím)</span>
+          <input type="text" name="billing_addr" autocomplete="street-address" placeholder="pl. 7100 Szekszárd, Fő utca 1." /></label>
+      </div>
       <div class="booking__field booking__field--svc">
         <span>Mit szeretnél? <em>(többet is választhatsz)</em></span>
         <div class="svc-picker">${servicePicker}</div>
@@ -1492,6 +1508,20 @@ function wireBookingForm(contact) {
   const form = document.getElementById("booking-form");
   if (!form) return;
   const note = document.getElementById("booking-note");
+
+  // Számlázás típusa: cég/vállalkozó esetén megjelennek a számlázási mezők
+  const billingType = document.getElementById("billing-type");
+  const companyRow = document.getElementById("billing-company-row");
+  const companyLabel = document.getElementById("company-label");
+  const addrLabel = document.getElementById("billing-addr-label");
+  const syncBilling = () => {
+    const isPerson = (billingType && billingType.value === "Magánszemély");
+    if (companyRow) companyRow.hidden = isPerson;
+    if (companyLabel && billingType) companyLabel.textContent = billingType.value === "Egyéni vállalkozó" ? "Vállalkozás neve *" : "Cég neve *";
+    if (addrLabel) addrLabel.textContent = isPerson ? "Számlázási cím (lakcím)" : "Számlázási cím (székhely) *";
+  };
+  if (billingType) { billingType.addEventListener("change", syncBilling); syncBilling(); }
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const f = new FormData(form);
@@ -1499,6 +1529,16 @@ function wireBookingForm(contact) {
     const phone = (f.get("phone") || "").toString().trim();
     if (!name || !phone) {
       if (note) { note.hidden = false; note.className = "booking__note booking__note--err"; note.textContent = "Kérlek add meg a neved és a telefonszámod."; }
+      return;
+    }
+    // Számlázási adatok
+    const billingType = (f.get("billing_type") || "Magánszemély").toString().trim();
+    const isBusiness = billingType !== "Magánszemély";
+    const company = (f.get("company") || "").toString().trim();
+    const taxno = (f.get("taxno") || "").toString().trim();
+    const billingAddr = (f.get("billing_addr") || "").toString().trim();
+    if (isBusiness && (!company || !taxno || !billingAddr)) {
+      if (note) { note.hidden = false; note.className = "booking__note booking__note--err"; note.textContent = "Céges/vállalkozói számlához kérlek add meg a cég nevét, az adószámot és a székhelyet (számlázási címet)."; }
       return;
     }
     const dateP = (f.get("date_pref") || "").toString().trim();
@@ -1511,9 +1551,13 @@ function wireBookingForm(contact) {
     // Táblázatos (oszlopos) elrendezés a levélben – a levélíró csak sima szöveget fogad.
     const LW = 18; // címke-oszlop szélessége
     const pad = (s) => { s = String(s); return s.length >= LW ? s : s + " ".repeat(LW - s.length); };
+    const billingRows = isBusiness
+      ? [["Számlázás", billingType], [billingType === "Egyéni vállalkozó" ? "Vállalkozás" : "Cég neve", company], ["Adószám", taxno], ["Székhely", billingAddr]]
+      : [["Számlázás", "Magánszemély"], ["Száml. cím (lakcím)", billingAddr || "—"]];
     const rowsData = [
       ["Név", name],
       ["Telefon", phone],
+      ...billingRows,
       ["Autó típusa", car],
       ["Szolgáltatás(ok)", services.length ? services : ["—"]],
       ["Helyszín", place],
