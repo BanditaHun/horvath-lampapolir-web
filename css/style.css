@@ -426,6 +426,13 @@ section:last-of-type { border-bottom: none; }
 :root[data-theme="light"] .gal-item, :root[data-theme="light"] .gal-vthumb { background: #fff; border-color: #ece4cf; }
 :root[data-theme="light"] .gal-arrow { background: rgba(255,255,255,0.88); }
 @media (max-width: 640px) { .gal-item { width: min(560px, 86vw); } .gal-video-grid { grid-template-columns: 1fr; } }
+/* Kezdőlapi „Munkáink" – kisebb carousel */
+.gal-carousel--sm .gal-item { width: min(340px, 66vw); }
+.gal-carousel--sm .gal-track { padding-top: 16px; padding-bottom: 16px; }
+.gal-carousel--sm .gal-item.is-center { box-shadow: 0 14px 34px rgba(0,0,0,0.5); }
+.gal-carousel--sm .gal-arrow { width: 40px; height: 40px; font-size: 1.3rem; }
+.gal-carousel--sm + .gal-caption { font-size: .95rem; }
+@media (max-width: 640px) { .gal-carousel--sm .gal-item { width: min(340px, 78vw); } }
 
 /* ---------- Kezdőlapi galéria-előnézet ---------- */
 .home-gallery { }

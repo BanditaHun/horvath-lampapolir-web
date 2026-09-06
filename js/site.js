@@ -834,12 +834,22 @@ async function renderHome(app, contact) {
   const introHTML = isSet(H.intro) ? `<div class="container"><p class="home-intro">${mdInline(H.intro)}</p></div>` : "";
 
   const galItems = (gallery && Array.isArray(gallery.items) ? gallery.items : []).filter((g) => g && isSet(g.image));
+  const galSlides = galItems.slice(0, 10).map((g, i) => {
+    const s = rel(g.image);
+    const media = isVideoSrc(s)
+      ? `<button type="button" class="gal-vthumb" data-src="${esc(s)}" aria-label="Videó lejátszása"><video src="${esc(s)}#t=0.1" muted preload="metadata" playsinline tabindex="-1"></video><span class="gal-vplay" aria-hidden="true">▶</span></button>`
+      : `<img class="zoomable" src="${esc(s)}" alt="${esc(g.caption || "Fényszóró-felújítás munka")}" loading="lazy" />`;
+    return `<figure class="gal-item${i === 0 ? " is-center" : ""}" data-caption="${esc(g.caption || "")}">${media}</figure>`;
+  }).join("");
   const galleryPreview = galItems.length ? `<div class="container"><section class="home-gallery">
     <h2 class="page__title">${esc((gallery && gallery.heading) || "Munkáink")}</h2>
-    <p class="home-gallery__lead">Nézd meg az eredményt – <strong>előtte</strong> és <strong>utána</strong>. Kattints a képre a nagyításhoz.</p>
-    <div class="home-gallery__grid">
-      ${galItems.slice(0, 6).map((g) => { const s = rel(g.image); const media = isVideoSrc(s) ? `<button type="button" class="gal-vthumb" data-src="${esc(s)}" aria-label="Videó lejátszása"><video src="${esc(s)}#t=0.1" muted preload="metadata" playsinline tabindex="-1"></video><span class="gal-vplay" aria-hidden="true">▶</span></button>` : `<img class="zoomable" src="${esc(s)}" alt="${esc(g.caption || "Fényszóró-felújítás munka")}" loading="lazy" />`; return `<figure class="home-gallery__item"><span class="home-gallery__frame">${media}</span>${isSet(g.caption) ? `<figcaption>${esc(g.caption)}</figcaption>` : ""}</figure>`; }).join("")}
+    <p class="home-gallery__lead">Nézd meg az eredményt – <strong>előtte</strong> és <strong>utána</strong>. Húzd oldalra, a középső kép nagyítható.</p>
+    <div class="gal-carousel gal-carousel--sm">
+      <button type="button" class="gal-arrow gal-arrow--prev" id="gal-prev" aria-label="Előző">‹</button>
+      <div class="gal-track" id="gal-track">${galSlides}</div>
+      <button type="button" class="gal-arrow gal-arrow--next" id="gal-next" aria-label="Következő">›</button>
     </div>
+    <p class="gal-caption" id="gal-caption">${esc((galItems[0] && galItems[0].caption) || "")}</p>
     <div class="home-gallery__cta"><a class="btn btn--ghost" href="galeria.html">Teljes galéria →</a></div>
   </section></div>` : "";
 
@@ -848,6 +858,7 @@ async function renderHome(app, contact) {
   wireHeroPolish();
   heroWeather();
   wireVideoThumbs();
+  wireGalleryCarousel();
 }
 
 // Háttér-animáció CSAK valós csapadék esetén (eső/hó) – évszakos falevél/szirom nincs.
