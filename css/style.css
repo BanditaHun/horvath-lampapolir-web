@@ -78,12 +78,12 @@ a:hover { text-decoration: underline; }
 .topbar__social:hover { color: var(--gold); border-color: var(--gold); background: rgba(240,180,41,0.14); transform: translateY(-1px); }
 .topbar__social svg { color: inherit; }
 /* E-mail választó menü (fejléc e-mail ikon) */
-.email-menu { position: fixed; z-index: 90; min-width: 250px; max-width: calc(100vw - 20px);
+.email-menu { position: fixed; z-index: 1000; min-width: 250px; max-width: calc(100vw - 20px);
   background: linear-gradient(180deg, #1b1810, #141210); border: 1px solid rgba(240,180,41,0.4); border-radius: 14px;
   box-shadow: 0 18px 46px rgba(0,0,0,0.6); padding: 7px; display: flex; flex-direction: column; gap: 2px;
   transform-origin: top right; animation: emailMenuIn .16s ease-out; }
 @keyframes emailMenuIn { from { opacity: 0; transform: translateY(-6px) scale(.97); } to { opacity: 1; transform: none; } }
-.email-menu::after { content: ""; position: absolute; top: -6px; right: 18px; width: 11px; height: 11px;
+.email-menu::after { content: ""; position: absolute; top: -6px; right: var(--caret-right, 18px); width: 11px; height: 11px;
   background: #1b1810; border-left: 1px solid rgba(240,180,41,0.4); border-top: 1px solid rgba(240,180,41,0.4); transform: rotate(45deg); }
 .email-menu__head { padding: 8px 12px 8px; font-size: .78rem; font-weight: 700; letter-spacing: .3px; color: var(--gold);
   border-bottom: 1px solid rgba(240,180,41,0.16); margin-bottom: 3px; }

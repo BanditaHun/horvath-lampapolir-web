@@ -514,13 +514,15 @@ function openEmailMenu(anchor, email) {
     `<a href="mailto:${esc(email)}">${env("currentColor")}<span>Alapértelmezett levelező</span></a>` +
     `<button type="button" class="email-menu__copy">${copyIc}<span>E-mail cím másolása</span></button>`;
   document.body.appendChild(m);
-  // A menü a TELJES fejléc (sticky nav) alá kerüljön, hogy ne lógjon a menüsorba
-  const nav = document.getElementById("nav");
-  const topY = (nav ? nav.getBoundingClientRect().bottom : anchor.getBoundingClientRect().bottom) + 10;
+  // Buborék közvetlenül az e-mail ikon alá, a nyíl az ikonra mutat
   const r = anchor.getBoundingClientRect();
-  m.style.top = topY + "px";
+  m.style.top = (r.bottom + 11) + "px";
   m.style.left = "auto";
-  m.style.right = Math.max(10, window.innerWidth - r.right) + "px";
+  const rightGap = Math.max(10, window.innerWidth - r.right - 4);
+  m.style.right = rightGap + "px";
+  // a nyilat pontosan az ikon közepe alá igazítjuk
+  const caretRight = Math.max(12, (window.innerWidth - r.right - rightGap) + (r.width / 2) - 6);
+  m.style.setProperty("--caret-right", caretRight + "px");
   const close = () => { m.remove(); document.removeEventListener("pointerdown", onDoc, true); };
   m.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setTimeout(close, 0)));
   m.querySelector(".email-menu__copy").addEventListener("click", function () {
