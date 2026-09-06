@@ -528,7 +528,12 @@ function openEmailMenu(anchor, email) {
   } else {
     m.style.top = (r.bottom + 11) + "px";
   }
-  const close = () => { m.remove(); document.removeEventListener("pointerdown", onDoc, true); };
+  const close = () => {
+    m.remove();
+    document.removeEventListener("pointerdown", onDoc, true);
+    window.removeEventListener("scroll", onScroll, true);
+    window.removeEventListener("resize", onScroll);
+  };
   m.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setTimeout(close, 0)));
   m.querySelector(".email-menu__copy").addEventListener("click", function () {
     try { navigator.clipboard.writeText(email); } catch (e) {}
@@ -536,7 +541,13 @@ function openEmailMenu(anchor, email) {
     setTimeout(close, 900);
   });
   function onDoc(ev) { if (!m.contains(ev.target) && ev.target !== anchor && !anchor.contains(ev.target)) close(); }
-  setTimeout(() => document.addEventListener("pointerdown", onDoc, true), 0);
+  // Görgetéskor / átméretezéskor záruljon be, ne ragadjon a képernyőn (position:fixed)
+  function onScroll() { close(); }
+  setTimeout(() => {
+    document.addEventListener("pointerdown", onDoc, true);
+    window.addEventListener("scroll", onScroll, true);
+    window.addEventListener("resize", onScroll);
+  }, 0);
 }
 
 // MINDEN mailto: link kattintására a választó buborék nyílik (fejléc, lábléc, Kapcsolat oldal stb.)
