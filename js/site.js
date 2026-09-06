@@ -512,11 +512,13 @@ function openEmailMenu(anchor, email) {
     `<a href="mailto:${esc(email)}">📧 Alapértelmezett levelező</a>` +
     `<button type="button" class="email-menu__copy">📋 E-mail cím másolása</button>`;
   document.body.appendChild(m);
+  // A menü a TELJES fejléc (sticky nav) alá kerüljön, hogy ne lógjon a menüsorba
+  const nav = document.getElementById("nav");
+  const topY = (nav ? nav.getBoundingClientRect().bottom : anchor.getBoundingClientRect().bottom) + 10;
   const r = anchor.getBoundingClientRect();
-  m.style.top = (r.bottom + 8) + "px";
-  // jobbra igazítjuk az ikon jobb széléhez (megbízható, függetlenül a menü szélességétől)
+  m.style.top = topY + "px";
   m.style.left = "auto";
-  m.style.right = Math.max(8, window.innerWidth - r.right) + "px";
+  m.style.right = Math.max(10, window.innerWidth - r.right) + "px";
   const close = () => { m.remove(); document.removeEventListener("pointerdown", onDoc, true); };
   m.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setTimeout(close, 0)));
   m.querySelector(".email-menu__copy").addEventListener("click", function () {
