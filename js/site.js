@@ -998,13 +998,18 @@ const WMO = {
 
 // „Időkép"-szerű widget a hero tetején: aktuális hőfok + időjárás (Tolna)
 async function heroWeather() {
+  // A widget a fejlécbe, a logó/cím mellé kerül (minden oldalon látszik)
+  const navTop = document.querySelector(".nav__top");
   const hero = document.querySelector(".hero");
-  if (!hero) return;
-  let w = hero.querySelector(".hero-weather");
+  const host = navTop || hero;
+  if (!host) return;
+  let w = document.querySelector(".hero-weather");
   if (!w) {
     w = document.createElement("div");
-    w.className = "hero-weather";
-    hero.insertBefore(w, hero.firstChild);
+    w.className = "hero-weather hero-weather--nav";
+    const brand = navTop && navTop.querySelector(".nav__brand");
+    if (brand) brand.insertAdjacentElement("afterend", w);
+    else host.insertBefore(w, host.firstChild);
   }
   w.innerHTML = `<span class="hero-weather__ic">⛅</span><span class="hero-weather__desc">Időjárás betöltése…</span>`;
   try {

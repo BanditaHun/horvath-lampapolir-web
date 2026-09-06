@@ -1553,3 +1553,18 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
   .hero-weather__ic { font-size: 1.15rem; }
   .hero-weather__loc { display: none; }
 }
+/* Fejléc-változat: kisebb, a logó mellett balra */
+.hero-weather--nav {
+  margin: 0 auto 0 14px; z-index: 2;
+  padding: 5px 13px; gap: 7px; font-size: .82rem; font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.28);
+}
+.hero-weather--nav .hero-weather__ic { font-size: 1rem; }
+.hero-weather--nav .hero-weather__temp { font-size: .9rem; }
+.hero-weather--nav .hero-weather__loc::before { margin: 0 3px 0 3px; }
+@media (max-width: 1024px) {
+  .hero-weather--nav .hero-weather__desc { display: none; }
+}
+@media (max-width: 860px) {
+  .hero-weather--nav { display: none; }
+}
