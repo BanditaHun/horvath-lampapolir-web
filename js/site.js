@@ -78,7 +78,7 @@ function applyTheme(theme) {
   if (theme.heading_scale) root.setProperty("--heading-scale", String(theme.heading_scale));
   if (theme.accent_color) {
     root.setProperty("--gold", theme.accent_color);
-    root.setProperty("--gold-dim", theme.accent_color);
+    // A --gold-dim-et NEM írjuk felül: témánként a CSS adja (világosban sötét arany a jó kontraszthoz).
   }
 }
 

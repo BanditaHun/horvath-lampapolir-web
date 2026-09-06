@@ -423,7 +423,7 @@ section:last-of-type { border-bottom: none; }
 .video-modal__close { position: absolute; top: 16px; right: 20px; width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgba(255,255,255,0.14); color: #fff; font-size: 1.3rem; cursor: pointer; }
 .video-modal__close:hover { background: rgba(255,255,255,0.26); }
 
-:root[data-theme="light"] .gal-item, :root[data-theme="light"] .gal-vthumb { background: #fff; border-color: #ece4cf; }
+:root[data-theme="light"] .gal-item, :root[data-theme="light"] .gal-vthumb { background: #fff; border-color: #d2d8df; }
 :root[data-theme="light"] .gal-arrow { background: rgba(255,255,255,0.88); }
 @media (max-width: 640px) { .gal-item { width: min(560px, 86vw); } .gal-video-grid { grid-template-columns: 1fr; } }
 /* Kezdőlapi „Munkáink" – kisebb carousel */
@@ -563,7 +563,7 @@ section:last-of-type { border-bottom: none; }
 .neon-card__media { margin: -26px -22px 8px; border-radius: 15px 15px 0 0; overflow: hidden; border-bottom: 1px solid rgba(240,180,41,0.2); }
 .neon-card__media img { width: 100%; height: 200px; object-fit: cover; display: block; cursor: zoom-in; transition: transform .4s ease; }
 .neon-card:hover .neon-card__media img { transform: scale(1.05); }
-:root[data-theme="light"] .neon-card__media { border-bottom-color: #ece4cf; }
+:root[data-theme="light"] .neon-card__media { border-bottom-color: #d2d8df; }
 .neon-card__badge { align-self: flex-start; font-size: .72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #1a1200; background: var(--gold); padding: 4px 10px; border-radius: 20px; }
 .neon-card__title { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: var(--gold); letter-spacing: .4px; text-shadow: 0 0 10px rgba(240,180,41,0.2); }
 .neon-card__desc { color: var(--chrome-dim); flex: 1; }
@@ -601,7 +601,9 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 
 /* ---------- Miért válassz engem? ---------- */
 .why { padding: 42px 0 8px; }
-.why-grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-top: 24px; }
+.why-grid { display: grid; gap: 18px; grid-template-columns: repeat(3, 1fr); max-width: 1040px; margin: 24px auto 0; align-items: stretch; }
+@media (max-width: 860px) { .why-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 540px) { .why-grid { grid-template-columns: 1fr; } }
 .why-item { background: var(--bg-card); border: 1px solid var(--line); border-radius: 14px; padding: 22px; transition: border-color .2s ease, transform .12s ease; }
 .why-item:hover { border-color: var(--gold); transform: translateY(-3px); }
 .why-item__ic { font-size: 1.8rem; display: block; margin-bottom: 8px; }
@@ -704,7 +706,7 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 .svc-check { display: flex; align-items: flex-start; gap: 8px; color: var(--chrome); font-size: .98rem; font-weight: 500; cursor: pointer; line-height: 1.35; }
 .svc-check input { flex: none; width: 18px; height: 18px; margin-top: 1px; accent-color: var(--gold); cursor: pointer; }
 .svc-check:hover { color: #fff; }
-:root[data-theme="light"] .svc-picker { background: #fff; border-color: #dfe3e8; }
+:root[data-theme="light"] .svc-picker { background: #fff; border-color: #cbd1d9; }
 :root[data-theme="light"] .svc-check { color: #23262b; }
 @media (max-width: 560px) { .svc-picker { grid-template-columns: 1fr; gap: 10px; } }
 .booking__field input:not([type="checkbox"]),
@@ -1079,14 +1081,14 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
   --bg-card: #ffffff;
   --gold: #e0a41c;
   --gold-dim: #a9760a;
-  --chrome: #23262b;
-  --chrome-dim: #3d434b;
-  --line: #e3e6ea;
+  --chrome: #1e2126;
+  --chrome-dim: #333941;
+  --line: #c7cdd5;
 }
 :root[data-theme="light"] body { background: var(--bg); color: var(--chrome); }
 :root[data-theme="light"] .starfield { display: none; }
 
-:root[data-theme="light"] .nav { background: rgba(255,255,255,0.9); border-bottom-color: #ece4cf; box-shadow: 0 2px 16px rgba(0,0,0,0.07); }
+:root[data-theme="light"] .nav { background: rgba(255,255,255,0.9); border-bottom-color: #d2d8df; box-shadow: 0 2px 16px rgba(0,0,0,0.07); }
 :root[data-theme="light"] .nav__logo { background: #fff; }
 :root[data-theme="light"] .nav__title-main { background: none; -webkit-background-clip: initial; background-clip: initial; -webkit-text-fill-color: #23262b; color: #23262b; }
 :root[data-theme="light"] .nav__title-sub { color: #7a818b; }
@@ -1098,7 +1100,7 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 :root[data-theme="light"] .hero__title { background: none; -webkit-text-fill-color: #23262b; color: #23262b; }
 :root[data-theme="light"] .hero { border-bottom-color: var(--line); }
 
-:root[data-theme="light"] .neon-card { background: #fff; border-color: #ece4cf; box-shadow: 0 4px 14px rgba(0,0,0,0.06); }
+:root[data-theme="light"] .neon-card { background: #fff; border-color: #d2d8df; box-shadow: 0 4px 14px rgba(0,0,0,0.06); }
 :root[data-theme="light"] .neon-card:hover { border-color: var(--gold); box-shadow: 0 12px 28px rgba(0,0,0,0.13); }
 :root[data-theme="light"] .neon-card__title { color: #23262b; text-shadow: none; }
 :root[data-theme="light"] .neon-card__price { color: #23262b; }
@@ -1107,16 +1109,16 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 
 :root[data-theme="light"] .page__title, :root[data-theme="light"] .rich strong, :root[data-theme="light"] .rich b, :root[data-theme="light"] .rich h1, :root[data-theme="light"] .rich h2, :root[data-theme="light"] .rich h3, :root[data-theme="light"] .rich h4, :root[data-theme="light"] .prose h1, :root[data-theme="light"] .prose h2, :root[data-theme="light"] .prose h3, :root[data-theme="light"] .prose h4 { color: #23262b; }
 
-:root[data-theme="light"] .ticker { background: #fff; border-color: #ece4cf; }
+:root[data-theme="light"] .ticker { background: #fff; border-color: #d2d8df; }
 :root[data-theme="light"] .ticker__item { color: #3a3f47; }
 
-:root[data-theme="light"] .trustbar__item, :root[data-theme="light"] .multicar, :root[data-theme="light"] .areas__tag, :root[data-theme="light"] .booking, :root[data-theme="light"] .contact-aside { background: #fff; border-color: #ece4cf; }
+:root[data-theme="light"] .trustbar__item, :root[data-theme="light"] .multicar, :root[data-theme="light"] .areas__tag, :root[data-theme="light"] .booking, :root[data-theme="light"] .contact-aside { background: #fff; border-color: #d2d8df; }
 :root[data-theme="light"] .trustbar__item, :root[data-theme="light"] .multicar__body span, :root[data-theme="light"] .areas__lead, :root[data-theme="light"] .areas__note, :root[data-theme="light"] .home-intro, :root[data-theme="light"] .areas__tag { color: #3a3f47; }
 :root[data-theme="light"] .trustbar__item b, :root[data-theme="light"] .booking__title, :root[data-theme="light"] .contact-aside__title, :root[data-theme="light"] .contact-info__value a, :root[data-theme="light"] .booking__info strong, :root[data-theme="light"] .faq__q, :root[data-theme="light"] .multicar__body strong { color: #23262b; }
 :root[data-theme="light"] .multicar__body strong { color: var(--gold-dim); }
 :root[data-theme="light"] .home-intro strong { color: var(--gold-dim); }
 
-:root[data-theme="light"] .booking__field input, :root[data-theme="light"] .booking__field select, :root[data-theme="light"] .booking__field textarea, :root[data-theme="light"] .review-form input, :root[data-theme="light"] .review-form textarea { background: #fff; color: #23262b; border-color: #dfe3e8; color-scheme: light; }
+:root[data-theme="light"] .booking__field input, :root[data-theme="light"] .booking__field select, :root[data-theme="light"] .booking__field textarea, :root[data-theme="light"] .review-form input, :root[data-theme="light"] .review-form textarea { background: #fff; color: #23262b; border-color: #cbd1d9; color-scheme: light; }
 :root[data-theme="light"] .booking__info { background: rgba(224,164,28,0.08); }
 /* Világos mód – mezőcímkék és szekciófejlécek jól látszódjanak (ne fehéren fehéren) */
 :root[data-theme="light"] .booking__field > span { color: #23262b; }
@@ -1125,10 +1127,10 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 :root[data-theme="light"] .svc-check:hover { color: #000; }
 :root[data-theme="light"] .booking__field input::placeholder, :root[data-theme="light"] .booking__field textarea::placeholder, :root[data-theme="light"] .calc__input::placeholder { color: #9aa0a8; }
 
-:root[data-theme="light"] .faq__item, :root[data-theme="light"] .faq__item[open] { background: #fff; border-color: #ece4cf; }
+:root[data-theme="light"] .faq__item, :root[data-theme="light"] .faq__item[open] { background: #fff; border-color: #d2d8df; }
 :root[data-theme="light"] .faq__a { color: #4a4f57; }
 
-:root[data-theme="light"] .ai-panel { background: #fff; border-color: #ece4cf; }
+:root[data-theme="light"] .ai-panel { background: #fff; border-color: #d2d8df; }
 :root[data-theme="light"] .ai-head { background: linear-gradient(135deg, rgba(224,164,28,0.14), rgba(255,255,255,0.5)); border-bottom-color: rgba(224,164,28,0.2); }
 :root[data-theme="light"] .ai-head__title { color: #23262b; }
 :root[data-theme="light"] .ai-msg--bot { background: #f1f2f4; color: #23262b; border-color: #e3e6ea; }
@@ -1262,7 +1264,7 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
   .premium__points li { text-align: left; }
   .premium__badge { width: 132px; }
 }
-:root[data-theme="light"] .premium { background: linear-gradient(135deg, rgba(224,164,28,0.10), #ffffff); border-color: #ece4cf; }
+:root[data-theme="light"] .premium { background: linear-gradient(135deg, rgba(224,164,28,0.10), #ffffff); border-color: #d2d8df; }
 :root[data-theme="light"] .premium__points strong { color: #a9760a; }
 
 /* ---------- Árlista letöltése gomb (Csomagok oldal) ---------- */
@@ -1339,7 +1341,7 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 .contact-map__t { color: var(--chrome); font-weight: 600; font-size: 1.05rem; }
 .contact-map__note { color: var(--chrome-dim); font-size: .82rem; max-width: 360px; }
 .contact-map iframe { display: block; width: 100%; height: 380px; border: 0; }
-:root[data-theme="light"] .contact-map { border-color: #ece4cf; }
+:root[data-theme="light"] .contact-map { border-color: #d2d8df; }
 :root[data-theme="light"] .contact-map__ph { background: linear-gradient(180deg, rgba(224,164,28,0.07), #ffffff); }
 
 /* ---------- Kiszolgált terület térkép (Leaflet + OSM, piros sugár) ---------- */
@@ -1348,8 +1350,8 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 .area-map-lead { color: var(--chrome-dim); margin-bottom: 16px; line-height: 1.6; }
 .area-map { height: 420px; border-radius: var(--radius); overflow: hidden; border: 1px solid rgba(240,180,41,0.32); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
 .area-map__err { display: flex; align-items: center; justify-content: center; height: 100%; color: var(--chrome-dim); }
-.leaflet-container { background: #dfe3e8; }
-:root[data-theme="light"] .area-map { border-color: #ece4cf; }
+.leaflet-container { background: #cbd1d9; }
+:root[data-theme="light"] .area-map { border-color: #d2d8df; }
 @media (max-width: 640px) { .area-map { height: 340px; } }
 
 /* ---------- Kiszállás oldal: lead, díjszabás-kártyák, infó ---------- */
@@ -1371,8 +1373,8 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 .delivery-car img { width: 100%; height: auto; display: block; cursor: zoom-in; }
 .delivery-car figcaption { padding: 12px 16px; color: var(--chrome); font-size: .98rem; line-height: 1.5; }
 .delivery-car figcaption strong { color: var(--gold); }
-:root[data-theme="light"] .delivery-car { border-color: #ece4cf; background: #fff; }
-:root[data-theme="light"] .dtier, :root[data-theme="light"] .dinfo { background: #fff; border-color: #ece4cf; }
+:root[data-theme="light"] .delivery-car { border-color: #d2d8df; background: #fff; }
+:root[data-theme="light"] .dtier, :root[data-theme="light"] .dinfo { background: #fff; border-color: #d2d8df; }
 :root[data-theme="light"] .dinfo { border-left-color: var(--gold); }
 @media (max-width: 900px) { .dtiers { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 480px) { .dtiers { grid-template-columns: 1fr; } }
@@ -1404,8 +1406,8 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 .calc__foot { color: var(--chrome-dim); font-size: .82rem; margin-top: 12px; line-height: 1.5; }
 .calc__over-note { margin-top: 12px; padding: 10px 14px; border-radius: 10px; font-size: .92rem; line-height: 1.55; color: var(--chrome); background: rgba(240,180,41,0.08); border: 1px solid rgba(240,180,41,0.3); }
 .calc__over-note strong { color: var(--gold); }
-:root[data-theme="light"] .calc__input, :root[data-theme="light"] .calc__stat { background: #fff; border-color: #ece4cf; }
-:root[data-theme="light"] .calc__map { border-color: #ece4cf; }
+:root[data-theme="light"] .calc__input, :root[data-theme="light"] .calc__stat { background: #fff; border-color: #d2d8df; }
+:root[data-theme="light"] .calc__map { border-color: #d2d8df; }
 @media (max-width: 600px) { .calc__stats { grid-template-columns: 1fr; } .calc__map { height: 320px; } }
 
 /* ---------- PDF / nyomtatás ---------- */
