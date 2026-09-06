@@ -202,13 +202,17 @@ function buildAiWidget(ai) {
   fab.addEventListener("click", () => { cancelPeek(); openPanel(); });
   panel.querySelector(".ai-head__close").addEventListener("click", () => { cancelPeek(); closePanel(); });
   panel.addEventListener("pointerdown", cancelPeek); // ha hozzáér, ne záruljon be automatikusan
+  // Kattintás a panelen KÍVÜLRE → csevegés bezárása
+  document.addEventListener("pointerdown", (e) => {
+    if (panel.hidden) return;
+    if (panel.contains(e.target) || fab.contains(e.target)) return;
+    cancelPeek();
+    closePanel();
+  });
 
   // ---- Kép csatolása ----
   const clearPreview = () => { pendingImage = null; preview.hidden = true; preview.innerHTML = ""; };
-  attachBtn.addEventListener("click", () => fileInput.click());
-  fileInput.addEventListener("change", () => {
-    const f = fileInput.files && fileInput.files[0];
-    fileInput.value = "";
+  const handleImageFile = (f) => {
     if (!f) return;
     if (!/^image\//.test(f.type)) { addMsg("bot", "Csak képet tudok fogadni (jpg vagy png)."); return; }
     if (f.size > 12 * 1024 * 1024) { addMsg("bot", "A kép túl nagy (max 12 MB). Kérlek küldj kisebbet."); return; }
@@ -217,7 +221,32 @@ function buildAiWidget(ai) {
       preview.innerHTML = `<div class="ai-thumb"><img src="${res.url}" alt="csatolt kép" /><button type="button" class="ai-thumb__x" aria-label="Kép eltávolítása">&times;</button></div>`;
       preview.hidden = false;
       preview.querySelector(".ai-thumb__x").addEventListener("click", clearPreview);
+      input.focus();
     }).catch(() => addMsg("bot", "Nem sikerült betölteni a képet. Próbálj másikat."));
+  };
+  attachBtn.addEventListener("click", () => fileInput.click());
+  fileInput.addEventListener("change", () => {
+    const f = fileInput.files && fileInput.files[0];
+    fileInput.value = "";
+    handleImageFile(f);
+  });
+  // Beillesztés (Ctrl+V): kimásolt KÉP → csatolás; kimásolt SZÖVEG → a beviteli mezőbe
+  panel.addEventListener("paste", (e) => {
+    const dt = e.clipboardData;
+    if (!dt) return;
+    const items = dt.items || [];
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].type && items[i].type.indexOf("image") === 0) {
+        const f = items[i].getAsFile();
+        if (f) { e.preventDefault(); handleImageFile(f); return; }
+      }
+    }
+    const txt = dt.getData && dt.getData("text");
+    if (txt && document.activeElement !== input) {
+      e.preventDefault();
+      input.value = (input.value + txt).slice(0, 500);
+      input.focus();
+    }
   });
 
   panel.querySelector("#ai-form").addEventListener("submit", async (e) => {
