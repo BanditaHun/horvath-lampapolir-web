@@ -40,7 +40,7 @@
     },
     {
       "q": "Milyen adatokat kell megadnom a számlához?",
-      "a": "**Minden értékesítésről és szolgáltatásról számlát állítok ki.** A számla kiállításához a megrendeléskor (személyesen, telefonon vagy e-mailben) az alábbi adatokat kérem:\n\n- **Magánszemélyeknek:** a **név** és a **cím (lakcím)**.\n- **Cégeknek / vállalkozóknak:** a **cégnév**, a **székhely (számlázási cím)** és az **adószám**.\n\nEzen adatok hiányában sajnos a szolgáltatást **nem áll módomban teljesíteni**. A megadott adatokat kizárólag a számla kiállításához használom – a részletek az [Adatvédelmi tájékoztatóban](adatvedelem.html) olvashatók."
+      "a": "**Minden szolgáltatásról számlát állítok ki.** A számla kiállításához a megrendeléskor (személyesen, telefonon vagy e-mailben) az alábbi adatokat kérem:\n\n- **Magánszemélyeknek:** a **név** és a **cím (lakcím)**.\n- **Cégeknek / vállalkozóknak:** a **cégnév**, a **székhely (számlázási cím)** és az **adószám**.\n\nEzen adatok hiányában sajnos a szolgáltatást **nem áll módomban teljesíteni**. A megadott adatokat kizárólag a számla kiállításához használom – a részletek az [Adatvédelmi tájékoztatóban](adatvedelem.html) olvashatók."
     },
     {
       "q": "Milyen fizetési módot fogadsz el?",

@@ -1394,7 +1394,7 @@ function renderContact(app, contact) {
 
   const billingNotice = `<div class="container"><section class="billing-notice">
       <h3 class="billing-notice__title">🧾 Számlázási tájékoztató</h3>
-      <p>Vállalkozásunk <strong>minden értékesítésről és szolgáltatásról számlát állít ki</strong>. A számla kiállításához a megrendeléskor (személyesen, telefonon vagy e-mailben) az alábbi adatokat kérjük:</p>
+      <p>Vállalkozásunk <strong>minden szolgáltatásról számlát állít ki</strong>. A számla kiállításához a megrendeléskor (személyesen, telefonon vagy e-mailben) az alábbi adatokat kérjük:</p>
       <ul class="billing-notice__list">
         <li><strong>Magánszemélyeknek:</strong> név és cím (lakcím).</li>
         <li><strong>Cégeknek / vállalkozóknak:</strong> cégnév, székhely (számlázási cím) és adószám.</li>
