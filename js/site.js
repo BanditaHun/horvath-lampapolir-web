@@ -106,6 +106,32 @@ const ICON_LI_FAQ = '<svg ' + IC_ATTR + '><circle cx="12" cy="12" r="9"/><path d
 const ICON_LI_LOCK = '<svg ' + IC_ATTR + '><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
 const ICON_LI_INFO = '<svg ' + IC_ATTR + '><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg>';
 
+const ICON_IMAGE = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor" stroke="none"/><path d="M21 15l-4.5-4.5L6 21"/></svg>';
+
+// Kép átméretezése + JPEG base64 (a Workernek), + előnézeti dataURL
+function resizeImageFile(file, maxDim, quality) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = reject;
+    reader.onload = () => {
+      const img = new Image();
+      img.onerror = reject;
+      img.onload = () => {
+        let w = img.naturalWidth, h = img.naturalHeight;
+        const scale = Math.min(1, maxDim / Math.max(w, h || 1));
+        w = Math.max(1, Math.round(w * scale)); h = Math.max(1, Math.round(h * scale));
+        const c = document.createElement("canvas");
+        c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        const url = c.toDataURL("image/jpeg", quality || 0.82);
+        resolve({ mime: "image/jpeg", data: url.split(",")[1], url });
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
 function buildAiWidget(ai) {
   if (!ai || ai.enabled === false || ai.enabled === "false" || !isSet(ai.api_url)) return;
   if (document.querySelector(".ai-fab")) return;
@@ -115,7 +141,7 @@ function buildAiWidget(ai) {
 
   const fab = document.createElement("button");
   fab.className = "ai-fab"; fab.type = "button"; fab.setAttribute("aria-label", title);
-  fab.innerHTML = ICON_CHAT;
+  fab.innerHTML = ICON_CHAT + '<span class="ai-fab__badge" aria-hidden="true">1</span>';
   fab.title = label;
 
   const panel = document.createElement("section");
@@ -124,39 +150,91 @@ function buildAiWidget(ai) {
     `<header class="ai-head"><span class="ai-head__dot"></span><span class="ai-head__title">${esc(title)}</span>` +
     `<button class="ai-head__close" type="button" aria-label="Bezárás">&times;</button></header>` +
     `<div class="ai-msgs" id="ai-msgs"></div>` +
-    `<form class="ai-form" id="ai-form"><input type="text" id="ai-input" autocomplete="off" ` +
-    `placeholder="Írd ide a kérdésed…" maxlength="500" /><button type="submit" aria-label="Küldés">${ICON_SEND}</button></form>` +
+    `<form class="ai-form" id="ai-form">` +
+      `<div class="ai-preview" id="ai-preview" hidden></div>` +
+      `<div class="ai-form__row">` +
+        `<button type="button" class="ai-attach" id="ai-attach" aria-label="Kép csatolása" title="Kép csatolása">${ICON_IMAGE}</button>` +
+        `<input type="text" id="ai-input" autocomplete="off" placeholder="Írd ide a kérdésed…" maxlength="500" />` +
+        `<button type="submit" class="ai-send" aria-label="Küldés">${ICON_SEND}</button>` +
+      `</div>` +
+      `<input type="file" id="ai-file" accept="image/*" hidden />` +
+    `</form>` +
     `<div class="ai-note">Tájékoztató jellegű – pontos időpontért hívj vagy írj WhatsAppon: +36 20 541 8369.</div>`;
 
   document.body.append(fab, panel);
   const msgsBox = panel.querySelector("#ai-msgs");
   const input = panel.querySelector("#ai-input");
+  const fileInput = panel.querySelector("#ai-file");
+  const attachBtn = panel.querySelector("#ai-attach");
+  const preview = panel.querySelector("#ai-preview");
   const history = [];
   let busy = false;
+  let pendingImage = null;
 
-  const addMsg = (who, text) => {
+  const addMsg = (who, text, imageUrl) => {
     const m = document.createElement("div");
     m.className = "ai-msg ai-msg--" + who;
-    m.textContent = text;
+    if (imageUrl) {
+      const im = document.createElement("img");
+      im.className = "ai-msg__img"; im.src = imageUrl; im.alt = "csatolt kép";
+      m.appendChild(im);
+    }
+    if (text) {
+      const t = document.createElement("div");
+      t.textContent = text;
+      m.appendChild(t);
+    }
     msgsBox.appendChild(m);
     msgsBox.scrollTop = msgsBox.scrollHeight;
     return m;
   };
   addMsg("bot", greeting);
 
-  const openPanel = () => { panel.hidden = false; fab.classList.add("ai-fab--hidden"); setTimeout(() => input.focus(), 50); };
+  let peekTimer = null;
+  const cancelPeek = () => { if (peekTimer) { clearTimeout(peekTimer); peekTimer = null; } };
+  const openPanel = (focus) => {
+    panel.hidden = false;
+    fab.classList.add("ai-fab--hidden");
+    fab.classList.remove("ai-fab--unread");
+    if (focus !== false) setTimeout(() => input.focus(), 50);
+  };
   const closePanel = () => { panel.hidden = true; fab.classList.remove("ai-fab--hidden"); };
-  fab.addEventListener("click", openPanel);
-  panel.querySelector(".ai-head__close").addEventListener("click", closePanel);
+  fab.addEventListener("click", () => { cancelPeek(); openPanel(); });
+  panel.querySelector(".ai-head__close").addEventListener("click", () => { cancelPeek(); closePanel(); });
+  panel.addEventListener("pointerdown", cancelPeek); // ha hozzáér, ne záruljon be automatikusan
+
+  // ---- Kép csatolása ----
+  const clearPreview = () => { pendingImage = null; preview.hidden = true; preview.innerHTML = ""; };
+  attachBtn.addEventListener("click", () => fileInput.click());
+  fileInput.addEventListener("change", () => {
+    const f = fileInput.files && fileInput.files[0];
+    fileInput.value = "";
+    if (!f) return;
+    if (!/^image\//.test(f.type)) { addMsg("bot", "Csak képet tudok fogadni (jpg vagy png)."); return; }
+    if (f.size > 12 * 1024 * 1024) { addMsg("bot", "A kép túl nagy (max 12 MB). Kérlek küldj kisebbet."); return; }
+    resizeImageFile(f, 1280, 0.82).then((res) => {
+      pendingImage = res;
+      preview.innerHTML = `<div class="ai-thumb"><img src="${res.url}" alt="csatolt kép" /><button type="button" class="ai-thumb__x" aria-label="Kép eltávolítása">&times;</button></div>`;
+      preview.hidden = false;
+      preview.querySelector(".ai-thumb__x").addEventListener("click", clearPreview);
+    }).catch(() => addMsg("bot", "Nem sikerült betölteni a képet. Próbálj másikat."));
+  });
 
   panel.querySelector("#ai-form").addEventListener("submit", async (e) => {
     e.preventDefault();
     if (busy) return;
     const text = input.value.trim();
-    if (!text) return;
+    const img = pendingImage;
+    if (!text && !img) return;
     input.value = "";
-    addMsg("user", text);
-    history.push({ role: "user", text });
+    addMsg("user", text, img && img.url);
+    // Kimenő üzenetek: az előzmény (kép nélkül) + az aktuális (képpel, ha van)
+    const outgoing = history.slice(-11).map((h) => ({ role: h.role, text: h.text }));
+    const cur = { role: "user", text: text || "(A látogató képet küldött – kérlek nézd meg és mondj róla véleményt.)" };
+    if (img) cur.image = { mime: img.mime, data: img.data };
+    outgoing.push(cur);
+    history.push({ role: "user", text: text || "(kép elküldve)" });
+    clearPreview();
     busy = true;
     const typing = addMsg("bot", "…");
     typing.classList.add("ai-msg--typing");
@@ -164,7 +242,7 @@ function buildAiWidget(ai) {
       const res = await fetch(ai.api_url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: history.slice(-12) }),
+        body: JSON.stringify({ messages: outgoing.slice(-12) }),
       });
       const data = await res.json().catch(() => ({}));
       typing.remove();
@@ -182,6 +260,22 @@ function buildAiWidget(ai) {
       input.focus();
     }
   });
+
+  // ---- Belépéskor: üdvözlő felugrás 5 mp-re, majd bezár + piros olvasatlan-jelzés (munkamenetenként egyszer) ----
+  let greeted = false;
+  try { greeted = sessionStorage.getItem("ai_greeted") === "1"; } catch (e) {}
+  if (!greeted) {
+    try { sessionStorage.setItem("ai_greeted", "1"); } catch (e) {}
+    setTimeout(() => {
+      if (!panel.hidden) return; // ha közben már megnyitotta
+      openPanel(false);          // fókusz nélkül nyit (ne ugorjon fel a billentyűzet mobilon)
+      peekTimer = setTimeout(() => {
+        peekTimer = null;
+        closePanel();
+        fab.classList.add("ai-fab--unread"); // piros „1 olvasatlan"
+      }, 5000);
+    }, 1400);
+  }
 }
 
 const ICON_SUN = '<svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><g stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="4.2"/><line x1="12" y1="19.8" x2="12" y2="22"/><line x1="2" y1="12" x2="4.2" y2="12"/><line x1="19.8" y1="12" x2="22" y2="12"/><line x1="4.9" y1="4.9" x2="6.5" y2="6.5"/><line x1="17.5" y1="17.5" x2="19.1" y2="19.1"/><line x1="4.9" y1="19.1" x2="6.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="19.1" y2="4.9"/></g></svg>';
@@ -1113,6 +1207,13 @@ function wireGalleryCarousel() {
   const cap = document.getElementById("gal-caption");
   let active = 0, raf = null;
   const centerOf = (el) => el.offsetLeft + el.offsetWidth / 2;
+  // Az oldalsó térköz = a szabad hely fele, hogy az ELSŐ és UTOLSÓ kép is középre tudjon állni.
+  function setPad() {
+    if (!items.length) return;
+    const pad = Math.max(0, (track.clientWidth - items[0].offsetWidth) / 2);
+    track.style.paddingLeft = pad + "px";
+    track.style.paddingRight = pad + "px";
+  }
   function update() {
     const mid = track.scrollLeft + track.clientWidth / 2;
     let best = 0, bd = Infinity;
@@ -1132,7 +1233,8 @@ function wireGalleryCarousel() {
   const prev = document.getElementById("gal-prev"), next = document.getElementById("gal-next");
   if (prev) prev.addEventListener("click", () => goTo(active - 1));
   if (next) next.addEventListener("click", () => goTo(active + 1));
-  setTimeout(() => { goTo(0); update(); }, 80);
+  setTimeout(() => { setPad(); goTo(0); update(); }, 80);
+  window.addEventListener("resize", () => { setPad(); goTo(active); });
 }
 
 // Videó bélyegkép → mini lejátszó (modal) native vezérlőkkel (start/stop, némítás, hangerő)
