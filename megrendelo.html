@@ -114,7 +114,20 @@
         <div class="field"><label>Számlázási cím / székhely</label><input class="val" type="text" id="f-billaddr"></div>
         <div class="field"><label>Adószám (cég esetén)</label><input class="val" type="text" id="f-taxno"></div>
       </div>
-      <div class="field"><label>Rendszám</label><input class="val" type="text" id="f-plate"></div>
+      <div class="grid2">
+        <div class="field"><label>Autó típusa</label><input class="val" type="text" id="f-car"></div>
+        <div class="field"><label>Rendszám</label><input class="val" type="text" id="f-plate"></div>
+      </div>
+      <div class="field"><label>Alvázszám (VIN) – ablaktörlőhöz</label><input class="val" type="text" id="f-vin"></div>
+      <div class="field"><label>Két autó egy helyszínen</label><span style="flex:1"><input type="checkbox" id="f-two"> Igen, egy helyszínen 2 jármű felújítása</span></div>
+      <div id="car2-block" style="display:none; margin-top:4px; padding:8px 10px; border:1px dashed var(--line); border-radius:8px;">
+        <div style="font-weight:700; color:var(--gold); margin-bottom:4px; font-size:10px; letter-spacing:.3px">2. JÁRMŰ ADATAI</div>
+        <div class="grid2">
+          <div class="field"><label>2. autó típusa</label><input class="val" type="text" id="f-car2"></div>
+          <div class="field"><label>2. rendszám</label><input class="val" type="text" id="f-plate2"></div>
+        </div>
+        <div class="field"><label>2. alvázszám (VIN)</label><input class="val" type="text" id="f-vin2"></div>
+      </div>
     </section>
 
     <section>
@@ -128,9 +141,10 @@
       <h2>3. Időpont és becsült összeg</h2>
       <div class="grid2">
         <div class="field"><label>Dátum</label><input class="val" type="text" id="f-date" placeholder="20__. __ hó __ nap"></div>
-        <div class="field"><label>Időpont (kb.)</label><input class="val" type="text" placeholder="__:__"></div>
+        <div class="field"><label>Időpont (kb.)</label><input class="val" type="text" id="f-time" placeholder="__:__"></div>
       </div>
       <div class="field"><label>Becsült összeg</label><input class="val" type="text" placeholder="__ __ Ft"></div>
+      <div class="field"><label>Megjegyzés</label><input class="val" type="text" id="f-note"></div>
     </section>
 
     <section>
@@ -181,9 +195,22 @@
       setVal("f-billaddr", P.get("billaddr"));
       setVal("f-taxno", P.get("taxno"));
       setVal("f-date", P.get("date"));
+      setVal("f-car", P.get("car"));
+      setVal("f-plate", P.get("plate"));
+      setVal("f-vin", P.get("vin"));
+      setVal("f-car2", P.get("car2"));
+      setVal("f-plate2", P.get("plate2"));
+      setVal("f-vin2", P.get("vin2"));
+      setVal("f-note", P.get("note"));
+      setVal("f-time", P.get("daypart"));
       var type = P.get("type");
       if (type === "company") { var tc = document.getElementById("t-company"); if (tc) tc.checked = true; }
       else if (type === "person") { var tp = document.getElementById("t-person"); if (tp) tp.checked = true; }
+      // 2 autó egy helyszínen – pipa + a 2. jármű blokk mutatása/rejtése
+      var twoCb = document.getElementById("f-two");
+      var car2Block = document.getElementById("car2-block");
+      var syncTwo = function () { if (car2Block) car2Block.style.display = (twoCb && twoCb.checked) ? "block" : "none"; };
+      if (twoCb) { if (P.get("two") === "1") twoCb.checked = true; twoCb.addEventListener("change", syncTwo); syncTwo(); }
       var norm = function (s) { return String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim(); };
       var wantSvc = (P.get("services") || "").split("|").map(function (s) { return s.trim(); }).filter(Boolean);
       var checkWanted = function () {

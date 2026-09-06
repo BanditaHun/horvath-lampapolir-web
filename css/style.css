@@ -695,6 +695,11 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 .booking__row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .booking__billing { display: grid; gap: 14px; padding: 14px; border: 1px dashed rgba(240,180,41,0.35); border-radius: 12px; background: rgba(240,180,41,0.04); }
 :root[data-theme="light"] .booking__billing { border-color: #e0c98f; background: #fffaf0; }
+.booking__subh { font-family: var(--font-heading); font-weight: 700; color: var(--gold-dim); font-size: .95rem; letter-spacing: .3px; }
+.booking__2car { display: flex; align-items: flex-start; gap: 10px; color: var(--chrome); font-size: .98rem; line-height: 1.45; cursor: pointer; padding: 2px 0; }
+.booking__2car input { flex: none; width: 18px; height: 18px; margin-top: 2px; accent-color: var(--gold); cursor: pointer; }
+.booking__2car em { color: var(--gold-dim); font-style: normal; font-weight: 600; }
+:root[data-theme="light"] .booking__2car { color: #23262b; }
 .booking__field { display: flex; flex-direction: column; gap: 7px; }
 .booking__field > span { color: #eef0f3; font-size: 1rem; font-weight: 600; }
 .booking__field > span em { color: var(--chrome-dim); font-style: normal; font-weight: 500; font-size: .88rem; }

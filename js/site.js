@@ -1466,6 +1466,24 @@ function bookingFormHTML(contact) {
         <label class="booking__field"><span>Település / helyszín</span>
           <input type="text" name="place" placeholder="pl. Szekszárd" /></label>
       </div>
+      <div class="booking__row">
+        <label class="booking__field"><span>Rendszám</span>
+          <input type="text" name="plate" autocomplete="off" placeholder="pl. ABC-123" /></label>
+        <label class="booking__field"><span>Alvázszám (VIN) <em>– ablaktörlőhöz</em></span>
+          <input type="text" name="vin" autocomplete="off" placeholder="17 karakter, pl. W0L0AHL..." /></label>
+      </div>
+      <label class="booking__2car"><input type="checkbox" id="two-cars" name="two_cars" value="Igen" /> <span>Egy helyszínen <b>2 autót</b> szeretnék felújítani <em>(a teljes összegből 5% kedvezmény)</em></span></label>
+      <div class="booking__billing" id="car2-fields" hidden>
+        <span class="booking__subh">2. jármű adatai</span>
+        <div class="booking__row">
+          <label class="booking__field"><span>2. autó típusa</span>
+            <input type="text" name="car2" autocomplete="off" placeholder="pl. Suzuki Swift, 2015" /></label>
+          <label class="booking__field"><span>2. rendszám</span>
+            <input type="text" name="plate2" autocomplete="off" placeholder="pl. XYZ-789" /></label>
+        </div>
+        <label class="booking__field"><span>2. alvázszám (VIN) <em>– ablaktörlőhöz</em></span>
+          <input type="text" name="vin2" autocomplete="off" placeholder="17 karakter" /></label>
+      </div>
       <label class="booking__field"><span>Kinek állítsam ki a számlát?</span>
         <select name="billing_type" id="billing-type">
           <option value="Magánszemély">Magánszemély</option>
@@ -1522,6 +1540,14 @@ function wireBookingForm(contact) {
   };
   if (billingType) { billingType.addEventListener("change", syncBilling); syncBilling(); }
 
+  // 2 autó egy helyszínen → második jármű mezői
+  const twoCars = document.getElementById("two-cars");
+  const car2Fields = document.getElementById("car2-fields");
+  if (twoCars && car2Fields) {
+    const syncCar2 = () => { car2Fields.hidden = !twoCars.checked; };
+    twoCars.addEventListener("change", syncCar2); syncCar2();
+  }
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const f = new FormData(form);
@@ -1546,6 +1572,12 @@ function wireBookingForm(contact) {
     const services = f.getAll("service").map((s) => s.toString().trim()).filter(Boolean);
     const car = (f.get("car") || "").toString().trim() || "—";
     const place = (f.get("place") || "").toString().trim() || "—";
+    const plate = (f.get("plate") || "").toString().trim();
+    const vin = (f.get("vin") || "").toString().trim();
+    const twoCarsVal = f.get("two_cars") ? "Igen – 2 autó egy helyszínen" : "";
+    const car2 = (f.get("car2") || "").toString().trim();
+    const plate2 = (f.get("plate2") || "").toString().trim();
+    const vin2 = (f.get("vin2") || "").toString().trim();
     const message = (f.get("message") || "").toString().trim() || "—";
 
     // Táblázatos (oszlopos) elrendezés a levélben – a levélíró csak sima szöveget fogad.
@@ -1554,11 +1586,20 @@ function wireBookingForm(contact) {
     const billingRows = isBusiness
       ? [["Számlázás", billingType], [billingType === "Egyéni vállalkozó" ? "Vállalkozás" : "Cég neve", company], ["Adószám", taxno], ["Székhely", billingAddr]]
       : [["Számlázás", "Magánszemély"], ["Száml. cím (lakcím)", billingAddr || "—"]];
+    const carRows = [["Autó típusa", car]];
+    if (plate) carRows.push(["Rendszám", plate]);
+    if (vin) carRows.push(["Alvázszám (VIN)", vin]);
+    if (twoCarsVal) {
+      carRows.push(["2 autó egyszerre", twoCarsVal]);
+      if (car2) carRows.push(["2. autó típusa", car2]);
+      if (plate2) carRows.push(["2. rendszám", plate2]);
+      if (vin2) carRows.push(["2. alvázszám", vin2]);
+    }
     const rowsData = [
       ["Név", name],
       ["Telefon", phone],
       ...billingRows,
-      ["Autó típusa", car],
+      ...carRows,
       ["Szolgáltatás(ok)", services.length ? services : ["—"]],
       ["Helyszín", place],
       ["Kért nap", dateP ? dateP.replace(/-/g, ". ") + "." : "—"],
@@ -1587,9 +1628,18 @@ function wireBookingForm(contact) {
       if (isBusiness && taxno) op.set("taxno", taxno);
       if (services.length) op.set("services", services.join("|"));
       if (dateP) op.set("date", dateP.replace(/-/g, ". ") + ".");
+      if (car && car !== "—") op.set("car", car);
+      if (plate) op.set("plate", plate);
+      if (vin) op.set("vin", vin);
+      if (twoCarsVal) op.set("two", "1");
+      if (car2) op.set("car2", car2);
+      if (plate2) op.set("plate2", plate2);
+      if (vin2) op.set("vin2", vin2);
+      if (daypart) op.set("daypart", daypart);
+      if (message && message !== "—") op.set("note", message);
       const orderUrl = new URL("megrendelo.html", location.href).href + "?" + op.toString();
       lines.push("");
-      lines.push("ELŐRE KITÖLTÖTT MEGRENDELŐ LAP (kattints rá – csak az árat/rendszámot kell kitölteni):");
+      lines.push("ELŐRE KITÖLTÖTT MEGRENDELŐ LAP (kattints rá – csak az árat/időpontot kell kitölteni):");
       lines.push(orderUrl);
     } catch (e) { /* ha valamiért nem megy, a fenti táblázat úgyis tartalmaz mindent */ }
 
