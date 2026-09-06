@@ -1454,60 +1454,85 @@ function bookingFormHTML(contact) {
     <h2 class="booking__title">Időpont igénylése</h2>
     <p class="booking__lead">Töltsd ki pár másodperc alatt, és e-mailben elküldöd nekem az igényed. Sürgős esetben inkább <a href="${telHref(contact.phone)}">hívj</a>.</p>
     <form class="booking__form" id="booking-form" novalidate>
-      <div class="booking__row">
-        <label class="booking__field"><span>Neved *</span>
-          <input type="text" name="name" required autocomplete="name" placeholder="pl. Kovács János" /></label>
-        <label class="booking__field"><span>Telefonszámod *</span>
-          <input type="tel" name="phone" required autocomplete="tel" placeholder="pl. +36 20 123 4567" /></label>
-      </div>
-      <div class="booking__row">
-        <label class="booking__field"><span>Autó típusa</span>
-          <input type="text" name="car" autocomplete="off" placeholder="pl. Opel Astra H, 2008" /></label>
-        <label class="booking__field"><span>Település / helyszín</span>
-          <input type="text" name="place" placeholder="pl. Szekszárd" /></label>
-      </div>
-      <div class="booking__row">
-        <label class="booking__field"><span>Rendszám</span>
-          <input type="text" name="plate" autocomplete="off" placeholder="pl. ABC-123" /></label>
-        <label class="booking__field"><span>Alvázszám (VIN) <em>– ablaktörlőhöz</em></span>
-          <input type="text" name="vin" autocomplete="off" placeholder="17 karakter, pl. W0L0AHL..." /></label>
-      </div>
-      <label class="booking__2car"><input type="checkbox" id="two-cars" name="two_cars" value="Igen" /> <span>Egy helyszínen <b>2 autót</b> szeretnék felújítani <em>(a teljes összegből 5% kedvezmény)</em></span></label>
-      <div class="booking__billing" id="car2-fields" hidden>
-        <span class="booking__subh">2. jármű adatai</span>
+      <fieldset class="booking__section">
+        <legend class="booking__section-h"><span class="booking__num">1</span> Megrendelő adatai</legend>
         <div class="booking__row">
-          <label class="booking__field"><span>2. autó típusa</span>
-            <input type="text" name="car2" autocomplete="off" placeholder="pl. Suzuki Swift, 2015" /></label>
-          <label class="booking__field"><span>2. rendszám</span>
-            <input type="text" name="plate2" autocomplete="off" placeholder="pl. XYZ-789" /></label>
+          <label class="booking__field"><span>Neved *</span>
+            <input type="text" name="name" required autocomplete="name" placeholder="pl. Kovács János" /></label>
+          <label class="booking__field"><span>Telefonszámod *</span>
+            <input type="tel" name="phone" required autocomplete="tel" placeholder="pl. +36 20 123 4567" /></label>
         </div>
-        <label class="booking__field"><span>2. alvázszám (VIN) <em>– ablaktörlőhöz</em></span>
-          <input type="text" name="vin2" autocomplete="off" placeholder="17 karakter" /></label>
-      </div>
-      <label class="booking__field"><span id="billing-addr-label">Számlázási cím (lakcím) – település, utca, házszám</span>
-        <input type="text" name="billing_addr" autocomplete="street-address" placeholder="pl. 7100 Szekszárd, Fő utca 12." /></label>
-      <label class="booking__2car"><input type="checkbox" id="biz-toggle" name="is_business" value="Igen" /> <span>Céges / jogi személyként kérem a számlát <em>(cég, Kft., Bt., egyéni vállalkozó)</em></span></label>
-      <div class="booking__billing" id="biz-fields" hidden>
-        <span class="booking__subh">Céges számlázási adatok</span>
+        <label class="booking__field"><span>Település / helyszín <em>(a munkavégzés helye)</em></span>
+          <input type="text" name="place" placeholder="pl. Szekszárd, Kossuth u. 5." /></label>
+      </fieldset>
+
+      <fieldset class="booking__section">
+        <legend class="booking__section-h"><span class="booking__num">2</span> Számlázás</legend>
+        <label class="booking__field"><span id="billing-addr-label">Számlázási cím (lakcím) – település, utca, házszám</span>
+          <input type="text" name="billing_addr" autocomplete="street-address" placeholder="pl. 7100 Szekszárd, Fő utca 12." /></label>
+        <label class="booking__2car"><input type="checkbox" id="biz-toggle" name="is_business" value="Igen" /> <span>Céges / jogi személyként kérem a számlát <em>(cég, Kft., Bt., egyéni vállalkozó)</em></span></label>
+        <div class="booking__billing" id="biz-fields" hidden>
+          <span class="booking__subh">Céges számlázási adatok</span>
+          <div class="booking__row">
+            <label class="booking__field"><span>Cég / vállalkozás neve *</span>
+              <input type="text" name="company" autocomplete="organization" placeholder="pl. Minta Kft." /></label>
+            <label class="booking__field"><span>Adószám *</span>
+              <input type="text" name="taxno" inputmode="numeric" placeholder="pl. 12345678-1-17" /></label>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="booking__section">
+        <legend class="booking__section-h"><span class="booking__num">3</span> Autó adatai</legend>
         <div class="booking__row">
-          <label class="booking__field"><span>Cég / vállalkozás neve *</span>
-            <input type="text" name="company" autocomplete="organization" placeholder="pl. Minta Kft." /></label>
-          <label class="booking__field"><span>Adószám *</span>
-            <input type="text" name="taxno" inputmode="numeric" placeholder="pl. 12345678-1-17" /></label>
+          <label class="booking__field"><span>Autó típusa</span>
+            <input type="text" name="car" autocomplete="off" placeholder="pl. Opel Astra H" /></label>
+          <label class="booking__field"><span>Évjárat</span>
+            <input type="text" name="year" inputmode="numeric" autocomplete="off" placeholder="pl. 2008" /></label>
         </div>
-      </div>
-      <div class="booking__field booking__field--svc">
-        <span>Mit szeretnél? <em>(többet is választhatsz)</em></span>
-        <div class="svc-picker">${servicePicker}</div>
-      </div>
-      <div class="booking__row">
-        <label class="booking__field"><span>Kért időpont (nap)</span>
-          <input type="date" name="date_pref" /></label>
-        <label class="booking__field"><span>Napszak</span>
-          <select name="daypart">${dayOpts}</select></label>
-      </div>
-      <label class="booking__field"><span>Megjegyzés</span>
-        <textarea name="message" rows="4" placeholder="pl. Mindkét fényszóró homályos, hétvégén érek rá."></textarea></label>
+        <div class="booking__row">
+          <label class="booking__field"><span>Rendszám</span>
+            <input type="text" name="plate" autocomplete="off" placeholder="pl. ABC-123" /></label>
+          <label class="booking__field"><span>Alvázszám (VIN) <em>– ablaktörlő lapát cseréhez</em></span>
+            <input type="text" name="vin" autocomplete="off" placeholder="17 karakter, pl. W0L0AHL..." /></label>
+        </div>
+        <label class="booking__2car"><input type="checkbox" id="two-cars" name="two_cars" value="Igen" /> <span>Egy helyszínen <b>2 autót</b> szeretnék felújítani <em>(a teljes összegből 5% kedvezmény)</em></span></label>
+        <div class="booking__billing" id="car2-fields" hidden>
+          <span class="booking__subh">2. jármű adatai</span>
+          <div class="booking__row">
+            <label class="booking__field"><span>2. autó típusa</span>
+              <input type="text" name="car2" autocomplete="off" placeholder="pl. Suzuki Swift" /></label>
+            <label class="booking__field"><span>2. évjárat</span>
+              <input type="text" name="year2" inputmode="numeric" autocomplete="off" placeholder="pl. 2015" /></label>
+          </div>
+          <div class="booking__row">
+            <label class="booking__field"><span>2. rendszám</span>
+              <input type="text" name="plate2" autocomplete="off" placeholder="pl. XYZ-789" /></label>
+            <label class="booking__field"><span>2. alvázszám (VIN)</span>
+              <input type="text" name="vin2" autocomplete="off" placeholder="17 karakter" /></label>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="booking__section">
+        <legend class="booking__section-h"><span class="booking__num">4</span> Mit szeretnél?</legend>
+        <div class="booking__field booking__field--svc">
+          <span>Válaszd ki a szolgáltatás(oka)t <em>(többet is választhatsz)</em></span>
+          <div class="svc-picker">${servicePicker}</div>
+        </div>
+      </fieldset>
+
+      <fieldset class="booking__section">
+        <legend class="booking__section-h"><span class="booking__num">5</span> Időpont és megjegyzés</legend>
+        <div class="booking__row">
+          <label class="booking__field"><span>Kért időpont (nap)</span>
+            <input type="date" name="date_pref" /></label>
+          <label class="booking__field"><span>Napszak</span>
+            <select name="daypart">${dayOpts}</select></label>
+        </div>
+        <label class="booking__field"><span>Megjegyzés</span>
+          <textarea name="message" rows="3" placeholder="pl. Mindkét fényszóró homályos, hétvégén érek rá."></textarea></label>
+      </fieldset>
       <p class="booking__info">ℹ️ Ez egy <strong>időpont-igénylő lap</strong>, nem végleges foglalás. Miután elküldted, <strong>rövid időn belül visszahívlak</strong>, és közösen egyeztetjük a pontos időpontot.</p>
       <div class="booking__actions">
         <button type="submit" class="btn btn--primary">Igénylés elküldése</button>
@@ -1565,11 +1590,13 @@ function wireBookingForm(contact) {
     const daypart = (f.get("daypart") || "").toString().trim();
     const services = f.getAll("service").map((s) => s.toString().trim()).filter(Boolean);
     const car = (f.get("car") || "").toString().trim() || "—";
+    const year = (f.get("year") || "").toString().trim();
     const place = (f.get("place") || "").toString().trim() || "—";
     const plate = (f.get("plate") || "").toString().trim();
     const vin = (f.get("vin") || "").toString().trim();
     const twoCarsVal = f.get("two_cars") ? "Igen – 2 autó egy helyszínen" : "";
     const car2 = (f.get("car2") || "").toString().trim();
+    const year2 = (f.get("year2") || "").toString().trim();
     const plate2 = (f.get("plate2") || "").toString().trim();
     const vin2 = (f.get("vin2") || "").toString().trim();
     const message = (f.get("message") || "").toString().trim() || "—";
@@ -1577,12 +1604,12 @@ function wireBookingForm(contact) {
     const billingRows = isBusiness
       ? [["Számlázás", "Cég / jogi személy"], ["Cég neve", company], ["Adószám", taxno], ["Székhely", billingAddr]]
       : [["Számlázás", "Magánszemély"], ["Száml. cím (lakcím)", billingAddr || "—"]];
-    const carRows = [["Autó típusa", car]];
+    const carRows = [["Autó típusa", car + (year ? " (" + year + ")" : "")]];
     if (plate) carRows.push(["Rendszám", plate]);
     if (vin) carRows.push(["Alvázszám (VIN)", vin]);
     if (twoCarsVal) {
       carRows.push(["2 autó egyszerre", twoCarsVal]);
-      if (car2) carRows.push(["2. autó típusa", car2]);
+      if (car2) carRows.push(["2. autó típusa", car2 + (year2 ? " (" + year2 + ")" : "")]);
       if (plate2) carRows.push(["2. rendszám", plate2]);
       if (vin2) carRows.push(["2. alvázszám", vin2]);
     }
@@ -1621,10 +1648,12 @@ function wireBookingForm(contact) {
       if (services.length) op.set("services", services.join("|"));
       if (dateP) op.set("date", dateP.replace(/-/g, ". ") + ".");
       if (car && car !== "—") op.set("car", car);
+      if (year) op.set("year", year);
       if (plate) op.set("plate", plate);
       if (vin) op.set("vin", vin);
       if (twoCarsVal) op.set("two", "1");
       if (car2) op.set("car2", car2);
+      if (year2) op.set("year2", year2);
       if (plate2) op.set("plate2", plate2);
       if (vin2) op.set("vin2", vin2);
       if (daypart) op.set("daypart", daypart);

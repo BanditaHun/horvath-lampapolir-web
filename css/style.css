@@ -692,6 +692,17 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 .booking__lead { color: var(--chrome); margin: 0 0 22px; font-size: 1.05rem; }
 .booking__lead a { color: var(--gold); }
 .booking__form { display: flex; flex-direction: column; gap: 16px; }
+/* Kategóriákra bontott űrlap-szekciók */
+.booking__section { display: flex; flex-direction: column; gap: 13px; min-width: 0;
+  border: 1px solid var(--line); border-radius: 14px; padding: 15px 16px 17px; margin: 0; }
+.booking__section-h { display: flex; align-items: center; gap: 10px; margin: 0 0 1px;
+  font-family: var(--font-heading); font-weight: 800; color: var(--gold-dim);
+  font-size: 1.02rem; letter-spacing: .3px; padding: 0; }
+.booking__num { display: inline-flex; align-items: center; justify-content: center; flex: none;
+  width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+  color: #1a1200; font-size: .82rem; font-weight: 800; }
+:root[data-theme="light"] .booking__section { border-color: #d7c79a; background: #fffdf7; }
+:root[data-theme="light"] .booking__section-h { color: #8a5e00; }
 .booking__row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .booking__billing { display: grid; gap: 14px; padding: 14px; border: 1px dashed rgba(240,180,41,0.35); border-radius: 12px; background: rgba(240,180,41,0.04); }
 .booking__billing[hidden] { display: none; }
