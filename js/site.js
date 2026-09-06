@@ -503,14 +503,16 @@ function openEmailMenu(anchor, email) {
   if (existing) { existing.remove(); return; }
   const gmail = "https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(email);
   const outlook = "https://outlook.live.com/mail/0/deeplink/compose?to=" + encodeURIComponent(email);
+  const env = (c) => `<svg class="email-menu__ic" viewBox="0 0 24 24" width="18" height="18" fill="${c}" aria-hidden="true"><path d="M3 5h18a1 1 0 0 1 1 1v.35l-10 6.25L2 6.35V6a1 1 0 0 1 1-1z"/><path d="M22 8.12V18a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V8.12l10 6.25 10-6.25z"/></svg>`;
+  const copyIc = `<svg class="email-menu__ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>`;
   const m = document.createElement("div");
   m.id = "email-menu"; m.className = "email-menu"; m.setAttribute("role", "menu");
   m.innerHTML =
     `<div class="email-menu__head">Írj e-mailt – válaszd, mivel:</div>` +
-    `<a href="${gmail}" target="_blank" rel="noopener">✉️ Gmail (böngészőben)</a>` +
-    `<a href="${outlook}" target="_blank" rel="noopener">✉️ Outlook (böngészőben)</a>` +
-    `<a href="mailto:${esc(email)}">📧 Alapértelmezett levelező</a>` +
-    `<button type="button" class="email-menu__copy">📋 E-mail cím másolása</button>`;
+    `<a href="${gmail}" target="_blank" rel="noopener">${env("#EA4335")}<span>Gmail <em>(böngészőben)</em></span></a>` +
+    `<a href="${outlook}" target="_blank" rel="noopener">${env("#0F6CBD")}<span>Outlook <em>(böngészőben)</em></span></a>` +
+    `<a href="mailto:${esc(email)}">${env("currentColor")}<span>Alapértelmezett levelező</span></a>` +
+    `<button type="button" class="email-menu__copy">${copyIc}<span>E-mail cím másolása</span></button>`;
   document.body.appendChild(m);
   // A menü a TELJES fejléc (sticky nav) alá kerüljön, hogy ne lógjon a menüsorba
   const nav = document.getElementById("nav");
