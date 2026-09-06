@@ -9,7 +9,7 @@
   --line: #2a2a2a;
   --radius: 14px;
   --maxw: min(96vw, 1920px);
-  --nav-h: 76px;
+  --nav-h: 92px;
 
   /* Tipográfia – ezeket a CMS „Megjelenés" menüje állítja (theme.json) */
   --font-body: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
@@ -139,7 +139,7 @@ a:hover { text-decoration: underline; }
 .nav__brand { display: inline-flex; align-items: center; z-index: 1; }
 .nav__brand:hover { text-decoration: none; }
 .nav__logo {
-  height: 68px; width: auto;
+  height: 84px; width: auto;
   border-radius: 14px; border: 1px solid rgba(240,180,41,0.4); background: #0a0a0a;
   animation: logoBeam 5s ease-in-out infinite;
 }
@@ -694,7 +694,7 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
   .contact__grid { grid-template-columns: 1fr; }
 
   .nav__toggle { display: flex; }
-  .nav__logo { height: 52px; }
+  .nav__logo { height: 60px; }
   .nav__title { display: none; }
   .nav__right { gap: 10px; }
   .nav__right .topbar__social { display: none; }
