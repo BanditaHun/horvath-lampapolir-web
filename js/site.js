@@ -492,7 +492,6 @@ function populateTopbar(contact) {
     te.href = "mailto:" + contact.email;
     te.title = "E-mail: " + contact.email;
     te.hidden = false;
-    te.addEventListener("click", (e) => { e.preventDefault(); openEmailMenu(te, contact.email); });
   }
   if (isSet(contact.facebook_url)) { const t = document.getElementById("top-fb"); t.href = contact.facebook_url; t.hidden = false; }
 }
@@ -514,15 +513,16 @@ function openEmailMenu(anchor, email) {
     `<a href="mailto:${esc(email)}">${env("currentColor")}<span>Alapértelmezett levelező</span></a>` +
     `<button type="button" class="email-menu__copy">${copyIc}<span>E-mail cím másolása</span></button>`;
   document.body.appendChild(m);
-  // Buborék közvetlenül az e-mail ikon alá, a nyíl az ikonra mutat
+  // Buborék közvetlenül az adott elem (link/ikon) alá, a nyíl az elemre mutat – bárhol az oldalon
   const r = anchor.getBoundingClientRect();
   m.style.top = (r.bottom + 11) + "px";
-  m.style.left = "auto";
-  const rightGap = Math.max(10, window.innerWidth - r.right - 4);
-  m.style.right = rightGap + "px";
-  // a nyilat pontosan az ikon közepe alá igazítjuk
-  const caretRight = Math.max(12, (window.innerWidth - r.right - rightGap) + (r.width / 2) - 6);
-  m.style.setProperty("--caret-right", caretRight + "px");
+  m.style.right = "auto";
+  const mw = m.offsetWidth;
+  const center = r.left + r.width / 2;
+  let left = Math.max(10, Math.min(center - mw / 2, window.innerWidth - mw - 10));
+  m.style.left = left + "px";
+  const caretLeft = Math.max(12, Math.min(mw - 22, center - left - 6));
+  m.style.setProperty("--caret-left", caretLeft + "px");
   const close = () => { m.remove(); document.removeEventListener("pointerdown", onDoc, true); };
   m.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setTimeout(close, 0)));
   m.querySelector(".email-menu__copy").addEventListener("click", function () {
@@ -532,6 +532,19 @@ function openEmailMenu(anchor, email) {
   });
   function onDoc(ev) { if (!m.contains(ev.target) && ev.target !== anchor && !anchor.contains(ev.target)) close(); }
   setTimeout(() => document.addEventListener("pointerdown", onDoc, true), 0);
+}
+
+// MINDEN mailto: link kattintására a választó buborék nyílik (fejléc, lábléc, Kapcsolat oldal stb.)
+function wireEmailChoosers() {
+  if (window.__emailChoosersWired) return;
+  window.__emailChoosersWired = true;
+  document.addEventListener("click", function (e) {
+    const link = e.target.closest && e.target.closest('a[href^="mailto:"]');
+    if (!link || link.closest(".email-menu")) return; // a buborékon belüli mailto marad natív
+    e.preventDefault();
+    const email = decodeURIComponent(link.getAttribute("href").replace(/^mailto:/i, "").split("?")[0]);
+    openEmailMenu(link, email);
+  });
 }
 
 // ---------- Neon kártyák ----------
@@ -1965,6 +1978,7 @@ async function initSite() {
   document.getElementById("site-footer").innerHTML = buildFooter();
   wireNav();
   wireTheme();
+  wireEmailChoosers();
 
   try { applyTheme(await loadJSON("content/theme.json")); } catch (e) { /* alap marad */ }
 
