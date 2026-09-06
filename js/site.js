@@ -1484,21 +1484,17 @@ function bookingFormHTML(contact) {
         <label class="booking__field"><span>2. alvázszám (VIN) <em>– ablaktörlőhöz</em></span>
           <input type="text" name="vin2" autocomplete="off" placeholder="17 karakter" /></label>
       </div>
-      <label class="booking__field"><span>Kinek állítsam ki a számlát?</span>
-        <select name="billing_type" id="billing-type">
-          <option value="Magánszemély">Magánszemély</option>
-          <option value="Egyéni vállalkozó">Egyéni vállalkozó</option>
-          <option value="Cég (Kft., Bt., Zrt. stb.)">Cég (Kft., Bt., Zrt. stb.)</option>
-        </select></label>
-      <div class="booking__billing" id="billing-fields">
-        <div class="booking__row" id="billing-company-row" hidden>
-          <label class="booking__field"><span id="company-label">Cég / vállalkozás neve *</span>
+      <label class="booking__field"><span id="billing-addr-label">Számlázási cím (lakcím) – település, utca, házszám</span>
+        <input type="text" name="billing_addr" autocomplete="street-address" placeholder="pl. 7100 Szekszárd, Fő utca 12." /></label>
+      <label class="booking__2car"><input type="checkbox" id="biz-toggle" name="is_business" value="Igen" /> <span>Céges / jogi személyként kérem a számlát <em>(cég, Kft., Bt., egyéni vállalkozó)</em></span></label>
+      <div class="booking__billing" id="biz-fields" hidden>
+        <span class="booking__subh">Céges számlázási adatok</span>
+        <div class="booking__row">
+          <label class="booking__field"><span>Cég / vállalkozás neve *</span>
             <input type="text" name="company" autocomplete="organization" placeholder="pl. Minta Kft." /></label>
           <label class="booking__field"><span>Adószám *</span>
             <input type="text" name="taxno" inputmode="numeric" placeholder="pl. 12345678-1-17" /></label>
         </div>
-        <label class="booking__field"><span id="billing-addr-label">Számlázási cím (lakcím)</span>
-          <input type="text" name="billing_addr" autocomplete="street-address" placeholder="pl. 7100 Szekszárd, Fő utca 1." /></label>
       </div>
       <div class="booking__field booking__field--svc">
         <span>Mit szeretnél? <em>(többet is választhatsz)</em></span>
@@ -1527,18 +1523,16 @@ function wireBookingForm(contact) {
   if (!form) return;
   const note = document.getElementById("booking-note");
 
-  // Számlázás típusa: cég/vállalkozó esetén megjelennek a számlázási mezők
-  const billingType = document.getElementById("billing-type");
-  const companyRow = document.getElementById("billing-company-row");
-  const companyLabel = document.getElementById("company-label");
+  // Céges/jogi személy pipa → megjelennek a céges számlázási mezők, a cím felirata "székhely"-re vált
+  const bizToggle = document.getElementById("biz-toggle");
+  const bizFields = document.getElementById("biz-fields");
   const addrLabel = document.getElementById("billing-addr-label");
-  const syncBilling = () => {
-    const isPerson = (billingType && billingType.value === "Magánszemély");
-    if (companyRow) companyRow.hidden = isPerson;
-    if (companyLabel && billingType) companyLabel.textContent = billingType.value === "Egyéni vállalkozó" ? "Vállalkozás neve *" : "Cég neve *";
-    if (addrLabel) addrLabel.textContent = isPerson ? "Számlázási cím (lakcím)" : "Számlázási cím (székhely) *";
+  const syncBiz = () => {
+    const on = !!(bizToggle && bizToggle.checked);
+    if (bizFields) bizFields.hidden = !on;
+    if (addrLabel) addrLabel.textContent = on ? "Székhely (számlázási cím) – település, utca, házszám *" : "Számlázási cím (lakcím) – település, utca, házszám";
   };
-  if (billingType) { billingType.addEventListener("change", syncBilling); syncBilling(); }
+  if (bizToggle) { bizToggle.addEventListener("change", syncBiz); syncBiz(); }
 
   // 2 autó egy helyszínen → második jármű mezői
   const twoCars = document.getElementById("two-cars");
@@ -1558,8 +1552,8 @@ function wireBookingForm(contact) {
       return;
     }
     // Számlázási adatok
-    const billingType = (f.get("billing_type") || "Magánszemély").toString().trim();
-    const isBusiness = billingType !== "Magánszemély";
+    const isBusiness = !!f.get("is_business");
+    const billingType = isBusiness ? "Cég / jogi személy" : "Magánszemély";
     const company = (f.get("company") || "").toString().trim();
     const taxno = (f.get("taxno") || "").toString().trim();
     const billingAddr = (f.get("billing_addr") || "").toString().trim();
@@ -1581,7 +1575,7 @@ function wireBookingForm(contact) {
     const message = (f.get("message") || "").toString().trim() || "—";
 
     const billingRows = isBusiness
-      ? [["Számlázás", billingType], [billingType === "Egyéni vállalkozó" ? "Vállalkozás" : "Cég neve", company], ["Adószám", taxno], ["Székhely", billingAddr]]
+      ? [["Számlázás", "Cég / jogi személy"], ["Cég neve", company], ["Adószám", taxno], ["Székhely", billingAddr]]
       : [["Számlázás", "Magánszemély"], ["Száml. cím (lakcím)", billingAddr || "—"]];
     const carRows = [["Autó típusa", car]];
     if (plate) carRows.push(["Rendszám", plate]);
