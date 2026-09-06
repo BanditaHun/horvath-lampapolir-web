@@ -77,6 +77,17 @@ a:hover { text-decoration: underline; }
 }
 .topbar__social:hover { color: var(--gold); border-color: var(--gold); background: rgba(240,180,41,0.14); transform: translateY(-1px); }
 .topbar__social svg { color: inherit; }
+/* E-mail választó menü (fejléc e-mail ikon) */
+.email-menu { position: fixed; z-index: 90; min-width: 230px; max-width: calc(100vw - 16px);
+  background: #16130b; border: 1px solid rgba(240,180,41,0.45); border-radius: 12px;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.55); padding: 6px; display: flex; flex-direction: column; }
+.email-menu__head { padding: 8px 12px 6px; font-size: .8rem; color: var(--chrome-dim); }
+.email-menu a, .email-menu button { text-align: left; padding: 11px 12px; border-radius: 8px; font: inherit;
+  color: var(--chrome); text-decoration: none; background: none; border: none; cursor: pointer; }
+.email-menu a:hover, .email-menu button:hover { background: rgba(240,180,41,0.16); color: var(--gold); }
+:root[data-theme="light"] .email-menu { background: #fff; border-color: #e0c98f; }
+:root[data-theme="light"] .email-menu a, :root[data-theme="light"] .email-menu button { color: #23262b; }
+:root[data-theme="light"] .email-menu a:hover, :root[data-theme="light"] .email-menu button:hover { background: #fdf3d6; color: #7a5300; }
 @media (max-width: 560px) {
   .topbar__inner { justify-content: center; gap: 10px; padding: 6px 12px; }
   .nav__right .topbar__phone { padding: 6px 13px; gap: 6px; white-space: nowrap; }

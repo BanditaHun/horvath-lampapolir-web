@@ -490,10 +490,42 @@ function populateTopbar(contact) {
   if (isSet(contact.email)) {
     const te = document.getElementById("top-email");
     te.href = "mailto:" + contact.email;
-    te.title = contact.email;
+    te.title = "E-mail: " + contact.email;
     te.hidden = false;
+    te.addEventListener("click", (e) => { e.preventDefault(); openEmailMenu(te, contact.email); });
   }
   if (isSet(contact.facebook_url)) { const t = document.getElementById("top-fb"); t.href = contact.facebook_url; t.hidden = false; }
+}
+
+// E-mail ikonra: kis választó menü (Gmail / Outlook / alapértelmezett levelező / cím másolása)
+function openEmailMenu(anchor, email) {
+  const existing = document.getElementById("email-menu");
+  if (existing) { existing.remove(); return; }
+  const gmail = "https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(email);
+  const outlook = "https://outlook.live.com/mail/0/deeplink/compose?to=" + encodeURIComponent(email);
+  const m = document.createElement("div");
+  m.id = "email-menu"; m.className = "email-menu"; m.setAttribute("role", "menu");
+  m.innerHTML =
+    `<div class="email-menu__head">Írj e-mailt – válaszd, mivel:</div>` +
+    `<a href="${gmail}" target="_blank" rel="noopener">✉️ Gmail (böngészőben)</a>` +
+    `<a href="${outlook}" target="_blank" rel="noopener">✉️ Outlook (böngészőben)</a>` +
+    `<a href="mailto:${esc(email)}">📧 Alapértelmezett levelező</a>` +
+    `<button type="button" class="email-menu__copy">📋 E-mail cím másolása</button>`;
+  document.body.appendChild(m);
+  const r = anchor.getBoundingClientRect();
+  m.style.top = (r.bottom + 8) + "px";
+  // jobbra igazítjuk az ikon jobb széléhez (megbízható, függetlenül a menü szélességétől)
+  m.style.left = "auto";
+  m.style.right = Math.max(8, window.innerWidth - r.right) + "px";
+  const close = () => { m.remove(); document.removeEventListener("pointerdown", onDoc, true); };
+  m.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setTimeout(close, 0)));
+  m.querySelector(".email-menu__copy").addEventListener("click", function () {
+    try { navigator.clipboard.writeText(email); } catch (e) {}
+    this.textContent = "Másolva ✓";
+    setTimeout(close, 900);
+  });
+  function onDoc(ev) { if (!m.contains(ev.target) && ev.target !== anchor && !anchor.contains(ev.target)) close(); }
+  setTimeout(() => document.addEventListener("pointerdown", onDoc, true), 0);
 }
 
 // ---------- Neon kártyák ----------
