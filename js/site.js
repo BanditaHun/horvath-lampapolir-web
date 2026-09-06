@@ -513,16 +513,21 @@ function openEmailMenu(anchor, email) {
     `<a href="mailto:${esc(email)}">${env("currentColor")}<span>Alapértelmezett levelező</span></a>` +
     `<button type="button" class="email-menu__copy">${copyIc}<span>E-mail cím másolása</span></button>`;
   document.body.appendChild(m);
-  // Buborék közvetlenül az adott elem (link/ikon) alá, a nyíl az elemre mutat – bárhol az oldalon
+  // Buborék az adott elem (link/ikon) mellé, a nyíl az elemre mutat – bárhol az oldalon
   const r = anchor.getBoundingClientRect();
-  m.style.top = (r.bottom + 11) + "px";
   m.style.right = "auto";
-  const mw = m.offsetWidth;
+  const mw = m.offsetWidth, mh = m.offsetHeight;
   const center = r.left + r.width / 2;
-  let left = Math.max(10, Math.min(center - mw / 2, window.innerWidth - mw - 10));
+  const left = Math.max(10, Math.min(center - mw / 2, window.innerWidth - mw - 10));
   m.style.left = left + "px";
-  const caretLeft = Math.max(12, Math.min(mw - 22, center - left - 6));
-  m.style.setProperty("--caret-left", caretLeft + "px");
+  m.style.setProperty("--caret-left", Math.max(12, Math.min(mw - 22, center - left - 6)) + "px");
+  // Ha alul nincs elég hely (pl. lábléc), felfelé nyílik
+  if (window.innerHeight - r.bottom < mh + 16 && r.top > mh + 16) {
+    m.classList.add("email-menu--up");
+    m.style.top = (r.top - mh - 11) + "px";
+  } else {
+    m.style.top = (r.bottom + 11) + "px";
+  }
   const close = () => { m.remove(); document.removeEventListener("pointerdown", onDoc, true); };
   m.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setTimeout(close, 0)));
   m.querySelector(".email-menu__copy").addEventListener("click", function () {

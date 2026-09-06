@@ -85,6 +85,10 @@ a:hover { text-decoration: underline; }
 @keyframes emailMenuIn { from { opacity: 0; transform: translateY(-6px) scale(.97); } to { opacity: 1; transform: none; } }
 .email-menu::after { content: ""; position: absolute; top: -6px; left: var(--caret-left, 18px); width: 11px; height: 11px;
   background: #1b1810; border-left: 1px solid rgba(240,180,41,0.4); border-top: 1px solid rgba(240,180,41,0.4); transform: rotate(45deg); }
+.email-menu--up { transform-origin: bottom center; }
+.email-menu--up::after { top: auto; bottom: -6px; border-left: none; border-top: none;
+  border-right: 1px solid rgba(240,180,41,0.4); border-bottom: 1px solid rgba(240,180,41,0.4); }
+:root[data-theme="light"] .email-menu--up::after { border-color: #e6d199; background: #fff; }
 .email-menu__head { padding: 8px 12px 8px; font-size: .78rem; font-weight: 700; letter-spacing: .3px; color: var(--gold);
   border-bottom: 1px solid rgba(240,180,41,0.16); margin-bottom: 3px; }
 .email-menu a, .email-menu button { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left;
