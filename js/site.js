@@ -1580,9 +1580,6 @@ function wireBookingForm(contact) {
     const vin2 = (f.get("vin2") || "").toString().trim();
     const message = (f.get("message") || "").toString().trim() || "—";
 
-    // Táblázatos (oszlopos) elrendezés a levélben – a levélíró csak sima szöveget fogad.
-    const LW = 18; // címke-oszlop szélessége
-    const pad = (s) => { s = String(s); return s.length >= LW ? s : s + " ".repeat(LW - s.length); };
     const billingRows = isBusiness
       ? [["Számlázás", billingType], [billingType === "Egyéni vállalkozó" ? "Vállalkozás" : "Cég neve", company], ["Adószám", taxno], ["Székhely", billingAddr]]
       : [["Számlázás", "Magánszemély"], ["Száml. cím (lakcím)", billingAddr || "—"]];
@@ -1606,15 +1603,16 @@ function wireBookingForm(contact) {
       ["Napszak", daypart || "—"],
       ["Megjegyzés", message],
     ];
-    const lines = ["IDŐPONT-IGÉNYLÉS A WEBOLDALRÓL", "=".repeat(44), pad("Adat") + "| Érték", "-".repeat(18) + "+" + "-".repeat(25)];
+    // Letisztult, sima szöveges levél (nincs táblázat/vonal): "Címke: érték"
+    const lines = ["IDŐPONT-IGÉNYLÉS A WEBOLDALRÓL", ""];
     for (const [k, v] of rowsData) {
       if (Array.isArray(v)) {
-        v.forEach((item, i) => lines.push(pad(i === 0 ? k : "") + "| " + item));
+        lines.push(k + ":");
+        v.forEach((item) => lines.push("  • " + item));
       } else {
-        lines.push(pad(k) + "| " + v);
+        lines.push(k + ": " + v);
       }
     }
-    lines.push("=".repeat(44));
 
     // Előre kitöltött MEGRENDELŐ LAP link – a beérkező levélből egy kattintással megnyílik,
     // már az ügyfél adataival kitöltve; csak a hiányzókat (ár, rendszám, időpont) kell beírni.
