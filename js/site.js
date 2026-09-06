@@ -1616,23 +1616,25 @@ function wireBookingForm(contact) {
       if (plate2) carRows.push(["2. rendszám", plate2]);
       if (vin2) carRows.push(["2. alvázszám", vin2]);
     }
-    const rowsData = [
-      ...idRows,
-      ...billingRows,
-      ...carRows,
-      ["Szolgáltatás(ok)", services.length ? services : ["—"]],
+    // Kategóriákra bontott, letisztult sima szöveges levél – a fejlécek NAGYBETŰVEL kiemelve
+    // (plain-text e-mailben valódi félkövér nem állítható be; ez a bevett kiemelés).
+    const timeRows = [
       ["Kért nap", dateP ? dateP.replace(/-/g, ". ") + "." : "—"],
       ["Napszak", daypart || "—"],
       ["Megjegyzés", message],
     ];
-    // Letisztult, sima szöveges levél (nincs táblázat/vonal): "Címke: érték"
-    const lines = ["IDŐPONT-IGÉNYLÉS A WEBOLDALRÓL", ""];
-    for (const [k, v] of rowsData) {
-      if (Array.isArray(v)) {
-        lines.push(k + ":");
-        v.forEach((item) => lines.push("  • " + item));
-      } else {
-        lines.push(k + ": " + v);
+    const groups = [
+      ["MEGRENDELŐ ADATAI", [...idRows, ...billingRows]],
+      ["AUTÓ ADATAI", carRows],
+      ["SZOLGÁLTATÁS(OK)", [["", services.length ? services : ["—"]]]],
+      ["IDŐPONT ÉS MEGJEGYZÉS", timeRows],
+    ];
+    const lines = ["IDŐPONT-IGÉNYLÉS A WEBOLDALRÓL"];
+    for (const [title, rows] of groups) {
+      lines.push("", title);
+      for (const [k, v] of rows) {
+        if (Array.isArray(v)) { v.forEach((item) => lines.push("  • " + item)); }
+        else { lines.push(k + ": " + v); }
       }
     }
 
