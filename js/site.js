@@ -585,7 +585,7 @@ function reviewsSectionHTML(reviews, contact) {
           <div class="star-input" id="star-input">${starBtns}</div>
           <input type="hidden" name="rating" id="rating-input" value="5" />
         </div>
-        <div class="form-row"><label for="rv-msg">Véleményed / hozzászólásod</label><textarea id="rv-msg" name="message" rows="4" required maxlength="1000"></textarea></div>
+        <div class="form-row"><label for="rv-msg">Véleményed / hozzászólásod</label><textarea id="rv-msg" name="message" rows="3" required maxlength="1000"></textarea></div>
         <button type="submit" class="btn btn--primary">Küldés</button>
         <p class="review-form__note">A véleményed a küldés után <strong>azonnal megjelenik</strong> az oldalon.</p>
       </form>
