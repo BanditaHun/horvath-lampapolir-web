@@ -410,13 +410,18 @@ function buildFooter() {
           <a href="kapcsolat.html">Kapcsolat</a>
         </div>
       </nav>
-      <nav class="site-footer__col" aria-label="Információk">
-        <h4 class="site-footer__h">Információk</h4>
+      <nav class="site-footer__col" aria-label="Letölthető dokumentumok">
+        <h4 class="site-footer__h">Letölthető dokumentumok</h4>
         <div class="site-footer__links site-footer__links--icons">
           <a href="arlista.html" target="_blank" rel="noopener">${ICON_LI_RECEIPT}<span>Árlista (PDF)</span></a>
           <a href="garancia.html" target="_blank" rel="noopener">${ICON_LI_CERT}<span>Garancialevél (PDF)</span></a>
           <a href="megrendelo.html" target="_blank" rel="noopener">${ICON_LI_RECEIPT}<span>Megrendelő lap (PDF)</span></a>
           <a href="kiszallasi-ertesito.html" target="_blank" rel="noopener">${ICON_LI_RECEIPT}<span>Kiszállási díj értesítő (PDF)</span></a>
+        </div>
+      </nav>
+      <nav class="site-footer__col" aria-label="Információk">
+        <h4 class="site-footer__h">Információk</h4>
+        <div class="site-footer__links site-footer__links--icons">
           <a href="gyik.html">${ICON_LI_FAQ}<span>GYIK – Gyakori kérdések</span></a>
           <a href="adatvedelem.html">${ICON_LI_LOCK}<span>Adatvédelmi tájékoztató</span></a>
           <a href="impresszum.html">${ICON_LI_INFO}<span>Impresszum</span></a>
