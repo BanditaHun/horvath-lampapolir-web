@@ -932,7 +932,6 @@ async function renderHome(app, contact) {
   app.innerHTML = h + tickerBand(hero.ticker) + trust + introHTML + promoSection(promo) + aboutHTML + nightHTML + quick + multicarNote(promo) + why + infoHTML + premiumSection(H) + galleryPreview + areas + reviewsSectionHTML(reviews, contact);
   await initReviews(reviews, app, contact);
   wireHeroPolish();
-  heroWeather();
   wireVideoThumbs();
   wireGalleryCarousel();
 }
@@ -1024,7 +1023,7 @@ async function heroWeather() {
       `<span class="hero-weather__temp">${temp}°C</span>` +
       `<span class="hero-weather__desc">${esc(info.t)}</span>` +
       `<span class="hero-weather__loc">Tolna</span>`;
-    if (info.fx) seasonFx(info.fx); // valós eső/hó felülírja az évszakos effektet
+    if (info.fx && document.querySelector(".hero")) seasonFx(info.fx); // eső/hó részecske csak a kezdőlapon
   } catch (e) {
     if (w) w.remove(); // ha nem elérhető, ne mutassunk hibás widgetet
   }
@@ -2000,6 +1999,7 @@ async function initSite() {
   wireNav();
   wireTheme();
   wireEmailChoosers();
+  heroWeather(); // időjárás-widget a fejlécbe – MINDEN oldalon
 
   try { applyTheme(await loadJSON("content/theme.json")); } catch (e) { /* alap marad */ }
 
