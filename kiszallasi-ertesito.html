@@ -145,7 +145,7 @@
     var SERIAL_API="https://horvath-stats.andras-horvat1989.workers.dev/serial", PDF_BASE="Horvath-Lampapolir-Kiszallasi-dij-ertesito";
     var _serial=null;
     function two(n){return (n<10?"0":"")+n;}
-    function fallbackSerial(){var d=new Date();return SERIAL_PREFIX+"-"+d.getFullYear()+two(d.getMonth()+1)+two(d.getDate())+"-"+Math.random().toString(36).slice(2,6).toUpperCase();}
+    function fallbackSerial(){return (new Date().getFullYear())+"/"+String(Date.now()).slice(-5);}
     function ensureBox(){
       var sheet=document.querySelector(".sheet"); if(!sheet) return;
       if(document.getElementById("doc-serial")) return;
