@@ -997,7 +997,7 @@ const WMO = {
 
 // „Időkép"-szerű widget a hero tetején: aktuális hőfok + időjárás (Tolna)
 async function heroWeather() {
-  // A widget a fejlécbe, a logó/cím mellé kerül (minden oldalon látszik)
+  // A widget a fejlécbe, a logó/cím mellé kerül – MINDEN oldalon látszik és MEGMARAD.
   const navTop = document.querySelector(".nav__top");
   const hero = document.querySelector(".hero");
   const host = navTop || hero;
@@ -1010,7 +1010,27 @@ async function heroWeather() {
     if (brand) brand.insertAdjacentElement("afterend", w);
     else host.insertBefore(w, host.firstChild);
   }
-  w.innerHTML = `<span class="hero-weather__ic">⛅</span><span class="hero-weather__desc">Időjárás betöltése…</span>`;
+  function paint(info, temp) {
+    w.innerHTML =
+      `<span class="hero-weather__ic">${info.i}</span>` +
+      `<span class="hero-weather__temp">${temp}°C</span>` +
+      `<span class="hero-weather__desc">${esc(info.t)}</span>` +
+      `<span class="hero-weather__loc">Tolna</span>`;
+  }
+  // 1) Azonnali megjelenítés a legutóbbi ismert értékből (localStorage) – így soha nem tűnik el lapozáskor.
+  let cache = null;
+  try { cache = JSON.parse(localStorage.getItem("hlp_wx") || "null"); } catch (e) {}
+  if (cache && cache.temp != null && cache.code != null) {
+    paint(WMO[cache.code] || { t: "Időjárás", i: "🌡️" }, cache.temp);
+  } else {
+    w.innerHTML = `<span class="hero-weather__ic">⛅</span><span class="hero-weather__desc">Időjárás…</span>`;
+  }
+  // 2) Ha a cache friss (< 15 perc), NE kérjük le újra (nincs fölösleges API-hívás/rate limit lapozásnál).
+  if (cache && cache.ts && (Date.now() - cache.ts) < 15 * 60 * 1000) {
+    if (cache.fx && document.querySelector(".hero")) seasonFx(cache.fx);
+    return;
+  }
+  // 3) Frissítés a háttérben; hiba esetén a widget MARAD (a cache/loading látszik, nem távolítjuk el).
   try {
     const r = await fetch("https://api.open-meteo.com/v1/forecast?latitude=46.4256&longitude=18.7817&current=temperature_2m,weather_code&timezone=auto", { cache: "no-store" });
     const d = await r.json();
@@ -1018,14 +1038,12 @@ async function heroWeather() {
     if (!cur || cur.temperature_2m == null) throw new Error("no data");
     const info = WMO[cur.weather_code] || { t: "Időjárás", i: "🌡️" };
     const temp = Math.round(cur.temperature_2m);
-    w.innerHTML =
-      `<span class="hero-weather__ic">${info.i}</span>` +
-      `<span class="hero-weather__temp">${temp}°C</span>` +
-      `<span class="hero-weather__desc">${esc(info.t)}</span>` +
-      `<span class="hero-weather__loc">Tolna</span>`;
+    paint(info, temp);
+    try { localStorage.setItem("hlp_wx", JSON.stringify({ temp, code: cur.weather_code, fx: info.fx || null, ts: Date.now() })); } catch (e) {}
     if (info.fx && document.querySelector(".hero")) seasonFx(info.fx); // eső/hó részecske csak a kezdőlapon
   } catch (e) {
-    if (w) w.remove(); // ha nem elérhető, ne mutassunk hibás widgetet
+    // Nem távolítjuk el: ha volt cache, az látszik; ha nem, semleges kijelzés marad.
+    if (!(cache && cache.temp != null)) w.innerHTML = `<span class="hero-weather__ic">🌡️</span><span class="hero-weather__loc">Tolna</span>`;
   }
 }
 
