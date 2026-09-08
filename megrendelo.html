@@ -308,7 +308,7 @@
         sheet.querySelectorAll("input[type=text]").forEach(function(i){ i.setAttribute("value", i.value); });
         sheet.querySelectorAll("input[type=checkbox]").forEach(function(i){ if(i.checked) i.setAttribute("checked","checked"); else i.removeAttribute("checked"); });
         sheet.querySelectorAll("textarea").forEach(function(x){ x.textContent=x.value; });
-        var fname=PDF_BASE+"-"+serial+".pdf";
+        var fname=PDF_BASE+"-"+String(serial).split("/").join("-").split(String.fromCharCode(92)).join("-")+".pdf";
         return window.html2pdf().set({ margin:0, filename:fname, image:{type:"jpeg",quality:0.98}, html2canvas:{scale:2, useCORS:true, backgroundColor:"#ffffff"}, jsPDF:{unit:"mm", format:"a4", orientation:"portrait"} }).from(sheet).save();
       }).then(function(){ btn.disabled=false; btn.textContent=old; })
         .catch(function(){ btn.disabled=false; btn.textContent=old; window.print(); });
