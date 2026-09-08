@@ -75,6 +75,11 @@
     input.val { border-bottom:1px solid #999; }
   }
 </style>
+
+  <style id="doc-serial-css">
+  .doc-serial { position: absolute; top: 6mm; right: 15mm; font-size: 10.5px; color: #444; text-align: right; letter-spacing: .4px; line-height: 1.2; }
+  .doc-serial b { display: block; font-size: 13px; font-weight: 800; color: #111; letter-spacing: .5px; }
+  </style>
 </head>
 <body>
   <div class="toolbar">
@@ -273,15 +278,39 @@
   <script>
   (function(){
     var btn=document.getElementById("pdf-btn"); if(!btn) return;
+    var SERIAL_TYPE="megrendelo", SERIAL_PREFIX="MEG";
+    var SERIAL_API="https://horvath-stats.andras-horvat1989.workers.dev/serial", PDF_BASE="Horvath-Lampapolir-Megrendelo-lap";
+    var _serial=null;
+    function two(n){return (n<10?"0":"")+n;}
+    function fallbackSerial(){var d=new Date();return SERIAL_PREFIX+"-"+d.getFullYear()+two(d.getMonth()+1)+two(d.getDate())+"-"+Math.random().toString(36).slice(2,6).toUpperCase();}
+    function ensureBox(){
+      var sheet=document.querySelector(".sheet"); if(!sheet) return;
+      if(document.getElementById("doc-serial")) return;
+      if(getComputedStyle(sheet).position==="static") sheet.style.position="relative";
+      var box=document.createElement("div"); box.id="doc-serial"; box.className="doc-serial";
+      box.innerHTML='Sorsz\u00e1m<b id="doc-serial-val">\u2014</b>';
+      sheet.insertBefore(box, sheet.firstChild);
+    }
+    function setSerial(s){ _serial=s; ensureBox(); var v=document.getElementById("doc-serial-val"); if(v) v.textContent=s; }
+    function getSerial(){
+      if(_serial) return Promise.resolve(_serial);
+      return fetch(SERIAL_API+"?type="+SERIAL_TYPE,{method:"POST"}).then(function(r){return r.json();})
+        .then(function(j){ if(j&&j.serial){ setSerial(j.serial); return j.serial; } throw 0; })
+        .catch(function(){ var f=fallbackSerial(); setSerial(f); return f; });
+    }
+    ensureBox();
     btn.addEventListener("click", function(){
       var sheet=document.querySelector(".sheet");
       if(!sheet||!window.html2pdf){ window.print(); return; }
-      sheet.querySelectorAll("input[type=text]").forEach(function(i){ i.setAttribute("value", i.value); });
-      sheet.querySelectorAll("input[type=checkbox]").forEach(function(i){ if(i.checked) i.setAttribute("checked","checked"); else i.removeAttribute("checked"); });
-      sheet.querySelectorAll("textarea").forEach(function(x){ x.textContent=x.value; });
-      var old=btn.textContent; btn.disabled=true; btn.textContent="PDF készítése…";
-      window.html2pdf().set({ margin:0, filename:"Horvath-Lampapolir-Megrendelo-lap.pdf", image:{type:"jpeg",quality:0.98}, html2canvas:{scale:2, useCORS:true, backgroundColor:"#ffffff"}, jsPDF:{unit:"mm", format:"a4", orientation:"portrait"} }).from(sheet).save()
-        .then(function(){ btn.disabled=false; btn.textContent=old; })
+      var old=btn.textContent; btn.disabled=true; btn.textContent="Sorsz\u00e1m k\u00e9r\u00e9se\u2026";
+      getSerial().then(function(serial){
+        btn.textContent="PDF k\u00e9sz\u00edt\u00e9se\u2026";
+        sheet.querySelectorAll("input[type=text]").forEach(function(i){ i.setAttribute("value", i.value); });
+        sheet.querySelectorAll("input[type=checkbox]").forEach(function(i){ if(i.checked) i.setAttribute("checked","checked"); else i.removeAttribute("checked"); });
+        sheet.querySelectorAll("textarea").forEach(function(x){ x.textContent=x.value; });
+        var fname=PDF_BASE+"-"+serial+".pdf";
+        return window.html2pdf().set({ margin:0, filename:fname, image:{type:"jpeg",quality:0.98}, html2canvas:{scale:2, useCORS:true, backgroundColor:"#ffffff"}, jsPDF:{unit:"mm", format:"a4", orientation:"portrait"} }).from(sheet).save();
+      }).then(function(){ btn.disabled=false; btn.textContent=old; })
         .catch(function(){ btn.disabled=false; btn.textContent=old; window.print(); });
     });
   })();
