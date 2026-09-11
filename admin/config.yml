@@ -14,6 +14,21 @@ public_folder: "/images/uploads"
 locale: "hu"
 
 collections:
+  # ---- Arculat (logó, márkanév, szlogen) ----
+  - name: "branding"
+    label: "Arculat (logó, név)"
+    files:
+      - name: "branding"
+        label: "Logó és márkanév"
+        file: "content/branding.json"
+        format: "json"
+        fields:
+          - { name: "logo", label: "Logó", widget: "image", required: false, hint: "A fejlécben, láblécben és a kezdőlapon jelenik meg. Ha üres, az alap logó marad." }
+          - { name: "brand_name", label: "Márkanév (fejléc cím)", widget: "string", hint: "A fejléc nagy, arany felirata." }
+          - { name: "brand_subtitle", label: "Fejléc alcíme", widget: "string", hint: "A márkanév alatti kis szürke sor." }
+          - { name: "pkg_slogan_main", label: "Csomagok – szlogen (fő sor)", widget: "string", required: false }
+          - { name: "pkg_slogan_sub", label: "Csomagok – szlogen (alsó sor)", widget: "string", required: false }
+
   # ---- Megjelenés (betűtípus, méret, szín) ----
   - name: "theme"
     label: "Megjelenés"

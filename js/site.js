@@ -323,6 +323,12 @@ const ICON_SUN = '<svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="t
 const ICON_MOON = '<svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M20.5 14.6A8.2 8.2 0 0 1 9.4 3.5a8.2 8.2 0 1 0 11.1 11.1z"/></svg>';
 const ICON_GOOGLE = '<svg viewBox="0 0 48 48" width="18" height="18" aria-hidden="true"><path fill="#4285F4" d="M45 24c0-1.6-.1-2.8-.4-4.1H24v7.7h12c-.2 1.9-1.5 4.8-4.3 6.7l6.6 5.1C42.6 36 45 30.6 45 24z"/><path fill="#34A853" d="M24 46c5.9 0 10.8-1.9 14.4-5.3l-6.6-5.1c-1.8 1.2-4.2 2.1-7.8 2.1-6 0-11-4-12.8-9.5l-6.8 5.3C7.9 40.6 15.3 46 24 46z"/><path fill="#FBBC05" d="M11.2 28.2c-.5-1.4-.7-2.8-.7-4.2s.2-2.8.7-4.2l-6.8-5.3C3 17.3 2 20.5 2 24s1 6.7 2.4 9.5l6.8-5.3z"/><path fill="#EA4335" d="M24 10.5c3.3 0 5.6 1.4 6.9 2.6l5.8-5.7C33.3 4.1 28.9 2 24 2 15.3 2 7.9 7.4 4.4 14.5l6.8 5.3C13 14.5 18 10.5 24 10.5z"/></svg>';
 
+// ---------- Arculat (logó, márkanév, szlogen) – CMS-ből szerkeszthető ----------
+let BRANDING = null;
+const brandLogo = () => (BRANDING && isSet(BRANDING.logo)) ? rel(BRANDING.logo) : "images/logo.png";
+const brandName = () => (BRANDING && isSet(BRANDING.brand_name)) ? BRANDING.brand_name : "Horváth Lámpapolír";
+const brandSub  = () => (BRANDING && isSet(BRANDING.brand_subtitle)) ? BRANDING.brand_subtitle : "Mobil fényszóró-felújítás – házhoz megyünk";
+
 function buildHeader(active) {
   const links = NAV.map((n) => {
     const cls = [n.cta ? "nav__cta" : "", n.page === active ? "is-active" : ""].filter(Boolean).join(" ");
@@ -332,11 +338,11 @@ function buildHeader(active) {
   <nav class="nav" id="nav">
     <div class="nav__top">
       <a class="nav__brand" href="index.html">
-        <img class="nav__logo" src="images/logo.png" alt="Horváth Lámpapolír" onerror="this.style.display='none'" />
+        <img class="nav__logo" src="${brandLogo()}" alt="${esc(brandName())}" onerror="this.style.display='none'" />
       </a>
       <div class="nav__title">
-        <span class="nav__title-main">Horváth Lámpapolír</span>
-        <span class="nav__title-sub">Mobil fényszóró-felújítás – házhoz megyünk</span>
+        <span class="nav__title-main">${esc(brandName())}</span>
+        <span class="nav__title-sub">${esc(brandSub())}</span>
       </div>
       <div class="nav__right">
         <a class="topbar__phone" id="top-phone" href="#" hidden>${ICON_PHONE}<span id="top-phone-text"></span></a>
@@ -395,7 +401,7 @@ function buildFooter() {
   return `<footer class="site-footer">
     <div class="container site-footer__inner">
       <div class="site-footer__brand">
-        <img class="site-footer__logo" src="images/logo.png" alt="" onerror="this.style.display='none'" />
+        <img class="site-footer__logo" src="${brandLogo()}" alt="" onerror="this.style.display='none'" />
         <div class="site-footer__brandtext">
           <strong>Horváth Lámpapolír</strong>
           <span id="footer-subtitle">Mobil fényszóró-felújítás Tolna megyében, 50 km-es körzetben</span>
@@ -853,7 +859,7 @@ async function renderHome(app, contact) {
       </div>`;
   } else {
     h += `<div class="hero__content">
-      <img class="hero__emblem" src="images/logo.png" alt="" onerror="this.style.display='none'" />
+      <img class="hero__emblem" src="${brandLogo()}" alt="" onerror="this.style.display='none'" />
       <h1 class="hero__title">${esc(hero.title || "")}</h1>
       <p class="hero__subtitle">${mdInline(hero.subtitle || "")}</p>
       <div class="hero__cta">
@@ -1111,7 +1117,9 @@ function renderCardsPage(app, data, defTitle, kind, promo) {
     const mediaFig = (src, alt) => `<figure class="pkg-row__media"><img class="zoomable" src="${src}" alt="${esc(alt)}" loading="lazy" /></figure>`;
 
     // Szlogen sáv
-    cont.insertAdjacentHTML("beforeend", `<aside class="pkg-slogan"><p class="pkg-slogan__main">Biztonság az utakon – mert a családod otthon vár! 🚗❤️</p><p class="pkg-slogan__sub">Látni és látszani – tiszta fényszóróval minden méter számít.</p></aside>`);
+    const sloMain = (BRANDING && isSet(BRANDING.pkg_slogan_main)) ? BRANDING.pkg_slogan_main : "Biztonság az utakon – mert a családod otthon vár! 🚗❤️";
+    const sloSub = (BRANDING && isSet(BRANDING.pkg_slogan_sub)) ? BRANDING.pkg_slogan_sub : "Látni és látszani – tiszta fényszóróval minden méter számít.";
+    cont.insertAdjacentHTML("beforeend", `<aside class="pkg-slogan"><p class="pkg-slogan__main">${esc(sloMain)}</p><p class="pkg-slogan__sub">${esc(sloSub)}</p></aside>`);
 
     // Fő szolgáltatás – első fényszóró kép balra, kártya jobbra
     const main = mains[0];
@@ -2023,6 +2031,8 @@ async function initSite() {
   if (!window.__PREVIEW) trackVisit();
   buildStarfield();
   const page = document.body.dataset.page || "home";
+  try { BRANDING = await loadJSON("content/branding.json"); } catch (e) { BRANDING = null; }
+  window.__branding = BRANDING;
   document.getElementById("site-header").innerHTML = buildHeader(page);
   document.getElementById("site-footer").innerHTML = buildFooter();
   wireNav();
