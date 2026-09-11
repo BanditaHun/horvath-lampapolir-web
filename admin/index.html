@@ -7,9 +7,87 @@
   <link rel="icon" type="image/png" href="../images/favicon.png" />
 </head>
 <body>
-  <!-- Sveltia CMS (a Decap/Netlify CMS modern, karbantartott utódja) -->
-  <!-- Ugyanazt a config.yml-t használja; GitHub backend + Cloudflare Worker OAuth -->
-  <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+  <!-- Decap CMS (a Netlify CMS karbantartott utódja). Ugyanazt a config.yml-t és a
+       Cloudflare Worker OAuth-belépést használja, mint korábban a Sveltia. -->
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+  <!-- ÉLŐ ELŐNÉZET: a szerkesztő jobb oldalán a VALÓDI oldal jelenik meg (iframe),
+       és a szerkesztett – még nem mentett – tartalmat élőben belé küldjük. Így mentés
+       előtt pontosan azt látod, ami mentés után lesz. -->
+  <script>
+    (function () {
+      if (!window.CMS) return;
+
+      // A jobb oldali előnézetet kitöltő iframe (padding nélkül).
+      CMS.registerPreviewStyle(
+        "html,body{margin:0;padding:0;height:100%;background:#0c0e11}" +
+        ".hlp-frame{position:fixed;inset:0;width:100%;height:100%;border:0;background:#fff}",
+        { raw: true }
+      );
+
+      // Gyűjtemény -> melyik oldalt töltse be az előnézet + melyik tartalom-fájl (JSON) piszkozata.
+      var MAP = {
+        theme:    { page: "index.html",           name: "theme" },
+        hero:     { page: "index.html",           name: "hero" },
+        promo:    { page: "index.html",           name: "promo" },
+        home:     { page: "index.html",           name: "home" },
+        footer:   { page: "index.html",           name: "footer" },
+        ai:       { page: "index.html",           name: "ai" },
+        about:    { page: "index.html",           name: "about" },
+        reviews:  { page: "index.html",           name: "reviews" },
+        packages: { page: "csomagok.html",        name: "packages" },
+        services: { page: "szolgaltatasok.html",  name: "services" },
+        delivery: { page: "kiszallas.html",       name: "delivery" },
+        contact:  { page: "kapcsolat.html",       name: "contact" },
+        gallery:  { page: "galeria.html",         name: "gallery" },
+        faq:      { page: "gyik.html",            name: "faq" }
+      };
+
+      function makePreview(cfg) {
+        return createClass({
+          resolve: function () {
+            // A "legal" gyűjteménynek két fájlja van (adatvédelem / impresszum) – a slug dönt.
+            if (cfg && cfg.legal) {
+              var slug = String(this.props.entry.get("slug") || "");
+              if (slug.indexOf("imprint") > -1) return { page: "impresszum.html", name: "imprint" };
+              return { page: "adatvedelem.html", name: "privacy" };
+            }
+            return cfg;
+          },
+          push: function () {
+            try {
+              var f = this._frame;
+              if (!f || !f.contentWindow) return;
+              var data = this.props.entry.get("data").toJS();
+              f.contentWindow.postMessage(
+                { __hlpPreview: true, name: this._name, data: data },
+                "*"
+              );
+            } catch (e) {}
+          },
+          componentDidMount: function () { this.push(); },
+          componentDidUpdate: function () { this.push(); },
+          render: function () {
+            var self = this;
+            var r = this.resolve();
+            this._name = r.name;
+            return h("iframe", {
+              className: "hlp-frame",
+              src: "../" + r.page + "?preview=1",
+              ref: function (el) { self._frame = el; },
+              onLoad: function () { self.push(); }
+            });
+          }
+        });
+      }
+
+      Object.keys(MAP).forEach(function (coll) {
+        CMS.registerPreviewTemplate(coll, makePreview(MAP[coll]));
+      });
+      // Jogi oldalak (adatvédelem + impresszum egy gyűjteményben)
+      CMS.registerPreviewTemplate("legal", makePreview({ legal: true }));
+    })();
+  </script>
 
   <!-- Lebegő gyorslink a látogatottsági statisztikához -->
   <script>

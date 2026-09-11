@@ -4,10 +4,21 @@
 // oldal tartalmát a content/*.json fájlokból rendereli.
 
 // ---------- Segédfüggvények ----------
+// Előnézet (CMS) mód: ?preview → a szerkesztett (nem mentett) tartalmat a
+// CMS postMessage-ben küldi; ilyenkor az adott JSON helyett a piszkozatot adjuk vissza.
+window.__PREVIEW = (function () { try { return new URLSearchParams(location.search).has("preview"); } catch (e) { return false; } })();
+window.__previewOverrides = window.__previewOverrides || {};
+const __jsonCache = {};
 async function loadJSON(path) {
+  const name = String(path).replace(/^.*content\//, "").replace(/\.json.*$/, "");
+  const ov = window.__previewOverrides;
+  if (ov && Object.prototype.hasOwnProperty.call(ov, name)) return JSON.parse(JSON.stringify(ov[name]));
+  if (window.__PREVIEW && __jsonCache[name] !== undefined) return JSON.parse(JSON.stringify(__jsonCache[name]));
   const res = await fetch(path, { cache: "no-store" });
   if (!res.ok) throw new Error("Nem sikerült betölteni: " + path);
-  return res.json();
+  const data = await res.json();
+  if (window.__PREVIEW) __jsonCache[name] = data;
+  return data;
 }
 function el(tag, className, html) {
   const e = document.createElement(tag);
@@ -2009,7 +2020,7 @@ function buildPrivacyBar() {
 }
 
 async function initSite() {
-  trackVisit();
+  if (!window.__PREVIEW) trackVisit();
   buildStarfield();
   const page = document.body.dataset.page || "home";
   document.getElementById("site-header").innerHTML = buildHeader(page);
@@ -2033,11 +2044,15 @@ async function initSite() {
     }
   } catch (e) { /* marad az alap szöveg */ }
 
-  buildMobileBar(contact);
-  buildToTop();
-  buildPrivacyBar();
-  injectLocalBusiness(contact);
-  try { buildAiWidget(await loadJSON("content/ai.json")); } catch (e) { /* nincs AI beállítva */ }
+  if (!window.__PREVIEW) {
+    // Előnézetben kihagyjuk a takaró/kiegészítő elemeket (mobil sáv, süti-sáv, AI-buborék),
+    // hogy a szerkesztett tartalom (pl. lábléc) tisztán látsszon.
+    buildMobileBar(contact);
+    buildToTop();
+    buildPrivacyBar();
+    injectLocalBusiness(contact);
+    try { buildAiWidget(await loadJSON("content/ai.json")); } catch (e) { /* nincs AI beállítva */ }
+  }
 
   const app = document.getElementById("app");
   try {
@@ -2080,6 +2095,28 @@ function initReveal() {
   });
   // Biztonsági háló: ha 2.5s múlva bármi rejtve maradna (IO nem tüzelt), mutassuk meg.
   setTimeout(() => { document.querySelectorAll(".reveal:not(.reveal--in)").forEach((elm) => { if (elm.getBoundingClientRect().top < (window.innerHeight || 800)) elm.classList.add("reveal--in"); }); }, 2500);
+}
+
+// ---------- CMS élő előnézet ----------
+// A szerkesztő (Decap CMS) a ?preview oldalt iframe-ben tölti be, és postMessage-ben
+// küldi a szerkesztett (még nem mentett) tartalmat. Itt fogadjuk, és a VALÓDI renderrel
+// újrarajzoljuk – így mentés előtt pontosan az látszik, ami mentés után lesz.
+if (window.__PREVIEW) {
+  let _rerenderTimer = null;
+  function previewRerender() {
+    clearTimeout(_rerenderTimer);
+    _rerenderTimer = setTimeout(() => { initSite(); }, 180);
+  }
+  window.addEventListener("message", (ev) => {
+    // Elfogadjuk az azonos origin-t és a Decap előnézeti keretének opaque ("null") originját is;
+    // más valódi origin-t nem (ez csak vizuális előnézet, nem tartós adat).
+    if (ev.origin && ev.origin !== "null" && ev.origin !== location.origin) return;
+    const d = ev.data;
+    if (!d || d.__hlpPreview !== true || !d.name) return;
+    try { window.__previewOverrides[d.name] = d.data; } catch (e) { return; }
+    previewRerender();
+  });
+  document.documentElement.setAttribute("data-preview", "1");
 }
 
 document.addEventListener("DOMContentLoaded", initSite);
