@@ -533,7 +533,7 @@ section:last-of-type { border-bottom: none; }
 .ticker__track { display: inline-flex; align-items: center; white-space: nowrap; will-change: transform; animation: tickerMove 34s linear infinite; }
 .ticker__item { color: #efe1bf; font-weight: 600; font-size: .94rem; letter-spacing: .4px; padding: 0 6px; }
 .ticker__sep { color: var(--gold); font-size: .68rem; padding: 0 22px; opacity: .75; vertical-align: middle; }
-@keyframes tickerMove { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+@keyframes tickerMove { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 .ticker:hover .ticker__track { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) { .ticker__track { animation: none; white-space: normal; text-align: center; padding: 0 16px; } }
 
