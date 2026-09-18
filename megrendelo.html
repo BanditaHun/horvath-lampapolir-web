@@ -19,51 +19,52 @@
   .tbtn--print { background: linear-gradient(90deg,#e0a41c,#c8901a); color: #17171b; }
   .tbtn--back { background: transparent; color: #cfd3da; border: 1px solid #565963; }
 
-  .sheet { width: 210mm; min-height: 297mm; margin: 18px auto; background: #fff; padding: 11mm 14mm 9mm; box-shadow: 0 10px 40px rgba(0,0,0,.45); font-size: 10.2px; line-height: 1.5; }
+  .sheet { width: 210mm; min-height: auto; margin: 18px auto; background: #fff; padding: 8mm 12mm 6mm; box-shadow: 0 10px 40px rgba(0,0,0,.45); font-size: 9px; line-height: 1.2; }
 
-  header.head { display: flex; align-items: center; gap: 14px; border-bottom: 2.5px solid var(--gold3); padding-bottom: 10px; margin-bottom: 10px; }
-  header.head img { width: 62px; height: 62px; object-fit: contain; }
-  .brand__name { font-size: 18px; font-weight: 800; }
-  .brand__tag { color: var(--dim); font-size: 10px; margin-top: 1px; }
-  .brand__meta { margin-top: 4px; font-size: 9px; color: #3a3f47; display: flex; flex-wrap: wrap; gap: 2px 14px; }
+  header.head { display: flex; align-items: center; gap: 12px; border-bottom: 2px solid var(--gold3); padding-bottom: 6px; margin-bottom: 6px; }
+  header.head img { width: 48px; height: 48px; object-fit: contain; }
+  .brand__name { font-size: 15px; font-weight: 800; }
+  .brand__tag { color: var(--dim); font-size: 9px; margin-top: 1px; }
+  .brand__meta { margin-top: 3px; font-size: 8.4px; color: #3a3f47; display: flex; flex-wrap: wrap; gap: 1px 12px; }
   .brand__meta b { color: var(--gold); }
 
-  h1 { text-align: center; font-size: 16px; letter-spacing: 1.5px; margin: 6px 0 2px; }
-  .subtitle { text-align: center; font-size: 10px; color: var(--dim); margin-bottom: 12px; }
+  h1 { text-align: center; font-size: 14px; letter-spacing: 1.5px; margin: 3px 0 1px; }
+  .subtitle { text-align: center; font-size: 9px; color: var(--dim); margin-bottom: 6px; }
 
-  h2 { font-size: 10.5px; text-transform: uppercase; letter-spacing: .3px; margin: 8px 0 4px; color: var(--gold); border-bottom: 1px solid var(--line); padding-bottom: 2px; }
-  p { margin: 0 0 5px; }
-  ol.decl { margin: 0 0 4px; padding-left: 18px; }
-  ol.decl li { margin-bottom: 3px; }
-  .party { font-size: 10px; }
+  h2 { font-size: 9.6px; text-transform: uppercase; letter-spacing: .3px; margin: 6px 0 3px; color: var(--gold); border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+  p { margin: 0 0 3px; }
+  ol.decl { margin: 0 0 3px; padding-left: 16px; }
+  ol.decl li { margin-bottom: 2px; }
+  .party { font-size: 9px; }
   .party b { color: var(--ink); }
 
-  .field { display: flex; align-items: baseline; gap: 8px; margin-bottom: 5px; }
-  .field > label { flex: none; color: var(--dim); font-weight: 600; min-width: 150px; }
+  .field { display: flex; align-items: baseline; gap: 8px; margin-bottom: 2.5px; }
+  .field > label { flex: none; color: var(--dim); font-weight: 600; min-width: 140px; }
   input.val { flex: 1; border: 0; border-bottom: 1px solid #b9bec6; font: inherit; color: var(--ink); background: transparent; padding: 1px 4px 2px; outline: none; }
   input.val:focus { border-bottom-color: var(--gold2); }
-  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 22px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; }
 
-  .svc-grp { margin: 6px 0 2px; font-weight: 700; color: var(--ink); }
-  .svc-list label { display: block; margin: 2px 0; }
+  .svc-grp { margin: 4px 0 1px; font-weight: 700; color: var(--ink); }
+  .svc-list { columns: 2; column-gap: 22px; }
+  .svc-list label { display: block; margin: 1px 0; break-inside: avoid; }
   .svc-list label input[type=checkbox] { margin-right: 5px; }
   .svc-list .svc-price { color: var(--gold); font-weight: 700; }
 
-  .fee-note { font-size: 9px; color: var(--faint); background: #fffdf8; border: 1px solid var(--line); border-radius: 6px; padding: 6px 9px; margin: 4px 0 6px; }
+  .fee-note { font-size: 8.2px; color: var(--faint); background: #fffdf8; border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; margin: 3px 0 4px; line-height: 1.32; }
   .fee-note b { color: var(--gold); }
 
-  .pay { border: 1px solid var(--gold3); border-radius: 7px; padding: 8px 11px; background: linear-gradient(135deg,#fff8e9,#fffdf8); margin-top: 4px; }
+  .pay { border: 1px solid var(--gold3); border-radius: 7px; padding: 6px 10px; background: linear-gradient(135deg,#fff8e9,#fffdf8); margin-top: 3px; }
   .pay b { color: var(--gold); }
-  .bank { font-size: 11px; font-weight: 700; letter-spacing: .3px; }
+  .bank { font-size: 9.5px; font-weight: 700; letter-spacing: .3px; }
   .bank .ph { background: #fff3cd; border: 1px dashed #e0a41c; padding: 0 6px; border-radius: 3px; color: #7a560a; }
 
-  .sign { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 10px; }
-  .sign__line { border-top: 1px solid #6b7280; margin: 16px 6px 4px; }
-  .sign__cap { text-align: center; font-size: 9.5px; color: var(--dim); }
-  .kelt { margin-top: 7px; }
+  .sign { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 7px; }
+  .sign__line { border-top: 1px solid #6b7280; margin: 14px 6px 4px; }
+  .sign__cap { text-align: center; font-size: 9px; color: var(--dim); }
+  .kelt { margin-top: 5px; }
   .kelt input.val { max-width: 240px; }
 
-  footer.foot { margin-top: 8px; border-top: 2px solid var(--gold3); padding-top: 6px; font-size: 8.5px; color: var(--faint); }
+  footer.foot { margin-top: 6px; border-top: 2px solid var(--gold3); padding-top: 5px; font-size: 8.2px; color: var(--faint); }
 
   @media (max-width: 760px){ .sheet{width:100%;min-height:0;margin:0;padding:16px 13px 22px;box-shadow:none} .grid2,.sign{grid-template-columns:1fr} .field{flex-wrap:wrap} body{background:#fff} }
   @media print {
@@ -177,7 +178,7 @@
       <p style="margin:0"><input type="checkbox"> <b>A megrendelő lemondta / nem volt elérhető a helyszínen</b> – a fenti feltételek szerint az útiköltséget (kiszállási díjat) köteles megtéríteni. Fizetendő útiköltség: <input class="val" type="text" style="max-width:150px" placeholder="__ __ Ft"></p>
     </section>
 
-    <p style="font-size:9px; color:var(--faint); line-height:1.5; margin:8px 0 0"><b>Számlázási tájékoztató:</b> Vállalkozásunk minden szolgáltatásról számlát állít ki. A számla kiállításához a megrendeléskor (személyesen, telefonon vagy e-mailben) a vevőnek meg kell adnia az alábbi adatokat: magánszemélyeknek a nevet és a címet; cégeknek/vállalkozóknak a cégnevet, a székhelyet (számlázási címet) és az adószámot. Ezen adatok hiányában a szolgáltatást nem áll módunkban teljesíteni. Minden igénybe vett szolgáltatásról számla kerül kiállításra. A szolgáltatás igénybevételével a Megrendelő hozzájárul a fenti adatok megadásához a számla kiállítása céljából.</p>
+    <p style="font-size:8px; color:var(--faint); line-height:1.28; margin:5px 0 0"><b>Számlázási tájékoztató:</b> Vállalkozásunk minden szolgáltatásról számlát állít ki. A számla kiállításához a megrendeléskor (személyesen, telefonon vagy e-mailben) a vevőnek meg kell adnia az alábbi adatokat: magánszemélyeknek a nevet és a címet; cégeknek/vállalkozóknak a cégnevet, a székhelyet (számlázási címet) és az adószámot. Ezen adatok hiányában a szolgáltatást nem áll módunkban teljesíteni. Minden igénybe vett szolgáltatásról számla kerül kiállításra. A szolgáltatás igénybevételével a Megrendelő hozzájárul a fenti adatok megadásához a számla kiállítása céljából.</p>
 
     <p style="margin:9px 0 0"><b>Megrendeléskor:</b> alulírott megrendelő aláírásommal igazolom, hogy a fenti adatokat és a megrendelt szolgáltatás(oka)t leadtam, valamint a 4. pontban foglalt lemondási és fizetési feltételeket megismertem és elfogadom.</p>
     <p style="margin:4px 0 0"><b>A munka végén:</b> aláírásommal igazolom az 5. pontban megjelölt eredményt is – az elvégzett munka hiánytalan átvételét, vagy lemondás esetén az útiköltség megtérítési kötelezettséget.</p>
