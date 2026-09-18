@@ -66,13 +66,13 @@
 
   footer.foot { margin-top: 6px; border-top: 2px solid var(--gold3); padding-top: 5px; font-size: 8.2px; color: var(--faint); }
 
-  @media (max-width: 760px){ .sheet{width:100%;min-height:0;margin:0;padding:16px 13px 22px;box-shadow:none} .grid2,.sign{grid-template-columns:1fr} .field{flex-wrap:wrap} body{background:#fff} }
+  @media screen and (max-width: 760px){ .sheet{width:100%;min-height:0;margin:0;padding:16px 13px 22px;box-shadow:none} .grid2,.sign{grid-template-columns:1fr} .field{flex-wrap:wrap} body{background:#fff} }
   @media print {
-    @page { size: A4; margin: 10mm 14mm 8mm; }
+    @page { size: A4; margin: 6mm 12mm 6mm; }
     body { background:#fff; }
     .toolbar { display:none !important; }
     .sheet { width:auto; min-height:0; margin:0; padding:0; box-shadow:none; }
-    section, .pay, .sign, .fee-note { break-inside: avoid; }
+    .pay, .sign, .fee-note { break-inside: avoid; }
     input.val { border-bottom:1px solid #999; }
   }
 

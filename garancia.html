@@ -23,11 +23,11 @@
   .tbtn--back { background: transparent; color: #cfd3da; border: 1px solid #565963; }
   .tbtn--back:hover { background: rgba(255,255,255,.06); }
 
-  .sheet { width: 210mm; min-height: auto; margin: 18px auto; background: #fff; padding: 14mm 15mm 12mm;
-    box-shadow: 0 10px 40px rgba(0,0,0,.45); font-size: 11px; line-height: 1.5; }
+  .sheet { width: 210mm; min-height: auto; margin: 18px auto; background: #fff; padding: 11mm 15mm 9mm;
+    box-shadow: 0 10px 40px rgba(0,0,0,.45); font-size: 10.6px; line-height: 1.38; }
 
-  header.head { display: flex; align-items: center; gap: 16px; border-bottom: 2.5px solid var(--gold3); padding-bottom: 12px; margin-bottom: 12px; }
-  header.head img.logo { width: 76px; height: 76px; object-fit: contain; }
+  header.head { display: flex; align-items: center; gap: 16px; border-bottom: 2.5px solid var(--gold3); padding-bottom: 7px; margin-bottom: 7px; }
+  header.head img.logo { width: 60px; height: 60px; object-fit: contain; }
   .brand { flex: 1; }
   .brand__name { font-size: 22px; font-weight: 800; letter-spacing: .3px; }
   .brand__tag { color: var(--dim); font-size: 11px; margin-top: 2px; }
@@ -36,15 +36,15 @@
   .seal { width: 68px; flex: none; }
   .seal svg { width: 100%; height: auto; }
 
-  .title { text-align: center; margin: 4px 0 12px; }
-  .title h1 { font-size: 25px; letter-spacing: 3px; margin: 0; color: var(--ink); }
+  .title { text-align: center; margin: 2px 0 7px; }
+  .title h1 { font-size: 22px; letter-spacing: 3px; margin: 0; color: var(--ink); }
   .title .sub { display: inline-block; margin-top: 6px; font-size: 12px; font-weight: 700; color: #fff;
     background: linear-gradient(90deg,var(--gold3),var(--gold2)); padding: 3px 14px; border-radius: 20px; letter-spacing: .5px; }
 
-  h2 { font-size: 12.5px; letter-spacing: .3px; margin: 12px 0 7px; color: var(--ink); text-transform: uppercase; }
+  h2 { font-size: 12px; letter-spacing: .3px; margin: 7px 0 4px; color: var(--ink); text-transform: uppercase; }
   h2 .bar { display: inline-block; width: 22px; height: 3px; background: linear-gradient(90deg,var(--gold3),var(--gold2)); border-radius: 2px; vertical-align: middle; margin-right: 8px; }
 
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 26px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 26px; }
   .field { display: flex; align-items: baseline; gap: 8px; }
   .field > label { flex: none; color: var(--dim); font-weight: 600; font-size: 10px; min-width: 118px; }
   .field .val { flex: 1; border-bottom: 1px solid #b9beC6; min-height: 20px; }
@@ -53,21 +53,21 @@
   .full { grid-column: 1 / -1; }
   .prefill { color: var(--ink); font-weight: 600; }
 
-  .terms { border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; background: #fffdf8; }
-  .terms p { margin: 0 0 7px; }
+  .terms { border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; background: #fffdf8; }
+  .terms p { margin: 0 0 4px; }
   .terms .lead b { color: var(--gold); }
-  .terms ul { margin: 3px 0 8px; padding-left: 18px; }
-  .terms li { margin-bottom: 2px; }
+  .terms ul { margin: 2px 0 5px; padding-left: 18px; }
+  .terms li { margin-bottom: 1px; }
   .terms .dur { display: inline-block; background: #fff3d8; border: 1px solid #f0d79a; color: #7a560a; font-weight: 700; padding: 1px 8px; border-radius: 5px; }
 
-  .sign { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 10px; }
+  .sign { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 6px; }
   .sign__box { text-align: center; }
-  .sign__line { border-top: 1px solid #6b7280; margin: 20px 8px 5px; }
+  .sign__line { border-top: 1px solid #6b7280; margin: 12px 8px 4px; }
   .sign__cap { font-size: 10px; color: var(--dim); }
-  .kelt { margin-top: 8px; font-size: 10.5px; color: var(--ink); }
+  .kelt { margin-top: 5px; font-size: 10.5px; color: var(--ink); }
   .kelt input.val { display: inline-block; width: 200px; }
 
-  footer.foot { margin-top: 12px; border-top: 2px solid var(--gold3); padding-top: 8px; font-size: 9px; color: var(--faint); }
+  footer.foot { margin-top: 7px; border-top: 2px solid var(--gold3); padding-top: 6px; font-size: 9px; color: var(--faint); }
   footer.foot b { color: var(--ink); }
   .foot-flex { display: flex; align-items: center; gap: 18px; }
   .foot-txt { flex: 1; min-width: 0; }
@@ -78,13 +78,13 @@
   .foot-biz { color: var(--ink); font-size: 9.2px; margin-bottom: 3px; }
   .foot-biz b { color: var(--ink); }
 
-  @media (max-width: 780px) {
+  @media screen and (max-width: 780px) {
     .sheet { width: 100%; min-height: 0; margin: 0; padding: 18px 14px 24px; box-shadow: none; }
     .grid, .sign { grid-template-columns: 1fr; }
     body { background: #fff; }
   }
   @media print {
-    @page { size: A4; margin: 14mm 15mm 12mm; }
+    @page { size: A4; margin: 8mm 14mm 8mm; }
     body { background: #fff; }
     .toolbar { display: none !important; }
     .sheet { width: auto; min-height: 0; margin: 0; padding: 0; box-shadow: none; }
@@ -93,7 +93,7 @@
   }
 
   /* PDF-készítéskor MINDIG asztali A4 elrendezés (mobilon is 1 oldal) */
-  body.pdfgen .sheet { width: 210mm !important; min-height: auto !important; margin: 0 auto !important; padding: 14mm 15mm 12mm !important; box-shadow: none !important; }
+  body.pdfgen .sheet { width: 210mm !important; min-height: auto !important; margin: 0 auto !important; padding: 11mm 15mm 9mm !important; box-shadow: none !important; }
   body.pdfgen .grid, body.pdfgen .grid2, body.pdfgen .sign, body.pdfgen .two, body.pdfgen .promo { grid-template-columns: 1fr 1fr !important; }
   body.pdfgen .pkgs { grid-template-columns: 1fr 1fr 1fr !important; }
   body.pdfgen .dels { grid-template-columns: repeat(4, 1fr) !important; }
