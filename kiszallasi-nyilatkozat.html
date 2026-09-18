@@ -69,6 +69,14 @@
     section, .pay, .sign, .fee-note { break-inside: avoid; }
     input.val { border-bottom:1px solid #999; }
   }
+
+  /* PDF-készítéskor MINDIG asztali A4 elrendezés (mobilon is 1 oldal) */
+  body.pdfgen .sheet { width: 210mm !important; min-height: auto !important; margin: 0 auto !important; padding: 11mm 14mm 9mm !important; box-shadow: none !important; }
+  body.pdfgen .grid, body.pdfgen .grid2, body.pdfgen .sign, body.pdfgen .two, body.pdfgen .promo { grid-template-columns: 1fr 1fr !important; }
+  body.pdfgen .pkgs { grid-template-columns: 1fr 1fr 1fr !important; }
+  body.pdfgen .dels { grid-template-columns: repeat(4, 1fr) !important; }
+  body.pdfgen .svc-list { columns: 2 !important; }
+  body.pdfgen .field { flex-wrap: nowrap !important; }
 </style>
 </head>
 <body>
@@ -171,9 +179,9 @@
       sheet.querySelectorAll("input[type=checkbox]").forEach(function(i){ if(i.checked) i.setAttribute("checked","checked"); else i.removeAttribute("checked"); });
       sheet.querySelectorAll("textarea").forEach(function(x){ x.textContent=x.value; });
       var old=btn.textContent; btn.disabled=true; btn.textContent="PDF készítése…";
-      window.html2pdf().set({ margin:0, filename:"Horvath-Lampapolir-Kiszallasi-nyilatkozat.pdf", image:{type:"jpeg",quality:0.98}, html2canvas:{scale:2, useCORS:true, backgroundColor:"#ffffff"}, jsPDF:{unit:"mm", format:"a4", orientation:"portrait"} }).from(sheet).save()
-        .then(function(){ btn.disabled=false; btn.textContent=old; })
-        .catch(function(){ btn.disabled=false; btn.textContent=old; window.print(); });
+      (document.body.classList.add("pdfgen"), window.html2pdf()).set({ margin:0, filename:"Horvath-Lampapolir-Kiszallasi-nyilatkozat.pdf", image:{type:"jpeg",quality:0.98}, html2canvas:{scale:2, useCORS:true, backgroundColor:"#ffffff"}, jsPDF:{unit:"mm", format:"a4", orientation:"portrait"} }).from(sheet).save()
+        .then(function(){ document.body.classList.remove("pdfgen"); btn.disabled=false; btn.textContent=old; })
+        .catch(function(){ document.body.classList.remove("pdfgen"); btn.disabled=false; btn.textContent=old; window.print(); });
     });
   })();
   </script>
