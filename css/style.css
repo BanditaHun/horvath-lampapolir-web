@@ -434,8 +434,8 @@ section:last-of-type { border-bottom: none; }
 .gal-carousel { position: relative; }
 .gal-track { display: flex; align-items: center; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding: 26px 0; scrollbar-width: none; -ms-overflow-style: none; }
 .gal-track::-webkit-scrollbar { height: 0; display: none; }
-.gal-item { flex: 0 0 auto; width: min(560px, 76vw); margin: 0; scroll-snap-align: center; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); background: var(--bg-card); transform: scale(.86); opacity: .55; transition: transform .35s ease, opacity .35s ease, box-shadow .35s ease, border-color .35s ease; }
-.gal-item.is-center { transform: scale(1); opacity: 1; box-shadow: 0 20px 48px rgba(0,0,0,0.55); border-color: rgba(240,180,41,0.45); }
+.gal-item { flex: 0 0 auto; width: min(560px, 76vw); margin: 0; scroll-snap-align: center; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); background: var(--bg-card); transform: scale(.78); opacity: .4; filter: grayscale(.45) brightness(.92); transition: transform .4s cubic-bezier(.22,.61,.36,1), opacity .4s ease, box-shadow .4s ease, border-color .4s ease, filter .4s ease; }
+.gal-item.is-center { transform: scale(1.06); opacity: 1; filter: none; box-shadow: 0 26px 60px rgba(0,0,0,0.6), 0 0 0 4px rgba(240,180,41,0.22); border: 2px solid var(--gold); z-index: 2; }
 .gal-item img { width: 100%; height: auto; display: block; cursor: zoom-in; }
 .gal-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3; width: 46px; height: 46px; border-radius: 50%; border: 1px solid rgba(240,180,41,0.5); background: rgba(10,10,10,0.8); color: var(--gold); font-size: 1.5rem; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
 .gal-arrow:hover { background: var(--gold); color: #1a1200; border-color: var(--gold); }
@@ -454,7 +454,9 @@ section:last-of-type { border-bottom: none; }
 /* Kezdőlapi „Munkáink" – kisebb carousel */
 .gal-carousel--sm .gal-item { width: min(340px, 66vw); }
 .gal-carousel--sm .gal-track { padding-top: 16px; padding-bottom: 16px; }
-.gal-carousel--sm .gal-item.is-center { box-shadow: 0 14px 34px rgba(0,0,0,0.5); }
+.gal-carousel--sm .gal-item.is-center { box-shadow: 0 16px 38px rgba(0,0,0,0.5), 0 0 0 3px rgba(240,180,41,0.22); }
+.gal-carousel--sm .gal-item { transform: scale(.8); }
+.gal-carousel--sm .gal-item.is-center { transform: scale(1.05); }
 .gal-carousel--sm .gal-arrow { width: 40px; height: 40px; font-size: 1.3rem; }
 .gal-carousel--sm + .gal-caption { font-size: .95rem; }
 @media (max-width: 640px) { .gal-carousel--sm .gal-item { width: min(340px, 78vw); } }
