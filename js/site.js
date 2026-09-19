@@ -430,10 +430,10 @@ function buildFooter() {
       <nav class="site-footer__col" aria-label="Letölthető dokumentumok">
         <h4 class="site-footer__h">Letölthető dokumentumok</h4>
         <div class="site-footer__links site-footer__links--icons">
-          <a href="arlista.html" target="_blank" rel="noopener">${ICON_LI_RECEIPT}<span>Árlista (PDF)</span></a>
-          <a href="garancia.html" target="_blank" rel="noopener">${ICON_LI_CERT}<span>Garancialevél (PDF)</span></a>
-          <a href="megrendelo.html" target="_blank" rel="noopener">${ICON_LI_RECEIPT}<span>Megrendelő lap (PDF)</span></a>
-          <a href="kiszallasi-ertesito.html" target="_blank" rel="noopener">${ICON_LI_RECEIPT}<span>Kiszállási díj értesítő (PDF)</span></a>
+          <a href="arlista.html?v=20260919" target="_blank" rel="noopener">${ICON_LI_RECEIPT}<span>Árlista (PDF)</span></a>
+          <a href="garancia.html?v=20260919" target="_blank" rel="noopener">${ICON_LI_CERT}<span>Garancialevél (PDF)</span></a>
+          <a href="megrendelo.html?v=20260919" target="_blank" rel="noopener">${ICON_LI_RECEIPT}<span>Megrendelő lap (PDF)</span></a>
+          <a href="kiszallasi-ertesito.html?v=20260919" target="_blank" rel="noopener">${ICON_LI_RECEIPT}<span>Kiszállási díj értesítő (PDF)</span></a>
         </div>
       </nav>
       <nav class="site-footer__col" aria-label="Információk">
@@ -1135,7 +1135,7 @@ function renderCardsPage(app, data, defTitle, kind, promo) {
           <div class="pkg-buy">
             <div class="neon-card__price pkg-buy__price">${esc(main.price || "")}</div>
             <a class="btn btn--primary neon-card__order" href="kapcsolat.html">Megrendelem</a>
-            <a class="pkg-featured__pdf" href="arlista.html" target="_blank" rel="noopener">${ICON_DOWNLOAD}<span>Teljes árlista (PDF)</span></a>
+            <a class="pkg-featured__pdf" href="arlista.html?v=20260919" target="_blank" rel="noopener">${ICON_DOWNLOAD}<span>Teljes árlista (PDF)</span></a>
           </div>
         </article>`;
       cont.appendChild(row);
