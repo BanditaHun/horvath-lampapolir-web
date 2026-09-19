@@ -150,12 +150,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js"></script>
   <script>
   (function(){
-    var btn=document.getElementById("pdf-btn"); if(!btn) return;
-    var SERIAL_TYPE="kiszallasi", SERIAL_PREFIX="KSZ";
-    var SERIAL_API="https://horvath-stats.andras-horvat1989.workers.dev/serial", PDF_BASE="Horvath-Lampapolir-Kiszallasi-dij-ertesito";
-    var _serial=null;
-    function two(n){return (n<10?"0":"")+n;}
-    function fallbackSerial(){return (new Date().getFullYear())+"/"+String(Date.now()).slice(-5);}
+    var btn=document.getElementById("pdf-btn");
+    var SERIAL_TYPE="kiszallasi", PDF_BASE="Horvath-Lampapolir-Kiszallasi-dij-ertesito";
+    var SKEY="hlp_serial_"+SERIAL_TYPE;
+    function yr(){ return new Date().getFullYear(); }
+    function pad(n){ n=String(n); while(n.length<5) n="0"+n; return n; }
+    function getNum(){ var v; try{ v=parseInt(localStorage.getItem(SKEY),10); }catch(e){} if(!(v>=1)) v=1; return v; }
+    function saveNum(n){ n=parseInt(n,10); if(!(n>=1)) n=1; try{ localStorage.setItem(SKEY,String(n)); }catch(e){} return n; }
+    function serial(){ return yr()+"/"+pad(getNum()); }
     function ensureBox(){
       var sheet=document.querySelector(".sheet"); if(!sheet) return;
       if(document.getElementById("doc-serial")) return;
@@ -164,28 +166,53 @@
       box.innerHTML='Sorsz\u00e1m<b id="doc-serial-val">\u2014</b>';
       sheet.insertBefore(box, sheet.firstChild);
     }
-    function setSerial(s){ _serial=s; ensureBox(); var v=document.getElementById("doc-serial-val"); if(v) v.textContent=s; }
-    function getSerial(){
-      if(_serial) return Promise.resolve(_serial);
-      return fetch(SERIAL_API+"?type="+SERIAL_TYPE,{method:"POST"}).then(function(r){return r.json();})
-        .then(function(j){ if(j&&j.serial){ setSerial(j.serial); return j.serial; } throw 0; })
-        .catch(function(){ var f=fallbackSerial(); setSerial(f); return f; });
+    function render(){
+      ensureBox();
+      var s=serial();
+      var v=document.getElementById("doc-serial-val"); if(v) v.textContent=s;
+      var f=document.getElementById("ser-full"); if(f) f.textContent=s;
+      var inp=document.getElementById("ser-num"); if(inp && document.activeElement!==inp) inp.value=getNum();
     }
-    ensureBox();
-    btn.addEventListener("click", function(){
-      var sheet=document.querySelector(".sheet");
-      if(!sheet||!window.html2pdf){ window.print(); return; }
-      var old=btn.textContent; btn.disabled=true; btn.textContent="Sorsz\u00e1m k\u00e9r\u00e9se\u2026";
-      getSerial().then(function(serial){
-        btn.textContent="PDF k\u00e9sz\u00edt\u00e9se\u2026";
+    function setNum(n){ saveNum(n); render(); }
+    function buildCtrl(){
+      var tb=document.querySelector(".toolbar"); if(!tb || document.getElementById("ser-ctrl")) return;
+      var st=document.createElement("style");
+      st.textContent=".ser-ctrl{display:inline-flex;align-items:center;gap:6px;color:#cfd3da;font:600 13px/1 'Segoe UI',Arial,sans-serif}"
+        +".ser-ctrl input{width:58px;padding:6px;border-radius:8px;border:1px solid #565963;background:#1c1e24;color:#f0b429;font:700 13px/1 'Segoe UI',Arial;text-align:center}"
+        +".ser-b{width:30px;height:30px;border-radius:8px;border:1px solid #565963;background:#3a3d45;color:#fff;font-size:18px;font-weight:700;cursor:pointer;line-height:1;display:inline-flex;align-items:center;justify-content:center}"
+        +".ser-b:hover{background:#4a4e57}.ser-full{color:#f0b429;font-weight:800;margin-left:2px}"
+        +"@media print{.ser-ctrl{display:none!important}}";
+      document.head.appendChild(st);
+      var w=document.createElement("div"); w.className="ser-ctrl"; w.id="ser-ctrl";
+      w.innerHTML='Sorsz\u00e1m: <button type="button" class="ser-b" id="ser-dn" title="Cs\u00f6kkent\u00e9s">\u2212</button>'
+        +'<input type="number" id="ser-num" min="1" step="1" aria-label="Sorsz\u00e1m">'
+        +'<button type="button" class="ser-b" id="ser-up" title="N\u00f6vel\u00e9s">+</button>'
+        +'<span class="ser-full" id="ser-full"></span>';
+      tb.appendChild(w);
+      document.getElementById("ser-dn").addEventListener("click", function(){ setNum(getNum()-1); });
+      document.getElementById("ser-up").addEventListener("click", function(){ setNum(getNum()+1); });
+      document.getElementById("ser-num").addEventListener("input", function(){
+        var n=parseInt(this.value,10);
+        if(n>=1){ saveNum(n); var s=serial(); var v=document.getElementById("doc-serial-val"); if(v)v.textContent=s; var f=document.getElementById("ser-full"); if(f)f.textContent=s; }
+      });
+    }
+    buildCtrl();
+    render();
+    if(btn){
+      btn.addEventListener("click", function(){
+        var sheet=document.querySelector(".sheet");
+        if(!sheet||!window.html2pdf){ window.print(); return; }
+        render();
+        var old=btn.textContent; btn.disabled=true; btn.textContent="PDF k\u00e9sz\u00edt\u00e9se\u2026";
         sheet.querySelectorAll("input[type=text]").forEach(function(i){ i.setAttribute("value", i.value); });
         sheet.querySelectorAll("input[type=checkbox]").forEach(function(i){ if(i.checked) i.setAttribute("checked","checked"); else i.removeAttribute("checked"); });
         sheet.querySelectorAll("textarea").forEach(function(x){ x.textContent=x.value; });
-        var fname=PDF_BASE+"-"+String(serial).split("/").join("-").split(String.fromCharCode(92)).join("-")+".pdf";
-        return (document.body.classList.add("pdfgen"), window.html2pdf()).set({ margin:0, filename:fname, image:{type:"jpeg",quality:0.98}, html2canvas:{scale:2, useCORS:true, backgroundColor:"#ffffff"}, jsPDF:{unit:"mm", format:"a4", orientation:"portrait"} }).from(sheet).save();
-      }).then(function(){ document.body.classList.remove("pdfgen"); btn.disabled=false; btn.textContent=old; })
-        .catch(function(){ document.body.classList.remove("pdfgen"); btn.disabled=false; btn.textContent=old; window.print(); });
-    });
+        var fname=PDF_BASE+"-"+serial().split("/").join("-")+".pdf";
+        (document.body.classList.add("pdfgen"), window.html2pdf()).set({ margin:0, filename:fname, image:{type:"jpeg",quality:0.98}, html2canvas:{scale:2, useCORS:true, backgroundColor:"#ffffff"}, jsPDF:{unit:"mm", format:"a4", orientation:"portrait"} }).from(sheet).save()
+          .then(function(){ document.body.classList.remove("pdfgen"); btn.disabled=false; btn.textContent=old; })
+          .catch(function(){ document.body.classList.remove("pdfgen"); btn.disabled=false; btn.textContent=old; window.print(); });
+      });
+    }
   })();
   </script>
 </body>
