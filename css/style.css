@@ -14,13 +14,14 @@
   /* Tipográfia – ezeket a CMS „Megjelenés" menüje állítja (theme.json) */
   --font-body: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
   --font-heading: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
-  --base-font-size: 17px;
+  --base-font-size: 18px;
   --heading-scale: 1;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; overflow-x: clip; }
+/* Az alap betűméret a rem-et is vezérli, így minden szöveg arányosan nő/csökken. */
+html { scroll-behavior: smooth; overflow-x: clip; font-size: var(--base-font-size); }
 
 body {
   background: var(--bg);
