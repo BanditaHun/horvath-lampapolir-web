@@ -1240,6 +1240,11 @@ a.neon-card, a.neon-card:hover { text-decoration: none; }
 }
 .reviews__google-btn:hover { background: #f6f7f9 !important; filter: none; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.3); }
 .reviews__google-btn svg { flex: none; }
+.reviews__panel--google { text-align: center; }
+.reviews__panel--google .page__title, .reviews__panel--google .page__intro { text-align: center; }
+.reviews__panel--google .page__intro { max-width: 640px; margin-left: auto; margin-right: auto; }
+.reviews__google-btns { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 16px; }
+.reviews__google-btns .reviews__google-btn { margin: 0; }
 .review-or a { color: var(--gold); font-weight: 700; }
 
 /* ---------- Adatvédelmi info-sáv ---------- */

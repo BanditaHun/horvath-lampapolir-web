@@ -661,46 +661,24 @@ function reviewsSummaryHTML(list) {
     </div>`;
 }
 function reviewsSectionHTML(reviews, contact) {
-  const apiUrl = reviews && isSet(reviews.api_url) ? reviews.api_url : "";
   const fbUrl = contact && isSet(contact.facebook_url) ? contact.facebook_url : "";
-  const googUrl = contact && isSet(contact.google_review_url) ? contact.google_review_url : "";
-  const starBtns = [1, 2, 3, 4, 5].map((i) => `<button type="button" class="star-btn" data-v="${i}" aria-label="${i} csillag">★</button>`).join("");
-  let form = "";
-  if (apiUrl) {
-    form = `<div class="review-form-card">
-      <h3 class="review-form-card__title">Írj véleményt vagy hozzászólást</h3>
-      <form class="review-form" data-api="${esc(apiUrl)}">
-        <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" />
-        <div class="form-row"><label for="rv-name">Neved</label><input id="rv-name" type="text" name="name" required maxlength="60" /></div>
-        <div class="form-row"><span class="form-label">Értékelés</span>
-          <div class="star-input" id="star-input">${starBtns}</div>
-          <input type="hidden" name="rating" id="rating-input" value="5" />
-        </div>
-        <div class="form-row"><label for="rv-msg">Véleményed / hozzászólásod</label><textarea id="rv-msg" name="message" rows="3" required maxlength="1000"></textarea></div>
-        <button type="submit" class="btn btn--primary">Küldés</button>
-        <p class="review-form__note">A véleményed a küldés után <strong>azonnal megjelenik</strong> az oldalon.</p>
-      </form>
-      ${(googUrl || fbUrl) ? `<p class="review-or">…vagy értékelj itt: ${googUrl ? `<a href="${esc(googUrl)}" target="_blank" rel="noopener">Google</a>` : ""}${googUrl && fbUrl ? " · " : ""}${fbUrl ? `<a href="${esc(fbUrl)}" target="_blank" rel="noopener">Facebook</a>` : ""}</p>` : ""}
-    </div>`;
-  } else if (fbUrl) {
-    form = `<div class="review-cta"><p>Elégedett voltál? Örülnénk a véleményednek:</p>
-      <a class="btn btn--primary" href="${esc(fbUrl)}" target="_blank" rel="noopener">Értékelés a Facebookon</a></div>`;
-  }
-  return `<section class="reviews" id="velemenyek"><div class="container"><div class="reviews__panel">
-    <h2 class="page__title">${esc((reviews && reviews.heading) || "Vélemények")}</h2>
-    ${reviews && reviews.intro ? `<div class="rich page__intro">${mdBlock(reviews.intro)}</div>` : ""}
-    ${googUrl ? `<a class="btn btn--primary reviews__google-btn" href="${esc(googUrl)}" target="_blank" rel="noopener">${ICON_GOOGLE}<span>Értékelj minket a Google-on</span></a>` : ""}
-    <div class="reviews__grid">
-      <div class="reviews__main">
-        <div id="greviews" class="greviews" hidden></div>
-        <div id="reviews-summary"></div>
-        <div class="reviews__list" id="reviews-list"></div>
-      </div>
-      <aside class="reviews__aside">${form}</aside>
-    </div>
+  const googProfile = contact && isSet(contact.google_url) ? contact.google_url : "";
+  const googReview = contact && isSet(contact.google_review_url) ? contact.google_review_url : "";
+  const heading = esc((reviews && reviews.heading) || "Vélemények");
+  const intro = reviews && reviews.intro ? `<div class="rich page__intro">${mdBlock(reviews.intro)}</div>` : "";
+  const btns = [];
+  if (googProfile) btns.push(`<a class="btn btn--primary reviews__google-btn" href="${esc(googProfile)}" target="_blank" rel="noopener">${ICON_GOOGLE}<span>Nézd meg a Google-értékeléseinket</span></a>`);
+  if (googReview) btns.push(`<a class="btn btn--ghost reviews__google-btn" href="${esc(googReview)}" target="_blank" rel="noopener">${ICON_GOOGLE}<span>Értékelj minket a Google-on</span></a>`);
+  if (fbUrl) btns.push(`<a class="btn btn--ghost reviews__google-btn" href="${esc(fbUrl)}" target="_blank" rel="noopener">${ICON_FB}<span>Facebook</span></a>`);
+  return `<section class="reviews" id="velemenyek"><div class="container"><div class="reviews__panel reviews__panel--google">
+    <h2 class="page__title">${heading}</h2>
+    ${intro}
+    <div class="reviews__google-btns">${btns.join("")}</div>
   </div></div></section>`;
 }
 async function initReviews(reviews, scope, contact) {
+  // Csak Google-értékelések: a saját vélemény-lista/űrlap megszűnt, itt nincs teendő.
+  if (!document.getElementById("reviews-list")) return;
   const curated = (reviews && reviews.items) || [];
   const apiUrl = reviews && isSet(reviews.api_url) ? reviews.api_url.replace(/\/+$/, "") : "";
   let apiReviews = [];
