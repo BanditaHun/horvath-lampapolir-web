@@ -673,11 +673,14 @@ function reviewsSectionHTML(reviews, contact) {
   return `<section class="reviews" id="velemenyek"><div class="container"><div class="reviews__panel reviews__panel--google">
     <h2 class="page__title">${heading}</h2>
     ${intro}
+    <div id="greviews" class="greviews" hidden></div>
     <div class="reviews__google-btns">${btns.join("")}</div>
   </div></div></section>`;
 }
 async function initReviews(reviews, scope, contact) {
-  // Csak Google-értékelések: a saját vélemény-lista/űrlap megszűnt, itt nincs teendő.
+  // Csak Google-értékelések: a Google-profil értékeléseit húzzuk be (Places proxy).
+  initGoogleReviews(contact);
+  // A régi saját vélemény-lista/űrlap megszűnt – ha nincs a DOM-ban, itt nincs több teendő.
   if (!document.getElementById("reviews-list")) return;
   const curated = (reviews && reviews.items) || [];
   const apiUrl = reviews && isSet(reviews.api_url) ? reviews.api_url.replace(/\/+$/, "") : "";
