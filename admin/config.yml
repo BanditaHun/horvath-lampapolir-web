@@ -136,7 +136,7 @@ collections:
             fields:
               - { name: "title", label: "Cím", widget: "string" }
               - { name: "text", label: "Szöveg", widget: "text" }
-              - { name: "link", label: "Hivatkozás (pl. csomagok.html)", widget: "string" }
+              - { name: "link", label: "Hivatkozás (pl. szolgaltatasok.html)", widget: "string" }
               - { name: "more", label: "Gomb-felirat (pl. Megnézem →)", widget: "string", required: false }
           - name: "trust"
             label: "Bizalmi sáv (a hero alatt)"

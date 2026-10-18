@@ -129,7 +129,7 @@
     <span class="toolbar__msg">Ez az árlista <b>mindig a friss árakat</b> mutatja. Mentsd PDF-be vagy nyomtasd ki:</span>
     <button class="tbtn tbtn--print" id="pdf-btn">💾 PDF letöltése</button>
     <button class="tbtn tbtn--back" onclick="window.print()">🖨️ Nyomtatás</button>
-    <a class="tbtn tbtn--back" href="csomagok.html">← Vissza az oldalra</a>
+    <a class="tbtn tbtn--back" href="szolgaltatasok.html">← Vissza az oldalra</a>
   </div>
 
   <div class="sheet" id="sheet">
@@ -284,7 +284,7 @@ async function build(){
   document.getElementById("sheet").innerHTML = html;
   document.title = "Árlista – Horváth Lámpapolír";
 }
-build().catch(e=>{ document.getElementById("sheet").innerHTML = '<div class="loading">Az árlista most nem tölthető be. Frissíts rá, vagy nézd meg a <a href="csomagok.html">Csomagok</a> oldalt.</div>'; });
+build().catch(e=>{ document.getElementById("sheet").innerHTML = '<div class="loading">Az árlista most nem tölthető be. Frissíts rá, vagy nézd meg a <a href="szolgaltatasok.html">Szolgáltatások &amp; árak</a> oldalt.</div>'; });
 </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js"></script>

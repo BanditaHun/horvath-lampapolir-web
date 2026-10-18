@@ -96,7 +96,6 @@ function applyTheme(theme) {
 // ---------- Fejléc / menü / lábléc ----------
 const NAV = [
   { href: "index.html", label: "Kezdőlap", page: "home" },
-  { href: "csomagok.html", label: "Csomagok", page: "csomagok" },
   { href: "szolgaltatasok.html", label: "Szolgáltatások", page: "szolgaltatasok" },
   { href: "kiszallas.html", label: "Kiszállás", page: "kiszallas" },
   { href: "galeria.html", label: "Galéria", page: "galeria" },
@@ -419,7 +418,6 @@ function buildFooter() {
         <h4 class="site-footer__h">Oldalak</h4>
         <div class="site-footer__links">
           <a href="index.html">Kezdőlap</a>
-          <a href="csomagok.html">Csomagok</a>
           <a href="szolgaltatasok.html">Szolgáltatások</a>
           <a href="kiszallas.html">Kiszállás</a>
           <a href="galeria.html">Galéria</a>
@@ -843,7 +841,7 @@ async function renderHome(app, contact) {
       <p class="hero__subtitle">${mdInline(hero.subtitle || "")}</p>
       <div class="hero__cta">
         <a class="btn btn--primary" href="kapcsolat.html">Kérj időpontot</a>
-        <a class="btn btn--ghost" href="csomagok.html">Csomagok &amp; árak</a>
+        <a class="btn btn--ghost" href="szolgaltatasok.html">Szolgáltatások &amp; árak</a>
       </div></div>`;
   }
   h += `</header>`;
@@ -869,7 +867,7 @@ async function renderHome(app, contact) {
   </section></div>`;
 
   const DQUICK = [
-    { title: "Csomagok & árak", text: "Prémium fényszóró-felújítás: csiszolás, polírozás, UV-védelem és 2 év garancia – 9 990 Ft / db, minden autótípusra.", link: "csomagok.html", more: "Megnézem →" },
+    { title: "Csomagok & árak", text: "Prémium fényszóró-felújítás: csiszolás, polírozás, UV-védelem és 2 év garancia – 9 990 Ft / db, minden autótípusra.", link: "szolgaltatasok.html", more: "Megnézem →" },
     { title: "Szolgáltatások", text: "Fényszóró-felújítás, üvegkezelés, állapotfelmérés – mind helyben.", link: "szolgaltatasok.html", more: "Megnézem →" },
     { title: "Kapcsolat", text: "Hívj vagy írj, és egyeztetünk egy időpontot – házhoz megyünk.", link: "kapcsolat.html", more: "Kapcsolat →" },
   ];
@@ -1143,8 +1141,22 @@ function renderCardsPage(app, data, defTitle, kind, promo) {
     return;
   }
 
+  cont.appendChild(cardsGrid(data.items, kind));
+}
+
+// Szolgáltatások oldal: felül a csomag (packages.json), alatta az önálló szolgáltatások (services.json)
+function renderServicesPage(app, pkg, svc, promo) {
+  renderCardsPage(app, Object.assign({}, pkg, { heading: "Szolgáltatások és árak" }), "Szolgáltatások és árak", "packages", promo);
+  const cont = app.querySelector(".container");
+  if (!svc || !(svc.items || []).length) return;
+  cont.insertAdjacentHTML("beforeend", `<div class="pkg-addons-head" id="onallo-szolgaltatasok"><h2 class="page__title">${esc(svc.heading || "Önálló szolgáltatások")}</h2></div>
+    ${svc.intro ? `<div class="rich page__intro">${mdBlock(svc.intro)}</div>` : ""}`);
+  cont.appendChild(cardsGrid(svc.items, "services"));
+}
+
+function cardsGrid(items, kind) {
   const grid = el("div", "cards" + (kind === "delivery" ? " cards--4" : (kind === "services" ? " cards--svc" : "")));
-  (data.items || []).forEach((it, i) => {
+  (items || []).forEach((it, i) => {
     let inner = "";
     if (kind === "delivery") {
       inner = `<h3 class="neon-card__title">${esc(it.range || "")}</h3>
@@ -1159,7 +1171,7 @@ function renderCardsPage(app, data, defTitle, kind, promo) {
     }
     grid.appendChild(neonCard(i, inner));
   });
-  cont.appendChild(grid);
+  return grid;
 }
 
 // ---------- Kiszállási díj kalkulátor (térkép + távolság + díj) ----------
@@ -2047,8 +2059,9 @@ async function initSite() {
   try {
     switch (page) {
       case "home": await renderHome(app, contact); break;
-      case "csomagok": renderCardsPage(app, await loadJSON("content/packages.json"), "Csomagok", "packages", await loadJSON("content/promo.json").catch(() => null)); break;
-      case "szolgaltatasok": renderCardsPage(app, await loadJSON("content/services.json"), "Szolgáltatások", "services"); break;
+      // A régi Csomagok oldal a Szolgáltatásokba olvadt (csomagok.html átirányít)
+      case "csomagok":
+      case "szolgaltatasok": renderServicesPage(app, await loadJSON("content/packages.json"), await loadJSON("content/services.json"), await loadJSON("content/promo.json").catch(() => null)); break;
       case "kiszallas": renderCardsPage(app, await loadJSON("content/delivery.json"), "Kiszállási díj", "delivery"); break;
       case "galeria": renderGallery(app, await loadJSON("content/gallery.json")); break;
       case "gyik": renderFaq(app, await loadJSON("content/faq.json")); break;
