@@ -156,18 +156,22 @@
     <section>
       <h2>2. Megrendelt szolgáltatás(ok)</h2>
       <div id="svc-list"><p style="color:var(--faint); margin:0">Szolgáltatások betöltése…</p></div>
-      <p style="margin:6px 0 0"><input type="checkbox"> Garancia igénybe véve a fenti csomaghoz (részletek a külön garanciajegyen)</p>
-      <div class="fee-note">A garancia a felvitt UV-védő bevonatra vonatkozik, rendeltetésszerű használat mellett, arra, hogy a kezelt felület a garancia ideje alatt nem sárgul vissza, nem homályosodik el. Nem terjed ki mechanikai sérülésre (kavicsfelverődés, karcolás, baleset), nem rendeltetésszerű vegyszerhasználatra vagy házilagos beavatkozásra. A pontos feltételeket a külön kiállított garanciajegy tartalmazza.</div>
+      <p style="margin:6px 0 0"><input type="checkbox"> <b>2 év garancia</b> a felújított fényszóró(k)ra – az ár tartalmazza (garancialevél átadva)</p>
+      <div class="fee-note">A garancia a felvitt UV-védő bevonatra vonatkozik, rendeltetésszerű használat mellett, arra, hogy a kezelt felület a garancia ideje alatt nem mattul vissza és nem sárgul be. Nem terjed ki mechanikai sérülésre (kavicsfelverődés, karcolás, baleset), nem rendeltetésszerű vegyszerhasználatra vagy házilagos beavatkozásra. A pontos feltételeket a külön kiállított garancialevél tartalmazza.</div>
     </section>
 
     <section>
       <h2>3. Időpont és fizetendő összeg</h2>
-      <div class="field"><label>Dátum</label><input class="val" type="text" id="f-date" placeholder="20                     hó                     nap"></div>
       <div class="grid2">
+        <div class="field"><label>Dátum</label><input class="val" type="text" id="f-date" placeholder="20        hó        nap"></div>
         <div class="field"><label>Időpont (kb.)</label><input class="val" type="text" id="f-time" placeholder="óra : perc"></div>
-        <div class="field"><label>Fizetendő végösszeg</label><input class="val" type="text"><span style="flex:none; margin-left:6px; color:var(--dim); font-weight:700">Ft</span></div>
       </div>
-      <div class="field"><label>Megjegyzés</label><input class="val" type="text" id="f-note"></div>
+      <div class="field"><label>Kiszállási díj</label><span id="fee-delivery" style="flex:1"><input class="val" type="text"></span></div>
+      <div id="fee-discounts"></div>
+      <div class="grid2">
+        <div class="field"><label>Fizetendő végösszeg</label><input class="val" type="text"><span style="flex:none; margin-left:6px; color:var(--dim); font-weight:700">Ft</span></div>
+        <div class="field"><label>Megjegyzés</label><input class="val" type="text" id="f-note"></div>
+      </div>
     </section>
 
     <section>
@@ -254,8 +258,32 @@
         });
       };
       var row = function (name, price) {
-        return '<label><input type="checkbox" data-svc="' + esc(name) + '"> ' + esc(name) + (price ? ' <span class="svc-price">(' + esc(price) + ')</span>' : '') + '</label>';
+        // Darabáras tételnél (pl. "9 990 Ft / DB") darabszám-mező is kell
+        var qty = /\/\s*db\b/i.test(price || "") ? ' – <input class="val" type="text" style="display:inline-block; width:34px"> db' : '';
+        return '<label><input type="checkbox" data-svc="' + esc(name) + '"> ' + esc(name) + (price ? ' <span class="svc-price">(' + esc(price) + ')</span>' : '') + qty + '</label>';
       };
+      // Kiszállási díj-sávok (delivery.json) és aktív kedvezmények (promo.json) – az oldallal együtt frissülnek
+      var plain = function (s) { return String(s || "").replace(/\*\*|__|_/g, ""); };
+      fetch("content/delivery.json", { cache: "no-store" }).then(function (r) { return r.json(); }).then(function (d) {
+        var el = document.getElementById("fee-delivery");
+        if (!el || !(d.items || []).length) return;
+        el.innerHTML = d.items.map(function (it) {
+          return '<label style="margin-right:10px; white-space:nowrap"><input type="checkbox"> ' + esc(it.range) + ': ' + esc(it.fee) + '</label>';
+        }).join("");
+      }).catch(function () {});
+      fetch("content/promo.json", { cache: "no-store" }).then(function (r) { return r.json(); }).then(function (p) {
+        var el = document.getElementById("fee-discounts");
+        if (!el) return;
+        var opts = [];
+        // "Az akció 2026. október 31-ig érvényes. ..." -> "2026. október 31-ig érvényes" (a dátum pontjai miatt nem pontnál vágunk)
+        var valid = (plain(p.valid_text).match(/(\d{4}\.[^]*?érvényes)/) || [])[1];
+        if (p.active) opts.push(plain(p.eyebrow || "Akció") + " (" + plain(p.badge) + " a fényszóró-felújításból" + (valid ? "; " + valid : "") + ")");
+        if (p.multicar_active) opts.push("Több autós kedvezmény (" + plain(p.multicar_badge) + " a végösszegből, legalább 2 autó egy helyszínen; kiszállási díj egyszer)");
+        if (!opts.length) return;
+        el.innerHTML = '<div class="field"><label>Kedvezmény</label><span style="flex:1">' + opts.map(function (o) {
+          return '<label style="display:block; font-size:9.5px"><input type="checkbox"> ' + esc(o) + '</label>';
+        }).join("") + '</span></div>';
+      }).catch(function () {});
       var isAddon = function (it) { return (it.badge || "").toLowerCase().indexOf("kieg") === 0; };
       Promise.all([
         fetch("content/packages.json", { cache: "no-store" }).then(function (r) { return r.json(); }),
