@@ -68,7 +68,8 @@
 
   footer.foot { margin-top: 6px; border-top: 2px solid var(--gold3); padding-top: 5px; font-size: 8.2px; color: var(--faint); }
 
-  @media screen and (max-width: 760px){ .sheet{width:100%;min-height:0;margin:0;padding:16px 13px 22px;box-shadow:none} .grid2,.sign{grid-template-columns:1fr} .field{flex-wrap:wrap} body{background:#fff} }
+  .car2-row { display:grid; grid-template-columns:1.6fr .8fr 1fr 1.6fr; gap:0 12px; }
+  @media screen and (max-width: 760px){ .sheet{width:100%;min-height:0;margin:0;padding:16px 13px 22px;box-shadow:none} .grid2,.sign,.car2-row{grid-template-columns:1fr} .field{flex-wrap:wrap} body{background:#fff} }
   @media print {
     @page { size: A4; margin: 6mm 12mm 6mm; }
     body { background:#fff; }
@@ -84,6 +85,7 @@
   body.pdfgen .pkgs { grid-template-columns: 1fr 1fr 1fr !important; }
   body.pdfgen .dels { grid-template-columns: repeat(4, 1fr) !important; }
   body.pdfgen .svc-list { columns: 2 !important; }
+  body.pdfgen .car2-row { grid-template-columns: 1.6fr .8fr 1fr 1.6fr !important; }
   body.pdfgen .field { flex-wrap: nowrap !important; }
 </style>
 
@@ -140,24 +142,22 @@
         <div class="field"><label>Alvázszám (VIN) – ablaktörlőhöz</label><input class="val" type="text" id="f-vin"></div>
       </div>
       <div class="field"><label>Két autó egy helyszínen</label><span style="flex:1"><input type="checkbox" id="f-two"> Igen, egy helyszínen 2 jármű felújítása</span></div>
-      <div id="car2-block" style="display:none; margin-top:4px; padding:8px 10px; border:1px dashed var(--line); border-radius:8px;">
-        <div style="font-weight:700; color:var(--gold); margin-bottom:4px; font-size:10px; letter-spacing:.3px">2. JÁRMŰ ADATAI</div>
-        <div class="grid2">
-          <div class="field"><label>2. autó típusa</label><input class="val" type="text" id="f-car2"></div>
-          <div class="field"><label>2. évjárat</label><input class="val" type="text" id="f-year2"></div>
-        </div>
-        <div class="grid2">
-          <div class="field"><label>2. rendszám</label><input class="val" type="text" id="f-plate2"></div>
-          <div class="field"><label>2. alvázszám (VIN)</label><input class="val" type="text" id="f-vin2"></div>
+      <div id="car2-block" style="display:none; margin-top:2px; padding:3px 10px 1px; border:1px dashed var(--line); border-radius:8px;">
+        <!-- 2. jármű egy sorban, rövid címkékkel – így két autóval is egy A4-en marad a lap -->
+        <div class="car2-row">
+          <div class="field"><label style="min-width:0">2. autó</label><input class="val" type="text" id="f-car2"></div>
+          <div class="field"><label style="min-width:0">Évj.</label><input class="val" type="text" id="f-year2"></div>
+          <div class="field"><label style="min-width:0">Rendsz.</label><input class="val" type="text" id="f-plate2"></div>
+          <div class="field"><label style="min-width:0">VIN</label><input class="val" type="text" id="f-vin2"></div>
         </div>
       </div>
     </section>
 
     <section>
-      <h2>2. Megrendelt szolgáltatás(ok)</h2>
+      <h2>2. Megrendelt szolgáltatás(ok) és garancia</h2>
       <div id="svc-list"><p style="color:var(--faint); margin:0">Szolgáltatások betöltése…</p></div>
-      <p style="margin:6px 0 0"><input type="checkbox"> <b>2 év garancia</b> a felújított fényszóró(k)ra – az ár tartalmazza (garancialevél átadva)</p>
-      <div class="fee-note">A garancia a felvitt UV-védő bevonatra vonatkozik, rendeltetésszerű használat mellett, arra, hogy a kezelt felület a garancia ideje alatt nem mattul vissza és nem sárgul be. Nem terjed ki mechanikai sérülésre (kavicsfelverődés, karcolás, baleset), nem rendeltetésszerű vegyszerhasználatra vagy házilagos beavatkozásra. A pontos feltételeket a külön kiállított garancialevél tartalmazza.</div>
+      <p style="margin:6px 0 0"><input type="checkbox"> <b>2 év garancia</b> a felújított fényszóró(k)ra – az ár tartalmazza, külön díj nélkül. &nbsp;Garancia lejárata: <input class="val" type="text" style="display:inline-block; width:130px" placeholder="20__. __ hó __ nap"></p>
+      <div class="fee-note"><b>Garanciális feltételek:</b> a szolgáltató a szolgáltatás napjától számított <b>2 évig</b> garanciát vállal arra, hogy a felújított, UV-védett fényszóró-felület rendeltetésszerű használat és kímélő tisztítás mellett nem mattul vissza és nem sárgul be. Nem terjed ki: mechanikai sérülésre (kőfelverődés, ütés, repedés, karcolás), balesetre, agresszív vegyszer okozta kárra, házilagos beavatkozásra, a lámpatest belső párásodására, elektromos vagy gyári hibájára. <b>Érvényesítés:</b> e lap és a számla bemutatásával; indokolt esetben a felület <b>díjmentes</b> újrakezelése. A fogyasztó jogszabályi jogait nem érinti.</div>
     </section>
 
     <section>
@@ -203,7 +203,7 @@
     </div>
 
     <footer class="foot">
-      Készült 2 eredeti példányban, amelyből egy a Szolgáltatót, egy a Megrendelőt illeti. &nbsp;·&nbsp; horvathlampapolir.hu &nbsp;·&nbsp; +36 20 541 8369
+      Készült 2 eredeti példányban, amelyből egy a Szolgáltatót, egy a Megrendelőt illeti; a Megrendelő példánya egyben a garanciajegy. &nbsp;·&nbsp; horvathlampapolir.hu &nbsp;·&nbsp; +36 20 541 8369
     </footer>
   </div>
 
@@ -295,11 +295,10 @@
         var addons = items.filter(isAddon);
         var svcs = svc.items || [];
         var html = "";
-        if (mains.length) {
-          html += '<div class="svc-grp">Csomag</div><div class="svc-list">' + mains.map(function (it) { return row(it.name, it.price); }).join("") + "</div>";
-        }
-        if (addons.length) {
-          html += '<div class="svc-grp">Kiegészítők</div><div class="svc-list">' + addons.map(function (it) { return row(it.name, it.price); }).join("") + "</div>";
+        // Csomag + kiegészítő egy csoportban (két oszlopban egymás mellett) – így a lap egy A4-en marad
+        if (mains.length || addons.length) {
+          html += '<div class="svc-grp">' + (addons.length ? "Csomag és kiegészítő" : "Csomag") + '</div><div class="svc-list">' +
+            mains.concat(addons).map(function (it) { return row(it.name, it.price); }).join("") + "</div>";
         }
         if (svcs.length) {
           html += '<div class="svc-grp">Önálló szolgáltatások</div><div class="svc-list">' + svcs.map(function (it) { return row(it.name, it.price); }).join("") +
