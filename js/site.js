@@ -325,7 +325,7 @@ const ICON_GOOGLE = '<svg viewBox="0 0 48 48" width="18" height="18" aria-hidden
 let BRANDING = null;
 const brandLogo = () => (BRANDING && isSet(BRANDING.logo)) ? rel(BRANDING.logo) : "images/logo.png";
 const brandName = () => (BRANDING && isSet(BRANDING.brand_name)) ? BRANDING.brand_name : "Horváth Lámpapolír";
-const brandSub  = () => (BRANDING && isSet(BRANDING.brand_subtitle)) ? BRANDING.brand_subtitle : "Mobil fényszóró-felújítás – házhoz megyünk";
+const brandSub  = () => (BRANDING && isSet(BRANDING.brand_subtitle)) ? BRANDING.brand_subtitle : "Mobil fényszóró-felújítás – házhoz megyek";
 
 function buildHeader(active) {
   const links = NAV.map((n) => {
@@ -403,7 +403,7 @@ function buildFooter() {
         <div class="site-footer__brandtext">
           <strong>Horváth Lámpapolír</strong>
           <span id="footer-subtitle">Mobil fényszóró-felújítás Tolna megyében, 50 km-es körzetben</span>
-          <span class="site-footer__tags" id="footer-tags">Házhoz megyünk – magánszemélyeknek, cégeknek és flottáknak egyaránt –, a munkára 2 év garanciát és számlát adunk.</span>
+          <span class="site-footer__tags" id="footer-tags">Házhoz megyek – magánszemélyeknek, cégeknek és flottáknak egyaránt –, a munkára 2 év garanciát és számlát adok.</span>
         </div>
         <div class="site-footer__pay">
           <div class="site-footer__pay-badges" aria-label="Elfogadott fizetési módok">${PAY_BADGES}</div>
@@ -737,8 +737,8 @@ async function initReviews(reviews, scope, contact) {
 }
 
 // Animált "reklám" buborékok a banner két oldalán (csak széles képernyőn)
-const FLANK_LEFT = ["Kristálytiszta fény", "Ingyenes állapotfelmérés", "2 év garancia*"];
-const FLANK_RIGHT = ["Házhoz megyünk", "UV-védelem", "Gyors, helyszíni munka"];
+const FLANK_LEFT = ["Kristálytiszta fény", "Fix ár: 9 990 Ft / db", "2 év garancia"];
+const FLANK_RIGHT = ["Házhoz megyek", "UV-védelem", "Gyors, helyszíni munka"];
 function flankChips(list) {
   return list
     .map((t, i) => `<div class="flank-chip" style="animation-delay:${(i * 0.45).toFixed(2)}s"><span class="flank-chip__ic">✦</span><span>${esc(t)}</span></div>`)
@@ -746,9 +746,9 @@ function flankChips(list) {
 }
 // Futó szalaghirdetés (ticker) a kezdőlapon
 const TICKER_DEFAULT = [
-  "Házhoz megyünk Tolna megyében",
-  "Ingyenes állapotfelmérés",
-  "2 év garancia*",
+  "Házhoz megyek Tolna megyében",
+  "Tolna 15 km-en belül díjmentes kiszállás",
+  "2 év garancia az árban",
   "Kristálytiszta fény – biztonságosabb éjszakai vezetés",
   "50 km-es körzetben, akár csak a fényszóróért",
   "Professzionális, helyszíni munka",
@@ -852,7 +852,7 @@ async function renderHome(app, contact) {
       <div class="rich prose">${mdBlock(about.text || "")}</div>
     </div>
     <figure class="home-about__media">
-      <img class="zoomable" src="${esc(isSet(about.image) ? rel(about.image) : "images/uploads/auto-felirat.png")}" alt="Horváth Lámpapolír – feliratozott szervizautó, házhoz megyünk" loading="lazy" />
+      <img class="zoomable" src="${esc(isSet(about.image) ? rel(about.image) : "images/uploads/auto-felirat.png")}" alt="Horváth Lámpapolír – feliratozott szervizautó, házhoz megyek" loading="lazy" />
     </figure>
   </section></div>` : "";
 
@@ -869,7 +869,7 @@ async function renderHome(app, contact) {
   const DQUICK = [
     { title: "Csomagok & árak", text: "Prémium fényszóró-felújítás: csiszolás, polírozás, UV-védelem és 2 év garancia – 9 990 Ft / db, minden autótípusra.", link: "szolgaltatasok.html", more: "Megnézem →" },
     { title: "Szolgáltatások", text: "Fényszóró-felújítás, üvegkezelés, állapotfelmérés – mind helyben.", link: "szolgaltatasok.html", more: "Megnézem →" },
-    { title: "Kapcsolat", text: "Hívj vagy írj, és egyeztetünk egy időpontot – házhoz megyünk.", link: "kapcsolat.html", more: "Kapcsolat →" },
+    { title: "Kapcsolat", text: "Hívj vagy írj, és egyeztetünk egy időpontot – házhoz megyek.", link: "kapcsolat.html", more: "Kapcsolat →" },
   ];
   const quickItems = Array.isArray(H.quick) && H.quick.length ? H.quick : DQUICK;
   const quick = `<div class="container"><div class="cards cards--3">` +
@@ -893,7 +893,7 @@ async function renderHome(app, contact) {
   const DTRUST = [
     { icon: "🛡️", text: "**2 év** garancia" },
     { icon: "🧾", text: "**Számlaképes** vállalkozás" },
-    { icon: "🏠", text: "**Házhoz** megyünk" },
+    { icon: "🏠", text: "**Házhoz** megyek" },
     { icon: "📍", text: "Tolna megye, **50 km**" },
   ];
   const trustItems = Array.isArray(H.trust) && H.trust.length ? H.trust : DTRUST;
@@ -1296,7 +1296,7 @@ function drawCalcMap(base, dest, geom) {
 
 function printLetterhead() {
   return `<div class="print-only print-letterhead">
-    <strong>Horváth Lámpapolír</strong> · Mobil fényszóró-felújítás – házhoz megyünk<br>
+    <strong>Horváth Lámpapolír</strong> · Mobil fényszóró-felújítás – házhoz megyek<br>
     +36 20 541 8369 · horvathlampapolir@gmail.com · horvathlampapolir.hu
   </div>`;
 }
@@ -1490,7 +1490,7 @@ function renderContact(app, contact) {
   if (isSet(contact.instagram_url)) rows.push(infoRow(ICON_IG, "Instagram", `<a href="${esc(contact.instagram_url)}" target="_blank" rel="noopener">Megnézem</a>`));
 
   const aside = `<aside class="contact-aside">
-      <figure class="contact-aside__photo"><img class="zoomable" src="${esc(isSet(contact.photo) ? rel(contact.photo) : "images/uploads/auto-felirat.png")}" alt="Horváth Lámpapolír – feliratos szervizautó, házhoz megyünk" loading="lazy" /></figure>
+      <figure class="contact-aside__photo"><img class="zoomable" src="${esc(isSet(contact.photo) ? rel(contact.photo) : "images/uploads/auto-felirat.png")}" alt="Horváth Lámpapolír – feliratos szervizautó, házhoz megyek" loading="lazy" /></figure>
       <h2 class="contact-aside__title">Közvetlen elérhetőség</h2>
       <ul class="contact-info">${rows.join("")}</ul>
       ${contact.note ? `<div class="contact-aside__note rich">${mdBlock(contact.note)}</div>` : ""}
@@ -1506,12 +1506,12 @@ function renderContact(app, contact) {
 
   const billingNotice = `<div class="container"><section class="billing-notice">
       <h3 class="billing-notice__title">🧾 Számlázási tájékoztató</h3>
-      <p>Vállalkozásunk <strong>minden szolgáltatásról számlát állít ki</strong>. A számla kiállításához a megrendeléskor (személyesen, telefonon vagy e-mailben) az alábbi adatokat kérjük:</p>
+      <p><strong>Minden szolgáltatásról számlát állítok ki.</strong> A számla kiállításához a megrendeléskor (személyesen, telefonon vagy e-mailben) az alábbi adatokat kérem:</p>
       <ul class="billing-notice__list">
         <li><strong>Magánszemélyeknek:</strong> név és cím (lakcím).</li>
         <li><strong>Cégeknek / vállalkozóknak:</strong> cégnév, székhely (számlázási cím) és adószám.</li>
       </ul>
-      <p>Ezen adatok hiányában a szolgáltatást nem áll módunkban teljesíteni. A szolgáltatás igénybevételével Ön hozzájárul a fenti adatok megadásához a számla kiállítása céljából.</p>
+      <p>Ezen adatok hiányában a szolgáltatást nem áll módomban teljesíteni. A szolgáltatás igénybevételével hozzájárulsz a fenti adatok megadásához a számla kiállítása céljából.</p>
     </section></div>`;
 
   app.innerHTML = pageHead(contact.heading || "Kapcsolat", "") +
@@ -1555,7 +1555,7 @@ function wireMap(contact) {
 function bookingFormHTML(contact) {
   const groups = [
     ["Fényszóró-felújítás (2 év garanciával)", ["Prémium fényszóró-felújítás", "Hátsó lámpák felújítása"]],
-    ["Önálló szolgáltatások", ["Szélvédőmosó feltöltés", "Fagyálló ellenőrzés", "Ablaktörlő lapát csere", "Nano szélvédő vízlepergető kezelés", "Állapotfelmérés"]],
+    ["Önálló szolgáltatások", ["Szélvédőmosó feltöltés", "Fagyálló ellenőrzés", "Ablaktörlő lapát csere", "Nano szélvédő vízlepergető kezelés", "Ajtótömítő gumik ápolása", "Állapotfelmérés"]],
     ["Egyéb", ["Egyéb – a megjegyzésbe írom"]],
   ];
   const servicePicker = groups.map(([g, arr]) =>
@@ -2083,6 +2083,13 @@ async function initSite() {
 
   initReveal();
   wireLightbox();
+
+  // A tartalom JS-ből töltődik, ezért a #horgony (pl. szolgaltatasok.html#fenyszoro) célját a böngésző
+  // még nem találja betöltéskor – a render után görgetünk oda.
+  if (location.hash.length > 1) {
+    const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (target) setTimeout(() => target.scrollIntoView({ block: "start", behavior: "instant" }), 60);
+  }
 }
 
 // Görgetéses beúszás: a szakaszok/kártyák finoman felúsznak, ahogy láthatóvá válnak.

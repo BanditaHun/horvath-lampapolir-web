@@ -2,20 +2,20 @@
   "intro": "**Horváth Lámpapolír** – mobil fényszóró-felújítás Tolna megyében. Házhoz megyek, és helyben, a lámpa kiszerelése nélkül adom vissza a fényszóród kristálytiszta fényét: jobb látás, biztonságosabb éjszakai vezetés – gyorsan, garanciával, számlaképesen.",
   "quick": [
     {
-      "title": "Csomagok & árak",
-      "text": "Prémium fényszóró-felújítás: csiszolás, polírozás, UV-védelem és 2 év garancia – 9 990 Ft / db, minden autótípusra. Kiegészítőként kérhető hátsó lámpa felújítás.",
-      "link": "szolgaltatasok.html",
+      "title": "Fényszóró-felújítás",
+      "text": "Csiszolás, polírozás, UV-védő bevonat és 2 év garancia – fix áron, 9 990 Ft / fényszóró, minden autótípusra. Kiegészítőként hátsó lámpa felújítás is kérhető.",
+      "link": "szolgaltatasok.html#fenyszoro",
       "more": "Megnézem →"
     },
     {
-      "title": "Szolgáltatások",
-      "text": "A fényszóró-felújítás mellett szélvédőmosó, fagyálló, ablaktörlő-csere, vízlepergető kezelés és ingyenes állapotfelmérés – mind helyben.",
-      "link": "szolgaltatasok.html",
+      "title": "Egyéb szolgáltatások",
+      "text": "A fényszóró-felújítás mellett szélvédőmosó, fagyálló, ablaktörlő-csere, vízlepergető kezelés és állapotfelmérés (munka mellett ingyenes) – mind helyben.",
+      "link": "szolgaltatasok.html#onallo-szolgaltatasok",
       "more": "Megnézem →"
     },
     {
       "title": "Kapcsolat",
-      "text": "Hívj vagy írj, és egyeztetünk egy időpontot – házhoz megyünk Tolna megyében, 50 km-es körzetben. Tolna 15 km-es körzetén belül a kiszállás díjmentes!",
+      "text": "Hívj vagy írj, és egyeztetünk egy időpontot – házhoz megyek Tolna megyében, 50 km-es körzetben. Tolna 15 km-es körzetén belül a kiszállás díjmentes!",
       "link": "kapcsolat.html",
       "more": "Kapcsolat →"
     }
@@ -31,7 +31,7 @@
     },
     {
       "icon": "🏠",
-      "text": "**Házhoz** megyünk"
+      "text": "**Házhoz** megyek"
     },
     {
       "icon": "📍",
@@ -47,8 +47,8 @@
     },
     {
       "icon": "⏱️",
-      "title": "Gyors, ~40 perc",
-      "text": "A lámpa kiszerelése nélkül, helyben – a kért szolgáltatástól függően legfeljebb 1 óra."
+      "title": "Gyors, 30–60 perc",
+      "text": "A lámpa kiszerelése nélkül, helyben – egy fényszórópár kb. 30–60 perc alatt elkészül."
     },
     {
       "icon": "🛡️",
