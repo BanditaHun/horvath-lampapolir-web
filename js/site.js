@@ -428,7 +428,7 @@ function buildFooter() {
         <h4 class="site-footer__h">Letölthető dokumentumok</h4>
         <div class="site-footer__links site-footer__links--icons">
           <a href="arlista.html?v=20260919b" target="_blank" rel="noopener">${ICON_LI_RECEIPT}<span>Árlista (PDF)</span></a>
-          <a href="megrendelo.html?v=20261018a" target="_blank" rel="noopener">${ICON_LI_RECEIPT}<span>Megrendelő lap (PDF)</span></a>
+          <a href="megrendelo.html?v=20261018b" target="_blank" rel="noopener">${ICON_LI_RECEIPT}<span>Megrendelő lap (PDF)</span></a>
           <a href="kiszallasi-ertesito.html?v=20260919b" target="_blank" rel="noopener">${ICON_LI_RECEIPT}<span>Kiszállási díj értesítő (PDF)</span></a>
         </div>
       </nav>
@@ -1609,7 +1609,7 @@ function bookingFormHTML(contact) {
           <label class="booking__field"><span>Alvázszám (VIN) <em>– ablaktörlő lapát cseréhez</em></span>
             <input type="text" name="vin" autocomplete="off" placeholder="17 karakter, pl. W0L0AHL..." /></label>
         </div>
-        <label class="booking__2car"><input type="checkbox" id="two-cars" name="two_cars" value="Igen" /> <span>Egy helyszínen <b>2 autót</b> szeretnék felújítani <em>(a teljes összegből 5% kedvezmény)</em></span></label>
+        <label class="booking__2car"><input type="checkbox" id="two-cars" name="two_cars" value="Igen" /> <span>Egy helyszínen <b>2 autót</b> szeretnék felújítani <em>(a teljes összegből 5% kedvezmény – más akcióval nem vonható össze)</em></span></label>
         <div class="booking__billing" id="car2-fields" hidden>
           <span class="booking__subh">2. jármű adatai</span>
           <div class="booking__row">

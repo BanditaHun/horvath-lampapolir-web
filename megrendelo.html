@@ -296,9 +296,14 @@
         if (p.active) opts.push(plain(p.eyebrow || "Akció") + " (" + plain(p.badge) + " a fényszóró-felújításból" + (valid ? "; " + valid : "") + ")");
         if (p.multicar_active) opts.push("Több autós kedvezmény (" + plain(p.multicar_badge) + " a végösszegből, legalább 2 autó egy helyszínen; kiszállási díj egyszer)");
         if (!opts.length) return;
-        el.innerHTML = '<div class="field"><label>Kedvezmény</label><span style="flex:1">' + opts.map(function (o) {
-          return '<label style="display:block; font-size:9.5px"><input type="checkbox"> ' + esc(o) + '</label>';
+        // A kedvezmények nem vonhatók össze: egyszerre csak egy jelölhető
+        el.innerHTML = '<div class="field"><label>Kedvezmény' + (opts.length > 1 ? ' <span style="font-weight:400">(csak egy)</span>' : '') + '</label><span style="flex:1">' + opts.map(function (o) {
+          return '<label style="display:block; font-size:9.5px"><input type="checkbox" class="disc-cb"> ' + esc(o) + '</label>';
         }).join("") + '</span></div>';
+        var cbs = el.querySelectorAll(".disc-cb");
+        cbs.forEach(function (cb) {
+          cb.addEventListener("change", function () { if (cb.checked) cbs.forEach(function (o) { if (o !== cb) o.checked = false; }); });
+        });
       }).catch(function () {});
       var isAddon = function (it) { return (it.badge || "").toLowerCase().indexOf("kieg") === 0; };
       Promise.all([
