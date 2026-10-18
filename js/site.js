@@ -1044,7 +1044,7 @@ async function heroWeather() {
 }
 
 function pkgCardInner(it) {
-  const order = `<a class="btn btn--primary neon-card__order" href="kapcsolat.html">Megrendelem</a>`;
+  const order = `<a class="btn btn--primary neon-card__order" href="kapcsolat.html">Időpontot kérek</a>`;
   // A csomag képét a "pkg-row" mutatja a kártya mellett, ezért itt NEM ismételjük meg.
   return `${it.badge ? `<span class="neon-card__badge">${esc(it.badge)}</span>` : ""}
     <h3 class="neon-card__title">${esc(it.name || "")}</h3>
@@ -1113,7 +1113,7 @@ function renderCardsPage(app, data, defTitle, kind, promo) {
           ${main.description ? `<div class="neon-card__desc rich">${mdBlock(main.description)}</div>` : ""}
           <div class="pkg-buy">
             <div class="neon-card__price pkg-buy__price">${esc(main.price || "")}</div>
-            <a class="btn btn--primary neon-card__order" href="kapcsolat.html">Megrendelem</a>
+            <a class="btn btn--primary neon-card__order" href="kapcsolat.html">Időpontot kérek</a>
             <a class="pkg-featured__pdf" href="arlista.html?v=20260919b" target="_blank" rel="noopener">${ICON_DOWNLOAD}<span>Teljes árlista (PDF)</span></a>
           </div>
         </article>`;
