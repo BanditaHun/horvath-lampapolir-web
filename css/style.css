@@ -1329,18 +1329,18 @@ body:not(:has(.ai-fab)) .to-top { bottom: 22px; }
 /* ---------- Csomagok oldal – egységes, középre igazított oszlop ---------- */
 .pkgpage .page__head { text-align: center; max-width: 900px; margin: 0 auto 6px; }
 .pkgpage .page__title::after { margin-left: auto; margin-right: auto; }
-.pkgpage .page__intro { max-width: 760px; margin: 16px auto 0; text-align: left; font-size: 1rem; line-height: 1.7; }
-.pkgpage .page__intro p { margin: 0 0 14px; }
-.pkgpage .page__intro p:first-of-type { font-size: 1.1rem; color: var(--chrome); }
-.pkgpage .page__intro strong { color: var(--gold); font-weight: 700; }
+.pkgpage .page__head .page__intro { max-width: 760px; margin: 16px auto 0; text-align: center; font-size: 1rem; line-height: 1.7; }
+.pkgpage .page__head .page__intro p { margin: 0 0 14px; }
+.pkgpage .page__head .page__intro p:first-of-type { font-size: 1.1rem; color: var(--chrome); }
+.pkgpage .page__head .page__intro strong { color: var(--gold); font-weight: 700; }
 /* Kiemelt "mobil szolgáltatás" sor: az a bekezdés, amelyik félkövérrel kezdődik */
-.pkgpage .page__intro p:nth-of-type(3) { position: relative; padding: 12px 16px 12px 18px;
+.pkgpage .page__head .page__intro p:nth-of-type(3) { position: relative; padding: 12px 16px 12px 18px;
   border-left: 3px solid var(--gold); border-radius: 8px; background: rgba(240,180,41,0.07); }
-.pkgpage .page__intro p:last-of-type { font-size: .86rem; color: var(--chrome-dim); font-style: italic; margin-bottom: 0; }
-.pkgpage .page__intro p:last-of-type em { font-style: italic; }
+.pkgpage .page__head .page__intro p:last-of-type { font-size: .86rem; color: var(--chrome-dim); font-style: italic; margin-bottom: 0; }
+.pkgpage .page__head .page__intro p:last-of-type em { font-style: italic; }
 @media (max-width: 560px) {
-  .pkgpage .page__intro { font-size: .94rem; line-height: 1.62; }
-  .pkgpage .page__intro p:first-of-type { font-size: 1.02rem; }
+  .pkgpage .page__head .page__intro { font-size: .94rem; line-height: 1.62; }
+  .pkgpage .page__head .page__intro p:first-of-type { font-size: 1.02rem; }
 }
 /* Szlogen sáv */
 .pkg-slogan { max-width: 900px; margin: 6px auto 28px; padding: 22px 26px; text-align: center;
@@ -1579,4 +1579,23 @@ body:not(:has(.ai-fab)) .to-top { bottom: 22px; }
 }
 @media (max-width: 860px) {
   .hero-weather--nav { display: none; }
+}
+
+/* ---------- Szolgáltatások és árak: ugrósáv, szakaszok ---------- */
+.svc-jump { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 900px; margin: 22px auto 6px; }
+.svc-jump a { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: 999px;
+  border: 1px solid var(--line); background: rgba(240,180,41,0.06); color: var(--chrome);
+  font-weight: 600; font-size: .92rem; text-decoration: none; transition: background .15s ease, border-color .15s ease, transform .15s ease; }
+.svc-jump a:hover { background: rgba(240,180,41,0.16); border-color: var(--gold); transform: translateY(-1px); text-decoration: none; }
+:root[data-theme="light"] .svc-jump a { background: #fff; border-color: #d2d8df; color: #2a2f36; }
+:root[data-theme="light"] .svc-jump a:hover { background: #fffaf0; border-color: #e6d199; }
+.pkgpage .pkg-addons-head[id] { scroll-margin-top: 110px; }
+.pkgpage .pkg-addons-head { margin-top: 54px; }
+.pkgpage > .page__intro { max-width: 760px; margin: 12px auto 26px; text-align: center; font-size: 1rem; line-height: 1.65; }
+.pkgpage .pkg-slogan { margin-top: 34px; }
+@media (max-width: 560px) {
+  .svc-jump { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 18px; }
+  .svc-jump a { justify-content: center; padding: 8px 8px; font-size: .8rem; text-align: center; white-space: nowrap; }
+  .pkgpage .page__head .page__intro, .pkgpage .page__head .page__intro p:first-of-type { font-size: .9rem; line-height: 1.55; }
+  .pkgpage .pkg-addons-head { margin-top: 40px; }
 }

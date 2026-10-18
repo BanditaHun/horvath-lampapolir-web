@@ -1,6 +1,6 @@
 {
   "heading": "Csomagok",
-  "intro": "A megfakult, sárga vagy bemattult fényszóró nemcsak csúnya – **balesetveszélyes** is. Az elöregedett búra szórja és elnyeli a fényt, így sötétben és esőben jóval rövidebb a látótávolság, a jármű pedig a **műszaki vizsgán is megbukhat**.\n\nA szakszerű felújítással visszakapod a **gyári szintű, kristálytiszta fényt**: élesebb világítást, sokkal biztonságosabb éjszakai vezetést és újszerű külsőt – mindezt az új lámpatest árának **töredékéért**.\n\n**Teljesen mobil szolgáltatás:** nem kell sehová utaznod – a felújítást a megadott címen, a helyszínen végzem el. Személyautó, kisteher, kamion, busz, mezőgazdasági és munkagép egyaránt.\n\n_A fényszóró-felújítás ára darabonként, a hátsó lámpáké 1 párra (2 db) értendő; ezek **fix árak**, a helyszínen sem változnak – csak a távolság szerinti kiszállási díj adódik hozzá._",
+  "intro": "A megfakult, sárga vagy matt fényszóró nemcsak csúnya – **balesetveszélyes** is, és a jármű a **műszaki vizsgán is megbukhat**. Helyben, a lámpa kiszerelése nélkül visszaadom a **gyári szintű, kristálytiszta fényt** – az új lámpatest árának töredékéért. Személyautó, kisteher, kamion, busz, mezőgazdasági és munkagép egyaránt.\n\n_Fix árak: a fényszóró darabonként, a hátsó lámpák páronként értendők. Csak a távolság szerinti kiszállási díj jön hozzá – Tolna 15 km-es körzetén belül díjmentes._",
   "items": [
     {
       "name": "Prémium fényszóró-felújítás és felületvédelem",
@@ -9,9 +9,9 @@
       "price": "9 990 Ft / DB"
     },
     {
-      "name": "Hátsó lámpák teljes körű felújítása (kiegészítő opció)",
+      "name": "Hátsó lámpák felújítása",
       "badge": "Kiegészítő",
-      "description": "* *KIEGÉSZÍTŐ*\n\n\n\n  *Hátsó lámpák teljes körű felújítása*\n\n\n\n  *• Mély szín és fényes felület – a matt, fakó felület megújítása és a mikrokarcok eltávolítása.*\n\n\n\n  *• Szebb, egységesebb megjelenés – a hátsó lámpák újra tiszta és ápolt hatást keltenek.*\n\n\n\n  *• Tartós UV-védelem – a felújított felület védelméért.*\n\n\n\n  *• A fényszóró-felújítás mellé választható kiegészítő szolgáltatás.*",
+      "description": "- **Mély szín, fényes felület** – eltűnik a matt, fakó réteg és a mikrokarcok.\n- **Egységes, ápolt megjelenés** – elöl-hátul újszerű lesz az autó.\n- **Tartós UV-védelem** a felújított felületen.\n- **A fényszóró-felújítás mellé** választható kiegészítő.\n\n_Fix ár egy pár (2 db) hátsó lámpára._",
       "price": "11 990 Ft / 2 DB"
     }
   ]

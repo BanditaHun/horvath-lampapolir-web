@@ -1093,14 +1093,16 @@ function renderCardsPage(app, data, defTitle, kind, promo) {
     const REAR_IMG = "images/uploads/jpg elötte utána hátsólámpa.png";
     const mediaFig = (src, alt) => `<figure class="pkg-row__media"><img class="zoomable" src="${src}" alt="${esc(alt)}" loading="lazy" /></figure>`;
 
-    // Szlogen sáv
-    const sloMain = (BRANDING && isSet(BRANDING.pkg_slogan_main)) ? BRANDING.pkg_slogan_main : "Biztonság az utakon – mert a családod otthon vár! 🚗❤️";
-    const sloSub = (BRANDING && isSet(BRANDING.pkg_slogan_sub)) ? BRANDING.pkg_slogan_sub : "Látni és látszani – tiszta fényszóróval minden méter számít.";
-    cont.insertAdjacentHTML("beforeend", `<aside class="pkg-slogan"><p class="pkg-slogan__main">${esc(sloMain)}</p><p class="pkg-slogan__sub">${esc(sloSub)}</p></aside>`);
+    // Gyors ugrósáv a szakaszokhoz (a Szolgáltatások oldalon az önálló szolgáltatások is lent vannak)
+    const jumps = [["#fenyszoro", "💡 Fényszórók"]];
+    if (addons.length) jumps.push(["#kiegeszitok", "🔴 Hátsó lámpák"]);
+    jumps.push(["#onallo-szolgaltatasok", "🧰 Egyéb munkák"], ["kiszallas.html", "🚗 Kiszállás"]);
+    cont.insertAdjacentHTML("beforeend", `<nav class="svc-jump" aria-label="Ugrás a szakaszokhoz">${jumps.map(([h, t]) => `<a href="${h}">${esc(t)}</a>`).join("")}</nav>`);
 
     // Fő szolgáltatás – első fényszóró kép balra, kártya jobbra
     const main = mains[0];
     if (main) {
+      cont.insertAdjacentHTML("beforeend", `<div class="pkg-addons-head" id="fenyszoro"><h2 class="page__title">Fényszóró-felújítás</h2><p class="pkg-addons-lead">Fix áron, helyben, 2 év garanciával.</p></div>`);
       const row = el("div", "pkg-row");
       row.innerHTML = `
         ${mediaFig(isSet(main.image) ? rel(main.image) : FRONT_IMG, "Első fényszóró felújítás előtte és utána")}
@@ -1119,7 +1121,7 @@ function renderCardsPage(app, data, defTitle, kind, promo) {
     }
 
     if (addons.length) {
-      cont.insertAdjacentHTML("beforeend", `<div class="pkg-addons-head"><h2 class="page__title">Kiegészítő opciók</h2><p class="pkg-addons-lead">A felújítás mellé választható extrák.</p></div>`);
+      cont.insertAdjacentHTML("beforeend", `<div class="pkg-addons-head" id="kiegeszitok"><h2 class="page__title">Kiegészítő opciók</h2><p class="pkg-addons-lead">A fényszóró-felújítás mellé választható.</p></div>`);
       addons.forEach((it) => {
         const rear = /h[áa]ts[óo]/i.test(it.name || "");
         if (rear) {
@@ -1138,6 +1140,11 @@ function renderCardsPage(app, data, defTitle, kind, promo) {
       });
     }
     if (promo) cont.insertAdjacentHTML("beforeend", multicarNote(promo));
+
+    // Szlogen sáv – a fényszóró-rész lezárásaként
+    const sloMain = (BRANDING && isSet(BRANDING.pkg_slogan_main)) ? BRANDING.pkg_slogan_main : "Biztonság az utakon – mert a családod otthon vár! 🚗❤️";
+    const sloSub = (BRANDING && isSet(BRANDING.pkg_slogan_sub)) ? BRANDING.pkg_slogan_sub : "Látni és látszani – tiszta fényszóróval minden méter számít.";
+    cont.insertAdjacentHTML("beforeend", `<aside class="pkg-slogan"><p class="pkg-slogan__main">${esc(sloMain)}</p><p class="pkg-slogan__sub">${esc(sloSub)}</p></aside>`);
     return;
   }
 
