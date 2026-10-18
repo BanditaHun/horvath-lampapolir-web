@@ -404,7 +404,7 @@ function buildFooter() {
         <div class="site-footer__brandtext">
           <strong>Horváth Lámpapolír</strong>
           <span id="footer-subtitle">Mobil fényszóró-felújítás Tolna megyében, 50 km-es körzetben</span>
-          <span class="site-footer__tags" id="footer-tags">Házhoz megyünk – magánszemélyeknek, cégeknek és flottáknak egyaránt –, a munkára 1 év garanciát és számlát adunk.</span>
+          <span class="site-footer__tags" id="footer-tags">Házhoz megyünk – magánszemélyeknek, cégeknek és flottáknak egyaránt –, a munkára 2 év garanciát és számlát adunk.</span>
         </div>
         <div class="site-footer__pay">
           <div class="site-footer__pay-badges" aria-label="Elfogadott fizetési módok">${PAY_BADGES}</div>
@@ -739,7 +739,7 @@ async function initReviews(reviews, scope, contact) {
 }
 
 // Animált "reklám" buborékok a banner két oldalán (csak széles képernyőn)
-const FLANK_LEFT = ["Kristálytiszta fény", "Ingyenes állapotfelmérés", "1 év garancia*"];
+const FLANK_LEFT = ["Kristálytiszta fény", "Ingyenes állapotfelmérés", "2 év garancia*"];
 const FLANK_RIGHT = ["Házhoz megyünk", "UV-védelem", "Gyors, helyszíni munka"];
 function flankChips(list) {
   return list
@@ -750,7 +750,7 @@ function flankChips(list) {
 const TICKER_DEFAULT = [
   "Házhoz megyünk Tolna megyében",
   "Ingyenes állapotfelmérés",
-  "1 év garancia*",
+  "2 év garancia*",
   "Kristálytiszta fény – biztonságosabb éjszakai vezetés",
   "50 km-es körzetben, akár csak a fényszóróért",
   "Professzionális, helyszíni munka",
@@ -869,7 +869,7 @@ async function renderHome(app, contact) {
   </section></div>`;
 
   const DQUICK = [
-    { title: "Csomagok & árak", text: "Prémium fényszóró-felújítás: csiszolás, polírozás, UV-védelem és 1 év garancia – 19 990 Ft-tól, minden autótípusra.", link: "csomagok.html", more: "Megnézem →" },
+    { title: "Csomagok & árak", text: "Prémium fényszóró-felújítás: csiszolás, polírozás, UV-védelem és 2 év garancia – 19 990 Ft-tól, minden autótípusra.", link: "csomagok.html", more: "Megnézem →" },
     { title: "Szolgáltatások", text: "Fényszóró-felújítás, üvegkezelés, állapotfelmérés – mind helyben.", link: "szolgaltatasok.html", more: "Megnézem →" },
     { title: "Kapcsolat", text: "Hívj vagy írj, és egyeztetünk egy időpontot – házhoz megyünk.", link: "kapcsolat.html", more: "Kapcsolat →" },
   ];
@@ -893,7 +893,7 @@ async function renderHome(app, contact) {
   </section></div>`;
 
   const DTRUST = [
-    { icon: "🛡️", text: "**1 év** garancia" },
+    { icon: "🛡️", text: "**2 év** garancia" },
     { icon: "🧾", text: "**Számlaképes** vállalkozás" },
     { icon: "🏠", text: "**Házhoz** megyünk" },
     { icon: "📍", text: "Tolna megye, **50 km**" },
@@ -1535,7 +1535,7 @@ function wireMap(contact) {
 
 function bookingFormHTML(contact) {
   const groups = [
-    ["Fényszóró-felújítás", ["Prémium fényszóró-felújítás", "+1 év kiegészítő garancia", "Hátsó lámpák felújítása"]],
+    ["Fényszóró-felújítás (2 év garanciával)", ["Prémium fényszóró-felújítás", "Hátsó lámpák felújítása"]],
     ["Önálló szolgáltatások", ["Szélvédőmosó feltöltés", "Fagyálló ellenőrzés", "Ablaktörlő lapát csere", "Nano szélvédő vízlepergető kezelés", "Állapotfelmérés"]],
     ["Egyéb", ["Egyéb – a megjegyzésbe írom"]],
   ];
