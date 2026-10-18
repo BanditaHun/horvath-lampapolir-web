@@ -350,6 +350,45 @@ collections:
               - { name: "text", label: "Vélemény szövege", widget: "text" }
               - { name: "date", label: "Dátum (opcionális)", widget: "string", required: false }
 
+  # ---- Nyomtatható dokumentumok ----
+  - name: "documents"
+    label: "Nyomtatványok"
+    files:
+      - name: "megrendelo"
+        label: "Megrendelő lap"
+        file: "content/megrendelo.json"
+        format: "json"
+        description: "A megrendelő lap (megrendelo.html) fix szövegei. A szolgáltatások, árak, kiszállási díjak és kedvezmények automatikusan a Csomagok / Szolgáltatások / Kiszállás / Akció oldalakról jönnek. **félkövér** mindenhol használható. Figyelj a hosszra: a lapnak 1 A4 oldalon kell elférnie – hosszabb szöveg után nézd meg a PDF-et."
+        fields:
+          - { name: "title", label: "Cím", widget: "string" }
+          - { name: "subtitle", label: "Alcím", widget: "string", required: false }
+          - { name: "brand_tag", label: "Fejléc – vállalkozás sora", widget: "string", hint: "A „Horváth Lámpapolír” felirat alatti kis sor." }
+          - name: "meta"
+            label: "Fejléc – vállalkozás adatai"
+            label_singular: "Adat"
+            widget: "list"
+            fields:
+              - { name: "label", label: "Megnevezés (pl. Adószám)", widget: "string" }
+              - { name: "value", label: "Érték", widget: "string" }
+          - { name: "warranty_line", label: "2. pont – garancia sor (a pipa mellett)", widget: "string" }
+          - { name: "warranty_terms", label: "2. pont – garanciális feltételek", widget: "text" }
+          - { name: "cancel_text", label: "4. pont – lemondási feltételek", widget: "text" }
+          - { name: "pay_intro", label: "4. pont – fizetés bevezető mondata", widget: "string" }
+          - { name: "bank_beneficiary", label: "Kedvezményezett", widget: "string" }
+          - { name: "bank_name", label: "Bank neve", widget: "string" }
+          - { name: "bank_account", label: "Bankszámlaszám", widget: "string" }
+          - { name: "bank_reference", label: "Közlemény", widget: "string" }
+          - { name: "bank_deadline", label: "Fizetési határidő", widget: "string" }
+          - { name: "collection_note", label: "4. pont – behajtási figyelmeztetés (apró betű)", widget: "text", required: false }
+          - { name: "result_hint", label: "5. pont – kitöltési útmutató", widget: "string", required: false }
+          - { name: "result_done", label: "5. pont – „Munka elvégezve” szöveg", widget: "text" }
+          - { name: "result_cancel", label: "5. pont – „Lemondta / nem volt elérhető” szöveg", widget: "text" }
+          - { name: "billing_note", label: "Számlázási tájékoztató (apró betű)", widget: "text", required: false }
+          - { name: "confirm_order", label: "Nyilatkozat – megrendeléskor", widget: "text" }
+          - { name: "confirm_end", label: "Nyilatkozat – a munka végén", widget: "text" }
+          - { name: "signer", label: "Szolgáltató aláírása alatti név", widget: "string" }
+          - { name: "footer", label: "Lábléc", widget: "string" }
+
   # ---- Jogi oldalak ----
   - name: "legal"
     label: "Jogi oldalak"

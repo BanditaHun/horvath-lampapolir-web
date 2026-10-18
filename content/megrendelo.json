@@ -1,0 +1,30 @@
+{
+  "title": "MEGRENDELŐ ÉS ÁTVÉTELI ELISMERVÉNY",
+  "subtitle": "Fényszóró-felújítás és kapcsolódó, helyszíni szolgáltatások megrendelése",
+  "brand_tag": "Horváth András E.V. (alanyi adómentes) · Mobil fényszóró-felújítás",
+  "meta": [
+    { "label": "Székhely", "value": "7131 Tolna-Mözs, Kossuth Lajos u. 11." },
+    { "label": "Adószám", "value": "91361369-1-37" },
+    { "label": "Nyilvántartási szám", "value": "62661573" },
+    { "label": "Tel", "value": "+36 20 541 8369" },
+    { "label": "E-mail", "value": "horvathlampapolir@gmail.com" }
+  ],
+  "warranty_line": "**2 év garancia** a felújított fényszóró(k)ra – az ár tartalmazza, külön díj nélkül.",
+  "warranty_terms": "**Garanciális feltételek:** a szolgáltató a szolgáltatás napjától számított **2 évig** garanciát vállal arra, hogy a felújított, UV-védett fényszóró-felület rendeltetésszerű használat és kímélő tisztítás mellett nem mattul vissza és nem sárgul be. Nem terjed ki: mechanikai sérülésre (kőfelverődés, ütés, repedés, karcolás), balesetre, agresszív vegyszer okozta kárra, házilagos beavatkozásra, a lámpatest belső párásodására, elektromos vagy gyári hibájára. **Érvényesítés:** e lap és a számla bemutatásával; indokolt esetben a felület **díjmentes** újrakezelése. A fogyasztó jogszabályi jogait nem érinti.",
+  "cancel_text": "A megrendelő tudomásul veszi, hogy a jelen megrendelő lapon rögzített időpontot legalább **24 órával korábban** kell lemondania telefonon. Amennyiben a lemondás elmarad, és a szolgáltatás a megrendelő érdekkörében felmerült okból nem valósul meg – így különösen, ha a megrendelő nem elérhető, nincs jelen, a jármű nem áll rendelkezésre, vagy a szolgáltatást a helyszínen lemondja –, a megrendelő a kiszállással felmerült **útiköltséget (kiszállási díjat) ebben az esetben is köteles megtéríteni**, függetlenül attól, hogy a szolgáltatás elvégzésre került-e.",
+  "pay_intro": "Amennyiben a fenti pont alapján kiszállási díj fizetendő, annak rendezése **banki átutalással** történik:",
+  "bank_beneficiary": "Horváth András",
+  "bank_name": "Erste Bank",
+  "bank_account": "11600006-00000002-03727771",
+  "bank_reference": "a jármű rendszáma",
+  "bank_deadline": "az értesítés kézhezvételétől számított **15 nap**",
+  "collection_note": "Amennyiben a megrendelő a fenti határidőn belül nem rendezi a kiszállási díjat, a szolgáltató jogosult a fennálló követelés jogi úton történő érvényesítését és behajtását kezdeményezni. Az eljárással kapcsolatban felmerülő, jogszabály alapján érvényesíthető költségek a megrendelőt terhelhetik.",
+  "result_hint": "Ezt a részt a munka végén, a helyszínen töltjük ki – jelöld a megfelelő négyzetet.",
+  "result_done": "**Munka elvégezve** – a megrendelő a szolgáltatást hiánytalanul, szerződésszerűen átvette, minőségi kifogása nincs.",
+  "result_cancel": "**A megrendelő lemondta / nem volt elérhető a helyszínen** – a fenti feltételek szerint az útiköltséget (kiszállási díjat) köteles megtéríteni. Fizetendő útiköltség:",
+  "billing_note": "**Számlázási tájékoztató:** Vállalkozásunk minden szolgáltatásról számlát állít ki. A számla kiállításához a megrendeléskor (személyesen, telefonon vagy e-mailben) a vevőnek meg kell adnia az alábbi adatokat: magánszemélyeknek a nevet és a címet; cégeknek/vállalkozóknak a cégnevet, a székhelyet (számlázási címet) és az adószámot. Ezen adatok hiányában a szolgáltatást nem áll módunkban teljesíteni. Minden igénybe vett szolgáltatásról számla kerül kiállításra. A szolgáltatás igénybevételével a Megrendelő hozzájárul a fenti adatok megadásához a számla kiállítása céljából.",
+  "confirm_order": "**Megrendeléskor:** alulírott megrendelő aláírásommal igazolom, hogy a fenti adatokat és a megrendelt szolgáltatás(oka)t leadtam, valamint a 4. pontban foglalt lemondási és fizetési feltételeket megismertem és elfogadom.",
+  "confirm_end": "**A munka végén:** aláírásommal igazolom az 5. pontban megjelölt eredményt is – az elvégzett munka hiánytalan átvételét, vagy lemondás esetén az útiköltség megtérítési kötelezettséget.",
+  "signer": "Horváth András (Horváth Lámpapolír)",
+  "footer": "Készült 2 eredeti példányban, amelyből egy a Szolgáltatót, egy a Megrendelőt illeti; a Megrendelő példánya egyben a garanciajegy. · horvathlampapolir.hu · +36 20 541 8369"
+}
