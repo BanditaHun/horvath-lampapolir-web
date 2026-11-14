@@ -904,7 +904,8 @@ async function renderHome(app, contact) {
   const introHTML = isSet(H.intro) ? `<div class="container"><p class="home-intro">${mdInline(H.intro)}</p></div>` : "";
 
   const galItems = (gallery && Array.isArray(gallery.items) ? gallery.items : []).filter((g) => g && isSet(g.image));
-  const galSlides = galItems.slice(0, 10).map((g, i) => {
+  // Minden kép (korábban csak az első 10 – így az újonnan, a lista végére feltöltött képek nem látszottak); a képek lustán töltődnek
+  const galSlides = galItems.map((g, i) => {
     const s = rel(g.image);
     const media = isVideoSrc(s)
       ? `<button type="button" class="gal-vthumb" data-src="${esc(s)}" aria-label="Videó lejátszása"><video src="${esc(s)}#t=0.1" muted preload="metadata" playsinline tabindex="-1"></video><span class="gal-vplay" aria-hidden="true">▶</span></button>`

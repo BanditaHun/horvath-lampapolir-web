@@ -304,6 +304,8 @@ collections:
           - { name: "heading", label: "Szakasz címe", widget: "string" }
           - name: "items"
             label: "Képek"
+            add_to_top: true
+            hint: "Az új kép a lista TETEJÉRE kerül, így elsőként látszik a galériában és a kezdőlapon. A sorrendet húzással módosíthatod (előtte–utána párnál az ELŐTTE legyen felül)."
             widget: "list"
             fields:
               - { name: "image", label: "Kép", widget: "image" }
